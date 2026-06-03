@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useLanguage } from '../LanguageContext';
-import { Atom, User, BookOpen, Languages, ChevronRight } from 'lucide-react';
+import { Atom, User, BookOpen, ClipboardCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface SidebarProps {
@@ -13,6 +13,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
 
   const navItems = [
     { id: 'physics', icon: Atom, label: t.nav.home },
+    { id: 'practice', icon: ClipboardCheck, label: 'Practice' },
     { id: 'about', icon: User, label: t.nav.about },
     { id: 'books', icon: BookOpen, label: t.nav.books },
   ];
@@ -58,4 +59,3 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
     </aside>
   );
 };
-
