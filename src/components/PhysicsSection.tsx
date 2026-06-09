@@ -34,8 +34,8 @@ export const PhysicsSection: React.FC = () => {
             {t.home.whatIsPhysicsText}
           </p>
           <div className="flex gap-4">
-             <button className="bg-white text-black px-6 py-3 text-xs font-bold uppercase tracking-widest rounded-full hover:bg-nebula hover:text-white transition-all">Start Learning</button>
-             <button className="border border-white/20 px-6 py-3 text-xs font-bold uppercase tracking-widest rounded-full hover:border-white transition-all">Curriculum</button>
+             <button className="bg-white text-black px-6 py-3 text-xs font-bold uppercase tracking-widest rounded-full hover:bg-nebula hover:text-white transition-all">{t.home.startLearning}</button>
+             <button className="border border-white/20 px-6 py-3 text-xs font-bold uppercase tracking-widest rounded-full hover:border-white transition-all">{t.home.curriculum}</button>
           </div>
         </div>
       </div>

@@ -16,17 +16,17 @@ export const AboutSection: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
         <div className="md:col-span-8 flex flex-col gap-6">
           <div className="glass p-8 rounded-2xl border border-white/10">
-            <h3 className="text-xs font-bold uppercase tracking-widest opacity-40 mb-6">The Tutor / 个人IP</h3>
+            <h3 className="text-xs font-bold uppercase tracking-widest opacity-40 mb-6">{t.about.sectionLabel}</h3>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-6">
               <div className="w-16 h-16 bg-space-900 rounded-full border border-nebula/30 flex items-center justify-center shrink-0">
                  <UserIcon />
               </div>
               <div>
                 <h1 className="text-2xl font-serif font-bold text-white mb-1">
-                  王豪硕 Mike Wang
+                  {t.about.displayName}
                 </h1>
                 <p className="text-[10px] text-slate-400 uppercase tracking-widest">
-                  TUM Robotics & Cognition
+                  {t.about.credential}
                 </p>
               </div>
             </div>
@@ -61,7 +61,7 @@ export const AboutSection: React.FC = () => {
             
             <div className="space-y-8 flex-1">
               <div>
-                <div className="text-[10px] text-nebula tracking-widest uppercase mb-1">Master</div>
+                <div className="text-[10px] text-nebula tracking-widest uppercase mb-1">{t.about.master}</div>
                 <h3 className="text-sm font-semibold text-white mb-2">{t.about.edu1Degree}</h3>
                 <p className="text-[10px] text-slate-400 italic">{t.about.edu1School}</p>
               </div>
@@ -69,7 +69,7 @@ export const AboutSection: React.FC = () => {
               <div className="w-12 h-px bg-white/10"></div>
               
               <div>
-                <div className="text-[10px] text-nebula tracking-widest uppercase mb-1">Bachelor</div>
+                <div className="text-[10px] text-nebula tracking-widest uppercase mb-1">{t.about.bachelor}</div>
                 <h3 className="text-sm font-semibold text-white mb-2">{t.about.edu2Degree}</h3>
                 <p className="text-[10px] text-slate-400 italic">{t.about.edu2School}</p>
               </div>
@@ -77,7 +77,7 @@ export const AboutSection: React.FC = () => {
             
             <div className="mt-8 p-4 bg-nebula/10 border border-nebula/20 rounded-lg">
               <p className="text-[10px] leading-relaxed text-indigo-200">
-                "The first principle is that you must not fool yourself, and you are the easiest person to fool." <br/><br/>— Richard Feynman
+                {t.about.quote} <br/><br/>— {t.about.quoteAuthor}
               </p>
             </div>
           </div>

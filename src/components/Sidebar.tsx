@@ -9,11 +9,11 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
-  const { t, language, toggleLanguage } = useLanguage();
+  const { t, toggleLanguage } = useLanguage();
 
   const navItems = [
     { id: 'physics', icon: Atom, label: t.nav.home },
-    { id: 'practice', icon: ClipboardCheck, label: 'Practice' },
+    { id: 'practice', icon: ClipboardCheck, label: t.nav.practice },
     { id: 'about', icon: User, label: t.nav.about },
     { id: 'books', icon: BookOpen, label: t.nav.books },
   ];
@@ -22,9 +22,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
     <aside className="fixed left-0 top-0 h-full w-20 flex flex-col items-center justify-between py-6 border-r border-white/10 glass z-50">
       <div className="flex flex-col gap-8 items-center w-full">
         <div className="text-[10px] font-bold tracking-widest opacity-40 uppercase" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
-          Est. 2024
+          {t.site.established}
         </div>
-        <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center font-bold text-xs uppercase tracking-widest">MW</div>
+        <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center font-bold text-xs uppercase tracking-widest">{t.site.mark}</div>
       </div>
 
       <nav className="flex-1 w-full flex flex-col items-center justify-center gap-6">
@@ -52,9 +52,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
       </nav>
 
       <div className="flex flex-col items-center gap-4 text-[10px] font-semibold tracking-tighter w-full">
-        <button onClick={toggleLanguage} className={language === 'en' ? "text-nebula" : "hover:text-nebula opacity-50"}>EN</button>
-        <span className="opacity-20">/</span>
-        <button onClick={toggleLanguage} className={language === 'zh' ? "text-nebula" : "hover:text-nebula opacity-50"}>CN</button>
+        <button onClick={toggleLanguage} className="text-nebula hover:text-quantum transition-colors" title={t.nav.language}>
+          {t.nav.language}
+        </button>
       </div>
     </aside>
   );

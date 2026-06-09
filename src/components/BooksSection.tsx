@@ -11,25 +11,25 @@ export const BooksSection: React.FC = () => {
       title: t.books.book1Title,
       author: t.books.book1Author,
       desc: t.books.book1Desc,
-      tag: 'SCIFI',
+      tag: t.books.book1Tag,
     },
     {
       title: t.books.book2Title,
       author: t.books.book2Author,
       desc: t.books.book2Desc,
-      tag: 'REF',
+      tag: t.books.book2Tag,
     },
     {
       title: t.books.book3Title,
       author: t.books.book3Author,
       desc: t.books.book3Desc,
-      tag: 'POP',
+      tag: t.books.book3Tag,
     },
     {
       title: t.books.book4Title,
       author: t.books.book4Author,
       desc: t.books.book4Desc,
-      tag: 'BIO',
+      tag: t.books.book4Tag,
     }
   ];
 
@@ -50,7 +50,7 @@ export const BooksSection: React.FC = () => {
       </div>
 
       <div className="glass p-8 rounded-2xl border border-white/10 flex flex-col gap-6">
-        <h3 className="text-xs font-bold uppercase tracking-widest opacity-40 mb-2">The Library / 推荐书单</h3>
+        <h3 className="text-xs font-bold uppercase tracking-widest opacity-40 mb-2">{t.books.sectionLabel}</h3>
         <div className="grid md:grid-cols-2 gap-8">
           {books.map((book, idx) => (
             <div 
