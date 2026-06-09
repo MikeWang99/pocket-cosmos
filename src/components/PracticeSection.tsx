@@ -12,7 +12,7 @@ import {
   Square,
   Target,
 } from 'lucide-react';
-import { practiceSetMeta, practiceSteps } from '../data/frq2025Mechanics';
+import { practiceSets } from '../data/practiceSets';
 import type { EvaluationResult } from '../types/practice';
 import { evaluateLocally } from '../utils/rubricScoring';
 
@@ -44,12 +44,16 @@ declare global {
 }
 
 export const PracticeSection: React.FC = () => {
+  const [activeSetId, setActiveSetId] = useState('calculus-for-physics');
   const [activeIndex, setActiveIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [results, setResults] = useState<Record<string, EvaluationResult>>({});
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
+  const activeSet = practiceSets.find((set) => set.id === activeSetId) ?? practiceSets[0];
+  const practiceSetMeta = activeSet;
+  const practiceSteps = activeSet.steps;
   const activeStep = practiceSteps[activeIndex];
   const currentAnswer = answers[activeStep.id] ?? '';
   const currentResult = results[activeStep.id];
@@ -90,6 +94,16 @@ export const PracticeSection: React.FC = () => {
     recognitionRef.current?.stop();
     setIsListening(false);
     setActiveIndex(Math.min(Math.max(index, 0), practiceSteps.length - 1));
+  };
+
+  const selectPracticeSet = (setId: string) => {
+    if (setId === activeSetId) return;
+    recognitionRef.current?.stop();
+    setIsListening(false);
+    setActiveSetId(setId);
+    setAnswers({});
+    setResults({});
+    setActiveIndex(0);
   };
 
   const resetPractice = () => {
@@ -137,14 +151,32 @@ export const PracticeSection: React.FC = () => {
         <div>
           <div className="flex items-center gap-3 text-nebula text-xs font-semibold tracking-widest uppercase mb-4">
             <ClipboardCheck className="w-4 h-4" />
-            AP Physics C Mechanics
+            {practiceSetMeta.eyebrow}
           </div>
           <h1 className="text-4xl md:text-6xl font-serif font-light text-white leading-tight">
-            FRQ Practice Studio
+            {practiceSetMeta.title}
           </h1>
           <p className="text-slate-400 mt-4 max-w-2xl leading-relaxed">
-            Work through the 2025 released mechanics FRQs one short step at a time. The rubric assistant checks your reasoning against official scoring points and keeps a running report.
+            {practiceSetMeta.description}
           </p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {practiceSets.map((set) => {
+              const isActive = set.id === activeSetId;
+              return (
+                <button
+                  key={set.id}
+                  onClick={() => selectPracticeSet(set.id)}
+                  className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
+                    isActive
+                      ? 'border-nebula/70 bg-nebula/15 text-white'
+                      : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/30 hover:text-white'
+                  }`}
+                >
+                  {set.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <div className="grid grid-cols-3 gap-3 min-w-[280px]">
@@ -370,22 +402,24 @@ export const PracticeSection: React.FC = () => {
                 <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-2">Session Report</div>
                 <h3 className="text-2xl font-serif text-white">Score {totalScore}/{totalPossible || 0}</h3>
                 <p className="text-sm text-slate-400 mt-2 max-w-2xl">
-                  Finish all steps to turn this into a full FRQ report. The current MVP scores by explicit rubric cues; a private server evaluator can replace this layer later.
+                  Finish the chapter to turn this into a readiness snapshot. The current checker scores by explicit reasoning cues, so treat the report as a quick diagnostic rather than a final grade.
                 </p>
               </div>
-              <div className="flex flex-wrap gap-2">
-                {practiceSetMeta.sources.map((source) => (
-                  <a
-                    key={source.url}
-                    href={source.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-full border border-white/10 px-4 py-2 text-xs text-slate-300 hover:border-nebula hover:text-nebula transition-colors"
-                  >
-                    {source.label}
-                  </a>
-                ))}
-              </div>
+              {practiceSetMeta.sources.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {practiceSetMeta.sources.map((source) => (
+                    <a
+                      key={source.url}
+                      href={source.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-full border border-white/10 px-4 py-2 text-xs text-slate-300 hover:border-nebula hover:text-nebula transition-colors"
+                    >
+                      {source.label}
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
 
             {weakSpots.length > 0 && (
