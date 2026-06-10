@@ -56,7 +56,8 @@ export const calculusForPhysicsSteps: PracticeStep[] = [
     id: 'cfp-02-dolphin-leap',
     title: 'Dolphin Leap Model',
     context:
-      'A dolphin jumps out of the water. A simplified projectile model gives y(t) = 0.6 + 5.8t - 4.9t^2, where y is height in meters and t is time in seconds.',
+      'A dolphin jumps out of the water. A simplified projectile model gives the height equation below, where y is height in meters and t is time in seconds.',
+    equations: ['y(t) = 0.6 + 5.8t - 4.9t^2'],
     prompt:
       'a. State the units of 0.6, 5.8, and 4.9. b. Without taking a derivative, explain what the negative -4.9t^2 term says about the motion. c. Identify the real physical effect behind the number 4.9.',
     maxScore: 4,
@@ -101,7 +102,8 @@ export const calculusForPhysicsSteps: PracticeStep[] = [
     id: 'cfp-03-hummingbird',
     title: 'Hummingbird Motion Along a Feeder Line',
     context:
-      'A hummingbird flies along a straight feeder line with velocity v(t) = 0.60 - 0.20t m/s for 0 <= t <= 5 s. Positive velocity means toward the feeder.',
+      'A hummingbird flies along a straight feeder line with the velocity model below for 0 <= t <= 5 s. Positive velocity means toward the feeder.',
+    equations: ['v(t) = 0.60 - 0.20t m/s'],
     prompt:
       'a. Find when the hummingbird momentarily stops. b. Decide whether displacement from 0 s to 5 s is positive, negative, or zero using signed area. c. Explain whether total distance equals the magnitude of displacement.',
     maxScore: 4,
@@ -143,7 +145,8 @@ export const calculusForPhysicsSteps: PracticeStep[] = [
     id: 'cfp-04-camera-slider',
     title: 'Programmed Camera Slider',
     context:
-      'A camera slider filming a slow-motion experiment is programmed with x(t) = 2t^3 - 9t^2 + 12t centimeters for 0 <= t <= 4 s.',
+      'A camera slider filming a slow-motion experiment is programmed with the position function below, where x is in centimeters and 0 <= t <= 4 s.',
+    equations: ['x(t) = 2t^3 - 9t^2 + 12t'],
     prompt:
       'a. Find v(t). b. Find a(t). c. Find all rest times between 0 s and 4 s. d. At t = 1 s, decide whether the slider is speeding up or slowing down, and explain the special case.',
     maxScore: 4,
@@ -185,7 +188,8 @@ export const calculusForPhysicsSteps: PracticeStep[] = [
     id: 'cfp-05-elevator',
     title: 'Elevator Starting Smoothly',
     context:
-      'An elevator begins moving upward with acceleration a(t) = 1.2 - 0.4t m/s^2. At t = 0, v(0) = 0.5 m/s upward and y(0) = 0.8 m.',
+      'An elevator begins moving upward with the acceleration model below. At t = 0, v(0) = 0.5 m/s upward and y(0) = 0.8 m.',
+    equations: ['a(t) = 1.2 - 0.4t m/s^2'],
     prompt:
       'a. Find v(t). b. Find y(t). c. Find the elevator displacement from 0 s to 3 s.',
     maxScore: 4,
@@ -228,7 +232,8 @@ export const calculusForPhysicsSteps: PracticeStep[] = [
     id: 'cfp-06-ebike',
     title: 'Regenerative Braking in an Electric Bike',
     context:
-      'An electric bike slows down using regenerative braking. The bike kinetic energy is K = (1/2)mv^2, where m is constant and v changes with time.',
+      'An electric bike slows down using regenerative braking. The bike kinetic energy is modeled below, where m is constant and v changes with time.',
+    equations: ['K = (1/2)mv^2'],
     prompt:
       'a. Use calculus to find dK/dt in terms of m, v, and dv/dt. b. If F_net = m dv/dt, rewrite dK/dt using F_net. c. Explain what dK/dt means physically and what sign you expect during braking.',
     maxScore: 4,
@@ -270,7 +275,8 @@ export const calculusForPhysicsSteps: PracticeStep[] = [
     id: 'cfp-07-toy-rocket',
     title: 'Toy Rocket With Ramping Acceleration',
     context:
-      'A toy rocket is tested on a vertical guide rail. During the first short interval, its net upward acceleration is modeled as a(t) = bt, where b is positive. At t = 0, the rocket is at rest at x = 0.',
+      'A toy rocket is tested on a vertical guide rail. During the first short interval, its net upward acceleration is modeled below, where b is positive. At t = 0, the rocket is at rest at x = 0.',
+    equations: ['a(t) = bt'],
     prompt:
       'a. Find v(t). b. Find x(t). c. State the units of b. d. Explain why using x = x0 + v0t + (1/2)at^2 directly would be wrong here.',
     maxScore: 4,
@@ -312,7 +318,8 @@ export const calculusForPhysicsSteps: PracticeStep[] = [
     id: 'cfp-08-magnetic-launcher',
     title: 'Magnetic Launcher Rail',
     context:
-      'A small cart is pushed along a magnetic launcher rail. As it moves away from the strongest part of the magnet, the force decreases as F(x) = F0(1 - x/L) for 0 <= x <= L.',
+      'A small cart is pushed along a magnetic launcher rail. As it moves away from the strongest part of the magnet, the force decreases according to the model below for 0 <= x <= L.',
+    equations: ['F(x) = F0(1 - x/L)'],
     prompt:
       'a. Write the work integral from x = 0 to x = L. b. Evaluate it. c. Describe the F vs. x graph and explain how the graph confirms the result.',
     maxScore: 4,
@@ -354,7 +361,8 @@ export const calculusForPhysicsSteps: PracticeStep[] = [
     id: 'cfp-09-spring-launcher',
     title: 'Spring Launcher Force Sensor',
     context:
-      'A spring-loaded launcher pushes a cart forward. A force sensor records F(t) = A t (T - t) for 0 <= t <= T, where the force is along +x.',
+      'A spring-loaded launcher pushes a cart forward. A force sensor records the force model below for 0 <= t <= T, where the force is along +x.',
+    equations: ['F(t) = A t (T - t)'],
     prompt:
       'a. Write the impulse integral. b. Evaluate the impulse. c. If the cart has mass m and initial speed v0 in +x, find its final speed after launch.',
     maxScore: 4,
@@ -397,6 +405,7 @@ export const calculusForPhysicsSteps: PracticeStep[] = [
     title: 'Subway Train Acceleration Profile',
     context:
       'A subway train starts from rest. Acceleration ramps linearly from 0 to a0 over 0 <= t <= T, then stays at a0 from T to 2T.',
+    equations: ['a(t) = (a0/T)t for 0 <= t <= T', 'a(t) = a0 for T <= t <= 2T'],
     prompt:
       'a. Find change in velocity from 0 to 2T using area under the acceleration-time graph. b. Write a(t) piecewise. c. Integrate to find v(t) for 0 <= t <= T. d. Evaluate v(T) and compare with the area method.',
     maxScore: 4,
@@ -438,7 +447,8 @@ export const calculusForPhysicsSteps: PracticeStep[] = [
     id: 'cfp-11-rod',
     title: 'Balance Point of a Nonuniform Rod',
     context:
-      'A thin experimental rod lies from x = 0 to x = L. Extra material near the right end gives linear mass density lambda(x) = lambda0(1 + x/L).',
+      'A thin experimental rod lies from x = 0 to x = L. Extra material near the right end gives the linear mass density model below.',
+    equations: ['lambda(x) = lambda0(1 + x/L)'],
     prompt:
       'a. Write an integral for total mass M. b. Write an integral for center of mass x_cm. c. Evaluate x_cm. d. Explain whether x_cm is less than, equal to, or greater than L/2.',
     maxScore: 4,
@@ -480,7 +490,8 @@ export const calculusForPhysicsSteps: PracticeStep[] = [
     id: 'cfp-12-stabilizer',
     title: 'Phone Camera Stabilizer Spring',
     context:
-      'A tiny mass inside a phone camera stabilizer is attached to a spring. When the phone shakes, the spring pulls the mass back toward equilibrium with F = -kx.',
+      'A tiny mass inside a phone camera stabilizer is attached to a spring. When the phone shakes, the spring pulls the mass back toward equilibrium.',
+    equations: ['F = -kx'],
     prompt:
       'a. Use Newton\'s second law to write a differential equation for x(t). b. If x(t) = A cos(omega t), substitute it and find omega. c. Explain why the negative sign in F = -kx matters for a stabilizer.',
     maxScore: 4,

@@ -13,7 +13,7 @@ import {
   Target,
 } from 'lucide-react';
 import { practiceSets } from '../data/practiceSets';
-import type { EvaluationResult } from '../types/practice';
+import type { EvaluationResult, PracticeStep } from '../types/practice';
 import { evaluateLocally } from '../utils/rubricScoring';
 import { useLanguage } from '../LanguageContext';
 
@@ -43,6 +43,114 @@ declare global {
     webkitSpeechRecognition?: SpeechRecognitionConstructor;
   }
 }
+
+const superscripts: Record<string, string> = {
+  '0': '⁰',
+  '1': '¹',
+  '2': '²',
+  '3': '³',
+  '4': '⁴',
+  '5': '⁵',
+  '6': '⁶',
+  '7': '⁷',
+  '8': '⁸',
+  '9': '⁹',
+  '+': '⁺',
+  '-': '⁻',
+  '=': '⁼',
+  '(': '⁽',
+  ')': '⁾',
+  n: 'ⁿ',
+};
+
+const subscripts: Record<string, string> = {
+  '0': '₀',
+  '1': '₁',
+  '2': '₂',
+  '3': '₃',
+  '4': '₄',
+  '5': '₅',
+  '6': '₆',
+  '7': '₇',
+  '8': '₈',
+  '9': '₉',
+  '+': '₊',
+  '-': '₋',
+  '=': '₌',
+  '(': '₍',
+  ')': '₎',
+};
+
+const translateRun = (value: string, map: Record<string, string>) =>
+  value
+    .split('')
+    .map((character) => map[character] ?? character)
+    .join('');
+
+const prettifyMath = (value: string) =>
+  value
+    .replace(/<=/g, '≤')
+    .replace(/>=/g, '≥')
+    .replace(/->/g, '→')
+    .replace(/\bDelta\b/g, 'Δ')
+    .replace(/\blambda0\b/g, 'λ₀')
+    .replace(/\blambda\b/g, 'λ')
+    .replace(/\btheta\b/g, 'θ')
+    .replace(/\bomega\b/g, 'ω')
+    .replace(/\balpha\b/g, 'α')
+    .replace(/\bmu\b/g, 'μ')
+    .replace(/\bintegral\b/g, '∫')
+    .replace(/sqrt\(k\/m\)/g, '√(k/m)')
+    .replace(/\bF_net\b/g, 'Fₙₑₜ')
+    .replace(/\bFmax\b/g, 'Fₘₐₓ')
+    .replace(/\bx_cm\b/g, 'x₍cm₎')
+    .replace(/\bv_f\b/g, 'v₍f₎')
+    .replace(/\bv0\b/g, 'v₀')
+    .replace(/\bv1\b/g, 'v₁')
+    .replace(/\bx0\b/g, 'x₀')
+    .replace(/\bx1\b/g, 'x₁')
+    .replace(/\ba0\b/g, 'a₀')
+    .replace(/\bF0\b/g, 'F₀')
+    .replace(/\^([0-9()+\-=n]+)/g, (_, run: string) => translateRun(run, superscripts))
+    .replace(/_([0-9]+)/g, (_, run: string) => translateRun(run, subscripts));
+
+const splitPromptParts = (prompt: string) => {
+  const parts = prompt.split(/\s(?=[a-d]\.\s)/).filter(Boolean);
+  return parts.length > 1 ? parts : [prompt];
+};
+
+const RichText: React.FC<{ children: string; className?: string }> = ({ children, className }) => (
+  <span className={className}>{prettifyMath(children)}</span>
+);
+
+const QuestionMedia: React.FC<{ step: PracticeStep; label: string }> = ({ step, label }) => {
+  if (!step.image) return null;
+
+  return (
+    <figure className="practice-media">
+      <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-3">{label}</div>
+      <img src={step.image.src} alt={step.image.alt} className="practice-media-image" />
+      {step.image.caption && <figcaption>{step.image.caption}</figcaption>}
+    </figure>
+  );
+};
+
+const EquationBlock: React.FC<{ equations?: string[]; label: string }> = ({ equations, label }) => {
+  if (!equations?.length) return null;
+
+  return (
+    <div className="practice-equations">
+      <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-3">{label}</div>
+      <div className="space-y-2">
+        {equations.map((equation) => (
+          <div key={equation} className="practice-equation">
+            {prettifyMath(equation)}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export const PracticeSection: React.FC = () => {
   const { t } = useLanguage();
@@ -257,12 +365,25 @@ export const PracticeSection: React.FC = () => {
                 <div className="mt-6 grid md:grid-cols-[1fr_1.2fr] gap-4">
                   <div className="rounded-lg bg-black/20 border border-white/5 p-4">
                     <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-2">{t.practice.setup}</div>
-                    <p className="text-sm text-slate-300 leading-relaxed">{activeStep.context}</p>
+                    <p className="text-sm text-slate-300 leading-relaxed">
+                      <RichText>{activeStep.context}</RichText>
+                    </p>
                   </div>
                   <div className="rounded-lg bg-white/[0.04] border border-white/10 p-4">
                     <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-2">{t.practice.task}</div>
-                    <p className="text-base text-white leading-relaxed">{activeStep.prompt}</p>
+                    <div className="space-y-2 text-base text-white leading-relaxed">
+                      {splitPromptParts(activeStep.prompt).map((part) => (
+                        <p key={part}>
+                          <RichText>{part}</RichText>
+                        </p>
+                      ))}
+                    </div>
                   </div>
+                </div>
+
+                <div className="mt-4 grid gap-4">
+                  <EquationBlock equations={activeStep.equations} label={t.practice.equations} />
+                  <QuestionMedia step={activeStep} label={t.practice.diagram} />
                 </div>
               </div>
 
@@ -292,10 +413,6 @@ export const PracticeSection: React.FC = () => {
                   className="min-h-[180px] w-full rounded-lg border border-white/10 bg-black/30 p-4 text-sm leading-relaxed text-white outline-none transition-colors placeholder:text-slate-600 focus:border-nebula/70"
                   placeholder={t.practice.answerPlaceholder}
                 />
-
-                <div className="mt-3 rounded-lg border border-white/5 bg-black/20 p-4 text-sm text-slate-400">
-                  <span className="text-slate-200">{t.practice.hint}</span> {activeStep.answerNudge}
-                </div>
 
                 <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
                   <div className="flex gap-3">

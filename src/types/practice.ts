@@ -12,6 +12,12 @@ export interface PracticeStep {
   title: string;
   prompt: string;
   context: string;
+  equations?: string[];
+  image?: {
+    src: string;
+    alt: string;
+    caption?: string;
+  };
   maxScore: number;
   source: string;
   answerNudge: string;
