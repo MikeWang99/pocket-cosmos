@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../LanguageContext';
-import { Atom, User, BookOpen, ClipboardCheck } from 'lucide-react';
+import { Atom, Orbit, BookOpen, ClipboardCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface SidebarProps {
@@ -14,7 +14,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
   const navItems = [
     { id: 'physics', icon: Atom, label: t.nav.home },
     { id: 'practice', icon: ClipboardCheck, label: t.nav.practice },
-    { id: 'about', icon: User, label: t.nav.about },
+    { id: 'about', icon: Orbit, label: t.nav.about },
     { id: 'books', icon: BookOpen, label: t.nav.books },
   ];
 
@@ -24,7 +24,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
         <div className="text-[10px] font-bold tracking-widest opacity-40 uppercase" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
           {t.site.established}
         </div>
-        <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center font-bold text-xs uppercase tracking-widest">{t.site.mark}</div>
+        <img
+          src="/assets/poco-logo.png"
+          alt={t.site.logoAlt}
+          className="w-11 h-11 rounded-full object-cover border border-white/20 shadow-sm"
+        />
       </div>
 
       <nav className="flex-1 w-full flex flex-col items-center justify-center gap-6">

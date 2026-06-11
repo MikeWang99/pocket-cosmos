@@ -25,11 +25,18 @@ export default function App() {
       <main className="flex-1 ml-20 flex flex-col min-h-screen relative z-10">
         <div className="flex-1 p-8 md:p-12 lg:p-16 max-w-7xl mx-auto w-full flex flex-col">
           <header className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-white/10 pb-6 mb-12 gap-8">
-            <div className="flex flex-col">
-              <h1 className="text-4xl md:text-5xl font-serif font-light tracking-tight">{t.site.title}</h1>
-              <p className={`text-xs opacity-50 mt-2 ${language === 'en' ? 'tracking-[0.3em] uppercase' : 'tracking-[0.18em]'}`}>
-                {t.site.subtitle}
-              </p>
+            <div className="flex items-center gap-4">
+              <img
+                src="/assets/poco-logo.png"
+                alt={t.site.logoAlt}
+                className="h-14 w-14 rounded-full object-cover border border-white/10 shadow-sm"
+              />
+              <div className="flex flex-col">
+                <h1 className="text-4xl md:text-5xl font-serif font-light tracking-tight">{t.site.title}</h1>
+                <p className={`text-xs opacity-50 mt-2 ${language === 'en' ? 'tracking-[0.3em] uppercase' : 'tracking-[0.18em]'}`}>
+                  {t.site.subtitle}
+                </p>
+              </div>
             </div>
             
             <div className="hidden md:flex gap-8 text-xs font-semibold tracking-widest uppercase pb-1">

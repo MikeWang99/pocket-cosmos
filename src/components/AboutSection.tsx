@@ -1,7 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../LanguageContext';
 import { motion } from 'motion/react';
-import { GraduationCap, BrainCircuit, Globe2, Sparkles } from 'lucide-react';
 
 export const AboutSection: React.FC = () => {
   const { t } = useLanguage();
@@ -18,9 +17,11 @@ export const AboutSection: React.FC = () => {
           <div className="glass p-8 rounded-2xl border border-white/10">
             <h3 className="text-xs font-bold uppercase tracking-widest opacity-40 mb-6">{t.about.sectionLabel}</h3>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-6">
-              <div className="w-16 h-16 bg-space-900 rounded-full border border-nebula/30 flex items-center justify-center shrink-0">
-                 <UserIcon />
-              </div>
+              <img
+                src="/assets/founder-photo.png"
+                alt={t.about.photoAlt}
+                className="w-20 h-20 rounded-full object-cover border border-nebula/30 shrink-0"
+              />
               <div>
                 <h1 className="text-2xl font-serif font-bold text-white mb-1">
                   {t.about.displayName}
@@ -86,10 +87,3 @@ export const AboutSection: React.FC = () => {
     </motion.div>
   );
 };
-
-const UserIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400">
-        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-        <circle cx="12" cy="7" r="4" />
-    </svg>
-)
