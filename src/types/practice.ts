@@ -9,6 +9,7 @@ export interface RubricCriterion {
 
 export interface PracticeStep {
   id: string;
+  mode?: 'free_response' | 'multiple_choice';
   title: string;
   prompt: string;
   context: string;
@@ -22,6 +23,12 @@ export interface PracticeStep {
   source: string;
   answerNudge: string;
   criteria: RubricCriterion[];
+  choices?: Array<{
+    label: string;
+    text: string;
+  }>;
+  correctAnswer?: string;
+  solution?: string;
 }
 
 export interface EvaluationResult {
