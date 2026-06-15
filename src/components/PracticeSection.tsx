@@ -41,6 +41,9 @@ declare global {
   interface Window {
     SpeechRecognition?: SpeechRecognitionConstructor;
     webkitSpeechRecognition?: SpeechRecognitionConstructor;
+    MathJax?: {
+      typesetPromise?: (elements?: Element[]) => Promise<void>;
+    };
   }
 }
 
@@ -123,6 +126,13 @@ const RichText: React.FC<{ children: string; className?: string }> = ({ children
   <span className={className}>{prettifyMath(children)}</span>
 );
 
+const MathText: React.FC<{ children: string; className?: string }> = ({ children, className }) => (
+  <span className={className}>{children}</span>
+);
+
+const isMultipleChoiceStep = (step: PracticeStep) =>
+  step.mode === 'multiple_choice' && Boolean(step.choices?.length && step.correctAnswer);
+
 const QuestionMedia: React.FC<{ step: PracticeStep; label: string }> = ({ step, label }) => {
   if (!step.image) return null;
 
@@ -154,7 +164,7 @@ const EquationBlock: React.FC<{ equations?: string[]; label: string }> = ({ equa
 
 export const PracticeSection: React.FC = () => {
   const { t } = useLanguage();
-  const [activeSetId, setActiveSetId] = useState('calculus-for-physics');
+  const [activeSetId, setActiveSetId] = useState('kinematics-multiple-choice');
   const [activeIndex, setActiveIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [results, setResults] = useState<Record<string, EvaluationResult>>({});
@@ -163,12 +173,15 @@ export const PracticeSection: React.FC = () => {
 
   const activeSet = practiceSets.find((set) => set.id === activeSetId) ?? practiceSets[0];
   const practiceSetMeta = activeSet;
-  const setCopy =
-    activeSet.id === 'calculus-for-physics'
-      ? t.practice.sets.calculusForPhysics
-      : t.practice.sets.frq2025;
+  const getSetCopy = (setId: string) => {
+    if (setId === 'calculus-for-physics') return t.practice.sets.calculusForPhysics;
+    if (setId === 'frq-2025-mechanics') return t.practice.sets.frq2025;
+    return t.practice.sets.kinematicsMultipleChoice;
+  };
+  const setCopy = getSetCopy(activeSet.id);
   const practiceSteps = activeSet.steps;
   const activeStep = practiceSteps[activeIndex];
+  const isActiveMultipleChoice = isMultipleChoiceStep(activeStep);
   const currentAnswer = answers[activeStep.id] ?? '';
   const currentResult = results[activeStep.id];
   const completedCount = Object.keys(results).length;
@@ -195,11 +208,49 @@ export const PracticeSection: React.FC = () => {
     return () => recognitionRef.current?.stop();
   }, []);
 
+  useEffect(() => {
+    window.MathJax?.typesetPromise?.();
+  }, [activeStep.id, currentAnswer, currentResult]);
+
   const updateAnswer = (value: string) => {
     setAnswers((previous) => ({ ...previous, [activeStep.id]: value }));
   };
 
   const submitAnswer = () => {
+    if (isMultipleChoiceStep(activeStep)) {
+      if (!currentAnswer) return;
+
+      const isCorrect = currentAnswer === activeStep.correctAnswer;
+      const selectedChoice = activeStep.choices?.find((choice) => choice.label === currentAnswer);
+      const correctChoice = activeStep.choices?.find((choice) => choice.label === activeStep.correctAnswer);
+      const hit = {
+        id: `${activeStep.id}-correct`,
+        label: `${t.practice.correctAnswer}: ${activeStep.correctAnswer}`,
+        point: 'Selected the correct option.',
+        keywords: [],
+        feedback: activeStep.solution ?? '',
+      };
+      const miss = {
+        id: `${activeStep.id}-miss`,
+        label: `${t.practice.yourAnswer}: ${selectedChoice?.label ?? currentAnswer}. ${t.practice.correctAnswer}: ${correctChoice?.label ?? activeStep.correctAnswer}`,
+        point: 'Review the solution and try the next item.',
+        keywords: [],
+        feedback: activeStep.solution ?? '',
+      };
+
+      setResults((previous) => ({
+        ...previous,
+        [activeStep.id]: {
+          score: isCorrect ? 1 : 0,
+          maxScore: 1,
+          hits: isCorrect ? [hit] : [],
+          misses: isCorrect ? [] : [miss],
+          suggestions: isCorrect ? [] : [activeStep.solution || activeStep.answerNudge],
+        },
+      }));
+      return;
+    }
+
     const result = evaluateLocally(activeStep, currentAnswer);
     setResults((previous) => ({ ...previous, [activeStep.id]: result }));
   };
@@ -286,7 +337,7 @@ export const PracticeSection: React.FC = () => {
                       : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/30 hover:text-white'
                   }`}
                 >
-                  {set.id === 'calculus-for-physics' ? t.practice.sets.calculusForPhysics.label : t.practice.sets.frq2025.label}
+                  {getSetCopy(set.id).label}
                 </button>
               );
             })}
@@ -366,7 +417,11 @@ export const PracticeSection: React.FC = () => {
                   <div className="rounded-lg bg-black/20 border border-white/5 p-4">
                     <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-2">{t.practice.setup}</div>
                     <p className="text-sm text-slate-300 leading-relaxed">
-                      <RichText>{activeStep.context}</RichText>
+                      {isActiveMultipleChoice ? (
+                        <MathText>{activeStep.context}</MathText>
+                      ) : (
+                        <RichText>{activeStep.context}</RichText>
+                      )}
                     </p>
                   </div>
                   <div className="rounded-lg bg-white/[0.04] border border-white/10 p-4">
@@ -374,7 +429,7 @@ export const PracticeSection: React.FC = () => {
                     <div className="space-y-2 text-base text-white leading-relaxed">
                       {splitPromptParts(activeStep.prompt).map((part) => (
                         <p key={part}>
-                          <RichText>{part}</RichText>
+                          {isActiveMultipleChoice ? <MathText>{part}</MathText> : <RichText>{part}</RichText>}
                         </p>
                       ))}
                     </div>
@@ -388,31 +443,85 @@ export const PracticeSection: React.FC = () => {
               </div>
 
               <div className="p-6 md:p-8">
-                <div className="flex items-center justify-between gap-4 mb-3">
-                  <label htmlFor="practice-answer" className="text-xs uppercase tracking-widest text-slate-500">
-                    {t.practice.response}
-                  </label>
-                  <button
-                    onClick={toggleSpeech}
-                    disabled={!speechSupported}
-                    className={`w-10 h-10 rounded-full border flex items-center justify-center transition-colors ${
-                      isListening
-                        ? 'border-rose-400 text-rose-300 bg-rose-400/10'
-                        : 'border-white/10 text-slate-300 hover:border-nebula hover:text-nebula disabled:opacity-30'
-                    }`}
-                    title={speechSupported ? t.practice.dictate : t.practice.speechUnavailable}
-                  >
-                    {isListening ? <Square className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
-                  </button>
-                </div>
+                {isActiveMultipleChoice ? (
+                  <div>
+                    <div className="text-xs uppercase tracking-widest text-slate-500 mb-3">{t.practice.chooseAnswer}</div>
+                    <div className="grid gap-3" role="radiogroup" aria-label={t.practice.chooseAnswer}>
+                      {activeStep.choices?.map((choice) => {
+                        const isSelected = currentAnswer === choice.label;
+                        const isChecked = Boolean(currentResult);
+                        const isCorrectChoice = currentResult && choice.label === activeStep.correctAnswer;
+                        const isWrongChoice = currentResult && isSelected && choice.label !== activeStep.correctAnswer;
 
-                <textarea
-                  id="practice-answer"
-                  value={currentAnswer}
-                  onChange={(event) => updateAnswer(event.target.value)}
-                  className="min-h-[180px] w-full rounded-lg border border-white/10 bg-black/30 p-4 text-sm leading-relaxed text-white outline-none transition-colors placeholder:text-slate-600 focus:border-nebula/70"
-                  placeholder={t.practice.answerPlaceholder}
-                />
+                        return (
+                          <button
+                            key={choice.label}
+                            type="button"
+                            data-choice={choice.label}
+                            onClick={() => {
+                              if (!currentResult) updateAnswer(choice.label);
+                            }}
+                            aria-pressed={isSelected}
+                            className={`grid grid-cols-[40px_minmax(0,1fr)] gap-3 rounded-lg border p-4 text-left transition-colors ${
+                              isCorrectChoice
+                                ? 'border-emerald-500/50 bg-emerald-500/10'
+                                : isWrongChoice
+                                  ? 'border-rose-500/50 bg-rose-500/10'
+                                  : isSelected
+                                    ? 'border-nebula/70 bg-nebula/10'
+                                    : 'border-white/10 bg-white/[0.03] hover:border-nebula/50'
+                            }`}
+                          >
+                            <span className="grid h-8 w-8 place-items-center rounded-full bg-white text-xs font-bold text-black">
+                              {choice.label}
+                            </span>
+                            <span className="self-center text-sm md:text-base text-slate-200 leading-relaxed">
+                              <MathText>{choice.text}</MathText>
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {currentResult && (
+                      <div className="mt-5 rounded-lg border border-white/10 bg-black/20 p-4">
+                        <div className="text-xs uppercase tracking-widest text-slate-500 mb-2">
+                          {currentResult.score === 1 ? t.practice.correct : t.practice.notQuite}
+                        </div>
+                        <p className="text-sm text-slate-300 leading-relaxed">
+                          <MathText>{activeStep.solution ?? ''}</MathText>
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex items-center justify-between gap-4 mb-3">
+                      <label htmlFor="practice-answer" className="text-xs uppercase tracking-widest text-slate-500">
+                        {t.practice.response}
+                      </label>
+                      <button
+                        onClick={toggleSpeech}
+                        disabled={!speechSupported}
+                        className={`w-10 h-10 rounded-full border flex items-center justify-center transition-colors ${
+                          isListening
+                            ? 'border-rose-400 text-rose-300 bg-rose-400/10'
+                            : 'border-white/10 text-slate-300 hover:border-nebula hover:text-nebula disabled:opacity-30'
+                        }`}
+                        title={speechSupported ? t.practice.dictate : t.practice.speechUnavailable}
+                      >
+                        {isListening ? <Square className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                      </button>
+                    </div>
+
+                    <textarea
+                      id="practice-answer"
+                      value={currentAnswer}
+                      onChange={(event) => updateAnswer(event.target.value)}
+                      className="min-h-[180px] w-full rounded-lg border border-white/10 bg-black/30 p-4 text-sm leading-relaxed text-white outline-none transition-colors placeholder:text-slate-600 focus:border-nebula/70"
+                      placeholder={t.practice.answerPlaceholder}
+                    />
+                  </>
+                )}
 
                 <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
                   <div className="flex gap-3">
@@ -436,11 +545,11 @@ export const PracticeSection: React.FC = () => {
 
                   <button
                     onClick={submitAnswer}
-                    disabled={currentAnswer.trim().length < 8}
+                    disabled={isActiveMultipleChoice ? !currentAnswer || Boolean(currentResult) : currentAnswer.trim().length < 8}
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold uppercase tracking-widest text-black transition-colors hover:bg-nebula hover:text-white disabled:opacity-30"
                   >
                     <Sparkles className="w-4 h-4" />
-                    {t.practice.scoreResponse}
+                    {isActiveMultipleChoice ? t.practice.checkAnswer : t.practice.scoreResponse}
                   </button>
                 </div>
               </div>
