@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-label="A block moving up an inclined plane">
+  <rect width="720" height="360" fill="#ffffff"/>
+  <path d="M120 285 L610 285 L610 80 Z" fill="#f8fafc" stroke="#0f172a" stroke-width="4"/>
+  <g transform="translate(365 195) rotate(-22.62)">
+    <rect x="-55" y="-38" width="110" height="76" rx="8" fill="#dbeafe" stroke="#0f172a" stroke-width="4"/>
+    <text x="0" y="10" text-anchor="middle" font-family="Inter, Arial" font-size="26" fill="#0f172a">m</text>
+    <line x1="68" y1="0" x2="170" y2="0" stroke="#4f46e5" stroke-width="8" stroke-linecap="round"/>
+    <path d="M170 0 L145 -17 L145 17 Z" fill="#4f46e5"/>
+    <text x="188" y="9" font-family="Inter, Arial" font-size="28" fill="#4f46e5">F</text>
+  </g>
+  <path d="M542 285 A70 70 0 0 0 525 239" fill="none" stroke="#4f46e5" stroke-width="4"/>
+  <text x="500" y="273" font-family="Inter, Arial" font-size="24" fill="#4f46e5">θ</text>
+  <text x="340" y="324" text-anchor="middle" font-family="Inter, Arial" font-size="21" fill="#475569">rough inclined plane</text>
+</svg>

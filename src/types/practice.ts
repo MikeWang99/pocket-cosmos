@@ -14,6 +14,7 @@ export interface PracticeStep {
   prompt: string;
   context: string;
   equations?: string[];
+  tags?: string[];
   image?: {
     src: string;
     alt: string;

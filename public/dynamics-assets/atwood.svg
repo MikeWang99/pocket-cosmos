@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-label="Two hanging masses connected over a pulley">
+  <rect width="720" height="360" fill="#ffffff"/>
+  <line x1="360" y1="45" x2="360" y2="80" stroke="#0f172a" stroke-width="5"/>
+  <circle cx="360" cy="105" r="42" fill="#f8fafc" stroke="#0f172a" stroke-width="5"/>
+  <path d="M318 105 C318 82 402 82 402 105" fill="none" stroke="#0f172a" stroke-width="5"/>
+  <line x1="318" y1="105" x2="318" y2="250" stroke="#0f172a" stroke-width="5"/>
+  <line x1="402" y1="105" x2="402" y2="285" stroke="#0f172a" stroke-width="5"/>
+  <rect x="273" y="250" width="90" height="55" rx="8" fill="#dbeafe" stroke="#0f172a" stroke-width="4"/>
+  <rect x="357" y="285" width="90" height="55" rx="8" fill="#fee2e2" stroke="#0f172a" stroke-width="4"/>
+  <text x="318" y="286" text-anchor="middle" font-family="Inter, Arial" font-size="24" fill="#0f172a">m₁</text>
+  <text x="402" y="321" text-anchor="middle" font-family="Inter, Arial" font-size="24" fill="#0f172a">m₂</text>
+  <text x="360" y="34" text-anchor="middle" font-family="Inter, Arial" font-size="20" fill="#475569">light string, frictionless pulley</text>
+</svg>

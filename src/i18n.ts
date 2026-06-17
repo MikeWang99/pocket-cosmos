@@ -89,6 +89,7 @@ export const i18n = {
       task: 'Your Task',
       equations: 'Model / Equation',
       diagram: 'Diagram',
+      knowledgePoints: 'Knowledge Points',
       response: 'Reasoning Response',
       scoreResponse: 'Score Response',
       rubricScore: 'Rubric Score',
@@ -129,6 +130,12 @@ export const i18n = {
           title: 'AP Physics C: Kinematics Multiple Choice',
           eyebrow: 'AP Physics C Mechanics',
           description: 'Practice the full kinematics multiple-choice set with diagrams, formulas, instant checking, and concise solution notes.',
+        },
+        dynamicsMultipleChoice: {
+          label: 'Dynamics',
+          title: 'AP Physics C: Dynamics Multiple Choice',
+          eyebrow: 'AP Physics C Mechanics',
+          description: 'Build Newton’s-law fluency across linear dynamics, friction, connected systems, drag, and circular motion with original multiple-choice modeling questions.',
         },
       },
     }
@@ -221,6 +228,7 @@ export const i18n = {
       task: '任务',
       equations: '模型 / 公式',
       diagram: '图像',
+      knowledgePoints: '考察知识点',
       response: '作答区',
       scoreResponse: '评分',
       rubricScore: '评分结果',
@@ -261,6 +269,12 @@ export const i18n = {
           title: 'AP Physics C：运动学选择题',
           eyebrow: '大学先修物理力学',
           description: '完整练习运动学选择题。题目保留图像与公式，作答后可以立即检查答案并查看简明解析。',
+        },
+        dynamicsMultipleChoice: {
+          label: '动力学',
+          title: 'AP Physics C：动力学选择题',
+          eyebrow: '大学先修物理力学',
+          description: '用原创选择题练习牛顿定律、摩擦、连接体、阻力与圆周运动，训练 Mechanics C 所需的动力学建模能力。',
         },
       },
     }

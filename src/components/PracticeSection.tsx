@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
+import katex from 'katex';
 import {
   ArrowLeft,
   ArrowRight,
@@ -41,9 +42,6 @@ declare global {
   interface Window {
     SpeechRecognition?: SpeechRecognitionConstructor;
     webkitSpeechRecognition?: SpeechRecognitionConstructor;
-    MathJax?: {
-      typesetPromise?: (elements?: Element[]) => Promise<void>;
-    };
   }
 }
 
@@ -126,9 +124,37 @@ const RichText: React.FC<{ children: string; className?: string }> = ({ children
   <span className={className}>{prettifyMath(children)}</span>
 );
 
-const MathText: React.FC<{ children: string; className?: string }> = ({ children, className }) => (
-  <span className={className}>{children}</span>
-);
+const renderMath = (value: string) =>
+  katex.renderToString(value, {
+    throwOnError: false,
+    strict: false,
+  });
+
+const MathText: React.FC<{ children: string; className?: string }> = ({ children, className }) => {
+  const parts = children.split(/(\$[^$]+\$|\\\([^)]+\\\))/g).filter(Boolean);
+
+  return (
+    <span className={className}>
+      {parts.map((part, index) => {
+        const isDollarMath = part.startsWith('$') && part.endsWith('$');
+        const isParenMath = part.startsWith('\\(') && part.endsWith('\\)');
+
+        if (!isDollarMath && !isParenMath) {
+          return <React.Fragment key={`${part}-${index}`}>{part}</React.Fragment>;
+        }
+
+        const expression = isDollarMath ? part.slice(1, -1) : part.slice(2, -2);
+        return (
+          <span
+            key={`${part}-${index}`}
+            className="math-inline"
+            dangerouslySetInnerHTML={{ __html: renderMath(expression) }}
+          />
+        );
+      })}
+    </span>
+  );
+};
 
 const isMultipleChoiceStep = (step: PracticeStep) =>
   step.mode === 'multiple_choice' && Boolean(step.choices?.length && step.correctAnswer);
@@ -154,8 +180,25 @@ const EquationBlock: React.FC<{ equations?: string[]; label: string }> = ({ equa
       <div className="space-y-2">
         {equations.map((equation) => (
           <div key={equation} className="practice-equation">
-            {prettifyMath(equation)}
+            <MathText>{equation}</MathText>
           </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const KnowledgeTags: React.FC<{ tags?: string[]; label: string }> = ({ tags, label }) => {
+  if (!tags?.length) return null;
+
+  return (
+    <div className="mt-4">
+      <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-2">{label}</div>
+      <div className="flex flex-wrap gap-2">
+        {tags.map((tag) => (
+          <span key={tag} className="rounded-full border border-nebula/20 bg-nebula/8 px-3 py-1 text-xs text-slate-600">
+            {tag}
+          </span>
         ))}
       </div>
     </div>
@@ -176,6 +219,7 @@ export const PracticeSection: React.FC = () => {
   const getSetCopy = (setId: string) => {
     if (setId === 'calculus-for-physics') return t.practice.sets.calculusForPhysics;
     if (setId === 'frq-2025-mechanics') return t.practice.sets.frq2025;
+    if (setId === 'dynamics-multiple-choice') return t.practice.sets.dynamicsMultipleChoice;
     return t.practice.sets.kinematicsMultipleChoice;
   };
   const setCopy = getSetCopy(activeSet.id);
@@ -207,10 +251,6 @@ export const PracticeSection: React.FC = () => {
   useEffect(() => {
     return () => recognitionRef.current?.stop();
   }, []);
-
-  useEffect(() => {
-    window.MathJax?.typesetPromise?.();
-  }, [activeStep.id, currentAnswer, currentResult]);
 
   const updateAnswer = (value: string) => {
     setAnswers((previous) => ({ ...previous, [activeStep.id]: value }));
@@ -407,6 +447,7 @@ export const PracticeSection: React.FC = () => {
                   <div>
                     <div className="text-xs uppercase tracking-widest text-nebula mb-3">{activeStep.source}</div>
                     <h2 className="text-2xl md:text-3xl font-serif text-white">{activeStep.title}</h2>
+                    <KnowledgeTags tags={activeStep.tags} label={t.practice.knowledgePoints} />
                   </div>
                   <div className="rounded-full border border-white/10 px-4 py-2 text-sm text-slate-300 w-fit">
                     {activeIndex + 1} / {practiceSteps.length}

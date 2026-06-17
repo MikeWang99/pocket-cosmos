@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-label="Force versus time graph">
+  <rect width="720" height="360" fill="#ffffff"/>
+  <line x1="110" y1="285" x2="620" y2="285" stroke="#0f172a" stroke-width="4"/>
+  <line x1="110" y1="285" x2="110" y2="70" stroke="#0f172a" stroke-width="4"/>
+  <path d="M110 285 L250 145 L390 145 L560 285" fill="none" stroke="#4f46e5" stroke-width="7" stroke-linejoin="round"/>
+  <line x1="250" y1="285" x2="250" y2="145" stroke="#cbd5e1" stroke-width="3" stroke-dasharray="9 8"/>
+  <line x1="390" y1="285" x2="390" y2="145" stroke="#cbd5e1" stroke-width="3" stroke-dasharray="9 8"/>
+  <text x="625" y="294" font-family="Inter, Arial" font-size="24" fill="#0f172a">t</text>
+  <text x="87" y="68" font-family="Inter, Arial" font-size="24" fill="#0f172a">F</text>
+  <text x="250" y="318" text-anchor="middle" font-family="Inter, Arial" font-size="20" fill="#475569">2 s</text>
+  <text x="390" y="318" text-anchor="middle" font-family="Inter, Arial" font-size="20" fill="#475569">5 s</text>
+  <text x="91" y="151" text-anchor="end" font-family="Inter, Arial" font-size="20" fill="#475569">12 N</text>
+</svg>
