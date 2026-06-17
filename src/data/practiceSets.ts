@@ -1,4 +1,5 @@
 import { calculusForPhysicsMeta, calculusForPhysicsSteps } from './calculusForPhysics';
+import { dynamicsMultipleChoiceMeta, dynamicsMultipleChoiceSteps } from './dynamicsMultipleChoice';
 import { practiceSetMeta as frq2025Meta, practiceSteps as frq2025Steps } from './frq2025Mechanics';
 import { kinematicsMultipleChoiceMeta, kinematicsMultipleChoiceSteps } from './kinematicsMultipleChoice';
 import type { PracticeStep } from '../types/practice';
@@ -38,5 +39,11 @@ export const practiceSets: PracticeSet[] = [
     label: 'Kinematics MC',
     ...kinematicsMultipleChoiceMeta,
     steps: kinematicsMultipleChoiceSteps,
+  },
+  {
+    id: 'dynamics-multiple-choice',
+    label: 'Dynamics',
+    ...dynamicsMultipleChoiceMeta,
+    steps: dynamicsMultipleChoiceSteps,
   },
 ];
