@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Two blocks on a frictionless horizontal surface pulled by a force">
+  <rect width="720" height="300" fill="#ffffff"/>
+  <line x1="70" y1="210" x2="650" y2="210" stroke="#334155" stroke-width="4"/>
+  <rect x="175" y="125" width="130" height="85" rx="8" fill="#e0f2fe" stroke="#0f172a" stroke-width="4"/>
+  <rect x="305" y="125" width="130" height="85" rx="8" fill="#ddd6fe" stroke="#0f172a" stroke-width="4"/>
+  <text x="240" y="176" text-anchor="middle" font-family="Inter, Arial" font-size="30" fill="#0f172a">2m</text>
+  <text x="370" y="176" text-anchor="middle" font-family="Inter, Arial" font-size="30" fill="#0f172a">m</text>
+  <line x1="435" y1="168" x2="565" y2="168" stroke="#4f46e5" stroke-width="8" stroke-linecap="round"/>
+  <path d="M565 168 L540 151 L540 185 Z" fill="#4f46e5"/>
+  <text x="600" y="158" font-family="Inter, Arial" font-size="32" fill="#4f46e5">F</text>
+  <text x="360" y="258" text-anchor="middle" font-family="Inter, Arial" font-size="22" fill="#475569">frictionless surface</text>
+</svg>

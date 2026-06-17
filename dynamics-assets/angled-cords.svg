@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-label="A weight held by a horizontal cord and an angled cord">
+  <rect width="720" height="360" fill="#ffffff"/>
+  <line x1="120" y1="90" x2="610" y2="90" stroke="#cbd5e1" stroke-width="6"/>
+  <circle cx="360" cy="190" r="8" fill="#0f172a"/>
+  <line x1="360" y1="190" x2="215" y2="190" stroke="#0f172a" stroke-width="5"/>
+  <line x1="360" y1="190" x2="482" y2="90" stroke="#0f172a" stroke-width="5"/>
+  <line x1="360" y1="190" x2="360" y2="280" stroke="#0f172a" stroke-width="5"/>
+  <rect x="325" y="280" width="70" height="45" rx="6" fill="#fee2e2" stroke="#0f172a" stroke-width="4"/>
+  <text x="360" y="312" text-anchor="middle" font-family="Inter, Arial" font-size="24" fill="#0f172a">W</text>
+  <path d="M430 132 A72 72 0 0 1 457 164" fill="none" stroke="#4f46e5" stroke-width="4"/>
+  <text x="474" y="172" font-family="Inter, Arial" font-size="24" fill="#4f46e5">30°</text>
+  <text x="285" y="178" font-family="Inter, Arial" font-size="20" fill="#475569">horizontal cord</text>
+  <text x="495" y="117" font-family="Inter, Arial" font-size="20" fill="#475569">angled cord</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-label="An object moving in uniform circular motion">
+  <rect width="720" height="360" fill="#ffffff"/>
+  <circle cx="360" cy="180" r="115" fill="#f8fafc" stroke="#cbd5e1" stroke-width="5"/>
+  <circle cx="475" cy="180" r="18" fill="#ddd6fe" stroke="#0f172a" stroke-width="4"/>
+  <line x1="475" y1="180" x2="370" y2="180" stroke="#4f46e5" stroke-width="7" stroke-linecap="round"/>
+  <path d="M370 180 L395 164 L395 196 Z" fill="#4f46e5"/>
+  <line x1="475" y1="180" x2="475" y2="76" stroke="#0ea5e9" stroke-width="7" stroke-linecap="round"/>
+  <path d="M475 76 L459 101 L491 101 Z" fill="#0ea5e9"/>
+  <text x="407" y="169" font-family="Inter, Arial" font-size="24" fill="#4f46e5">aᶜ</text>
+  <text x="491" y="93" font-family="Inter, Arial" font-size="24" fill="#0ea5e9">v</text>
+  <circle cx="360" cy="180" r="6" fill="#0f172a"/>
+  <text x="360" y="324" text-anchor="middle" font-family="Inter, Arial" font-size="22" fill="#475569">centripetal acceleration points toward the center</text>
+</svg>

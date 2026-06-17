@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 470" role="img" aria-label="Five free-body diagram choices for a block on a ramp">
+  <rect width="840" height="470" fill="#ffffff"/>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#0f172a"/>
+    </marker>
+  </defs>
+  <g font-family="Inter, Arial" fill="#0f172a">
+    <text x="420" y="34" text-anchor="middle" font-size="22" fill="#475569">Ramp rises to the right. Each dot represents the block.</text>
+  </g>
+  <g font-family="Inter, Arial" font-size="18" fill="#0f172a" stroke="#0f172a" stroke-width="4" stroke-linecap="round">
+    <g transform="translate(135 150)">
+      <text x="-70" y="-80" stroke="none" font-size="26">A</text>
+      <line x1="-65" y1="56" x2="72" y2="-8" stroke="#cbd5e1" stroke-width="5"/>
+      <circle r="7" fill="#0f172a" stroke="none"/>
+      <line x1="0" y1="0" x2="0" y2="78" marker-end="url(#arrow)"/>
+      <line x1="0" y1="0" x2="-42" y2="-88" marker-end="url(#arrow)"/>
+      <line x1="0" y1="0" x2="-82" y2="38" marker-end="url(#arrow)"/>
+      <text x="8" y="78" stroke="none">mg</text><text x="-66" y="-82" stroke="none">N</text><text x="-105" y="42" stroke="none">f</text>
+    </g>
+    <g transform="translate(420 150)">
+      <text x="-70" y="-80" stroke="none" font-size="26">B</text>
+      <line x1="-65" y1="56" x2="72" y2="-8" stroke="#cbd5e1" stroke-width="5"/>
+      <circle r="7" fill="#0f172a" stroke="none"/>
+      <line x1="0" y1="0" x2="0" y2="78" marker-end="url(#arrow)"/>
+      <line x1="0" y1="0" x2="-42" y2="-88" marker-end="url(#arrow)"/>
+      <line x1="0" y1="0" x2="82" y2="-38" marker-end="url(#arrow)"/>
+      <text x="8" y="78" stroke="none">mg</text><text x="-66" y="-82" stroke="none">N</text><text x="88" y="-34" stroke="none">f</text>
+    </g>
+    <g transform="translate(705 150)">
+      <text x="-70" y="-80" stroke="none" font-size="26">C</text>
+      <line x1="-65" y1="56" x2="72" y2="-8" stroke="#cbd5e1" stroke-width="5"/>
+      <circle r="7" fill="#0f172a" stroke="none"/>
+      <line x1="0" y1="0" x2="0" y2="78" marker-end="url(#arrow)"/>
+      <line x1="0" y1="0" x2="-42" y2="-88" marker-end="url(#arrow)"/>
+      <text x="8" y="78" stroke="none">mg</text><text x="-66" y="-82" stroke="none">N</text>
+    </g>
+    <g transform="translate(275 355)">
+      <text x="-70" y="-80" stroke="none" font-size="26">D</text>
+      <line x1="-65" y1="56" x2="72" y2="-8" stroke="#cbd5e1" stroke-width="5"/>
+      <circle r="7" fill="#0f172a" stroke="none"/>
+      <line x1="0" y1="0" x2="0" y2="78" marker-end="url(#arrow)"/>
+      <line x1="0" y1="0" x2="-82" y2="38" marker-end="url(#arrow)"/>
+      <text x="8" y="78" stroke="none">mg</text><text x="-105" y="42" stroke="none">f</text>
+    </g>
+    <g transform="translate(565 355)">
+      <text x="-70" y="-80" stroke="none" font-size="26">E</text>
+      <line x1="-65" y1="56" x2="72" y2="-8" stroke="#cbd5e1" stroke-width="5"/>
+      <circle r="7" fill="#0f172a" stroke="none"/>
+      <line x1="0" y1="0" x2="0" y2="78" marker-end="url(#arrow)"/>
+      <line x1="0" y1="0" x2="-42" y2="-88" marker-end="url(#arrow)"/>
+      <line x1="0" y1="0" x2="-82" y2="38" marker-end="url(#arrow)"/>
+      <line x1="0" y1="0" x2="82" y2="-38" marker-end="url(#arrow)"/>
+      <text x="8" y="78" stroke="none">mg</text><text x="-66" y="-82" stroke="none">N</text><text x="-105" y="42" stroke="none">f</text><text x="88" y="-34" stroke="none">f</text>
+    </g>
+  </g>
+</svg>
