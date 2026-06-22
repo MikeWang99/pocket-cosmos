@@ -4,6 +4,7 @@ export const i18n = {
   en: {
     nav: {
       home: 'Home',
+      curriculum: 'AP Curriculum',
       practice: 'Practice',
       about: 'About',
       books: 'Reading List',
@@ -34,6 +35,20 @@ export const i18n = {
       point3Text: 'Every "why" leads to deeper understanding. Never stop questioning the nature of everyday phenomena.',
       startLearning: 'Start Learning',
       curriculum: 'Curriculum',
+    },
+    curriculum: {
+      sectionLabel: 'Official Course Map',
+      title: 'AP Physics Knowledge Map',
+      description: 'A complete unit-by-unit view of the required topics across all four AP Physics courses, organized from the current College Board Course and Exam Descriptions.',
+      courseSelector: 'Select an AP Physics course',
+      units: 'units',
+      topics: 'topics',
+      unit: 'Unit',
+      examWeight: 'exam weight',
+      expandAll: 'Expand all',
+      collapseAll: 'Collapse all',
+      officialSource: 'Official CED',
+      sourceNote: 'Topic names, unit structure, and exam weightings are based on the official College Board Course and Exam Descriptions. Chinese topic names are translations prepared by Pocket Cosmos for learning reference.',
     },
     about: {
       title: 'About Pocket Cosmos',
@@ -143,6 +158,7 @@ export const i18n = {
   zh: {
     nav: {
       home: '探索宇宙',
+      curriculum: '知识地图',
       practice: '练习',
       about: '关于口袋宇宙',
       books: '推荐读物',
@@ -173,6 +189,20 @@ export const i18n = {
       point3Text: '每一个“为什么”都是通向真理的阶梯。永远不要停止对日常现象本质的追问。',
       startLearning: '开始学习',
       curriculum: '课程体系',
+    },
+    curriculum: {
+      sectionLabel: '官方课程地图',
+      title: '大学先修物理知识地图',
+      description: '依据美国大学理事会最新课程与考试说明，完整整理四门大学先修物理课程的单元结构与全部必修知识点。',
+      courseSelector: '选择一门大学先修物理课程',
+      units: '个单元',
+      topics: '个知识点',
+      unit: '单元',
+      examWeight: '考试占比',
+      expandAll: '展开全部',
+      collapseAll: '收起全部',
+      officialSource: '官方课程说明',
+      sourceNote: '知识点名称、单元结构与考试占比均参考美国大学理事会官方课程与考试说明；中文名称由口袋宇宙翻译整理，仅供学习参考。',
     },
     about: {
       title: '关于口袋宇宙',

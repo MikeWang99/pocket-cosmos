@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../LanguageContext';
-import { Atom, Orbit, BookOpen, ClipboardCheck } from 'lucide-react';
+import { Atom, Orbit, BookOpen, ClipboardCheck, BookOpenCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface SidebarProps {
@@ -13,6 +13,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
 
   const navItems = [
     { id: 'physics', icon: Atom, label: t.nav.home },
+    { id: 'curriculum', icon: BookOpenCheck, label: t.nav.curriculum },
     { id: 'practice', icon: ClipboardCheck, label: t.nav.practice },
     { id: 'about', icon: Orbit, label: t.nav.about },
     { id: 'books', icon: BookOpen, label: t.nav.books },
