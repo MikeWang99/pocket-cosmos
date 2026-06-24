@@ -114,7 +114,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         emailRedirectTo: window.location.origin,
       },
     });
-    setAuthMessage(error ? error.message : 'Check your inbox for the login link.');
+    setAuthMessage(error ? error.message : 'AUTH_LINK_SENT');
   };
 
   const signOut = async () => {
@@ -142,9 +142,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const success = Boolean(data);
     if (success) {
       await refreshAdminStatus();
-      setAuthMessage('Admin access enabled.');
+      setAuthMessage('ADMIN_ACCESS_ENABLED');
     } else {
-      setAuthMessage('Invalid or expired admin code.');
+      setAuthMessage('ADMIN_CODE_INVALID');
     }
     return success;
   };
