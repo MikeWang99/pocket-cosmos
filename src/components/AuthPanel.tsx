@@ -98,8 +98,10 @@ export const AuthPanel: React.FC = () => {
 
         <button
           type="button"
+          disabled
           onClick={signInWithGoogle}
-          className="rounded-full border border-white/10 px-4 py-2 text-xs font-semibold text-slate-700 transition-colors hover:border-nebula/40 hover:text-nebula"
+          className="rounded-full border border-white/10 px-4 py-2 text-xs font-semibold text-slate-400 opacity-60"
+          title={t.auth.googleNote}
         >
           {t.auth.googleLogin}
         </button>
