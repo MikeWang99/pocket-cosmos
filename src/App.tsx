@@ -10,6 +10,7 @@ import { AboutSection } from './components/AboutSection';
 import { BooksSection } from './components/BooksSection';
 import { PracticeSection } from './components/PracticeSection';
 import { CurriculumSection } from './components/CurriculumSection';
+import { AdminSection } from './components/AdminSection';
 import { AnimatePresence } from 'motion/react';
 import { useLanguage } from './LanguageContext';
 
@@ -44,6 +45,7 @@ export default function App() {
               <button onClick={() => setActiveTab('physics')} className={`transition-colors ${activeTab === 'physics' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.home}</button>
               <button onClick={() => setActiveTab('curriculum')} className={`transition-colors ${activeTab === 'curriculum' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.curriculum}</button>
               <button onClick={() => setActiveTab('practice')} className={`transition-colors ${activeTab === 'practice' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.practice}</button>
+              <button onClick={() => setActiveTab('admin')} className={`transition-colors ${activeTab === 'admin' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.admin}</button>
               <button onClick={() => setActiveTab('about')} className={`transition-colors ${activeTab === 'about' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.about}</button>
               <button onClick={() => setActiveTab('books')} className={`transition-colors ${activeTab === 'books' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.books}</button>
             </div>
@@ -54,6 +56,7 @@ export default function App() {
               {activeTab === 'physics' && <PhysicsSection key="physics" />}
               {activeTab === 'curriculum' && <CurriculumSection key="curriculum" />}
               {activeTab === 'practice' && <PracticeSection key="practice" />}
+              {activeTab === 'admin' && <AdminSection key="admin" />}
               {activeTab === 'about' && <AboutSection key="about" />}
               {activeTab === 'books' && <BooksSection key="books" />}
             </AnimatePresence>
