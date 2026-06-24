@@ -4,7 +4,6 @@ import { motion } from 'motion/react';
 import { useAuth } from '../AuthContext';
 import { useLanguage } from '../LanguageContext';
 import { supabase, type PracticeSubmissionRow } from '../lib/supabase';
-import { AuthPanel } from './AuthPanel';
 
 const formatDateTime = (value: string) =>
   new Intl.DateTimeFormat(undefined, {
@@ -14,7 +13,11 @@ const formatDateTime = (value: string) =>
     minute: '2-digit',
   }).format(new Date(value));
 
-export const AdminSection: React.FC = () => {
+interface AdminSectionProps {
+  onAuthRequired: () => void;
+}
+
+export const AdminSection: React.FC<AdminSectionProps> = ({ onAuthRequired }) => {
   const { t } = useLanguage();
   const { authEnabled, user, isAdmin, redeemAdminCode, authMessage } = useAuth();
   const [adminCode, setAdminCode] = useState('');
@@ -85,6 +88,13 @@ export const AdminSection: React.FC = () => {
     if (success) setAdminCode('');
   };
 
+  const readableAuthMessage =
+    authMessage === 'ADMIN_ACCESS_ENABLED'
+      ? t.admin.accessEnabled
+      : authMessage === 'ADMIN_CODE_INVALID'
+        ? t.admin.invalidCode
+        : authMessage;
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -101,14 +111,24 @@ export const AdminSection: React.FC = () => {
         <p className="mt-4 max-w-2xl leading-relaxed text-slate-400">{t.admin.description}</p>
       </div>
 
-      <div className="mb-6">
-        <AuthPanel />
-      </div>
-
       {!authEnabled && (
         <div className="glass-panel rounded-lg p-6">
           <h2 className="text-xl font-serif text-white">{t.admin.setupRequiredTitle}</h2>
           <p className="mt-2 text-sm leading-relaxed text-slate-500">{t.admin.setupRequiredText}</p>
+        </div>
+      )}
+
+      {authEnabled && !user && (
+        <div className="glass-panel rounded-lg p-8">
+          <h2 className="text-2xl font-serif text-white">{t.admin.signInTitle}</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-500">{t.admin.signInText}</p>
+          <button
+            type="button"
+            onClick={onAuthRequired}
+            className="mt-6 inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-nebula"
+          >
+            {t.auth.signIn}
+          </button>
         </div>
       )}
 
@@ -133,7 +153,7 @@ export const AdminSection: React.FC = () => {
               {t.admin.redeemCode}
             </button>
           </form>
-          {authMessage && <div className="mt-3 text-xs text-slate-500">{authMessage}</div>}
+          {readableAuthMessage && <div className="mt-3 text-xs text-slate-500">{readableAuthMessage}</div>}
         </div>
       )}
 

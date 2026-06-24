@@ -11,11 +11,14 @@ import { BooksSection } from './components/BooksSection';
 import { PracticeSection } from './components/PracticeSection';
 import { CurriculumSection } from './components/CurriculumSection';
 import { AdminSection } from './components/AdminSection';
+import { AuthModal } from './components/AuthModal';
+import { AuthStatusButton } from './components/AuthStatusButton';
 import { AnimatePresence } from 'motion/react';
 import { useLanguage } from './LanguageContext';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('physics');
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   const { t, language } = useLanguage();
 
   return (
@@ -41,13 +44,16 @@ export default function App() {
               </div>
             </div>
             
-            <div className="hidden md:flex gap-6 text-xs font-semibold tracking-widest uppercase pb-1">
-              <button onClick={() => setActiveTab('physics')} className={`transition-colors ${activeTab === 'physics' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.home}</button>
-              <button onClick={() => setActiveTab('curriculum')} className={`transition-colors ${activeTab === 'curriculum' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.curriculum}</button>
-              <button onClick={() => setActiveTab('practice')} className={`transition-colors ${activeTab === 'practice' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.practice}</button>
-              <button onClick={() => setActiveTab('admin')} className={`transition-colors ${activeTab === 'admin' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.admin}</button>
-              <button onClick={() => setActiveTab('about')} className={`transition-colors ${activeTab === 'about' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.about}</button>
-              <button onClick={() => setActiveTab('books')} className={`transition-colors ${activeTab === 'books' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.books}</button>
+            <div className="flex flex-col items-start gap-4 md:items-end">
+              <AuthStatusButton onSignIn={() => setAuthModalOpen(true)} />
+              <div className="hidden md:flex gap-6 text-xs font-semibold tracking-widest uppercase pb-1">
+                <button onClick={() => setActiveTab('physics')} className={`transition-colors ${activeTab === 'physics' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.home}</button>
+                <button onClick={() => setActiveTab('curriculum')} className={`transition-colors ${activeTab === 'curriculum' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.curriculum}</button>
+                <button onClick={() => setActiveTab('practice')} className={`transition-colors ${activeTab === 'practice' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.practice}</button>
+                <button onClick={() => setActiveTab('admin')} className={`transition-colors ${activeTab === 'admin' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.admin}</button>
+                <button onClick={() => setActiveTab('about')} className={`transition-colors ${activeTab === 'about' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.about}</button>
+                <button onClick={() => setActiveTab('books')} className={`transition-colors ${activeTab === 'books' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.books}</button>
+              </div>
             </div>
           </header>
 
@@ -55,8 +61,8 @@ export default function App() {
             <AnimatePresence mode="wait">
               {activeTab === 'physics' && <PhysicsSection key="physics" />}
               {activeTab === 'curriculum' && <CurriculumSection key="curriculum" />}
-              {activeTab === 'practice' && <PracticeSection key="practice" />}
-              {activeTab === 'admin' && <AdminSection key="admin" />}
+              {activeTab === 'practice' && <PracticeSection key="practice" onAuthRequired={() => setAuthModalOpen(true)} />}
+              {activeTab === 'admin' && <AdminSection key="admin" onAuthRequired={() => setAuthModalOpen(true)} />}
               {activeTab === 'about' && <AboutSection key="about" />}
               {activeTab === 'books' && <BooksSection key="books" />}
             </AnimatePresence>
@@ -68,6 +74,7 @@ export default function App() {
           </footer>
         </div>
       </main>
+      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
     </div>
   );
 }

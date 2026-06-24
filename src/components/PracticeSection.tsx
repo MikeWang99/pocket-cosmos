@@ -19,7 +19,6 @@ import { evaluateLocally } from '../utils/rubricScoring';
 import { useLanguage } from '../LanguageContext';
 import { useAuth } from '../AuthContext';
 import { authEnabled, supabase } from '../lib/supabase';
-import { AuthPanel } from './AuthPanel';
 
 type SpeechRecognitionConstructor = new () => SpeechRecognition;
 
@@ -208,7 +207,11 @@ const KnowledgeTags: React.FC<{ tags?: string[]; label: string }> = ({ tags, lab
   );
 };
 
-export const PracticeSection: React.FC = () => {
+interface PracticeSectionProps {
+  onAuthRequired: () => void;
+}
+
+export const PracticeSection: React.FC<PracticeSectionProps> = ({ onAuthRequired }) => {
   const { t } = useLanguage();
   const { user, profile } = useAuth();
   const [activeSetId, setActiveSetId] = useState('kinematics-multiple-choice');
@@ -304,6 +307,12 @@ export const PracticeSection: React.FC = () => {
   };
 
   const submitAnswer = async () => {
+    if (authEnabled && !user) {
+      setSyncStatus('login_required');
+      onAuthRequired();
+      return;
+    }
+
     if (isMultipleChoiceStep(activeStep)) {
       if (!currentAnswer) return;
 
@@ -454,10 +463,6 @@ export const PracticeSection: React.FC = () => {
             <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.practice.reset}</div>
           </button>
         </div>
-      </div>
-
-      <div className="mb-6">
-        <AuthPanel />
       </div>
 
       <div className="grid lg:grid-cols-[260px_minmax(0,1fr)] gap-6">
@@ -644,13 +649,18 @@ export const PracticeSection: React.FC = () => {
                     onClick={submitAnswer}
                     disabled={
                       (isActiveMultipleChoice ? !currentAnswer || Boolean(currentResult) : currentAnswer.trim().length < 8) ||
-                      (authEnabled && !user) ||
                       syncStatus === 'saving'
                     }
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold uppercase tracking-widest text-black transition-colors hover:bg-nebula hover:text-white disabled:opacity-30"
                   >
                     <Sparkles className="w-4 h-4" />
-                    {syncStatus === 'saving' ? t.practice.saving : isActiveMultipleChoice ? t.practice.checkAnswer : t.practice.scoreResponse}
+                    {syncStatus === 'saving'
+                      ? t.practice.saving
+                      : authEnabled && !user
+                        ? t.practice.signInToSubmit
+                        : isActiveMultipleChoice
+                          ? t.practice.checkAnswer
+                          : t.practice.scoreResponse}
                   </button>
                 </div>
                 {syncStatus !== 'idle' && (
