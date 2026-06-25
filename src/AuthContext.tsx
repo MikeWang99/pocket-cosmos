@@ -9,7 +9,6 @@ interface AuthContextType {
   isAdmin: boolean;
   loading: boolean;
   authMessage: string | null;
-  signInWithGoogle: () => Promise<void>;
   signInWithEmail: (email: string) => Promise<void>;
   signOut: () => Promise<void>;
   redeemAdminCode: (code: string) => Promise<boolean>;
@@ -93,18 +92,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
   }, []);
 
-  const signInWithGoogle = async () => {
-    if (!supabase) return;
-    setAuthMessage(null);
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: window.location.origin,
-      },
-    });
-    if (error) setAuthMessage(error.message);
-  };
-
   const signInWithEmail = async (email: string) => {
     if (!supabase) return;
     setAuthMessage(null);
@@ -157,7 +144,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       isAdmin,
       loading,
       authMessage,
-      signInWithGoogle,
       signInWithEmail,
       signOut,
       redeemAdminCode,

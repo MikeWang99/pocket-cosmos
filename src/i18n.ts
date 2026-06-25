@@ -178,11 +178,6 @@ export const i18n = {
       emailLogin: 'Email login link',
       sendingLink: 'Sending link...',
       linkSent: 'Check your inbox for the login link.',
-      googleLogin: 'Google',
-      googleNote: 'Google login requires Google OAuth credentials in Supabase Auth.',
-      wechatLogin: 'WeChat',
-      wechatNote: 'WeChat login requires a configured WeChat Open Platform or official account app.',
-      providerNote: 'Email login is currently enabled. Google and WeChat will be added after their OAuth applications are configured.',
     },
     admin: {
       eyebrow: 'Instructor Console',
@@ -394,11 +389,6 @@ export const i18n = {
       emailLogin: '邮箱登录链接',
       sendingLink: '正在发送链接……',
       linkSent: '登录链接已发送，请检查你的邮箱。',
-      googleLogin: '谷歌登录',
-      googleNote: '谷歌登录需要先在 Supabase Auth 中配置 Google OAuth。',
-      wechatLogin: '微信扫码',
-      wechatNote: '微信登录需要先配置微信开放平台或公众号应用。',
-      providerNote: '当前已启用邮箱登录。谷歌和微信会在对应 OAuth 应用配置完成后再开放。',
     },
     admin: {
       eyebrow: '教师控制台',
