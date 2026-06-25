@@ -99,7 +99,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               </form>
             )}
 
-            <p className="mt-4 text-xs leading-relaxed text-slate-500">{t.auth.providerNote}</p>
             {readableMessage && <div className="mt-4 rounded-lg bg-slate-50 p-3 text-xs leading-relaxed text-slate-500">{readableMessage}</div>}
           </motion.div>
         </motion.div>
