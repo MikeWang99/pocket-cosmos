@@ -17,8 +17,6 @@ import { practiceSets } from '../data/practiceSets';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
 import { evaluateLocally } from '../utils/rubricScoring';
 import { useLanguage } from '../LanguageContext';
-import { useAuth } from '../AuthContext';
-import { authEnabled, supabase } from '../lib/supabase';
 
 type SpeechRecognitionConstructor = new () => SpeechRecognition;
 
@@ -207,19 +205,12 @@ const KnowledgeTags: React.FC<{ tags?: string[]; label: string }> = ({ tags, lab
   );
 };
 
-interface PracticeSectionProps {
-  onAuthRequired: () => void;
-}
-
-export const PracticeSection: React.FC<PracticeSectionProps> = ({ onAuthRequired }) => {
+export const PracticeSection: React.FC = () => {
   const { t } = useLanguage();
-  const { user, profile } = useAuth();
   const [activeSetId, setActiveSetId] = useState('kinematics-multiple-choice');
   const [activeIndex, setActiveIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [results, setResults] = useState<Record<string, EvaluationResult>>({});
-  const [syncStatus, setSyncStatus] = useState<'idle' | 'saving' | 'saved' | 'error' | 'login_required'>('idle');
-  const [syncError, setSyncError] = useState<string | null>(null);
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
@@ -265,54 +256,7 @@ export const PracticeSection: React.FC<PracticeSectionProps> = ({ onAuthRequired
     setAnswers((previous) => ({ ...previous, [activeStep.id]: value }));
   };
 
-  const persistSubmission = async (step: PracticeStep, answer: string, result: EvaluationResult) => {
-    if (!authEnabled) return;
-
-    if (!supabase || !user) {
-      setSyncStatus('login_required');
-      return;
-    }
-
-    setSyncStatus('saving');
-    setSyncError(null);
-    const { error } = await supabase.from('practice_submissions').insert({
-      student_id: user.id,
-      student_email: user.email ?? null,
-      display_name: profile?.display_name ?? user.email ?? null,
-      practice_set_id: activeSet.id,
-      practice_set_title: getSetCopy(activeSet.id).title,
-      question_id: step.id,
-      question_title: step.title,
-      answer,
-      score: result.score,
-      max_score: result.maxScore,
-      is_correct: result.score === result.maxScore,
-      tags: step.tags ?? [],
-      result: {
-        score: result.score,
-        maxScore: result.maxScore,
-        hits: result.hits.map((hit) => ({ id: hit.id, label: hit.label })),
-        misses: result.misses.map((miss) => ({ id: miss.id, label: miss.label })),
-        suggestions: result.suggestions,
-      },
-    });
-
-    if (error) {
-      setSyncStatus('error');
-      setSyncError(error.message);
-      return;
-    }
-
-    setSyncStatus('saved');
-  };
-
-  const submitAnswer = async () => {
-    if (authEnabled && !user) {
-      setSyncStatus('login_required');
-      onAuthRequired();
-      return;
-    }
-
+  const submitAnswer = () => {
     if (isMultipleChoiceStep(activeStep)) {
       if (!currentAnswer) return;
 
@@ -343,13 +287,11 @@ export const PracticeSection: React.FC<PracticeSectionProps> = ({ onAuthRequired
       };
 
       setResults((previous) => ({ ...previous, [activeStep.id]: result }));
-      await persistSubmission(activeStep, currentAnswer, result);
       return;
     }
 
     const result = evaluateLocally(activeStep, currentAnswer);
     setResults((previous) => ({ ...previous, [activeStep.id]: result }));
-    await persistSubmission(activeStep, currentAnswer, result);
   };
 
   const goToStep = (index: number) => {
@@ -365,8 +307,6 @@ export const PracticeSection: React.FC<PracticeSectionProps> = ({ onAuthRequired
     setActiveSetId(setId);
     setAnswers({});
     setResults({});
-    setSyncStatus('idle');
-    setSyncError(null);
     setActiveIndex(0);
   };
 
@@ -375,8 +315,6 @@ export const PracticeSection: React.FC<PracticeSectionProps> = ({ onAuthRequired
     setIsListening(false);
     setAnswers({});
     setResults({});
-    setSyncStatus('idle');
-    setSyncError(null);
     setActiveIndex(0);
   };
 
@@ -645,34 +583,19 @@ export const PracticeSection: React.FC<PracticeSectionProps> = ({ onAuthRequired
                     </button>
                   </div>
 
-                  <button
-                    onClick={submitAnswer}
-                    disabled={
-                      (isActiveMultipleChoice ? !currentAnswer || Boolean(currentResult) : currentAnswer.trim().length < 8) ||
-                      syncStatus === 'saving'
+                    <button
+                      onClick={submitAnswer}
+                      disabled={
+                      isActiveMultipleChoice ? !currentAnswer || Boolean(currentResult) : currentAnswer.trim().length < 8
                     }
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold uppercase tracking-widest text-black transition-colors hover:bg-nebula hover:text-white disabled:opacity-30"
-                  >
-                    <Sparkles className="w-4 h-4" />
-                    {syncStatus === 'saving'
-                      ? t.practice.saving
-                      : authEnabled && !user
-                        ? t.practice.signInToSubmit
-                        : isActiveMultipleChoice
-                          ? t.practice.checkAnswer
-                          : t.practice.scoreResponse}
-                  </button>
-                </div>
-                {syncStatus !== 'idle' && (
-                  <div className="mt-4 rounded-lg border border-white/10 bg-white/[0.04] p-3 text-xs text-slate-500">
-                    {syncStatus === 'login_required' && t.practice.loginRequired}
-                    {syncStatus === 'saved' && t.practice.saved}
-                    {syncStatus === 'error' && `${t.practice.saveFailed}${syncError ? `: ${syncError}` : ''}`}
-                    {syncStatus === 'saving' && t.practice.saving}
+                      className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold uppercase tracking-widest text-black transition-colors hover:bg-nebula hover:text-white disabled:opacity-30"
+                    >
+                      <Sparkles className="w-4 h-4" />
+                    {isActiveMultipleChoice ? t.practice.checkAnswer : t.practice.scoreResponse}
+                    </button>
                   </div>
-                )}
-              </div>
-            </motion.div>
+                </div>
+              </motion.div>
           </AnimatePresence>
 
           {currentResult && (
