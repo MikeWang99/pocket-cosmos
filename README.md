@@ -1,20 +1,24 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Pocket Cosmos
 
-# Run and deploy your AI Studio app
+Pocket Cosmos is a bilingual physics learning site, now structured as a Next.js overseas product stack.
 
-This contains everything you need to run your app locally.
+## Stack
 
-View your app in AI Studio: https://ai.studio/apps/14fe410a-92ff-4a02-8059-ca52bbf65bc6
+- Next.js App Router
+- React
+- Tailwind CSS
+- Vercel-ready server routes
+- Supabase-ready auth/data architecture
 
-## Run Locally
+## Local Development
 
-**Prerequisites:**  Node.js
+```bash
+pnpm install
+pnpm run dev
+```
 
+Open `http://localhost:3000`.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Backend Direction
+
+Reserved API routes live under `app/api`. See `docs/overseas-architecture.md` for the overseas-first product plan.
