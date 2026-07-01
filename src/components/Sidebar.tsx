@@ -26,9 +26,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
           {t.site.established}
         </div>
         <img
-          src="/assets/poco-logo-transparent.png"
+          src="/assets/poco-mark.svg"
           alt={t.site.logoAlt}
-          className="w-11 h-11 object-contain"
+          className="h-[52px] w-[52px] object-contain"
         />
       </div>
 

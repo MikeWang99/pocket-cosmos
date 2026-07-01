@@ -30,9 +30,9 @@ export default function App() {
           <header className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-white/10 pb-6 mb-12 gap-8">
             <div className="flex items-center gap-4">
               <img
-                src="/assets/poco-logo-transparent.png"
+                src="/assets/poco-mark.svg"
                 alt={t.site.logoAlt}
-                className="h-14 w-14 object-contain"
+                className="h-16 w-16 md:h-[72px] md:w-[72px] object-contain"
               />
               <div className="flex flex-col">
                 <h1 className="text-4xl md:text-5xl font-serif font-light tracking-tight">{t.site.title}</h1>

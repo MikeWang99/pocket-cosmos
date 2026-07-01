@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Pocket Cosmos mark</title>
+  <desc id="desc">A bold circular mark containing an infinity symbol.</desc>
+  <g fill="none" stroke="#155E75" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="256" cy="256" r="212" stroke-width="40" />
+    <path
+      d="M124 256C124 176 216 176 256 256C296 336 388 336 388 256C388 176 296 176 256 256C216 336 124 336 124 256Z"
+      stroke-width="44"
+    />
+  </g>
+</svg>
