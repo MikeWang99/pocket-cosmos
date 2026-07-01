@@ -7,8 +7,11 @@ export const metadata: Metadata = {
   title: 'Pocket Cosmos | 口袋宇宙',
   description: 'Bilingual physics learning, AP Physics practice, and first-principles teaching from Pocket Cosmos.',
   icons: {
-    icon: '/assets/poco-favicon.png',
-    apple: '/assets/poco-logo-transparent.png',
+    icon: [
+      { url: '/assets/poco-mark.svg', type: 'image/svg+xml' },
+      { url: '/assets/poco-favicon.png', sizes: '64x64', type: 'image/png' },
+    ],
+    apple: '/assets/poco-apple-touch-icon.png',
   },
 };
 
