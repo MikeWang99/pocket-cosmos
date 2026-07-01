@@ -18,6 +18,14 @@ export const i18n = {
       established: 'Pocket Cosmos',
       logoAlt: 'Pocket Cosmos logo',
     },
+    auth: {
+      loading: 'Checking session',
+      previewConfig: 'Preview auth needs setup',
+      previewConfigTitle: 'Set Supabase Preview environment variables before testing login.',
+      signInWithGoogle: 'Sign in with Google',
+      signedIn: 'Signed in',
+      signOut: 'Sign out',
+    },
     hero: {
       title: 'Pocket Cosmos',
       subtitle: 'Unveiling the universe, one principle at a time.',
@@ -127,6 +135,12 @@ export const i18n = {
       speechUnavailable: 'Speech input is not available in this browser',
       previous: 'Previous question',
       next: 'Next question',
+      progressLoginPrompt: 'Sign in with Google to keep correct and wrong answers for next time.',
+      progressSaved: 'Signed in. Practice results save automatically.',
+      progressRestoring: 'Restoring saved practice results.',
+      progressSyncing: 'Saving practice result.',
+      progressError: 'Practice progress is not syncing yet.',
+      progressPreviewConfig: 'Preview login is waiting for Supabase settings.',
       sets: {
         calculusForPhysics: {
           label: 'Calculus for Physics',
@@ -171,6 +185,14 @@ export const i18n = {
       footerLocation: '物理学习品牌',
       established: '口袋宇宙',
       logoAlt: '口袋宇宙标志',
+    },
+    auth: {
+      loading: '正在检查登录状态',
+      previewConfig: '预览登录待配置',
+      previewConfigTitle: '需要先在 Vercel Preview 配好 Supabase 环境变量。',
+      signInWithGoogle: '使用 Google 登录',
+      signedIn: '已登录',
+      signOut: '退出',
     },
     hero: {
       title: '口袋宇宙',
@@ -281,6 +303,12 @@ export const i18n = {
       speechUnavailable: '当前浏览器不支持语音输入',
       previous: '上一题',
       next: '下一题',
+      progressLoginPrompt: '使用 Google 登录后，会自动记住每道题的对错记录。',
+      progressSaved: '已登录，做题结果会自动保存。',
+      progressRestoring: '正在恢复之前的做题记录。',
+      progressSyncing: '正在保存做题结果。',
+      progressError: '做题记录暂时没有同步成功。',
+      progressPreviewConfig: '预览登录还在等待 Supabase 配置。',
       sets: {
         calculusForPhysics: {
           label: '物理中的微积分',

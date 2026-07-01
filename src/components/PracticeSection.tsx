@@ -5,7 +5,10 @@ import {
   ArrowLeft,
   ArrowRight,
   CheckCircle2,
+  CircleX,
   ClipboardCheck,
+  Cloud,
+  CloudOff,
   FileText,
   Mic,
   RotateCcw,
@@ -17,6 +20,8 @@ import { practiceSets } from '../data/practiceSets';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
 import { evaluateLocally } from '../utils/rubricScoring';
 import { useLanguage } from '../LanguageContext';
+import { useAuth } from '../auth/AuthContext';
+import { usePracticeProgress } from '../hooks/usePracticeProgress';
 
 type SpeechRecognitionConstructor = new () => SpeechRecognition;
 
@@ -207,12 +212,14 @@ const KnowledgeTags: React.FC<{ tags?: string[]; label: string }> = ({ tags, lab
 
 export const PracticeSection: React.FC = () => {
   const { t } = useLanguage();
+  const { authEnabled, configured, user } = useAuth();
   const [activeSetId, setActiveSetId] = useState('kinematics-multiple-choice');
   const [activeIndex, setActiveIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [results, setResults] = useState<Record<string, EvaluationResult>>({});
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const { savedAttempts, saveAttempt, syncError, syncState } = usePracticeProgress(activeSetId);
 
   const activeSet = practiceSets.find((set) => set.id === activeSetId) ?? practiceSets[0];
   const practiceSetMeta = activeSet;
@@ -252,8 +259,58 @@ export const PracticeSection: React.FC = () => {
     return () => recognitionRef.current?.stop();
   }, []);
 
+  useEffect(() => {
+    const attempts = Object.values(savedAttempts);
+    if (!attempts.length) return;
+
+    setAnswers((previous) => {
+      let changed = false;
+      const next = { ...previous };
+
+      attempts.forEach((attempt) => {
+        if (!next[attempt.questionId] && attempt.answer) {
+          next[attempt.questionId] = attempt.answer;
+          changed = true;
+        }
+      });
+
+      return changed ? next : previous;
+    });
+
+    setResults((previous) => {
+      let changed = false;
+      const next = { ...previous };
+
+      attempts.forEach((attempt) => {
+        if (!next[attempt.questionId]) {
+          next[attempt.questionId] = attempt.result;
+          changed = true;
+        }
+      });
+
+      return changed ? next : previous;
+    });
+  }, [savedAttempts]);
+
   const updateAnswer = (value: string) => {
     setAnswers((previous) => ({ ...previous, [activeStep.id]: value }));
+  };
+
+  const recordResult = (result: EvaluationResult, answer: string) => {
+    setResults((previous) => ({ ...previous, [activeStep.id]: result }));
+
+    void saveAttempt({
+      practiceSetId: activeSet.id,
+      practiceSetTitle: setCopy.title,
+      questionId: activeStep.id,
+      questionTitle: activeStep.title,
+      answer,
+      score: result.score,
+      maxScore: result.maxScore,
+      isCorrect: result.maxScore > 0 && result.score >= result.maxScore,
+      tags: activeStep.tags ?? [],
+      result,
+    });
   };
 
   const submitAnswer = () => {
@@ -286,12 +343,12 @@ export const PracticeSection: React.FC = () => {
         suggestions: isCorrect ? [] : [activeStep.solution || activeStep.answerNudge],
       };
 
-      setResults((previous) => ({ ...previous, [activeStep.id]: result }));
+      recordResult(result, currentAnswer);
       return;
     }
 
     const result = evaluateLocally(activeStep, currentAnswer);
-    setResults((previous) => ({ ...previous, [activeStep.id]: result }));
+    recordResult(result, currentAnswer);
   };
 
   const goToStep = (index: number) => {
@@ -363,6 +420,33 @@ export const PracticeSection: React.FC = () => {
           <p className="text-slate-400 mt-4 max-w-2xl leading-relaxed">
             {setCopy.description}
           </p>
+          {authEnabled && (
+            <div
+              className={`mt-4 inline-flex max-w-full items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold ${
+                syncState === 'error'
+                  ? 'border-rose-500/25 bg-rose-500/10 text-rose-700'
+                  : user
+                    ? 'border-emerald-500/25 bg-emerald-500/10 text-emerald-700'
+                    : 'border-white/10 bg-white/[0.04] text-slate-500'
+              }`}
+              title={syncError ?? undefined}
+            >
+              {syncState === 'error' || !configured ? <CloudOff className="h-4 w-4 shrink-0" /> : <Cloud className="h-4 w-4 shrink-0" />}
+              <span>
+                {!configured
+                  ? t.practice.progressPreviewConfig
+                  : syncState === 'loading'
+                    ? t.practice.progressRestoring
+                    : syncState === 'syncing'
+                      ? t.practice.progressSyncing
+                      : syncState === 'error'
+                        ? t.practice.progressError
+                        : user
+                          ? t.practice.progressSaved
+                          : t.practice.progressLoginPrompt}
+              </span>
+            </div>
+          )}
           <div className="mt-5 flex flex-wrap gap-2">
             {practiceSets.map((set) => {
               const isActive = set.id === activeSetId;
@@ -422,7 +506,13 @@ export const PracticeSection: React.FC = () => {
                 >
                   <div className="flex items-center justify-between gap-3">
                     <span className="text-xs font-semibold">{step.title}</span>
-                    {result && <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />}
+                    {result && (
+                      result.score >= result.maxScore ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                      ) : (
+                        <CircleX className="w-4 h-4 text-rose-500 shrink-0" />
+                      )
+                    )}
                   </div>
                   <div className="text-[10px] mt-1 opacity-60">{result ? `${result.score}/${result.maxScore} ${t.practice.points}` : `${step.maxScore} ${t.practice.points}`}</div>
                 </button>
