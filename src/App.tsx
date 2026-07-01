@@ -12,6 +12,7 @@ import { AboutSection } from './components/AboutSection';
 import { BooksSection } from './components/BooksSection';
 import { PracticeSection } from './components/PracticeSection';
 import { CurriculumSection } from './components/CurriculumSection';
+import { AuthStatusButton } from './components/AuthStatusButton';
 import { AnimatePresence } from 'motion/react';
 import { useLanguage } from './LanguageContext';
 
@@ -50,6 +51,7 @@ export default function App() {
                 <button onClick={() => setActiveTab('about')} className={`transition-colors ${activeTab === 'about' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.about}</button>
                 <button onClick={() => setActiveTab('books')} className={`transition-colors ${activeTab === 'books' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.books}</button>
               </div>
+              <AuthStatusButton />
             </div>
           </header>
 
