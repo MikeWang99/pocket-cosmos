@@ -2,6 +2,7 @@ import { calculusForPhysicsMeta, calculusForPhysicsSteps } from './calculusForPh
 import { dynamicsMultipleChoiceMeta, dynamicsMultipleChoiceSteps } from './dynamicsMultipleChoice';
 import { practiceSetMeta as frq2025Meta, practiceSteps as frq2025Steps } from './frq2025Mechanics';
 import { kinematicsMultipleChoiceMeta, kinematicsMultipleChoiceSteps } from './kinematicsMultipleChoice';
+import { workEnergyMultipleChoiceMeta, workEnergyMultipleChoiceSteps } from './workEnergyMultipleChoice';
 import type { PracticeStep } from '../types/practice';
 
 export interface PracticeSet {
@@ -45,5 +46,11 @@ export const practiceSets: PracticeSet[] = [
     label: 'Dynamics',
     ...dynamicsMultipleChoiceMeta,
     steps: dynamicsMultipleChoiceSteps,
+  },
+  {
+    id: 'work-energy-multiple-choice',
+    label: 'Work & Energy',
+    ...workEnergyMultipleChoiceMeta,
+    steps: workEnergyMultipleChoiceSteps,
   },
 ];

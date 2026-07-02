@@ -213,6 +213,12 @@ export const i18n = {
           eyebrow: 'AP Physics C Mechanics',
           description: 'Build Newton’s-law fluency across linear dynamics, friction, connected systems, drag, and circular motion with original multiple-choice modeling questions.',
         },
+        workEnergyMultipleChoice: {
+          label: 'Work & Energy',
+          title: 'AP Physics C: Work and Energy Multiple Choice',
+          eyebrow: 'AP Physics C Mechanics',
+          description: 'Practice work, energy conservation, potential energy curves, variable-force integrals, friction energy loss, and power with the full Work and Energy multiple-choice set.',
+        },
       },
     }
   },
@@ -427,6 +433,12 @@ export const i18n = {
           title: 'AP Physics C：动力学选择题',
           eyebrow: '大学先修物理力学',
           description: '用原创选择题练习牛顿定律、摩擦、连接体、阻力与圆周运动，训练 Mechanics C 所需的动力学建模能力。',
+        },
+        workEnergyMultipleChoice: {
+          label: '功和能',
+          title: 'AP Physics C：功和能选择题',
+          eyebrow: '大学先修物理力学',
+          description: '完整练习功、能量守恒、势能图像、变力积分、摩擦能量损失与功率相关选择题。',
         },
       },
     }
