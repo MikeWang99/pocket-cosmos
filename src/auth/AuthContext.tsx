@@ -24,6 +24,7 @@ interface AuthContextValue {
   sendPasswordReset: (email: string) => Promise<AuthActionResult>;
   setPassword: (password: string) => Promise<AuthActionResult>;
   signInWithEmailPassword: (email: string, password: string) => Promise<AuthActionResult>;
+  signUpWithEmailPassword: (email: string, password: string) => Promise<AuthActionResult>;
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
   verifyEmailCode: (email: string, token: string) => Promise<AuthActionResult>;
@@ -141,6 +142,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setPasswordSetupRequired(false);
       clearPasswordSetupPending();
       return authSuccess('AUTH_SIGNED_IN');
+    },
+    [supabase],
+  );
+
+  const signUpWithEmailPassword = useCallback(
+    async (email: string, password: string) => {
+      if (!supabase) {
+        setMessage('AUTH_NOT_CONFIGURED');
+        return authError({ message: 'AUTH_NOT_CONFIGURED' });
+      }
+
+      setMessage(null);
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+        },
+      });
+
+      if (error) {
+        setMessage(error.message);
+        return authError(error);
+      }
+
+      return authSuccess('AUTH_SIGNUP_SUCCESS');
     },
     [supabase],
   );
@@ -298,6 +325,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       sendPasswordReset,
       setPassword,
       signInWithEmailPassword,
+      signUpWithEmailPassword,
       signInWithGoogle,
       signOut,
       verifyEmailCode,
@@ -314,6 +342,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       session,
       setPassword,
       signInWithEmailPassword,
+      signUpWithEmailPassword,
       signInWithGoogle,
       signOut,
       verifyEmailCode,
