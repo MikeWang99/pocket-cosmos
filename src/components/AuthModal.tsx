@@ -152,13 +152,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          onClick={() => closeModal()}
         >
-          <button
-            type="button"
-            aria-label={t.auth.close}
-            className="absolute inset-0 h-full w-full cursor-default"
-            onClick={() => closeModal()}
-          />
           <motion.div
             role="dialog"
             aria-modal="true"
@@ -168,6 +163,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
+            onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
             <div className="border-b border-gray-200 px-6 pb-4 pt-6">
