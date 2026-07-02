@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { LogIn, LogOut, ShieldAlert, UserCircle2 } from 'lucide-react';
 import { useAuth } from '../auth/AuthContext';
 import { useLanguage } from '../LanguageContext';
 import { AuthModal } from './AuthModal';
 
-export const AuthStatusButton: React.FC = () => {
+export const AuthStatusButton: FC = () => {
   const { t } = useLanguage();
   const { authEnabled, configured, loading, passwordRecovery, passwordSetupRequired, user, signOut } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);

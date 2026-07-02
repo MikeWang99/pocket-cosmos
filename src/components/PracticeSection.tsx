@@ -21,7 +21,7 @@ import type { EvaluationResult, PracticeStep } from '../types/practice';
 import { evaluateLocally } from '../utils/rubricScoring';
 import { useLanguage } from '../LanguageContext';
 import { useAuth } from '../auth/AuthContext';
-import { usePracticeProgress } from '../hooks/usePracticeProgress';
+import { usePracticeProgress, type SavedPracticeAttempt } from '../hooks/usePracticeProgress';
 
 type SpeechRecognitionConstructor = new () => SpeechRecognition;
 
@@ -227,6 +227,7 @@ export const PracticeSection: React.FC = () => {
     if (setId === 'calculus-for-physics') return t.practice.sets.calculusForPhysics;
     if (setId === 'frq-2025-mechanics') return t.practice.sets.frq2025;
     if (setId === 'dynamics-multiple-choice') return t.practice.sets.dynamicsMultipleChoice;
+    if (setId === 'work-energy-multiple-choice') return t.practice.sets.workEnergyMultipleChoice;
     return t.practice.sets.kinematicsMultipleChoice;
   };
   const setCopy = getSetCopy(activeSet.id);
@@ -260,7 +261,7 @@ export const PracticeSection: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const attempts = Object.values(savedAttempts);
+    const attempts = Object.values(savedAttempts) as SavedPracticeAttempt[];
     if (!attempts.length) return;
 
     setAnswers((previous) => {
