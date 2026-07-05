@@ -5,26 +5,35 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { PhysicsSection } from './components/PhysicsSection';
 import { AboutSection } from './components/AboutSection';
 import { BooksSection } from './components/BooksSection';
 import { PracticeSection } from './components/PracticeSection';
 import { CurriculumSection } from './components/CurriculumSection';
+import { AdminSection } from './components/AdminSection';
 import { AuthStatusButton } from './components/AuthStatusButton';
 import { AnimatePresence } from 'motion/react';
 import { useLanguage } from './LanguageContext';
+import { useAuth } from './auth/AuthContext';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('physics');
   const { t, language } = useLanguage();
+  const { isAdmin } = useAuth();
+
+  useEffect(() => {
+    if (!isAdmin && activeTab === 'admin') {
+      setActiveTab('practice');
+    }
+  }, [activeTab, isAdmin]);
 
   return (
     <div className="min-h-screen bg-space-950 font-sans text-starlight antialiased selection:bg-quantum/20 flex">
       <div className="fixed inset-0 bg-grid-pattern opacity-60 pointer-events-none"></div>
       
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} showAdmin={isAdmin} />
       
       <main className="flex-1 ml-20 flex flex-col min-h-screen relative z-10">
         <div className="flex-1 p-8 md:p-12 lg:p-16 max-w-7xl mx-auto w-full flex flex-col">
@@ -48,6 +57,9 @@ export default function App() {
                 <button onClick={() => setActiveTab('physics')} className={`transition-colors ${activeTab === 'physics' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.home}</button>
                 <button onClick={() => setActiveTab('curriculum')} className={`transition-colors ${activeTab === 'curriculum' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.curriculum}</button>
                 <button onClick={() => setActiveTab('practice')} className={`transition-colors ${activeTab === 'practice' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.practice}</button>
+                {isAdmin && (
+                  <button onClick={() => setActiveTab('admin')} className={`transition-colors ${activeTab === 'admin' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.admin}</button>
+                )}
                 <button onClick={() => setActiveTab('about')} className={`transition-colors ${activeTab === 'about' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.about}</button>
                 <button onClick={() => setActiveTab('books')} className={`transition-colors ${activeTab === 'books' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.books}</button>
               </div>
@@ -60,6 +72,7 @@ export default function App() {
               {activeTab === 'physics' && <PhysicsSection key="physics" />}
               {activeTab === 'curriculum' && <CurriculumSection key="curriculum" />}
               {activeTab === 'practice' && <PracticeSection key="practice" />}
+              {activeTab === 'admin' && isAdmin && <AdminSection key="admin" />}
               {activeTab === 'about' && <AboutSection key="about" />}
               {activeTab === 'books' && <BooksSection key="books" />}
             </AnimatePresence>
