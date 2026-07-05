@@ -32,7 +32,7 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 const PASSWORD_SETUP_STORAGE_KEY = 'pocket-cosmos-email-password-setup';
-const ADMIN_EMAILS = new Set(['mac.wong.de@gmail.com']);
+const ADMIN_EMAILS = new Set(['mike.wang.de@gmail.com']);
 
 const authError = (error: { message?: string } | null | undefined): AuthActionResult => ({
   ok: false,
