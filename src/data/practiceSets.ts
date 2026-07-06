@@ -2,11 +2,13 @@ import { calculusForPhysicsMeta, calculusForPhysicsSteps } from './calculusForPh
 import { dynamicsMultipleChoiceMeta, dynamicsMultipleChoiceSteps } from './dynamicsMultipleChoice';
 import { practiceSetMeta as frq2025Meta, practiceSteps as frq2025Steps } from './frq2025Mechanics';
 import { kinematicsMultipleChoiceMeta, kinematicsMultipleChoiceSteps } from './kinematicsMultipleChoice';
+import { physicsBowlEmMeta, physicsBowlEmSteps } from './physicsBowlEmQuestionBank';
 import { workEnergyMultipleChoiceMeta, workEnergyMultipleChoiceSteps } from './workEnergyMultipleChoice';
 import type { PracticeStep } from '../types/practice';
 
 export interface PracticeSet {
   id: string;
+  category: 'mechanics' | 'electromagnetism';
   label: string;
   title: string;
   subtitle: string;
@@ -22,12 +24,14 @@ export interface PracticeSet {
 export const practiceSets: PracticeSet[] = [
   {
     id: 'calculus-for-physics',
+    category: 'mechanics',
     label: 'Calculus for Physics',
     ...calculusForPhysicsMeta,
     steps: calculusForPhysicsSteps,
   },
   {
     id: 'frq-2025-mechanics',
+    category: 'mechanics',
     label: '2025 FRQ Lab',
     eyebrow: 'AP Physics C Mechanics',
     description:
@@ -37,20 +41,30 @@ export const practiceSets: PracticeSet[] = [
   },
   {
     id: 'kinematics-multiple-choice',
+    category: 'mechanics',
     label: 'Kinematics MC',
     ...kinematicsMultipleChoiceMeta,
     steps: kinematicsMultipleChoiceSteps,
   },
   {
     id: 'dynamics-multiple-choice',
+    category: 'mechanics',
     label: 'Dynamics',
     ...dynamicsMultipleChoiceMeta,
     steps: dynamicsMultipleChoiceSteps,
   },
   {
     id: 'work-energy-multiple-choice',
+    category: 'mechanics',
     label: 'Work & Energy',
     ...workEnergyMultipleChoiceMeta,
     steps: workEnergyMultipleChoiceSteps,
+  },
+  {
+    id: 'physics-bowl-em-question-bank',
+    category: 'electromagnetism',
+    label: 'Physics Bowl 物理碗精选题库',
+    ...physicsBowlEmMeta,
+    steps: physicsBowlEmSteps,
   },
 ];

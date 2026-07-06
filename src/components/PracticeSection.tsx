@@ -228,6 +228,7 @@ export const PracticeSection: React.FC = () => {
     if (setId === 'frq-2025-mechanics') return t.practice.sets.frq2025;
     if (setId === 'dynamics-multiple-choice') return t.practice.sets.dynamicsMultipleChoice;
     if (setId === 'work-energy-multiple-choice') return t.practice.sets.workEnergyMultipleChoice;
+    if (setId === 'physics-bowl-em-question-bank') return t.practice.sets.physicsBowlEmQuestionBank;
     return t.practice.sets.kinematicsMultipleChoice;
   };
   const setCopy = getSetCopy(activeSet.id);
@@ -255,6 +256,18 @@ export const PracticeSection: React.FC = () => {
   }, [resultList]);
 
   const speechSupported = typeof window !== 'undefined' && Boolean(window.SpeechRecognition || window.webkitSpeechRecognition);
+  const practiceSetGroups = [
+    {
+      id: 'mechanics',
+      label: t.practice.setGroups.mechanics,
+      sets: practiceSets.filter((set) => set.category === 'mechanics'),
+    },
+    {
+      id: 'electromagnetism',
+      label: t.practice.setGroups.electromagnetism,
+      sets: practiceSets.filter((set) => set.category === 'electromagnetism'),
+    },
+  ].filter((group) => group.sets.length > 0);
 
   useEffect(() => {
     return () => recognitionRef.current?.stop();
@@ -448,23 +461,32 @@ export const PracticeSection: React.FC = () => {
               </span>
             </div>
           )}
-          <div className="mt-5 flex flex-wrap gap-2">
-            {practiceSets.map((set) => {
-              const isActive = set.id === activeSetId;
-              return (
-                <button
-                  key={set.id}
-                  onClick={() => selectPracticeSet(set.id)}
-                  className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
-                    isActive
-                      ? 'border-nebula/70 bg-nebula/15 text-white'
-                      : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/30 hover:text-white'
-                  }`}
-                >
-                  {getSetCopy(set.id).label}
-                </button>
-              );
-            })}
+          <div className="mt-5 space-y-3">
+            {practiceSetGroups.map((group) => (
+              <div key={group.id}>
+                <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
+                  {group.label}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {group.sets.map((set) => {
+                    const isActive = set.id === activeSetId;
+                    return (
+                      <button
+                        key={set.id}
+                        onClick={() => selectPracticeSet(set.id)}
+                        className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
+                          isActive
+                            ? 'border-nebula/70 bg-nebula/15 text-white'
+                            : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/30 hover:text-white'
+                        }`}
+                      >
+                        {getSetCopy(set.id).label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
