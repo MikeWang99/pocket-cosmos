@@ -197,6 +197,10 @@ export const i18n = {
       progressSyncing: 'Saving practice result.',
       progressError: 'Practice progress is not syncing yet.',
       progressPreviewConfig: 'Preview login is waiting for Supabase settings.',
+      setGroups: {
+        mechanics: 'Mechanics',
+        electromagnetism: 'Electricity & Magnetism',
+      },
       sets: {
         calculusForPhysics: {
           label: 'Calculus for Physics',
@@ -227,6 +231,12 @@ export const i18n = {
           title: 'AP Physics C: Work and Energy Multiple Choice',
           eyebrow: 'AP Physics C Mechanics',
           description: 'Practice work, energy conservation, potential energy curves, variable-force integrals, friction energy loss, and power with the full Work and Energy multiple-choice set.',
+        },
+        physicsBowlEmQuestionBank: {
+          label: 'Physics Bowl Selected E&M',
+          title: 'Physics Bowl Selected E&M Question Bank',
+          eyebrow: 'AP Physics C Electricity and Magnetism',
+          description: 'Practice selected Physics Bowl questions on Coulomb’s law, electric fields, electric potential, electric potential energy, and electrostatic conductors.',
         },
       },
     },
@@ -460,6 +470,10 @@ export const i18n = {
       progressSyncing: '正在保存做题结果。',
       progressError: '做题记录暂时没有同步成功。',
       progressPreviewConfig: '预览登录还在等待 Supabase 配置。',
+      setGroups: {
+        mechanics: '力学',
+        electromagnetism: '电磁学',
+      },
       sets: {
         calculusForPhysics: {
           label: '物理中的微积分',
@@ -490,6 +504,12 @@ export const i18n = {
           title: 'AP Physics C：功和能选择题',
           eyebrow: '大学先修物理力学',
           description: '完整练习功、能量守恒、势能图像、变力积分、摩擦能量损失与功率相关选择题。',
+        },
+        physicsBowlEmQuestionBank: {
+          label: 'Physics Bowl 物理碗精选题库',
+          title: 'Physics Bowl 物理碗精选题库',
+          eyebrow: 'AP Physics C：电磁学',
+          description: '精选物理碗电磁学习题，覆盖库仑定律、电场、电势、电势能、电能守恒与静电平衡导体等知识点。',
         },
       },
     },
