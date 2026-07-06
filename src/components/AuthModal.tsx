@@ -23,6 +23,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     clearPasswordRecovery,
     sendPasswordReset,
     signInWithEmailPassword,
+    signInWithGoogle,
     signUpWithEmailPassword,
     signOut,
   } = useAuth();
@@ -77,6 +78,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     closeModal();
   };
 
+  const startGoogleSignIn = async () => {
+    setBusy(true);
+    setFeedback(null);
+    const result = await signInWithGoogle();
+
+    if (!result.ok) {
+      setBusy(false);
+      setFeedback(result.message ?? 'AUTH_GOOGLE_FAILED');
+      setFeedbackType('error');
+    }
+  };
+
   const submitSignup = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!isPasswordValid) {
@@ -126,6 +139,28 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     setConfirmPassword('');
   };
 
+  const renderGoogleButton = () => (
+    <button
+      type="button"
+      onClick={() => void startGoogleSignIn()}
+      disabled={busy}
+      className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white px-5 text-sm font-semibold text-gray-800 shadow-sm transition-colors hover:border-nebula/40 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+    >
+      <span className="grid h-5 w-5 place-items-center rounded-full bg-white text-base font-bold text-[#4285f4]">
+        G
+      </span>
+      {busy ? t.auth.working : t.auth.googleAction}
+    </button>
+  );
+
+  const renderAuthDivider = () => (
+    <div className="flex items-center gap-3 py-1 text-xs font-medium text-gray-400">
+      <span className="h-px flex-1 bg-gray-200" />
+      {t.auth.or}
+      <span className="h-px flex-1 bg-gray-200" />
+    </div>
+  );
+
   const renderPrimaryButton = (label: string, icon: React.ReactNode, disabled = false) => (
     <button
       type="submit"
@@ -166,10 +201,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     {mode === 'reset-password' ? t.auth.resetPasswordTitle : mode === 'signup' ? t.auth.signupTab : t.auth.loginTab}
                   </h2>
                   <p className="mt-1 text-sm text-gray-500">
-                    {mode === 'login' && '欢迎回来，请登录您的账号'}
-                    {mode === 'signup' && '创建新账号，开始您的学习之旅'}
-                    {mode === 'reset-request' && '输入邮箱，我们将发送重置链接'}
-                    {mode === 'reset-password' && '设置新密码'}
+                    {mode === 'login' && t.auth.loginSubtitle}
+                    {mode === 'signup' && t.auth.signupSubtitle}
+                    {mode === 'reset-request' && t.auth.resetRequestSubtitle}
+                    {mode === 'reset-password' && t.auth.resetPasswordSubtitle}
                   </p>
                 </div>
                 <button
@@ -207,6 +242,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   {/* Login Mode */}
                   {mode === 'login' && (
                     <form onSubmit={submitLogin} className="space-y-4">
+                      {renderGoogleButton()}
+                      {renderAuthDivider()}
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           {t.auth.emailLabel}
@@ -260,6 +297,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   {/* Signup Mode */}
                   {mode === 'signup' && (
                     <form onSubmit={submitSignup} className="space-y-4">
+                      {renderGoogleButton()}
+                      {renderAuthDivider()}
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           {t.auth.emailLabel}

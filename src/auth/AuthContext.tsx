@@ -25,6 +25,7 @@ interface AuthContextValue {
   sendPasswordReset: (email: string) => Promise<AuthActionResult>;
   setPassword: (password: string) => Promise<AuthActionResult>;
   signInWithEmailPassword: (email: string, password: string) => Promise<AuthActionResult>;
+  signInWithGoogle: () => Promise<AuthActionResult>;
   signUpWithEmailPassword: (email: string, password: string) => Promise<AuthActionResult>;
   signOut: () => Promise<void>;
   verifyEmailCode: (email: string, token: string) => Promise<AuthActionResult>;
@@ -146,6 +147,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     },
     [supabase],
   );
+
+  const signInWithGoogle = useCallback(async () => {
+    if (!supabase) {
+      setMessage('AUTH_NOT_CONFIGURED');
+      return authError({ message: 'AUTH_NOT_CONFIGURED' });
+    }
+
+    setMessage(null);
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/`,
+      },
+    });
+
+    if (error) {
+      setMessage(error.message);
+      return authError(error);
+    }
+
+    return authSuccess('AUTH_GOOGLE_REDIRECT');
+  }, [supabase]);
 
   const signUpWithEmailPassword = useCallback(
     async (email: string, password: string) => {
@@ -306,6 +329,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       sendPasswordReset,
       setPassword,
       signInWithEmailPassword,
+      signInWithGoogle,
       signUpWithEmailPassword,
       signOut,
       verifyEmailCode,
@@ -322,6 +346,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       session,
       setPassword,
       signInWithEmailPassword,
+      signInWithGoogle,
       signUpWithEmailPassword,
       signOut,
       verifyEmailCode,
