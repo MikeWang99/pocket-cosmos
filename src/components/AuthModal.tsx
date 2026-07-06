@@ -23,8 +23,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     clearPasswordRecovery,
     sendPasswordReset,
     signInWithEmailPassword,
-    signUpWithEmailPassword,
     signInWithGoogle,
+    signUpWithEmailPassword,
     signOut,
   } = useAuth();
 
@@ -78,6 +78,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     closeModal();
   };
 
+  const startGoogleSignIn = async () => {
+    setBusy(true);
+    setFeedback(null);
+    const result = await signInWithGoogle();
+
+    if (!result.ok) {
+      setBusy(false);
+      setFeedback(result.message ?? 'AUTH_GOOGLE_FAILED');
+      setFeedbackType('error');
+    }
+  };
+
   const submitSignup = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!isPasswordValid) {
@@ -120,12 +132,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     setFeedbackType(result.ok ? 'success' : 'error');
   };
 
-  const startGoogle = async () => {
-    setBusy(true);
-    await signInWithGoogle();
-    setBusy(false);
-  };
-
   const switchMode = (nextMode: AuthMode) => {
     setMode(nextMode);
     setFeedback(null);
@@ -133,11 +139,33 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     setConfirmPassword('');
   };
 
+  const renderGoogleButton = () => (
+    <button
+      type="button"
+      onClick={() => void startGoogleSignIn()}
+      disabled={busy}
+      className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-lg border border-[#d1d5db] bg-[#ffffff] px-5 text-sm font-semibold text-[#1f2937] shadow-sm transition-colors hover:border-nebula/40 hover:bg-[#f9fafb] disabled:cursor-not-allowed disabled:opacity-50"
+    >
+      <span className="grid h-5 w-5 place-items-center rounded-full bg-[#ffffff] text-base font-bold text-[#4285f4]">
+        G
+      </span>
+      {busy ? t.auth.working : t.auth.googleAction}
+    </button>
+  );
+
+  const renderAuthDivider = () => (
+    <div className="flex items-center gap-3 py-1 text-xs font-medium text-gray-400">
+      <span className="h-px flex-1 bg-gray-200" />
+      {t.auth.or}
+      <span className="h-px flex-1 bg-gray-200" />
+    </div>
+  );
+
   const renderPrimaryButton = (label: string, icon: React.ReactNode, disabled = false) => (
     <button
       type="submit"
       disabled={busy || disabled}
-      className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-nebula px-5 text-sm font-semibold text-white transition-colors hover:bg-nebula/90 disabled:opacity-50 disabled:cursor-not-allowed"
+      className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-nebula px-5 text-sm font-semibold text-[#ffffff] transition-colors hover:bg-nebula/90 disabled:cursor-not-allowed disabled:opacity-50"
     >
       {icon}
       {busy ? t.auth.working : label}
@@ -148,7 +176,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[120] grid place-items-center bg-black/50 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[120] grid place-items-center bg-[rgba(15,23,42,0.42)] p-4 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -158,7 +186,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             role="dialog"
             aria-modal="true"
             aria-labelledby="auth-modal-title"
-            className="relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl"
+            className="relative w-full max-w-md overflow-hidden rounded-2xl bg-[#ffffff] shadow-2xl"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -166,23 +194,23 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="border-b border-gray-200 px-6 pb-4 pt-6">
+            <div className="border-b border-[#e5e7eb] px-6 pb-4 pt-6">
               <div className="flex items-start justify-between">
                 <div>
-                  <h2 id="auth-modal-title" className="text-2xl font-bold text-gray-900">
+                  <h2 id="auth-modal-title" className="text-2xl font-bold text-[#111827]">
                     {mode === 'reset-password' ? t.auth.resetPasswordTitle : mode === 'signup' ? t.auth.signupTab : t.auth.loginTab}
                   </h2>
-                  <p className="mt-1 text-sm text-gray-500">
-                    {mode === 'login' && '欢迎回来，请登录您的账号'}
-                    {mode === 'signup' && '创建新账号，开始您的学习之旅'}
-                    {mode === 'reset-request' && '输入邮箱，我们将发送重置链接'}
-                    {mode === 'reset-password' && '设置新密码'}
+                  <p className="mt-1 text-sm text-[#6b7280]">
+                    {mode === 'login' && t.auth.loginSubtitle}
+                    {mode === 'signup' && t.auth.signupSubtitle}
+                    {mode === 'reset-request' && t.auth.resetRequestSubtitle}
+                    {mode === 'reset-password' && t.auth.resetPasswordSubtitle}
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => closeModal()}
-                  className="rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors"
+                  className="rounded-full p-2 text-[#9ca3af] transition-colors hover:bg-[#f3f4f6] hover:text-[#4b5563]"
                   title={t.auth.close}
                 >
                   <X className="h-5 w-5" />
@@ -214,8 +242,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   {/* Login Mode */}
                   {mode === 'login' && (
                     <form onSubmit={submitLogin} className="space-y-4">
+                      {renderGoogleButton()}
+                      {renderAuthDivider()}
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="mb-1 block text-sm font-medium text-[#374151]">
                           {t.auth.emailLabel}
                         </label>
                         <input
@@ -223,13 +253,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           value={email}
                           onChange={(event) => setEmail(event.target.value)}
                           placeholder={t.auth.emailPlaceholder}
-                          className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition-colors focus:border-nebula focus:ring-2 focus:ring-nebula/20"
+                          className="w-full rounded-lg border border-[#d1d5db] bg-[#ffffff] px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
                           autoComplete="email"
                           required
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="mb-1 block text-sm font-medium text-[#374151]">
                           {t.auth.passwordLabel}
                         </label>
                         <input
@@ -237,7 +267,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           value={password}
                           onChange={(event) => setPasswordInput(event.target.value)}
                           placeholder={t.auth.passwordPlaceholder}
-                          className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition-colors focus:border-nebula focus:ring-2 focus:ring-nebula/20"
+                          className="w-full rounded-lg border border-[#d1d5db] bg-[#ffffff] px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
                           autoComplete="current-password"
                           required
                         />
@@ -261,49 +291,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         </button>
                       </div>
 
-                      <div className="relative my-6">
-                        <div className="absolute inset-0 flex items-center">
-                          <div className="w-full border-t border-gray-300" />
-                        </div>
-                        <div className="relative flex justify-center text-sm">
-                          <span className="bg-white px-2 text-gray-500">或</span>
-                        </div>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={startGoogle}
-                        disabled={busy}
-                        className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50"
-                      >
-                        <svg className="h-5 w-5" viewBox="0 0 24 24">
-                          <path
-                            fill="#4285F4"
-                            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                          />
-                          <path
-                            fill="#34A853"
-                            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                          />
-                          <path
-                            fill="#FBBC05"
-                            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                          />
-                          <path
-                            fill="#EA4335"
-                            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                          />
-                        </svg>
-                        使用 Google 账号登录
-                      </button>
                     </form>
                   )}
 
                   {/* Signup Mode */}
                   {mode === 'signup' && (
                     <form onSubmit={submitSignup} className="space-y-4">
+                      {renderGoogleButton()}
+                      {renderAuthDivider()}
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="mb-1 block text-sm font-medium text-[#374151]">
                           {t.auth.emailLabel}
                         </label>
                         <input
@@ -311,13 +308,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           value={email}
                           onChange={(event) => setEmail(event.target.value)}
                           placeholder={t.auth.emailPlaceholder}
-                          className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition-colors focus:border-nebula focus:ring-2 focus:ring-nebula/20"
+                          className="w-full rounded-lg border border-[#d1d5db] bg-[#ffffff] px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
                           autoComplete="email"
                           required
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="mb-1 block text-sm font-medium text-[#374151]">
                           {t.auth.newPasswordLabel}
                         </label>
                         <input
@@ -325,7 +322,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           value={password}
                           onChange={(event) => setPasswordInput(event.target.value)}
                           placeholder={t.auth.newPasswordPlaceholder}
-                          className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition-colors focus:border-nebula focus:ring-2 focus:ring-nebula/20"
+                          className="w-full rounded-lg border border-[#d1d5db] bg-[#ffffff] px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
                           autoComplete="new-password"
                           required
                         />
@@ -334,7 +331,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         )}
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="mb-1 block text-sm font-medium text-[#374151]">
                           {t.auth.confirmPasswordLabel}
                         </label>
                         <input
@@ -342,7 +339,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           value={confirmPassword}
                           onChange={(event) => setConfirmPassword(event.target.value)}
                           placeholder={t.auth.confirmPasswordPlaceholder}
-                          className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition-colors focus:border-nebula focus:ring-2 focus:ring-nebula/20"
+                          className="w-full rounded-lg border border-[#d1d5db] bg-[#ffffff] px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
                           autoComplete="new-password"
                           required
                         />
@@ -366,41 +363,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         </button>
                       </div>
 
-                      <div className="relative my-6">
-                        <div className="absolute inset-0 flex items-center">
-                          <div className="w-full border-t border-gray-300" />
-                        </div>
-                        <div className="relative flex justify-center text-sm">
-                          <span className="bg-white px-2 text-gray-500">或</span>
-                        </div>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={startGoogle}
-                        disabled={busy}
-                        className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50"
-                      >
-                        <svg className="h-5 w-5" viewBox="0 0 24 24">
-                          <path
-                            fill="#4285F4"
-                            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                          />
-                          <path
-                            fill="#34A853"
-                            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                          />
-                          <path
-                            fill="#FBBC05"
-                            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                          />
-                          <path
-                            fill="#EA4335"
-                            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                          />
-                        </svg>
-                        使用 Google 账号注册
-                      </button>
                     </form>
                   )}
 
@@ -408,7 +370,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   {mode === 'reset-request' && (
                     <form onSubmit={submitResetRequest} className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="mb-1 block text-sm font-medium text-[#374151]">
                           {t.auth.emailLabel}
                         </label>
                         <input
@@ -416,7 +378,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           value={email}
                           onChange={(event) => setEmail(event.target.value)}
                           placeholder={t.auth.emailPlaceholder}
-                          className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition-colors focus:border-nebula focus:ring-2 focus:ring-nebula/20"
+                          className="w-full rounded-lg border border-[#d1d5db] bg-[#ffffff] px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
                           autoComplete="email"
                           required
                         />
