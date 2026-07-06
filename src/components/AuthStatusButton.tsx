@@ -62,7 +62,7 @@ export const AuthStatusButton: FC = () => {
       <button
         type="button"
         onClick={() => setAuthModalOpen(true)}
-        className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-slate-950 px-5 text-xs font-bold uppercase tracking-widest text-[#ffffff] transition-colors hover:bg-nebula"
+        className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-nebula/25 bg-white px-4 text-sm font-semibold text-nebula shadow-sm transition-colors hover:border-nebula/45 hover:bg-nebula hover:text-white"
       >
         <LogIn className="h-4 w-4" />
         {t.auth.openAuth}
