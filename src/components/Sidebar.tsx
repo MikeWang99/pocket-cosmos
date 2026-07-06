@@ -1,20 +1,22 @@
 import React from 'react';
 import { useLanguage } from '../LanguageContext';
-import { Atom, Orbit, BookOpen, ClipboardCheck, BookOpenCheck } from 'lucide-react';
+import { Atom, Orbit, BookOpen, ClipboardCheck, BookOpenCheck, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface SidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  showAdmin?: boolean;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, showAdmin = false }) => {
   const { t, toggleLanguage } = useLanguage();
 
   const navItems = [
     { id: 'physics', icon: Atom, label: t.nav.home },
     { id: 'curriculum', icon: BookOpenCheck, label: t.nav.curriculum },
     { id: 'practice', icon: ClipboardCheck, label: t.nav.practice },
+    ...(showAdmin ? [{ id: 'admin', icon: ShieldCheck, label: t.nav.admin }] : []),
     { id: 'about', icon: Orbit, label: t.nav.about },
     { id: 'books', icon: BookOpen, label: t.nav.books },
   ];

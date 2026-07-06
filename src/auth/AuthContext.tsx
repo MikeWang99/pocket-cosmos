@@ -12,6 +12,7 @@ export interface AuthActionResult {
 interface AuthContextValue {
   authEnabled: boolean;
   configured: boolean;
+  isAdmin: boolean;
   loading: boolean;
   message: string | null;
   passwordRecovery: boolean;
@@ -24,14 +25,15 @@ interface AuthContextValue {
   sendPasswordReset: (email: string) => Promise<AuthActionResult>;
   setPassword: (password: string) => Promise<AuthActionResult>;
   signInWithEmailPassword: (email: string, password: string) => Promise<AuthActionResult>;
+  signInWithGoogle: () => Promise<AuthActionResult>;
   signUpWithEmailPassword: (email: string, password: string) => Promise<AuthActionResult>;
-  signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
   verifyEmailCode: (email: string, token: string) => Promise<AuthActionResult>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 const PASSWORD_SETUP_STORAGE_KEY = 'pocket-cosmos-email-password-setup';
+const ADMIN_EMAILS = new Set(['mike.wang.de@gmail.com']);
 
 const authError = (error: { message?: string } | null | undefined): AuthActionResult => ({
   ok: false,
@@ -145,6 +147,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     },
     [supabase],
   );
+
+  const signInWithGoogle = useCallback(async () => {
+    if (!supabase) {
+      setMessage('AUTH_NOT_CONFIGURED');
+      return authError({ message: 'AUTH_NOT_CONFIGURED' });
+    }
+
+    setMessage(null);
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/`,
+      },
+    });
+
+    if (error) {
+      setMessage(error.message);
+      return authError(error);
+    }
+
+    return authSuccess('AUTH_GOOGLE_REDIRECT');
+  }, [supabase]);
 
   const signUpWithEmailPassword = useCallback(
     async (email: string, password: string) => {
@@ -282,27 +306,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     [supabase],
   );
 
-  const signInWithGoogle = useCallback(async () => {
-    if (!supabase) {
-      setMessage('AUTH_NOT_CONFIGURED');
-      return;
-    }
-
-    setPasswordRecovery(false);
-    setPasswordSetupRequired(false);
-    clearPasswordSetupPending();
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/`,
-        skipBrowserRedirect: true,
-      },
-    });
-
-    if (error) setMessage(error.message);
-    if (data?.url) window.location.assign(data.url);
-  }, [supabase]);
-
   const signOut = useCallback(async () => {
     if (!supabase) return;
     const { error } = await supabase.auth.signOut();
@@ -313,6 +316,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     () => ({
       authEnabled: authFeatureEnabled,
       configured: supabaseConfigured,
+      isAdmin: ADMIN_EMAILS.has((session?.user.email ?? '').toLowerCase()),
       loading,
       message,
       passwordRecovery,
@@ -325,8 +329,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       sendPasswordReset,
       setPassword,
       signInWithEmailPassword,
-      signUpWithEmailPassword,
       signInWithGoogle,
+      signUpWithEmailPassword,
       signOut,
       verifyEmailCode,
     }),
@@ -342,8 +346,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       session,
       setPassword,
       signInWithEmailPassword,
-      signUpWithEmailPassword,
       signInWithGoogle,
+      signUpWithEmailPassword,
       signOut,
       verifyEmailCode,
     ],

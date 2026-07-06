@@ -29,7 +29,7 @@ export const AuthStatusButton: FC = () => {
 
   if (loading) {
     return (
-      <div className="inline-flex h-10 items-center rounded-full border border-white/10 bg-white/[0.04] px-4 text-xs font-semibold text-slate-500">
+      <div className="inline-flex h-10 items-center rounded-full border border-[rgba(15,23,42,0.1)] bg-[rgba(79,70,229,0.06)] px-4 text-xs font-semibold text-slate-500">
         {t.auth.loading}
       </div>
     );
@@ -46,7 +46,7 @@ export const AuthStatusButton: FC = () => {
           <button
             type="button"
             onClick={() => void signOut()}
-            className="inline-flex h-10 items-center gap-2 rounded-full border border-white/10 px-4 text-xs font-semibold text-slate-500 transition-colors hover:border-nebula/50 hover:text-nebula"
+            className="inline-flex h-10 items-center gap-2 rounded-full border border-[rgba(15,23,42,0.1)] px-4 text-xs font-semibold text-slate-500 transition-colors hover:border-nebula/50 hover:text-nebula"
           >
             <LogOut className="h-4 w-4" />
             {t.auth.signOut}
@@ -62,7 +62,7 @@ export const AuthStatusButton: FC = () => {
       <button
         type="button"
         onClick={() => setAuthModalOpen(true)}
-        className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-slate-950 px-5 text-xs font-bold uppercase tracking-widest text-[#ffffff] transition-colors hover:bg-nebula"
+        className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-nebula/25 bg-[#ffffff] px-4 text-sm font-semibold text-nebula shadow-sm transition-colors hover:border-nebula/45 hover:bg-nebula hover:text-[#ffffff]"
       >
         <LogIn className="h-4 w-4" />
         {t.auth.openAuth}
