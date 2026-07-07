@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../LanguageContext';
-import { Atom, Orbit, BookOpen, ClipboardCheck, BookOpenCheck, ShieldCheck } from 'lucide-react';
+import { ClipboardCheck, BookOpenCheck, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface SidebarProps {
@@ -10,21 +10,24 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, showAdmin = false }) => {
-  const { t, toggleLanguage } = useLanguage();
+  const { language, t, toggleLanguage } = useLanguage();
 
   const navItems = [
-    { id: 'physics', icon: Atom, label: t.nav.home },
     { id: 'curriculum', icon: BookOpenCheck, label: t.nav.curriculum },
     { id: 'practice', icon: ClipboardCheck, label: t.nav.practice },
     ...(showAdmin ? [{ id: 'admin', icon: ShieldCheck, label: t.nav.admin }] : []),
-    { id: 'about', icon: Orbit, label: t.nav.about },
-    { id: 'books', icon: BookOpen, label: t.nav.books },
   ];
 
   return (
     <aside className="fixed left-0 top-0 h-full w-20 flex flex-col items-center justify-between py-6 border-r border-white/10 glass z-50">
       <div className="flex flex-col gap-8 items-center w-full">
-        <div className="text-[10px] font-bold tracking-widest opacity-40 uppercase" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
+        <div
+          className="text-[10px] font-bold tracking-widest opacity-40 uppercase"
+          style={{
+            writingMode: 'vertical-rl',
+            transform: language === 'zh' ? 'none' : 'rotate(180deg)',
+          }}
+        >
           {t.site.established}
         </div>
         <img
