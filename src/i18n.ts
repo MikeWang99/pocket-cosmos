@@ -101,7 +101,7 @@ export const i18n = {
     curriculum: {
       sectionLabel: 'Physics Knowledge Map',
       title: 'One-Stop Physics Learning Map',
-      description: 'A growing map for AP Physics, A-Level Physics, IB Physics, competition preparation, and independent study. The AP system is available first, with more systems being structured for future release.',
+      description: 'A growing one-stop map for AP Physics, Cambridge A-Level Physics, IB Physics, competition preparation, and independent study. Each unit connects official topic structure with learning focus, key formulas, and original diagrams.',
       systemSelector: 'Select a physics learning system',
       systems: {
         ap: {
@@ -150,6 +150,10 @@ export const i18n = {
       expandAll: 'Expand all',
       collapseAll: 'Collapse all',
       officialSource: 'Official CED',
+      focusTitle: 'Key Focus',
+      checklistTitle: 'Full Topic Checklist',
+      formulasTitle: 'Key Formulas',
+      diagramsTitle: 'Diagrams',
       sourceNote: 'Topic names, unit structure, and exam weightings are based on the official College Board Course and Exam Descriptions. Chinese topic names are translations prepared by Pocket Cosmos for learning reference.',
     },
     practice: {
@@ -369,7 +373,7 @@ export const i18n = {
     curriculum: {
       sectionLabel: '物理知识地图',
       title: '一站式物理学习地图',
-      description: '面向 AP、A-Level、IB、竞赛拓展与自主学习的物理知识体系。当前优先开放 AP 体系，其他体系先完成结构规划，后续逐步补充内容。',
+      description: '面向 AP、Cambridge A-Level、IB、竞赛拓展与自主学习的一站式物理知识体系。每个单元会把官方 topic 结构、学习重点、重点公式和原创示意图连接起来。',
       systemSelector: '选择一个物理学习体系',
       systems: {
         ap: {
@@ -418,6 +422,10 @@ export const i18n = {
       expandAll: '展开全部',
       collapseAll: '收起全部',
       officialSource: '官方课程说明',
+      focusTitle: '重点知识点',
+      checklistTitle: '完整知识点清单',
+      formulasTitle: '重点公式',
+      diagramsTitle: '图像与示意图',
       sourceNote: '知识点名称、单元结构与考试占比均参考美国大学理事会官方课程与考试说明；中文名称由口袋宇宙翻译整理，仅供学习参考。',
     },
     practice: {
