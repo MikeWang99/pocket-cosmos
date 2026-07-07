@@ -7,9 +7,6 @@
 
 import { useEffect, useState } from 'react';
 import { Sidebar } from './components/Sidebar';
-import { PhysicsSection } from './components/PhysicsSection';
-import { AboutSection } from './components/AboutSection';
-import { BooksSection } from './components/BooksSection';
 import { PracticeSection } from './components/PracticeSection';
 import { CurriculumSection } from './components/CurriculumSection';
 import { AdminSection } from './components/AdminSection';
@@ -19,11 +16,15 @@ import { useLanguage } from './LanguageContext';
 import { useAuth } from './auth/AuthContext';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('physics');
+  const [activeTab, setActiveTab] = useState('curriculum');
   const { t, language } = useLanguage();
   const { isAdmin } = useAuth();
 
   useEffect(() => {
+    if (activeTab === 'physics' || activeTab === 'about' || activeTab === 'books') {
+      setActiveTab('curriculum');
+      return;
+    }
     if (!isAdmin && activeTab === 'admin') {
       setActiveTab('practice');
     }
@@ -54,14 +55,11 @@ export default function App() {
             
             <div className="flex flex-col items-start gap-4 md:items-end">
               <div className="hidden md:flex gap-6 text-xs font-semibold tracking-widest uppercase pb-1">
-                <button onClick={() => setActiveTab('physics')} className={`transition-colors ${activeTab === 'physics' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.home}</button>
                 <button onClick={() => setActiveTab('curriculum')} className={`transition-colors ${activeTab === 'curriculum' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.curriculum}</button>
                 <button onClick={() => setActiveTab('practice')} className={`transition-colors ${activeTab === 'practice' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.practice}</button>
                 {isAdmin && (
                   <button onClick={() => setActiveTab('admin')} className={`transition-colors ${activeTab === 'admin' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.admin}</button>
                 )}
-                <button onClick={() => setActiveTab('about')} className={`transition-colors ${activeTab === 'about' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.about}</button>
-                <button onClick={() => setActiveTab('books')} className={`transition-colors ${activeTab === 'books' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.books}</button>
               </div>
               <AuthStatusButton />
             </div>
@@ -69,18 +67,14 @@ export default function App() {
 
           <div className="flex-1">
             <AnimatePresence mode="wait">
-              {activeTab === 'physics' && <PhysicsSection key="physics" />}
               {activeTab === 'curriculum' && <CurriculumSection key="curriculum" />}
               {activeTab === 'practice' && <PracticeSection key="practice" />}
               {activeTab === 'admin' && isAdmin && <AdminSection key="admin" />}
-              {activeTab === 'about' && <AboutSection key="about" />}
-              {activeTab === 'books' && <BooksSection key="books" />}
             </AnimatePresence>
           </div>
           
           <footer className="mt-16 pb-8 flex justify-between items-center text-[10px] tracking-widest uppercase opacity-30 border-t border-white/10 pt-8">
             <div>{t.site.footerBrand}</div>
-            <div className="hidden sm:block">{t.site.footerLocation}</div>
           </footer>
         </div>
       </main>
