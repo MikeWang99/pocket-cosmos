@@ -4,11 +4,45 @@ import { motion } from 'motion/react';
 import { useLanguage } from '../LanguageContext';
 import { apPhysicsCurriculum } from '../data/apPhysicsCurriculum';
 
+type LearningSystemId = 'ap' | 'alevel' | 'ib' | 'competition';
+
 export const CurriculumSection: React.FC = () => {
   const { language, t } = useLanguage();
+  const [systemId, setSystemId] = useState<LearningSystemId>('ap');
   const [courseId, setCourseId] = useState(apPhysicsCurriculum[0].id);
   const course = apPhysicsCurriculum.find((item) => item.id === courseId) ?? apPhysicsCurriculum[0];
   const [openUnits, setOpenUnits] = useState<Set<number>>(() => new Set([course.units[0].number]));
+  const learningSystems: Array<{
+    id: LearningSystemId;
+    label: string;
+    description: string;
+    status: string;
+  }> = [
+    {
+      id: 'ap',
+      label: t.curriculum.systems.ap.label,
+      description: t.curriculum.systems.ap.description,
+      status: t.curriculum.systems.ap.status,
+    },
+    {
+      id: 'alevel',
+      label: t.curriculum.systems.alevel.label,
+      description: t.curriculum.systems.alevel.description,
+      status: t.curriculum.systems.alevel.status,
+    },
+    {
+      id: 'ib',
+      label: t.curriculum.systems.ib.label,
+      description: t.curriculum.systems.ib.description,
+      status: t.curriculum.systems.ib.status,
+    },
+    {
+      id: 'competition',
+      label: t.curriculum.systems.competition.label,
+      description: t.curriculum.systems.competition.description,
+      status: t.curriculum.systems.competition.status,
+    },
+  ];
 
   const topicCount = useMemo(
     () => course.units.reduce((total, unit) => total + unit.topics.length, 0),
@@ -51,6 +85,44 @@ export const CurriculumSection: React.FC = () => {
         <p className="mt-4 text-sm md:text-base leading-7 text-slate-600">{t.curriculum.description}</p>
       </div>
 
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4" role="tablist" aria-label={t.curriculum.systemSelector}>
+        {learningSystems.map((system) => {
+          const active = system.id === systemId;
+          return (
+            <button
+              key={system.id}
+              type="button"
+              role="tab"
+              aria-selected={active}
+              onClick={() => setSystemId(system.id)}
+              className={`min-h-28 border rounded-lg px-4 py-4 text-left transition-colors ${
+                active
+                  ? 'border-nebula bg-white/10 text-nebula'
+                  : 'border-white/10 bg-white/5 text-slate-600 hover:border-white/30 hover:text-starlight'
+              }`}
+            >
+              <span className="block text-sm font-semibold leading-5">{system.label}</span>
+              <span className="mt-2 block text-xs leading-5 opacity-70">{system.description}</span>
+              <span className="mt-3 inline-flex rounded-full border border-nebula/20 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-nebula">
+                {system.status}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {systemId !== 'ap' ? (
+        <div className="grid gap-4 md:grid-cols-3">
+          {t.curriculum.placeholderModules.map((module) => (
+            <article key={module.title} className="rounded-lg border border-white/10 bg-white/[0.04] p-5">
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-nebula">{module.kicker}</p>
+              <h3 className="mt-3 text-lg font-semibold">{module.title}</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-500">{module.description}</p>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2" role="tablist" aria-label={t.curriculum.courseSelector}>
         {apPhysicsCurriculum.map((item) => {
           const active = item.id === course.id;
@@ -156,6 +228,8 @@ export const CurriculumSection: React.FC = () => {
       </div>
 
       <p className="text-xs leading-5 text-slate-500">{t.curriculum.sourceNote}</p>
+        </>
+      )}
     </motion.section>
   );
 };
