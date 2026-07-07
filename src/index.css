@@ -183,3 +183,21 @@ textarea::placeholder {
   font-size: 0.78rem;
   line-height: 1.4;
 }
+
+.curriculum-formula {
+  margin-top: 8px;
+  overflow-x: auto;
+  border: 1px solid rgba(79, 70, 229, 0.14);
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: #0f172a;
+}
+
+.curriculum-formula .katex-display {
+  margin: 0;
+}
+
+.curriculum-formula .katex {
+  font-size: 1.03rem;
+}

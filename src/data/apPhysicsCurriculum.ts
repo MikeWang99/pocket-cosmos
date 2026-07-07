@@ -8,18 +8,35 @@ export interface CurriculumTopic {
   title: LocalizedText;
 }
 
+export interface CurriculumFormula {
+  label: LocalizedText;
+  expression: string;
+  note?: LocalizedText;
+}
+
+export interface CurriculumDiagram {
+  kind: string;
+  title: LocalizedText;
+  caption: LocalizedText;
+}
+
 export interface CurriculumUnit {
   number: number;
   title: LocalizedText;
   weighting: string;
   topics: CurriculumTopic[];
+  summary?: LocalizedText;
+  focus?: LocalizedText[];
+  formulas?: CurriculumFormula[];
+  diagrams?: CurriculumDiagram[];
 }
 
 export interface CurriculumCourse {
-  id: 'physics-1' | 'physics-2' | 'mechanics' | 'electricity-magnetism';
+  id: string;
   name: LocalizedText;
   level: LocalizedText;
   sourceUrl: string;
+  sourceLabel?: LocalizedText;
   units: CurriculumUnit[];
 }
 
