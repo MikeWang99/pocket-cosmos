@@ -176,40 +176,6 @@ const QuestionMedia: React.FC<{ step: PracticeStep; label: string }> = ({ step, 
   );
 };
 
-const EquationBlock: React.FC<{ equations?: string[]; label: string }> = ({ equations, label }) => {
-  if (!equations?.length) return null;
-
-  return (
-    <div className="practice-equations">
-      <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-3">{label}</div>
-      <div className="space-y-2">
-        {equations.map((equation) => (
-          <div key={equation} className="practice-equation">
-            <MathText>{equation}</MathText>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const KnowledgeTags: React.FC<{ tags?: string[]; label: string }> = ({ tags, label }) => {
-  if (!tags?.length) return null;
-
-  return (
-    <div className="mt-4">
-      <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-2">{label}</div>
-      <div className="flex flex-wrap gap-2">
-        {tags.map((tag) => (
-          <span key={tag} className="rounded-full border border-nebula/20 bg-nebula/8 px-3 py-1 text-xs text-slate-600">
-            {tag}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-};
-
 export const PracticeSection: React.FC = () => {
   const { t } = useLanguage();
   const { authEnabled, configured, user } = useAuth();
@@ -219,7 +185,7 @@ export const PracticeSection: React.FC = () => {
   const [results, setResults] = useState<Record<string, EvaluationResult>>({});
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
-  const { savedAttempts, saveAttempt, syncError, syncState } = usePracticeProgress(activeSetId);
+  const { resetSavedAttempts, savedAttempts, saveAttempt, syncError, syncState } = usePracticeProgress(activeSetId);
 
   const activeSet = practiceSets.find((set) => set.id === activeSetId) ?? practiceSets[0];
   const practiceSetMeta = activeSet;
@@ -387,6 +353,7 @@ export const PracticeSection: React.FC = () => {
     setAnswers({});
     setResults({});
     setActiveIndex(0);
+    resetSavedAttempts();
   };
 
   const toggleSpeech = () => {
@@ -559,27 +526,15 @@ export const PracticeSection: React.FC = () => {
                   <div>
                     <div className="text-xs uppercase tracking-widest text-nebula mb-3">{activeStep.source}</div>
                     <h2 className="text-2xl md:text-3xl font-serif text-white">{activeStep.title}</h2>
-                    <KnowledgeTags tags={activeStep.tags} label={t.practice.knowledgePoints} />
                   </div>
                   <div className="rounded-full border border-white/10 px-4 py-2 text-sm text-slate-300 w-fit">
                     {activeIndex + 1} / {practiceSteps.length}
                   </div>
                 </div>
 
-                <div className="mt-6 grid md:grid-cols-[1fr_1.2fr] gap-4">
-                  <div className="rounded-lg bg-black/20 border border-white/5 p-4">
-                    <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-2">{t.practice.setup}</div>
-                    <p className="text-sm text-slate-300 leading-relaxed">
-                      {isActiveMultipleChoice ? (
-                        <MathText>{activeStep.context}</MathText>
-                      ) : (
-                        <RichText>{activeStep.context}</RichText>
-                      )}
-                    </p>
-                  </div>
-                  <div className="rounded-lg bg-white/[0.04] border border-white/10 p-4">
-                    <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-2">{t.practice.task}</div>
-                    <div className="space-y-2 text-base text-white leading-relaxed">
+                <div className="mt-6">
+                  <div className="rounded-lg bg-white/[0.04] border border-white/10 p-5 md:p-6">
+                    <div className="space-y-3 text-base md:text-lg text-white leading-relaxed">
                       {splitPromptParts(activeStep.prompt).map((part) => (
                         <p key={part}>
                           {isActiveMultipleChoice ? <MathText>{part}</MathText> : <RichText>{part}</RichText>}
@@ -590,7 +545,6 @@ export const PracticeSection: React.FC = () => {
                 </div>
 
                 <div className="mt-4 grid gap-4">
-                  <EquationBlock equations={activeStep.equations} label={t.practice.equations} />
                   <QuestionMedia step={activeStep} label={t.practice.diagram} />
                 </div>
               </div>
