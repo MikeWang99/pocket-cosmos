@@ -50,12 +50,22 @@ const normalizeResult = (row: PracticeAttemptRow): EvaluationResult => {
   };
 };
 
+const resetStorageKey = (studentId: string, practiceSetId: string) =>
+  `pocket-cosmos:practice-reset:${studentId}:${practiceSetId}`;
+
+const readResetTimestamp = (studentId: string | undefined, practiceSetId: string) => {
+  if (!studentId || typeof window === 'undefined') return 0;
+  const value = window.localStorage.getItem(resetStorageKey(studentId, practiceSetId));
+  return value ? Number(value) || 0 : 0;
+};
+
 export const usePracticeProgress = (practiceSetId: string) => {
   const { authEnabled, configured, user } = useAuth();
   const supabase = getSupabaseClient();
   const [savedAttempts, setSavedAttempts] = useState<Record<string, SavedPracticeAttempt>>({});
   const [syncState, setSyncState] = useState<PracticeSyncState>('off');
   const [syncError, setSyncError] = useState<string | null>(null);
+  const [resetVersion, setResetVersion] = useState(0);
 
   const canSync = Boolean(authEnabled && configured && supabase && user);
 
@@ -90,8 +100,12 @@ export const usePracticeProgress = (practiceSetId: string) => {
           return;
         }
 
+        const resetAt = readResetTimestamp(user.id, practiceSetId);
         const attempts = (data ?? []).reduce<Record<string, SavedPracticeAttempt>>((map, row) => {
           const typedRow = row as PracticeAttemptRow;
+          const updatedAt = Date.parse(typedRow.updated_at);
+          if (resetAt && Number.isFinite(updatedAt) && updatedAt <= resetAt) return map;
+
           map[typedRow.question_id] = {
             questionId: typedRow.question_id,
             answer: typedRow.answer ?? '',
@@ -109,7 +123,14 @@ export const usePracticeProgress = (practiceSetId: string) => {
     return () => {
       mounted = false;
     };
-  }, [authEnabled, configured, practiceSetId, supabase, user]);
+  }, [authEnabled, configured, practiceSetId, resetVersion, supabase, user]);
+
+  const resetSavedAttempts = useCallback(() => {
+    setSavedAttempts({});
+    if (!user || typeof window === 'undefined') return;
+    window.localStorage.setItem(resetStorageKey(user.id, practiceSetId), String(Date.now()));
+    setResetVersion((version) => version + 1);
+  }, [practiceSetId, user]);
 
   const saveAttempt = useCallback(
     async (attempt: SavePracticeAttemptInput) => {
@@ -160,11 +181,12 @@ export const usePracticeProgress = (practiceSetId: string) => {
   return useMemo(
     () => ({
       canSync,
+      resetSavedAttempts,
       savedAttempts,
       saveAttempt,
       syncError,
       syncState,
     }),
-    [canSync, savedAttempts, saveAttempt, syncError, syncState],
+    [canSync, resetSavedAttempts, savedAttempts, saveAttempt, syncError, syncState],
   );
 };
