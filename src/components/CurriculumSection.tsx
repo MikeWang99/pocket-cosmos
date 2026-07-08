@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import katex from 'katex';
-import { BookOpenCheck, ChevronDown, ExternalLink, FunctionSquare, Image as ImageIcon, Layers3, ListChecks } from 'lucide-react';
+import { BookOpenCheck, ChevronDown, ExternalLink, FunctionSquare, Image as ImageIcon, Layers3, ListChecks, NotebookText } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useLanguage } from '../LanguageContext';
 import { learningSystems, type LearningSystemId } from '../data/physicsLearningSystems';
@@ -439,6 +439,70 @@ export const CurriculumSection: React.FC = () => {
                             </div>
                           </section>
                         </div>
+
+                        {!!unit.lessons?.length && (
+                          <section className="mt-4 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
+                            <div className="mb-3 flex items-center gap-2 text-nebula">
+                              <NotebookText className="h-4 w-4" />
+                              <h4 className="text-sm font-semibold">{t.curriculum.lessonsTitle}</h4>
+                            </div>
+                            <div className="space-y-4">
+                              {unit.lessons.map((lesson) => (
+                                <article key={lesson.title.en} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+                                  <h5 className="text-base font-semibold text-slate-900">{lesson.title[language]}</h5>
+                                  <p className="mt-2 text-sm leading-6 text-slate-600">{lesson.description[language]}</p>
+
+                                  <div className="mt-4 space-y-2">
+                                    {lesson.sections.map((section, index) => (
+                                      <details
+                                        key={section.heading.en}
+                                        open={index === 0}
+                                        className="group rounded-lg border border-slate-200 bg-[#ffffff] px-3 py-2"
+                                      >
+                                        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-1 text-sm font-semibold text-slate-800">
+                                          <span>{section.heading[language]}</span>
+                                          <ChevronDown className="h-4 w-4 shrink-0 text-slate-400 transition-transform group-open:rotate-180" />
+                                        </summary>
+                                        <div className="space-y-3 pb-2 pt-3">
+                                          {section.paragraphs?.map((paragraph) => (
+                                            <p key={paragraph.en} className="text-sm leading-7 text-slate-600">
+                                              {paragraph[language]}
+                                            </p>
+                                          ))}
+                                          {!!section.bullets?.length && (
+                                            <ul className="space-y-2">
+                                              {section.bullets.map((item) => (
+                                                <li key={item.en} className="flex gap-2 text-sm leading-6 text-slate-600">
+                                                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-nebula" />
+                                                  <span>{item[language]}</span>
+                                                </li>
+                                              ))}
+                                            </ul>
+                                          )}
+                                          {!!section.formulas?.length && (
+                                            <div className="grid gap-3 lg:grid-cols-2">
+                                              {section.formulas.map((item) => (
+                                                <div key={`${item.label.en}-${item.expression}`} className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                                                  <p className="text-xs font-semibold text-slate-600">{item.label[language]}</p>
+                                                  <MathBlock value={item.expression} />
+                                                </div>
+                                              ))}
+                                            </div>
+                                          )}
+                                          {section.takeaway && (
+                                            <div className="rounded-lg border border-nebula/15 bg-nebula/5 p-3 text-sm leading-6 text-slate-700">
+                                              {section.takeaway[language]}
+                                            </div>
+                                          )}
+                                        </div>
+                                      </details>
+                                    ))}
+                                  </div>
+                                </article>
+                              ))}
+                            </div>
+                          </section>
+                        )}
 
                         {!!unit.formulas?.length && (
                           <section className="mt-4 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
