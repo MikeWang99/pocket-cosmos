@@ -389,21 +389,21 @@ export const PracticeSection: React.FC = () => {
       exit={{ opacity: 0, y: -20 }}
       className="max-w-6xl"
     >
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-10">
-        <div>
-          <div className="flex items-center gap-3 text-nebula text-xs font-semibold tracking-widest uppercase mb-4">
+      <div className="mb-8 flex flex-col gap-6 lg:mb-10 lg:flex-row lg:items-end lg:justify-between">
+        <div className="min-w-0">
+          <div className="mb-3 flex items-center gap-3 text-xs font-semibold uppercase tracking-widest text-nebula sm:mb-4">
             <ClipboardCheck className="w-4 h-4" />
             {setCopy.eyebrow}
           </div>
-          <h1 className="text-4xl md:text-6xl font-serif font-light text-white leading-tight">
+          <h1 className="text-balance font-serif text-3xl font-light leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
             {setCopy.title}
           </h1>
-          <p className="text-slate-400 mt-4 max-w-2xl leading-relaxed">
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-400 sm:mt-4 sm:text-base">
             {setCopy.description}
           </p>
           {authEnabled && (
             <div
-              className={`mt-4 inline-flex max-w-full items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold ${
+                className={`mt-4 inline-flex max-w-full items-start gap-2 rounded-lg border px-3 py-2 text-xs font-semibold sm:items-center sm:rounded-full sm:px-4 ${
                 syncState === 'error'
                   ? 'border-rose-500/25 bg-rose-500/10 text-rose-700'
                   : user
@@ -413,7 +413,7 @@ export const PracticeSection: React.FC = () => {
               title={syncError ?? undefined}
             >
               {syncState === 'error' || !configured ? <CloudOff className="h-4 w-4 shrink-0" /> : <Cloud className="h-4 w-4 shrink-0" />}
-              <span>
+              <span className="min-w-0 leading-5">
                 {!configured
                   ? t.practice.progressPreviewConfig
                   : syncState === 'loading'
@@ -434,14 +434,14 @@ export const PracticeSection: React.FC = () => {
                 <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
                   {group.label}
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex gap-2 overflow-x-auto pb-1 sm:flex-wrap">
                   {group.sets.map((set) => {
                     const isActive = set.id === activeSetId;
                     return (
                       <button
                         key={set.id}
                         onClick={() => selectPracticeSet(set.id)}
-                        className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
+                        className={`min-h-10 shrink-0 rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
                           isActive
                             ? 'border-nebula/70 bg-nebula/15 text-white'
                             : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/30 hover:text-white'
@@ -457,30 +457,30 @@ export const PracticeSection: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 min-w-[280px]">
-          <div className="glass-panel rounded-lg p-4">
+        <div className="grid w-full grid-cols-3 gap-2 sm:gap-3 lg:w-auto lg:min-w-[280px]">
+          <div className="glass-panel rounded-lg p-3 sm:p-4">
             <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.practice.progress}</div>
-            <div className="text-2xl font-semibold mt-1">{completedCount}/{practiceSteps.length}</div>
+            <div className="mt-1 text-xl font-semibold sm:text-2xl">{completedCount}/{practiceSteps.length}</div>
           </div>
-          <div className="glass-panel rounded-lg p-4">
+          <div className="glass-panel rounded-lg p-3 sm:p-4">
             <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.practice.score}</div>
-            <div className="text-2xl font-semibold mt-1">{totalScore}/{totalPossible || 0}</div>
+            <div className="mt-1 text-xl font-semibold sm:text-2xl">{totalScore}/{totalPossible || 0}</div>
           </div>
           <button
             onClick={resetPractice}
-            className="glass-panel rounded-lg p-4 text-left hover:border-nebula/60 transition-colors"
+            className="glass-panel rounded-lg p-3 text-left transition-colors hover:border-nebula/60 sm:p-4"
             title={t.practice.resetTitle}
           >
-            <RotateCcw className="w-5 h-5 text-slate-300 mb-2" />
+            <RotateCcw className="mb-1 h-5 w-5 text-slate-300 sm:mb-2" />
             <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.practice.reset}</div>
           </button>
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-[260px_minmax(0,1fr)] gap-6">
-        <aside className="glass-panel rounded-lg p-3 h-fit">
+      <div className="grid gap-5 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-6 xl:grid-cols-[260px_minmax(0,1fr)]">
+        <aside className="glass-panel h-fit rounded-lg p-3 lg:sticky lg:top-6">
           <div className="px-3 py-2 text-[10px] uppercase tracking-widest text-slate-500">{t.practice.questionPath}</div>
-          <div className="flex lg:flex-col gap-2 overflow-x-auto pb-1">
+          <div className="flex gap-2 overflow-x-auto pb-1 lg:max-h-[calc(100vh-9rem)] lg:flex-col lg:overflow-y-auto">
             {practiceSteps.map((step, index) => {
               const result = results[step.id];
               const isActive = index === activeIndex;
@@ -488,7 +488,7 @@ export const PracticeSection: React.FC = () => {
                 <button
                   key={step.id}
                   onClick={() => goToStep(index)}
-                  className={`min-w-[170px] lg:min-w-0 text-left rounded-md px-3 py-3 border transition-colors ${
+                  className={`min-w-[150px] rounded-md border px-3 py-3 text-left transition-colors sm:min-w-[170px] lg:min-w-0 ${
                     isActive
                       ? 'border-nebula/70 bg-white/8 text-white'
                       : 'border-white/5 bg-white/[0.02] text-slate-400 hover:text-white hover:border-white/20'
@@ -521,11 +521,11 @@ export const PracticeSection: React.FC = () => {
               transition={{ duration: 0.2 }}
               className="glass-panel rounded-lg overflow-hidden"
             >
-              <div className="border-b border-white/10 p-6 md:p-8">
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                  <div>
+              <div className="border-b border-white/10 p-4 sm:p-6 md:p-8">
+                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                  <div className="min-w-0">
                     <div className="text-xs uppercase tracking-widest text-nebula mb-3">{activeStep.source}</div>
-                    <h2 className="text-2xl md:text-3xl font-serif text-white">{activeStep.title}</h2>
+                    <h2 className="text-balance font-serif text-2xl text-white md:text-3xl">{activeStep.title}</h2>
                   </div>
                   <div className="rounded-full border border-white/10 px-4 py-2 text-sm text-slate-300 w-fit">
                     {activeIndex + 1} / {practiceSteps.length}
@@ -533,8 +533,8 @@ export const PracticeSection: React.FC = () => {
                 </div>
 
                 <div className="mt-6">
-                  <div className="rounded-lg bg-white/[0.04] border border-white/10 p-5 md:p-6">
-                    <div className="space-y-3 text-base md:text-lg text-white leading-relaxed">
+                  <div className="rounded-lg border border-white/10 bg-white/[0.04] p-4 sm:p-5 md:p-6">
+                    <div className="space-y-3 text-base leading-relaxed text-white md:text-lg">
                       {splitPromptParts(activeStep.prompt).map((part) => (
                         <p key={part}>
                           {isActiveMultipleChoice ? <MathText>{part}</MathText> : <RichText>{part}</RichText>}
@@ -549,7 +549,7 @@ export const PracticeSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-6 md:p-8">
+              <div className="p-4 sm:p-6 md:p-8">
                 {isActiveMultipleChoice ? (
                   <div>
                     <div className="text-xs uppercase tracking-widest text-slate-500 mb-3">{t.practice.chooseAnswer}</div>
@@ -569,7 +569,7 @@ export const PracticeSection: React.FC = () => {
                               if (!currentResult) updateAnswer(choice.label);
                             }}
                             aria-pressed={isSelected}
-                            className={`grid grid-cols-[40px_minmax(0,1fr)] gap-3 rounded-lg border p-4 text-left transition-colors ${
+                            className={`grid grid-cols-[34px_minmax(0,1fr)] gap-3 rounded-lg border p-3 text-left transition-colors sm:grid-cols-[40px_minmax(0,1fr)] sm:p-4 ${
                               isCorrectChoice
                                 ? 'border-emerald-500/50 bg-emerald-500/10'
                                 : isWrongChoice
@@ -624,13 +624,13 @@ export const PracticeSection: React.FC = () => {
                       id="practice-answer"
                       value={currentAnswer}
                       onChange={(event) => updateAnswer(event.target.value)}
-                      className="min-h-[180px] w-full rounded-lg border border-white/10 bg-black/30 p-4 text-sm leading-relaxed text-white outline-none transition-colors placeholder:text-slate-600 focus:border-nebula/70"
+                      className="min-h-[180px] w-full rounded-lg border border-white/10 bg-black/30 p-4 text-base leading-relaxed text-white outline-none transition-colors placeholder:text-slate-600 focus:border-nebula/70 sm:text-sm"
                       placeholder={t.practice.answerPlaceholder}
                     />
                   </>
                 )}
 
-                <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex gap-3">
                     <button
                       onClick={() => goToStep(activeIndex - 1)}
@@ -655,7 +655,7 @@ export const PracticeSection: React.FC = () => {
                       disabled={
                       isActiveMultipleChoice ? !currentAnswer || Boolean(currentResult) : currentAnswer.trim().length < 8
                     }
-                      className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold uppercase tracking-widest text-black transition-colors hover:bg-nebula hover:text-white disabled:opacity-30"
+                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold uppercase tracking-widest text-black transition-colors hover:bg-nebula hover:text-white disabled:opacity-30"
                     >
                       <Sparkles className="w-4 h-4" />
                     {isActiveMultipleChoice ? t.practice.checkAnswer : t.practice.scoreResponse}
@@ -669,9 +669,9 @@ export const PracticeSection: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              className="grid md:grid-cols-[220px_minmax(0,1fr)] gap-6"
+              className="grid gap-5 md:grid-cols-[220px_minmax(0,1fr)] md:gap-6"
             >
-              <div className="glass-panel rounded-lg p-6">
+              <div className="glass-panel rounded-lg p-5 sm:p-6">
                 <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-3">{t.practice.rubricScore}</div>
                 <div className="text-5xl font-serif text-white">{currentResult.score}/{currentResult.maxScore}</div>
                 <div className="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
@@ -682,8 +682,8 @@ export const PracticeSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="glass-panel rounded-lg p-6">
-                <div className="grid md:grid-cols-2 gap-6">
+              <div className="glass-panel rounded-lg p-5 sm:p-6">
+                <div className="grid gap-5 md:grid-cols-2 md:gap-6">
                   <div>
                     <div className="flex items-center gap-2 text-emerald-300 text-xs uppercase tracking-widest mb-3">
                       <Target className="w-4 h-4" />
@@ -737,8 +737,8 @@ export const PracticeSection: React.FC = () => {
             </motion.div>
           )}
 
-          <div className="glass-panel rounded-lg p-6">
-            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-5">
+          <div className="glass-panel rounded-lg p-5 sm:p-6">
+            <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
               <div>
                 <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-2">{t.practice.sessionReport}</div>
                 <h3 className="text-2xl font-serif text-white">{t.practice.score} {totalScore}/{totalPossible || 0}</h3>

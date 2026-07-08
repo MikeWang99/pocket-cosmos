@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../LanguageContext';
-import { ClipboardCheck, BookOpenCheck, ShieldCheck } from 'lucide-react';
+import { ClipboardCheck, BookOpenCheck, Languages, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface SidebarProps {
@@ -19,8 +19,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, showA
   ];
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-20 flex flex-col items-center justify-between py-6 border-r border-white/10 glass z-50">
-      <div className="flex flex-col gap-8 items-center w-full">
+    <aside className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 glass md:inset-x-auto md:left-0 md:top-0 md:h-full md:w-20 md:border-r md:border-t-0">
+      <div className="hidden w-full flex-col items-center gap-8 py-6 md:flex">
         <div
           className="text-[10px] font-bold tracking-widest opacity-40 uppercase"
           style={{
@@ -37,35 +37,44 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, showA
         />
       </div>
 
-      <nav className="flex-1 w-full flex flex-col items-center justify-center gap-6">
+      <nav className={`mx-auto grid max-w-md items-center gap-1 py-2 pl-3 pr-14 md:absolute md:inset-y-0 md:left-0 md:mx-0 md:flex md:w-full md:max-w-none md:flex-col md:justify-center md:gap-6 md:px-0 md:py-0 ${navItems.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
         {navItems.map((item) => {
           const isActive = activeTab === item.id;
           return (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className="relative group flex items-center justify-center w-12 h-12"
+              className="group relative flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl px-2 text-[10px] font-semibold text-slate-500 md:h-12 md:min-h-0 md:w-12 md:rounded-none md:px-0"
               title={item.label}
             >
               {isActive && (
                 <motion.div
                   layoutId="activeTab"
-                  className="absolute inset-0 bg-white/5 border border-white/10 rounded-full"
+                  className="absolute inset-0 rounded-xl border border-white/10 bg-white/5 md:rounded-full"
                   initial={false}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
               )}
               <item.icon className={`w-5 h-5 shrink-0 relative z-10 transition-colors ${isActive ? 'text-nebula' : 'text-slate-400 group-hover:text-slate-200'}`} />
+              <span className={`relative z-10 leading-none md:hidden ${isActive ? 'text-nebula' : ''}`}>{item.label}</span>
             </button>
           );
         })}
       </nav>
 
-      <div className="flex flex-col items-center gap-4 text-[10px] font-semibold tracking-tighter w-full">
-        <button onClick={toggleLanguage} className="text-nebula hover:text-quantum transition-colors" title={t.nav.language}>
+      <div className="absolute right-3 top-3 hidden flex-col items-center gap-4 text-[10px] font-semibold tracking-tighter md:bottom-6 md:left-0 md:right-auto md:top-auto md:flex md:w-full">
+        <button onClick={toggleLanguage} className="text-nebula transition-colors hover:text-quantum" title={t.nav.language}>
           {t.nav.language}
         </button>
       </div>
+
+      <button
+        onClick={toggleLanguage}
+        className="absolute right-3 top-2 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-nebula md:hidden"
+        title={t.nav.language}
+      >
+        <Languages className="h-4 w-4" />
+      </button>
     </aside>
   );
 };
