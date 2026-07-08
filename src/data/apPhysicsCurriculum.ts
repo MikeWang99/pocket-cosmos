@@ -20,8 +20,17 @@ export interface CurriculumDiagram {
   caption: LocalizedText;
 }
 
+export interface CurriculumVideo {
+  provider: 'youtube';
+  title: LocalizedText;
+  embedUrl: string;
+  sourceUrl: string;
+  sourceLabel: LocalizedText;
+}
+
 export interface CurriculumLessonSection {
   heading: LocalizedText;
+  videos?: CurriculumVideo[];
   paragraphs?: LocalizedText[];
   bullets?: LocalizedText[];
   formulas?: CurriculumFormula[];
