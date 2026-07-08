@@ -4,8 +4,6 @@ import katex from 'katex';
 import {
   ArrowLeft,
   ArrowRight,
-  CheckCircle2,
-  CircleX,
   ClipboardCheck,
   Cloud,
   CloudOff,
@@ -480,31 +478,34 @@ export const PracticeSection: React.FC = () => {
       <div className="grid gap-5 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-6 xl:grid-cols-[260px_minmax(0,1fr)]">
         <aside className="glass-panel h-fit rounded-lg p-3 lg:sticky lg:top-6">
           <div className="px-3 py-2 text-[10px] uppercase tracking-widest text-slate-500">{t.practice.questionPath}</div>
-          <div className="flex gap-2 overflow-x-auto pb-1 lg:max-h-[calc(100vh-9rem)] lg:flex-col lg:overflow-y-auto">
+          <div className="grid auto-cols-[44px] grid-flow-col gap-2 overflow-x-auto pb-1 lg:max-h-[calc(100vh-9rem)] lg:grid-flow-row lg:grid-cols-5 lg:overflow-y-auto xl:grid-cols-6">
             {practiceSteps.map((step, index) => {
               const result = results[step.id];
               const isActive = index === activeIndex;
+              const isCorrect = result && result.score >= result.maxScore;
               return (
                 <button
                   key={step.id}
                   onClick={() => goToStep(index)}
-                  className={`min-w-[150px] rounded-md border px-3 py-3 text-left transition-colors sm:min-w-[170px] lg:min-w-0 ${
+                  className={`relative grid h-11 w-11 shrink-0 place-items-center rounded-lg border text-sm font-semibold transition-colors ${
                     isActive
-                      ? 'border-nebula/70 bg-white/8 text-white'
-                      : 'border-white/5 bg-white/[0.02] text-slate-400 hover:text-white hover:border-white/20'
+                      ? 'border-nebula/70 bg-nebula/12 text-nebula'
+                      : result
+                        ? isCorrect
+                          ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700 hover:border-emerald-500/55'
+                          : 'border-rose-500/35 bg-rose-500/10 text-rose-700 hover:border-rose-500/55'
+                        : 'border-white/10 bg-white/[0.03] text-slate-500 hover:border-white/30 hover:text-nebula'
                   }`}
+                  title={`${t.practice.questionPath} ${index + 1}`}
                 >
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="text-xs font-semibold">{step.title}</span>
-                    {result && (
-                      result.score >= result.maxScore ? (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                      ) : (
-                        <CircleX className="w-4 h-4 text-rose-500 shrink-0" />
-                      )
-                    )}
-                  </div>
-                  <div className="text-[10px] mt-1 opacity-60">{result ? `${result.score}/${result.maxScore} ${t.practice.points}` : `${step.maxScore} ${t.practice.points}`}</div>
+                  {index + 1}
+                  {result && (
+                    <span
+                      className={`absolute right-1 top-1 h-1.5 w-1.5 rounded-full ${
+                        isCorrect ? 'bg-emerald-500' : 'bg-rose-500'
+                      }`}
+                    />
+                  )}
                 </button>
               );
             })}
