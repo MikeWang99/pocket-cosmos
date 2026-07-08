@@ -424,24 +424,24 @@ const apEnrichment: Record<string, Enrichment> = {
     ['Interpret slope and area on position, velocity, and acceleration graphs.', '解释位置、速度、加速度图像的斜率和面积。'],
     ['Model one- and two-dimensional motion with vector components.', '用矢量分量建立一维和二维运动模型。'],
   ]),
-  'physics-1:2': {
-    ...enrich('dynamics', 'dynamics', 'dynamics', [
-      ['Represent interactions with system boundaries and free-body diagrams.', '用系统边界和自由体图表示相互作用。'],
-      ['Apply Newton’s laws to friction, springs, gravity, and circular motion.', '把牛顿定律应用到摩擦、弹簧、重力和圆周运动。'],
-      ['Separate internal forces from external forces before writing equations.', '列方程前先区分内力与外力。'],
-    ]),
-    lessons: [centerOfMassLesson],
-  },
+  'physics-1:2': enrich('dynamics', 'dynamics', 'dynamics', [
+    ['Represent interactions with system boundaries and free-body diagrams.', '用系统边界和自由体图表示相互作用。'],
+    ['Apply Newton’s laws to friction, springs, gravity, and circular motion.', '把牛顿定律应用到摩擦、弹簧、重力和圆周运动。'],
+    ['Separate internal forces from external forces before writing equations.', '列方程前先区分内力与外力。'],
+  ]),
   'physics-1:3': enrich('energy', 'energy', 'energy', [
     ['Connect work to energy transfer and changes in kinetic or potential energy.', '把功和能量转移、动能或势能变化连接起来。'],
     ['Use system choice to decide whether energy is conserved.', '通过系统选择判断机械能是否守恒。'],
     ['Interpret power as the rate of energy transfer.', '把功率理解为能量转移速率。'],
   ]),
-  'physics-1:4': enrich('momentum', 'momentum', 'momentum', [
-    ['Use impulse to connect net force over time with momentum change.', '用冲量连接一段时间内的合外力与动量变化。'],
-    ['Identify when momentum is conserved for a chosen system.', '判断所选系统何时动量守恒。'],
-    ['Compare elastic and inelastic collisions using energy and momentum.', '用能量和动量比较弹性与非弹性碰撞。'],
-  ]),
+  'physics-1:4': {
+    ...enrich('momentum', 'momentum', 'momentum', [
+      ['Use impulse to connect net force over time with momentum change.', '用冲量连接一段时间内的合外力与动量变化。'],
+      ['Identify when momentum is conserved for a chosen system.', '判断所选系统何时动量守恒。'],
+      ['Compare elastic and inelastic collisions using energy and momentum.', '用能量和动量比较弹性与非弹性碰撞。'],
+    ]),
+    lessons: [centerOfMassLesson],
+  },
   'physics-1:5': enrich('rotation', 'rotation', 'rotation', [
     ['Translate between linear and angular quantities.', '在平动量和转动量之间转换。'],
     ['Use torque to predict rotational equilibrium and angular acceleration.', '用力矩预测转动平衡和角加速度。'],
@@ -502,24 +502,24 @@ const apEnrichment: Record<string, Enrichment> = {
     ['Handle 2D/3D vectors, parametric motion, and relative motion.', '处理二维/三维矢量、参数运动和相对运动。'],
     ['Interpret motion graphs quantitatively.', '定量解释运动图像。'],
   ]),
-  'mechanics:2': {
-    ...enrich('dynamics', 'dynamics', 'dynamics', [
-      ['Build Newton-law equations from free-body diagrams.', '从自由体图建立牛顿定律方程。'],
-      ['Model drag and circular motion with calculus-ready reasoning.', '用适合微积分的方式建模阻力和圆周运动。'],
-      ['Choose coordinates that simplify force components.', '选择能简化力分量的坐标系。'],
-    ]),
-    lessons: [centerOfMassLesson],
-  },
+  'mechanics:2': enrich('dynamics', 'dynamics', 'dynamics', [
+    ['Build Newton-law equations from free-body diagrams.', '从自由体图建立牛顿定律方程。'],
+    ['Model drag and circular motion with calculus-ready reasoning.', '用适合微积分的方式建模阻力和圆周运动。'],
+    ['Choose coordinates that simplify force components.', '选择能简化力分量的坐标系。'],
+  ]),
   'mechanics:3': enrich('energy', 'energy', 'energy', [
     ['Evaluate work by dot products and integrals.', '用点积和积分计算功。'],
     ['Connect conservative forces with potential energy functions.', '把保守力与势能函数连接起来。'],
     ['Use power as instantaneous energy-transfer rate.', '把功率作为瞬时能量转移速率。'],
   ]),
-  'mechanics:4': enrich('momentum', 'momentum', 'momentum', [
-    ['Use impulse from force-time graphs and integrals.', '从力-时间图像和积分求冲量。'],
-    ['Apply center-of-mass reasoning to multi-object systems.', '用质心思想分析多物体系统。'],
-    ['Combine momentum and energy constraints in collisions.', '在碰撞中结合动量和能量约束。'],
-  ]),
+  'mechanics:4': {
+    ...enrich('momentum', 'momentum', 'momentum', [
+      ['Use impulse from force-time graphs and integrals.', '从力-时间图像和积分求冲量。'],
+      ['Apply center-of-mass reasoning to multi-object systems.', '用质心思想分析多物体系统。'],
+      ['Combine momentum and energy constraints in collisions.', '在碰撞中结合动量和能量约束。'],
+    ]),
+    lessons: [centerOfMassLesson],
+  },
   'mechanics:5': enrich('rotation', 'rotation', 'rotation', [
     ['Use rotational kinematics and torque with calculus notation.', '用微积分符号处理转动运动学和力矩。'],
     ['Compute or use rotational inertia for extended bodies.', '计算或使用刚体转动惯量。'],
