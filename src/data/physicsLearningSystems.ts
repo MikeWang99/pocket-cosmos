@@ -592,26 +592,26 @@ const centerOfMassCalculusLesson: CurriculumLesson = {
 
 const scalarsVectors1DLesson: CurriculumLesson = {
   title: text('Scalars, Vectors, and One-Dimensional Motion', '标量、矢量与一维运动'),
-  description: text('Build the foundation of motion description: scalars vs vectors, displacement vs distance, velocity vs speed, and how to choose a reference frame.', '建立运动描述的基础：标量与矢量、位移与路程、速度与速率，以及如何建立参考系。'),
+  description: text('Build the foundation of motion description: scalars vs vectors, displacement vs distance, velocity vs speed, and how to choose a reference frame.', '建立运动描述的基础:标量与矢量、位移与路程、速度与速率,以及如何建立参考系。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题？'),
-      paragraphs: [        text('When we describe how something moves, words like "fast" or "far" are not enough for physics. We need quantities that carry both size and direction, and a rule for measuring them consistently.', '当我们描述一个物体的运动，光说"快"或"远"在物理中是不够的。我们需要同时包含大小和方向的量，以及一套一致的测量规则。'),
-        text('This lesson introduces scalars (numbers only), vectors (numbers with direction), and how to use them to describe one-dimensional motion.', '本节介绍标量（只有数值）、矢量（数值加方向），以及如何用它们描述一维运动。')],
-      takeaway: text('Scalars tell you "how much." Vectors tell you "how much and which way."', '标量告诉你"有多少"。矢量告诉你"有多少，向哪边"。')
+      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      paragraphs: [        text('When we describe how something moves, words like "fast" or "far" are not enough for physics. We need quantities that carry both size and direction, and a rule for measuring them consistently.', '当我们描述一个物体的运动,光说"快"或"远"在物理中是不够的。我们需要同时包含大小和方向的量,以及一套一致的测量规则。'),
+        text('This lesson introduces scalars (numbers only), vectors (numbers with direction), and how to use them to describe one-dimensional motion.', '本节介绍标量(只有数值)、矢量(数值加方向),以及如何用它们描述一维运动。')],
+      takeaway: text('Scalars tell you "how much." Vectors tell you "how much and which way."', '标量告诉你"有多少"。矢量告诉你"有多少,向哪边"。')
     },
     {
       heading: text('1. Scalars vs vectors', '1. 标量与矢量'),
-      paragraphs: [        text('A scalar is a single number with a unit, such as 5 kg or 20 C. A vector has both magnitude and direction. In one dimension, direction is captured by a sign: positive or negative relative to a chosen positive direction.', '标量是一个带单位的数值，如 5 kg 或 20 C。矢量既有大小又有方向。在一维中，方向由正负号表示：相对于选定的正方向为正或为负。')],
-      bullets: [        text('Scalar examples: mass, temperature, speed, distance, time.', '标量示例：质量、温度、速率、路程、时间。'),
-        text('Vector examples in 1D: displacement, velocity, acceleration.', '一维矢量示例：位移、速度、加速度。'),
-        text('In 1D, a vector is a signed number: +3 m/s means 3 m/s in the positive direction.', '在一维中，矢量是带正负号的数：+3 m/s 表示正方向 3 m/s。')],
+      paragraphs: [        text('A scalar is a single number with a unit, such as 5 kg or 20 C. A vector has both magnitude and direction. In one dimension, direction is captured by a sign: positive or negative relative to a chosen positive direction.', '标量是一个带单位的数值,如 5 kg 或 20 C。矢量既有大小又有方向。在一维中,方向由正负号表示:相对于选定的正方向为正或为负。')],
+      bullets: [        text('Scalar examples: mass, temperature, speed, distance, time.', '标量示例:质量、温度、速率、路程、时间。'),
+        text('Vector examples in 1D: displacement, velocity, acceleration.', '一维矢量示例:位移、速度、加速度。'),
+        text('In 1D, a vector is a signed number: +3 m/s means 3 m/s in the positive direction.', '在一维中,矢量是带正负号的数:+3 m/s 表示正方向 3 m/s。')],
       formulas: [        formula('Speed is magnitude of velocity', '速率是速度的大小', '\text{speed}=|v|')]
     },
     {
       heading: text('2. Displacement vs distance', '2. 位移与路程'),
-      paragraphs: [        text('Distance counts every meter traveled, regardless of direction. Displacement only cares about the starting point and the ending point.', '路程统计走过的每一米，不管方向。位移只关心起点和终点。'),
-        text('If you walk 3 m forward and 2 m backward, distance = 5 m but displacement = +1 m (assuming forward is positive).', '如果你向前走 3 m 再向后走 2 m，路程 = 5 m，但位移 = +1 m（假设向前为正）。')],
+      paragraphs: [        text('Distance counts every meter traveled, regardless of direction. Displacement only cares about the starting point and the ending point.', '路程统计走过的每一米,不管方向。位移只关心起点和终点。'),
+        text('If you walk 3 m forward and 2 m backward, distance = 5 m but displacement = +1 m (assuming forward is positive).', '如果你向前走 3 m 再向后走 2 m,路程 = 5 m,但位移 = +1 m(假设向前为正)。')],
       formulas: [        formula('Displacement', '位移', '\Delta x=x_f-x_i'),
         formula('Distance', '路程', 'd=\text{total path length}')]
     },
@@ -622,16 +622,16 @@ const scalarsVectors1DLesson: CurriculumLesson = {
         formula('Average speed', '平均速率', '\text{average speed}=\frac{\text{total distance}}{\Delta t}')]
     },
     {
-      heading: text('4. Classroom check: round trip', '4. 课堂题：往返运动'),
+      heading: text('4. Classroom check: round trip', '4. 课堂题:往返运动'),
       classroomQuestions: [        {
           id: 'scalar-vector-round-trip',
-          title: text('Classroom Check: displacement and velocity', '课堂题：位移与速度'),
-          prompt: text('A runner goes 100 m east in 20 s, then turns around and runs 60 m west in 15 s. Taking east as positive, which statement is correct?', '一名运动员向东跑 100 m 用时 20 s，然后掉头向西跑 60 m 用时 15 s。规定向东为正，下列哪项正确？'),
+          title: text('Classroom Check: displacement and velocity', '课堂题:位移与速度'),
+          prompt: text('A runner goes 100 m east in 20 s, then turns around and runs 60 m west in 15 s. Taking east as positive, which statement is correct?', '一名运动员向东跑 100 m 用时 20 s,然后掉头向西跑 60 m 用时 15 s。规定向东为正,下列哪项正确?'),
           choices: [
-            { label: 'A', text: text('Average speed = 4.57 m/s, average velocity = +1.14 m/s', '平均速率 = 4.57 m/s，平均速度 = +1.14 m/s') },
-            { label: 'B', text: text('Average speed = 4 m/s, average velocity = +1.14 m/s', '平均速率 = 4 m/s，平均速度 = +1.14 m/s') },
-            { label: 'C', text: text('Average speed = 4.57 m/s, average velocity = 0 m/s', '平均速率 = 4.57 m/s，平均速度 = 0 m/s') },
-            { label: 'D', text: text('Average speed = 1.14 m/s, average velocity = 4.57 m/s', '平均速率 = 1.14 m/s，平均速度 = 4.57 m/s') },
+            { label: 'A', text: text('Average speed = 4.57 m/s, average velocity = +1.14 m/s', '平均速率 = 4.57 m/s,平均速度 = +1.14 m/s') },
+            { label: 'B', text: text('Average speed = 4 m/s, average velocity = +1.14 m/s', '平均速率 = 4 m/s,平均速度 = +1.14 m/s') },
+            { label: 'C', text: text('Average speed = 4.57 m/s, average velocity = 0 m/s', '平均速率 = 4.57 m/s,平均速度 = 0 m/s') },
+            { label: 'D', text: text('Average speed = 1.14 m/s, average velocity = 4.57 m/s', '平均速率 = 1.14 m/s,平均速度 = 4.57 m/s') },
           ],
           correctAnswer: 'A',
           feedback: text('Total distance = 160 m. Total time = 35 s. Average speed = 160/35 = 4.57 m/s. Displacement = 100 - 60 = 40 m east. Average velocity = 40/35 = 1.14 m/s.', '总路程 = 160 m。总时间 = 35 s。平均速率 = 160/35 = 4.57 m/s。位移 = 100 - 60 = 40 m 向东。平均速度 = 40/35 = 1.14 m/s。'),
@@ -659,8 +659,8 @@ const positionVelocityAccelerationLesson: CurriculumLesson = {
   description: text('Connect the three core kinematic quantities through definitions, graphs, and the constant-acceleration model.', '通过定义、图像和匀加速模型连接位置、速度、加速度三个核心运动学量。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题？'),
-      paragraphs: [        text('If you know where an object is at every moment, can you predict where it will be next? The answers depend on understanding the relationship between position, velocity, and acceleration.', '如果你知道一个物体每一时刻的位置，能预测它下一刻在哪里吗？答案取决于你对位置、速度和加速度之间关系的理解。')],
+      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      paragraphs: [        text('If you know where an object is at every moment, can you predict where it will be next? The answers depend on understanding the relationship between position, velocity, and acceleration.', '如果你知道一个物体每一时刻的位置,能预测它下一刻在哪里吗?答案取决于你对位置、速度和加速度之间关系的理解。')],
       takeaway: text('Position tells you where. Velocity tells you where you are going. Acceleration tells you how velocity is changing.', '位置告诉你在哪里。速度告诉你往哪走。加速度告诉你速度怎么变。')
     },
     {
@@ -671,7 +671,7 @@ const positionVelocityAccelerationLesson: CurriculumLesson = {
     },
     {
       heading: text('2. The meaning of acceleration', '2. 加速度的含义'),
-      paragraphs: [        text('Acceleration is not the same as speed. When acceleration and velocity point in the same direction, the object speeds up. When they point in opposite directions, the object slows down.', '加速度不等于速度。当加速度和速度同向时，物体加速；当它们反向时，物体减速。')]
+      paragraphs: [        text('Acceleration is not the same as speed. When acceleration and velocity point in the same direction, the object speeds up. When they point in opposite directions, the object slows down.', '加速度不等于速度。当加速度和速度同向时,物体加速;当它们反向时,物体减速。')]
     },
     {
       heading: text('3. Reading motion graphs', '3. 读取运动图像'),
@@ -681,31 +681,31 @@ const positionVelocityAccelerationLesson: CurriculumLesson = {
     },
     {
       heading: text('4. Constant-acceleration model', '4. 匀加速模型'),
-      paragraphs: [        text('When acceleration is constant, we can derive simple equations that connect position, velocity, and time.', '当加速度恒定时，我们可以推导出简单的方程来连接位置、速度和时间。')],
+      paragraphs: [        text('When acceleration is constant, we can derive simple equations that connect position, velocity, and time.', '当加速度恒定时,我们可以推导出简单的方程来连接位置、速度和时间。')],
       formulas: [        formula('Velocity-time', '速度-时间关系', 'v=v_0+at'),
         formula('Position-time', '位置-时间关系', 'x=x_0+v_0t+\frac12at^2'),
         formula('Velocity-position', '速度-位移关系', 'v^2=v_0^2+2a(x-x_0)')],
       takeaway: text('These equations only work when acceleration is constant. Always check this condition first.', '这些方程只在加速度恒定时成立。使用前一定要先检查这个条件。')
     },
     {
-      heading: text('5. Classroom check: speeding up or slowing down?', '5. 课堂题：加速还是减速？'),
+      heading: text('5. Classroom check: speeding up or slowing down?', '5. 课堂题:加速还是减速?'),
       classroomQuestions: [        {
           id: 'speeding-up-or-slowing-down',
-          title: text('Classroom Check: sign analysis', '课堂题：符号分析'),
-          prompt: text('An object has velocity v = -5 m/s and acceleration a = -2 m/s^2. Is the object speeding up or slowing down?', '一个物体的速度为 v = -5 m/s，加速度为 a = -2 m/s^2。该物体在加速还是减速？'),
+          title: text('Classroom Check: sign analysis', '课堂题:符号分析'),
+          prompt: text('An object has velocity v = -5 m/s and acceleration a = -2 m/s^2. Is the object speeding up or slowing down?', '一个物体的速度为 v = -5 m/s,加速度为 a = -2 m/s^2。该物体在加速还是减速?'),
           choices: [
-            { label: 'A', text: text('Speeding up, because velocity and acceleration have the same sign.', '加速，因为速度和加速度同号。') },
-            { label: 'B', text: text('Slowing down, because acceleration is negative.', '减速，因为加速度为负。') },
-            { label: 'C', text: text('Speeding up, because acceleration is negative.', '加速，因为加速度为负。') },
-            { label: 'D', text: text('Slowing down, because velocity is negative.', '减速，因为速度为负。') },
+            { label: 'A', text: text('Speeding up, because velocity and acceleration have the same sign.', '加速,因为速度和加速度同号。') },
+            { label: 'B', text: text('Slowing down, because acceleration is negative.', '减速,因为加速度为负。') },
+            { label: 'C', text: text('Speeding up, because acceleration is negative.', '加速,因为加速度为负。') },
+            { label: 'D', text: text('Slowing down, because velocity is negative.', '减速,因为速度为负。') },
           ],
           correctAnswer: 'A',
-          feedback: text('When velocity and acceleration have the same sign, the magnitude of velocity increases. The object is moving in the negative direction and getting faster in that direction: speeding up.', '当速度和加速度同号时，速度的大小增加。物体向负方向运动且越来越快：加速。'),
+          feedback: text('When velocity and acceleration have the same sign, the magnitude of velocity increases. The object is moving in the negative direction and getting faster in that direction: speeding up.', '当速度和加速度同号时,速度的大小增加。物体向负方向运动且越来越快:加速。'),
         }]
     },
     {
-      heading: text('6. Free fall as a constant-acceleration example', '6. 自由落体：匀加速的实例'),
-      paragraphs: [        text('Near the surface, a falling object (ignoring air resistance) experiences constant downward acceleration of about 9.8 m/s^2.', '在地球表面附近，下落物体（忽略空气阻力）受到恒定的向下加速度，约 9.8 m/s^2。')],
+      heading: text('6. Free fall as a constant-acceleration example', '6. 自由落体:匀加速的实例'),
+      paragraphs: [        text('Near the surface, a falling object (ignoring air resistance) experiences constant downward acceleration of about 9.8 m/s^2.', '在地球表面附近,下落物体(忽略空气阻力)受到恒定的向下加速度,约 9.8 m/s^2。')],
       formulas: [        formula('Free-fall acceleration', '自由落体加速度', 'a_y=-g\approx-9.8\ \text{m/s}^2\quad(\text{taking up as positive})')]
     },
     {
@@ -726,33 +726,33 @@ const positionVelocityAccelerationLesson: CurriculumLesson = {
 
 const referenceFramesRelativeMotionLesson: CurriculumLesson = {
   title: text('Reference Frames and Relative Motion', '参考系与相对运动'),
-  description: text('Why the same motion looks different from different viewpoints, and how to translate between reference frames.', '为什么同一个运动在不同视角下看起来不同，以及如何在参考系之间转换。'),
+  description: text('Why the same motion looks different from different viewpoints, and how to translate between reference frames.', '为什么同一个运动在不同视角下看起来不同,以及如何在参考系之间转换。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题？'),
-      paragraphs: [        text('If you sit on a train and watch another train pass by, is it moving or are you moving? Both answers can be correct, depending on your reference frame.', '如果你坐在火车上看另一列火车经过，是它在动还是你在动？两个答案都可以正确，取决于你的参考系。')],
+      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      paragraphs: [        text('If you sit on a train and watch another train pass by, is it moving or are you moving? Both answers can be correct, depending on your reference frame.', '如果你坐在火车上看另一列火车经过,是它在动还是你在动?两个答案都可以正确,取决于你的参考系。')],
       takeaway: text('Motion is always measured relative to a chosen reference frame. State your frame first.', '运动总是相对于某个选定的参考系来测量的。先说清你的参考系。')
     },
     {
-      heading: text('1. What is a reference frame?', '1. 什么是参考系？'),
-      paragraphs: [        text('A reference frame is a coordinate system with an origin and a set of axes, plus a clock to measure time.', '参考系是一个带原点和坐标轴的坐标系，加上测量时间的时钟。')]
+      heading: text('1. What is a reference frame?', '1. 什么是参考系?'),
+      paragraphs: [        text('A reference frame is a coordinate system with an origin and a set of axes, plus a clock to measure time.', '参考系是一个带原点和坐标轴的坐标系,加上测量时间的时钟。')]
     },
     {
       heading: text('2. Relative velocity in one dimension', '2. 一维相对速度'),
-      paragraphs: [        text('If observer A measures an object moving at a certain velocity relative to A, and A itself moves relative to C, then C measures the object velocity as the sum of the two.', '如果观察者 A 测得物体相对于 A 的速度，而 A 自身相对于 C 运动，则 C 测得物体的速度为两者之和。')],
+      paragraphs: [        text('If observer A measures an object moving at a certain velocity relative to A, and A itself moves relative to C, then C measures the object velocity as the sum of the two.', '如果观察者 A 测得物体相对于 A 的速度,而 A 自身相对于 C 运动,则 C 测得物体的速度为两者之和。')],
       formulas: [        formula('Relative velocity (1D)', '一维相对速度', 'v_{BC}=v_{BA}+v_{AC}')]
     },
     {
-      heading: text('3. Classroom check: moving walkway', '3. 课堂题：移动人行道'),
+      heading: text('3. Classroom check: moving walkway', '3. 课堂题:移动人行道'),
       classroomQuestions: [        {
           id: 'relative-motion-walkway',
-          title: text('Classroom Check: reference frames', '课堂题：参考系'),
-          prompt: text('A moving walkway travels at 2 m/s relative to the ground. A person walks forward on the walkway at 1 m/s relative to the walkway. What is the person speed relative to the ground?', '一条移动人行道相对于地面以 2 m/s 前进。一个人在人行道上以 1 m/s 相对于人行道向前走。这个人相对于地面的速度是多少？'),
+          title: text('Classroom Check: reference frames', '课堂题:参考系'),
+          prompt: text('A moving walkway travels at 2 m/s relative to the ground. A person walks forward on the walkway at 1 m/s relative to the walkway. What is the person speed relative to the ground?', '一条移动人行道相对于地面以 2 m/s 前进。一个人在人行道上以 1 m/s 相对于人行道向前走。这个人相对于地面的速度是多少?'),
           choices: [
             { label: 'A', text: text('1 m/s', '1 m/s') },
             { label: 'B', text: text('2 m/s', '2 m/s') },
             { label: 'C', text: text('3 m/s', '3 m/s') },
-            { label: 'D', text: text('Cannot be determined without more information.', '信息不足，无法判断。') },
+            { label: 'D', text: text('Cannot be determined without more information.', '信息不足,无法判断。') },
           ],
           correctAnswer: 'C',
           feedback: text('v_pg = v_pw + v_wg = 1 + 2 = 3 m/s. The person velocity relative to the ground is the sum of their velocity relative to the walkway plus the walkway velocity relative to the ground.', 'v_pg = v_pw + v_wg = 1 + 2 = 3 m/s。人相对于地面的速度等于人相对于人行道的速度加上人行道相对于地面的速度。'),
@@ -773,38 +773,38 @@ const referenceFramesRelativeMotionLesson: CurriculumLesson = {
 
 const systemsCenterOfMassUnit2Lesson: CurriculumLesson = {
   title: text('Systems and Center of Mass', '系统与质心'),
-  description: text('Define what a system means in physics, distinguish internal from external forces, and use center of mass to represent the motion of complex objects.', '定义物理中的系统概念，区分内力与外力，用质心代表复杂物体的运动。'),
+  description: text('Define what a system means in physics, distinguish internal from external forces, and use center of mass to represent the motion of complex objects.', '定义物理中的系统概念,区分内力与外力,用质心代表复杂物体的运动。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题？'),
-      paragraphs: [        text('Before writing any force equation, you must decide what you are analyzing. The choice of system determines which forces are internal and which are external, and only external forces appear in the system equation.', '在写任何力的方程之前，你必须决定你要分析什么。系统的选择决定了哪些力是内力、哪些是外力，而只有外力出现在系统方程中。')],
+      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      paragraphs: [        text('Before writing any force equation, you must decide what you are analyzing. The choice of system determines which forces are internal and which are external, and only external forces appear in the system equation.', '在写任何力的方程之前,你必须决定你要分析什么。系统的选择决定了哪些力是内力、哪些是外力,而只有外力出现在系统方程中。')],
       takeaway: text('Choose your system first. Everything else follows from that choice.', '先选系统。其他一切都从这个选择出发。')
     },
     {
-      heading: text('1. What is a system?', '1. 什么是系统？'),
+      heading: text('1. What is a system?', '1. 什么是系统?'),
       paragraphs: [        text('A system is the set of objects you choose to analyze together. Everything outside the system is the environment.', '系统是你选择一起分析的一组物体。系统之外的一切都是环境。'),
         text('Internal forces are forces between objects inside the system. External forces are forces from the environment acting on the system.', '内力是系统内部物体之间的力。外力是环境中物体对系统施加的力。')],
-      bullets: [        text('Two carts pushing each other: if both are in the system, the push is internal.', '两辆小车互相推：如果都在系统内，推力是内力。'),
-        text('If only one cart is in the system, the other cart push is external.', '如果只有一辆车在系统内，另一辆车的推力就是外力。')]
+      bullets: [        text('Two carts pushing each other: if both are in the system, the push is internal.', '两辆小车互相推:如果都在系统内,推力是内力。'),
+        text('If only one cart is in the system, the other cart push is external.', '如果只有一辆车在系统内,另一辆车的推力就是外力。')]
     },
     {
       heading: text('2. Internal vs external forces', '2. 内力与外力'),
-      paragraphs: [        text('Internal forces always come in equal-and-opposite pairs. When you add the force equations for all parts of a system, internal forces cancel. Only external forces determine the system overall acceleration.', '内力总是成对出现、大小相等方向相反。把系统各部分的力方程加起来时，内力抵消。只有外力决定系统的整体加速度。')],
+      paragraphs: [        text('Internal forces always come in equal-and-opposite pairs. When you add the force equations for all parts of a system, internal forces cancel. Only external forces determine the system overall acceleration.', '内力总是成对出现、大小相等方向相反。把系统各部分的力方程加起来时,内力抵消。只有外力决定系统的整体加速度。')],
       formulas: [        formula('Internal force pair', '内力对', '\vec F_{AB}=-\vec F_{BA}'),
         formula('System equation', '系统方程', '\sum \vec F_{\mathrm{ext}}=M\vec a_{\mathrm{cm}}')]
     },
     {
       heading: text('3. Center of mass as the representative point', '3. 质心作为代表点'),
-      paragraphs: [        text('For an extended object or a multi-object system, the center of mass is the point that moves as if all the mass were concentrated there and all external forces acted there.', '对于一个有尺寸的物体或多物体系统，质心就是那个表现得像所有质量都集中在那里、所有外力都作用在那里的点。')],
-      formulas: [        formula('Center of mass (discrete)', '质心（离散）', 'x_{\mathrm{cm}}=\frac{\sum m_ix_i}{\sum m_i}'),
+      paragraphs: [        text('For an extended object or a multi-object system, the center of mass is the point that moves as if all the mass were concentrated there and all external forces acted there.', '对于一个有尺寸的物体或多物体系统,质心就是那个表现得像所有质量都集中在那里、所有外力都作用在那里的点。')],
+      formulas: [        formula('Center of mass (discrete)', '质心(离散)', 'x_{\mathrm{cm}}=\frac{\sum m_ix_i}{\sum m_i}'),
         formula('System Newton second law', '系统牛顿第二定律', '\sum \vec F_{\mathrm{ext}}=M\vec a_{\mathrm{cm}}')]
     },
     {
-      heading: text('4. Classroom check: system choice', '4. 课堂题：系统选择'),
+      heading: text('4. Classroom check: system choice', '4. 课堂题:系统选择'),
       classroomQuestions: [        {
           id: 'system-choice-fbd',
-          title: text('Classroom Check: internal vs external', '课堂题：内力与外力'),
-          prompt: text('Two blocks of mass m1 and m2 are connected by a light string on a frictionless table. A force F pulls m1 to the right. If the system is defined as both blocks together, which forces are external?', '两个质量为 m1 和 m2 的方块用轻绳连接，放在无摩擦桌面上。一个力 F 向右拉 m1。如果系统定义为两个方块整体，哪些力是外力？'),
+          title: text('Classroom Check: internal vs external', '课堂题:内力与外力'),
+          prompt: text('Two blocks of mass m1 and m2 are connected by a light string on a frictionless table. A force F pulls m1 to the right. If the system is defined as both blocks together, which forces are external?', '两个质量为 m1 和 m2 的方块用轻绳连接,放在无摩擦桌面上。一个力 F 向右拉 m1。如果系统定义为两个方块整体,哪些力是外力?'),
           choices: [
             { label: 'A', text: text('Only the applied force F.', '只有拉力 F。') },
             { label: 'B', text: text('The applied force F, gravity on both blocks, and the normal force from the table.', '拉力 F、两个方块的重力、桌面对方块的支持力。') },
@@ -812,18 +812,18 @@ const systemsCenterOfMassUnit2Lesson: CurriculumLesson = {
             { label: 'D', text: text('Only the tension in the string.', '只有绳中的张力。') },
           ],
           correctAnswer: 'B',
-          feedback: text('When both blocks are the system, the string tension is internal. The applied force F, gravity on each block, and normal forces from the table are all external.', '当两个方块都是系统时，绳中张力是内力。拉力 F、每个方块的重力和桌面的支持力都是外力。'),
+          feedback: text('When both blocks are the system, the string tension is internal. The applied force F, gravity on each block, and normal forces from the table are all external.', '当两个方块都是系统时,绳中张力是内力。拉力 F、每个方块的重力和桌面的支持力都是外力。'),
         }]
     },
     {
       heading: text('5. Common mistakes', '5. 常见错误'),
       bullets: [        text('Drawing internal forces on a free-body diagram of the whole system.', '在系统整体的自由体图上画内力。'),
-        text('Forgetting that normal force and gravity are external when the system does not include the Earth or table.', '忘记当系统不包括地球或桌面时，支持力和重力是外力。'),
+        text('Forgetting that normal force and gravity are external when the system does not include the Earth or table.', '忘记当系统不包括地球或桌面时,支持力和重力是外力。'),
         text('Thinking the center of mass must be inside the material of the object.', '以为质心一定在物体的材料内部。')]
     },
     {
       heading: text('6. Formula summary', '6. 本节核心公式'),
-      formulas: [        formula('Center of mass (1D)', '质心（一维）', 'x_{\mathrm{cm}}=\frac{\sum m_ix_i}{\sum m_i}'),
+      formulas: [        formula('Center of mass (1D)', '质心(一维)', 'x_{\mathrm{cm}}=\frac{\sum m_ix_i}{\sum m_i}'),
         formula('System Newton second law', '系统牛顿第二定律', '\sum \vec F_{\mathrm{ext}}=M\vec a_{\mathrm{cm}}')]
     }
   ],
@@ -831,39 +831,39 @@ const systemsCenterOfMassUnit2Lesson: CurriculumLesson = {
 
 const forcesFreeBodyDiagramsUnit2Lesson: CurriculumLesson = {
   title: text('Forces and Free-Body Diagrams', '力与自由体图'),
-  description: text('Identify all forces acting on a chosen system, draw a clean free-body diagram, and translate it into a Newton equation.', '识别作用在所选系统上的所有力，画出清晰的自由体图，并将其转化为牛顿方程。'),
+  description: text('Identify all forces acting on a chosen system, draw a clean free-body diagram, and translate it into a Newton equation.', '识别作用在所选系统上的所有力,画出清晰的自由体图,并将其转化为牛顿方程。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题？'),
-      paragraphs: [        text('Real objects are pushed, pulled, and twisted by many forces at once. To predict motion, we must identify every force, represent it as a vector, and add them correctly. The free-body diagram is the single most important tool for doing this.', '真实物体同时被很多力推、拉、扭曲。要预测运动，我们必须识别每一个力，把它表示为矢量，然后正确地相加。自由体图是做到这一点的最重要工具。')],
+      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      paragraphs: [        text('Real objects are pushed, pulled, and twisted by many forces at once. To predict motion, we must identify every force, represent it as a vector, and add them correctly. The free-body diagram is the single most important tool for doing this.', '真实物体同时被很多力推、拉、扭曲。要预测运动,我们必须识别每一个力,把它表示为矢量,然后正确地相加。自由体图是做到这一点的最重要工具。')],
       takeaway: text('A good free-body diagram is half the solution.', '一张好的自由体图就是解题的一半。')
     },
     {
       heading: text('1. Common forces', '1. 常见的力'),
-      bullets: [        text('Weight (gravity): always downward toward the center of the Earth.', '重力：始终指向地心向下。'),
-        text('Normal force: perpendicular to the contact surface.', '支持力：垂直接触面。'),
-        text('Friction: parallel to the contact surface, opposing relative motion.', '摩擦力：平行接触面，方向与相对运动相反。'),
-        text('Tension: pulls along a rope or string.', '张力：沿绳子方向拉。'),
-        text('Spring force: F = -kx, restoring toward equilibrium.', '弹簧力：F = -kx，回复平衡位置。')]
+      bullets: [        text('Weight (gravity): always downward toward the center of the Earth.', '重力:始终指向地心向下。'),
+        text('Normal force: perpendicular to the contact surface.', '支持力:垂直接触面。'),
+        text('Friction: parallel to the contact surface, opposing relative motion.', '摩擦力:平行接触面,方向与相对运动相反。'),
+        text('Tension: pulls along a rope or string.', '张力:沿绳子方向拉。'),
+        text('Spring force: F = -kx, restoring toward equilibrium.', '弹簧力:F = -kx,回复平衡位置。')]
     },
     {
       heading: text('2. How to draw a free-body diagram', '2. 如何画自由体图'),
-      paragraphs: [        text('Step 1: Choose the system. Step 2: Draw a dot. Step 3: Draw one arrow for each external force. Step 4: Label each force. Step 5: Choose coordinate axes.', '第一步：选系统。第二步：画一个点。第三步：为每个外力画一个箭头。第四步：标出每个力。第五步：选坐标轴。')],
+      paragraphs: [        text('Step 1: Choose the system. Step 2: Draw a dot. Step 3: Draw one arrow for each external force. Step 4: Label each force. Step 5: Choose coordinate axes.', '第一步:选系统。第二步:画一个点。第三步:为每个外力画一个箭头。第四步:标出每个力。第五步:选坐标轴。')],
       bullets: [        text('Never draw forces the object exerts on other things.', '绝不画物体对其他物体施加的力。'),
         text('Never draw internal forces.', '绝不画内力。'),
         text('The length of each arrow should roughly reflect the force magnitude.', '每个箭头的长度应大致反映力的大小。')]
     },
     {
       heading: text('3. From FBD to equations', '3. 从自由体图到方程'),
-      paragraphs: [        text('Once the FBD is drawn, write Newton second law for each axis separately.', '画好自由体图后，对每个坐标轴分别写出牛顿第二定律。')],
-      formulas: [        formula('Newton second law (component form)', '牛顿第二定律（分量形式）', '\sum F_x=ma_x,\quad \sum F_y=ma_y')]
+      paragraphs: [        text('Once the FBD is drawn, write Newton second law for each axis separately.', '画好自由体图后,对每个坐标轴分别写出牛顿第二定律。')],
+      formulas: [        formula('Newton second law (component form)', '牛顿第二定律(分量形式)', '\sum F_x=ma_x,\quad \sum F_y=ma_y')]
     },
     {
-      heading: text('4. Classroom check: block on a ramp', '4. 课堂题：斜面上的方块'),
+      heading: text('4. Classroom check: block on a ramp', '4. 课堂题:斜面上的方块'),
       classroomQuestions: [        {
           id: 'fbd-ramp-forces',
-          title: text('Classroom Check: free-body diagram', '课堂题：自由体图'),
-          prompt: text('A block rests on a rough inclined ramp at rest. Which forces act on the block?', '一个方块静止在粗糙斜面上。方块受到哪些力？'),
+          title: text('Classroom Check: free-body diagram', '课堂题:自由体图'),
+          prompt: text('A block rests on a rough inclined ramp at rest. Which forces act on the block?', '一个方块静止在粗糙斜面上。方块受到哪些力?'),
           choices: [
             { label: 'A', text: text('Gravity, normal force, and static friction.', '重力、支持力和静摩擦力。') },
             { label: 'B', text: text('Gravity and normal force only.', '只有重力和支持力。') },
@@ -871,7 +871,7 @@ const forcesFreeBodyDiagramsUnit2Lesson: CurriculumLesson = {
             { label: 'D', text: text('Gravity, normal force, friction, and a force pushing it up the ramp.', '重力、支持力、摩擦力和一个沿斜面向上推它的力。') },
           ],
           correctAnswer: 'A',
-          feedback: text('The block is at rest, so static friction acts to prevent sliding down the ramp. Gravity pulls down, the normal force is perpendicular to the surface, and static friction points up the ramp.', '方块静止，所以静摩擦力阻止它沿斜面下滑。重力向下，支持力垂直于斜面，静摩擦力沿斜面向上。'),
+          feedback: text('The block is at rest, so static friction acts to prevent sliding down the ramp. Gravity pulls down, the normal force is perpendicular to the surface, and static friction points up the ramp.', '方块静止,所以静摩擦力阻止它沿斜面下滑。重力向下,支持力垂直于斜面,静摩擦力沿斜面向上。'),
         }]
     },
     {
@@ -889,40 +889,40 @@ const forcesFreeBodyDiagramsUnit2Lesson: CurriculumLesson = {
 };
 
 const newtonsThirdLawUnit2Lesson: CurriculumLesson = {
-  title: text('Newton\\\'s Third Law: Action and Reaction', '牛顿第三定律：作用力与反作用力'),
-  description: text('Understand that forces always come in pairs between two objects, and why these pairs never cancel when analyzing a single object.', '理解力总是成对出现在两个物体之间，以及为什么分析单个物体时这些力对不会抵消。'),
+  title: text('Newton\\\'s Third Law: Action and Reaction', '牛顿第三定律:作用力与反作用力'),
+  description: text('Understand that forces always come in pairs between two objects, and why these pairs never cancel when analyzing a single object.', '理解力总是成对出现在两个物体之间,以及为什么分析单个物体时这些力对不会抵消。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题？'),
-      paragraphs: [        text('When you push a wall, the wall pushes back. Forces are interactions between two objects, not properties of a single object. The third law formalizes this idea.', '你推墙时，墙也推你。力是两个物体之间的相互作用，不是单个物体的属性。第三定律将这个思想形式化。')],
+      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      paragraphs: [        text('When you push a wall, the wall pushes back. Forces are interactions between two objects, not properties of a single object. The third law formalizes this idea.', '你推墙时,墙也推你。力是两个物体之间的相互作用,不是单个物体的属性。第三定律将这个思想形式化。')],
       takeaway: text('Forces come in pairs. Each force in the pair acts on a different object.', '力成对出现。力对中的每个力作用在不同的物体上。')
     },
     {
       heading: text('1. The law', '1. 定律表述'),
-      paragraphs: [        text('If object A exerts a force on object B, then object B exerts a force of equal magnitude and opposite direction on object A.', '如果物体 A 对物体 B 施加一个力，那么物体 B 对物体 A 施加一个大小相等、方向相反的力。')],
+      paragraphs: [        text('If object A exerts a force on object B, then object B exerts a force of equal magnitude and opposite direction on object A.', '如果物体 A 对物体 B 施加一个力,那么物体 B 对物体 A 施加一个大小相等、方向相反的力。')],
       bullets: [        text('The two forces act on different objects.', '两个力作用在不同物体上。'),
         text('The two forces are the same type.', '两个力是同一类型的。'),
-        text('They are simultaneous, neither causes the other.', '它们是同时的，没有一个导致另一个。')],
+        text('They are simultaneous, neither causes the other.', '它们是同时的,没有一个导致另一个。')],
       formulas: [        formula('Newton third law', '牛顿第三定律', '\vec F_{A\mathrm{\ on\ }B}=-\vec F_{B\mathrm{\ on\ }A}')]
     },
     {
-      heading: text('2. Why do not they cancel?', '2. 为什么它们不抵消？'),
+      heading: text('2. Why do not they cancel?', '2. 为什么它们不抵消?'),
       paragraphs: [        text('Forces only cancel when they act on the same object. The action-reaction pair acts on two different objects.', '力只有在作用在同一个物体上时才会抵消。作用-反作用力对作用在两个不同物体上。')]
     },
     {
-      heading: text('3. Classroom check: horse and cart', '3. 课堂题：马拉车'),
+      heading: text('3. Classroom check: horse and cart', '3. 课堂题:马拉车'),
       classroomQuestions: [        {
           id: 'newton-third-horse-cart',
-          title: text('Classroom Check: action-reaction pairs', '课堂题：作用-反作用力对'),
-          prompt: text('A horse pulls a cart forward. The cart pulls the horse backward with an equal force. How does the cart move forward?', '一匹马向前拉车。车以相等的力向后拉马。车怎么会向前运动？'),
+          title: text('Classroom Check: action-reaction pairs', '课堂题:作用-反作用力对'),
+          prompt: text('A horse pulls a cart forward. The cart pulls the horse backward with an equal force. How does the cart move forward?', '一匹马向前拉车。车以相等的力向后拉马。车怎么会向前运动?'),
           choices: [
             { label: 'A', text: text('The horse pulls harder than the cart pulls back.', '马比车拉得更用力。') },
-            { label: 'B', text: text('The forces are equal, but the horse pushes backward on the ground, and the ground pushes forward on the horse.', '两个力相等，但马还向后蹬地，地面向前推马。') },
-            { label: 'C', text: text('The cart pull on the horse is weaker because the cart is rolling.', '车拉马的力更弱，因为车在滚动。') },
-            { label: 'D', text: text('The two forces cancel, so the cart moves because of inertia.', '两个力抵消，所以车因为惯性而运动。') },
+            { label: 'B', text: text('The forces are equal, but the horse pushes backward on the ground, and the ground pushes forward on the horse.', '两个力相等,但马还向后蹬地,地面向前推马。') },
+            { label: 'C', text: text('The cart pull on the horse is weaker because the cart is rolling.', '车拉马的力更弱,因为车在滚动。') },
+            { label: 'D', text: text('The two forces cancel, so the cart moves because of inertia.', '两个力抵消,所以车因为惯性而运动。') },
           ],
           correctAnswer: 'B',
-          feedback: text('The horse-cart force pair is equal and opposite, but they act on different objects. The horse moves forward because the ground pushes forward on the horse.', '马-车的力对大小相等方向相反，但它们作用在不同物体上。马向前运动是因为地面向前推马。'),
+          feedback: text('The horse-cart force pair is equal and opposite, but they act on different objects. The horse moves forward because the ground pushes forward on the horse.', '马-车的力对大小相等方向相反,但它们作用在不同物体上。马向前运动是因为地面向前推马。'),
         }]
     },
     {
@@ -939,50 +939,50 @@ const newtonsThirdLawUnit2Lesson: CurriculumLesson = {
 
 const newtonsFirstSecondLawUnit2Lesson: CurriculumLesson = {
   title: text('Newton\\\'s First and Second Laws', '牛顿第一和第二定律'),
-  description: text('Connect force, mass, and acceleration. Understand inertia, equilibrium, and how to build equations from free-body diagrams.', '连接力、质量和加速度。理解惯性、平衡状态，以及如何从自由体图建立方程。'),
+  description: text('Connect force, mass, and acceleration. Understand inertia, equilibrium, and how to build equations from free-body diagrams.', '连接力、质量和加速度。理解惯性、平衡状态,以及如何从自由体图建立方程。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题？'),
-      paragraphs: [        text('Why does a hockey puck glide across ice for so long, but a book slides to a stop on a table? Why does a heavy truck need more force to accelerate than a bicycle? Newton first two laws give us the connection.', '为什么冰球能在冰上滑行很久，而书在桌上会停下来？为什么卡车比自行车需要更大的力才能加速？牛顿的前两个定律给出了这个联系。')],
+      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      paragraphs: [        text('Why does a hockey puck glide across ice for so long, but a book slides to a stop on a table? Why does a heavy truck need more force to accelerate than a bicycle? Newton first two laws give us the connection.', '为什么冰球能在冰上滑行很久,而书在桌上会停下来?为什么卡车比自行车需要更大的力才能加速?牛顿的前两个定律给出了这个联系。')],
       takeaway: text('Force changes motion. Mass resists that change.', '力改变运动。质量抵抗这种改变。')
     },
     {
-      heading: text('1. Newton First Law: the law of inertia', '1. 牛顿第一定律：惯性定律'),
-      paragraphs: [        text('An object at rest stays at rest, and an object in motion stays in motion with constant velocity, unless acted on by a net external force.', '静止的物体保持静止，运动的物体保持匀速运动，除非受到合外力的作用。'),
+      heading: text('1. Newton First Law: the law of inertia', '1. 牛顿第一定律:惯性定律'),
+      paragraphs: [        text('An object at rest stays at rest, and an object in motion stays in motion with constant velocity, unless acted on by a net external force.', '静止的物体保持静止,运动的物体保持匀速运动,除非受到合外力的作用。'),
         text('Inertia is the tendency of an object to resist changes in its motion. Mass is the quantitative measure of inertia.', '惯性是物体抵抗运动变化的倾向。质量是惯性的定量度量。')],
-      bullets: [        text('Net external force matters, not just any force.', '重要的是合外力，不是随便哪个力。'),
+      bullets: [        text('Net external force matters, not just any force.', '重要的是合外力,不是随便哪个力。'),
         text('Equilibrium means net force equals zero.', '平衡状态意味着合力为零。')]
     },
     {
       heading: text('2. Newton Second Law', '2. 牛顿第二定律'),
-      paragraphs: [        text('The acceleration of an object is directly proportional to the net force acting on it and inversely proportional to its mass.', '物体的加速度与作用在它上面的合外力成正比，与它的质量成反比。')],
+      paragraphs: [        text('The acceleration of an object is directly proportional to the net force acting on it and inversely proportional to its mass.', '物体的加速度与作用在它上面的合外力成正比,与它的质量成反比。')],
       formulas: [        formula('Newton second law', '牛顿第二定律', '\sum \vec F=m\vec a'),
         formula('Component form', '分量形式', '\sum F_x=ma_x,\quad \sum F_y=ma_y')]
     },
     {
       heading: text('3. Problem-solving recipe', '3. 解题步骤'),
-      paragraphs: [        text('Step 1: Choose the system. Step 2: Draw a free-body diagram. Step 3: Choose coordinate axes. Step 4: Write sum F = ma for each axis. Step 5: Solve.', '第一步：选系统。第二步：画自由体图。第三步：选坐标轴。第四步：对每个轴写 sum F = ma。第五步：求解。')]
+      paragraphs: [        text('Step 1: Choose the system. Step 2: Draw a free-body diagram. Step 3: Choose coordinate axes. Step 4: Write sum F = ma for each axis. Step 5: Solve.', '第一步:选系统。第二步:画自由体图。第三步:选坐标轴。第四步:对每个轴写 sum F = ma。第五步:求解。')]
     },
     {
-      heading: text('4. Classroom check: elevator scale', '4. 课堂题：电梯秤'),
+      heading: text('4. Classroom check: elevator scale', '4. 课堂题:电梯秤'),
       classroomQuestions: [        {
           id: 'elevator-scale-reading',
-          title: text('Classroom Check: Newton second law', '课堂题：牛顿第二定律'),
-          prompt: text('A person of mass 60 kg stands on a scale in an elevator. The elevator accelerates upward at 2 m/s^2. What does the scale read?', '一个质量为 60 kg 的人站在电梯里的秤上。电梯以 2 m/s^2 的加速度向上加速。秤的读数是多少？'),
+          title: text('Classroom Check: Newton second law', '课堂题:牛顿第二定律'),
+          prompt: text('A person of mass 60 kg stands on a scale in an elevator. The elevator accelerates upward at 2 m/s^2. What does the scale read?', '一个质量为 60 kg 的人站在电梯里的秤上。电梯以 2 m/s^2 的加速度向上加速。秤的读数是多少?'),
           choices: [
-            { label: 'A', text: text('600 N (the person weight)', '600 N（人的体重）') },
-            { label: 'B', text: text('480 N (less than weight)', '480 N（小于体重）') },
-            { label: 'C', text: text('720 N (more than weight)', '720 N（大于体重）') },
-            { label: 'D', text: text('120 N (ma only)', '120 N（只有 ma）') },
+            { label: 'A', text: text('600 N (the person weight)', '600 N(人的体重)') },
+            { label: 'B', text: text('480 N (less than weight)', '480 N(小于体重)') },
+            { label: 'C', text: text('720 N (more than weight)', '720 N(大于体重)') },
+            { label: 'D', text: text('120 N (ma only)', '120 N(只有 ma)') },
           ],
           correctAnswer: 'C',
-          feedback: text('Taking up as positive: N - mg = ma. N = mg + ma = 60 * 10 + 60 * 2 = 720 N. The scale reads the normal force, which is greater than weight because the elevator is accelerating upward.', '向上为正：N - mg = ma。N = mg + ma = 60 * 10 + 60 * 2 = 720 N。秤读的是支持力，大于体重，因为电梯在向上加速。'),
+          feedback: text('Taking up as positive: N - mg = ma. N = mg + ma = 60 * 10 + 60 * 2 = 720 N. The scale reads the normal force, which is greater than weight because the elevator is accelerating upward.', '向上为正:N - mg = ma。N = mg + ma = 60 * 10 + 60 * 2 = 720 N。秤读的是支持力,大于体重,因为电梯在向上加速。'),
         }]
     },
     {
       heading: text('5. Common mistakes', '5. 常见错误'),
-      bullets: [        text('Writing F = ma instead of sum F = ma (missing net).', '写 F = ma 而不是 sum F = ma（漏了合）。'),
-        text('Treating weight as mass (60 kg is not 60 N).', '把质量当体重（60 kg 不等于 60 N）。'),
+      bullets: [        text('Writing F = ma instead of sum F = ma (missing net).', '写 F = ma 而不是 sum F = ma(漏了合)。'),
+        text('Treating weight as mass (60 kg is not 60 N).', '把质量当体重(60 kg 不等于 60 N)。'),
         text('Forgetting that an object moving at constant velocity has zero net force.', '忘记匀速运动的物体合力为零。'),
         text('Adding ma as a force on the FBD.', '把 ma 当力加在自由体图上。')]
     },
@@ -997,28 +997,28 @@ const newtonsFirstSecondLawUnit2Lesson: CurriculumLesson = {
 
 const gravitationalForceUnit2Lesson: CurriculumLesson = {
   title: text('Gravitational Force', '万有引力'),
-  description: text('Understand the difference between the local model W = mg and the universal law of gravitation, and when to use each.', '理解局部模型 W = mg 与万有引力定律的区别，以及何时使用哪个。'),
+  description: text('Understand the difference between the local model W = mg and the universal law of gravitation, and when to use each.', '理解局部模型 W = mg 与万有引力定律的区别,以及何时使用哪个。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题？'),
-      paragraphs: [        text('Near the surface, we use W = mg. But what about the Moon or a satellite? The universal law of gravitation works everywhere.', '在表面附近，我们用 W = mg。但月球呢？轨道卫星呢？万有引力定律在任何地方都适用。')],
+      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      paragraphs: [        text('Near the surface, we use W = mg. But what about the Moon or a satellite? The universal law of gravitation works everywhere.', '在表面附近,我们用 W = mg。但月球呢?轨道卫星呢?万有引力定律在任何地方都适用。')],
       takeaway: text('W = mg is a shortcut near the surface. The universal law works everywhere.', 'W = mg 是表面附近的便捷公式。万有引力定律在任何地方都有效。')
     },
     {
       heading: text('1. The universal law of gravitation', '1. 万有引力定律'),
-      paragraphs: [        text('Every pair of masses attracts each other with a force proportional to the product of their masses and inversely proportional to the square of the distance between them.', '每一对质量之间的引力与它们的质量乘积成正比，与它们之间距离的平方成反比。')],
+      paragraphs: [        text('Every pair of masses attracts each other with a force proportional to the product of their masses and inversely proportional to the square of the distance between them.', '每一对质量之间的引力与它们的质量乘积成正比,与它们之间距离的平方成反比。')],
       formulas: [        formula('Universal gravitation', '万有引力定律', 'F_g=G\frac{m_1m_2}{r^2}')]
     },
     {
       heading: text('2. Connecting W = mg to the universal law', '2. W = mg 与万有引力定律的联系'),
-      paragraphs: [        text('Near the surface, r is approximately the Earth radius, so g = GM / R^2.', '在表面附近，r 约等于地球半径，所以 g = GM / R^2。')],
+      paragraphs: [        text('Near the surface, r is approximately the Earth radius, so g = GM / R^2.', '在表面附近,r 约等于地球半径,所以 g = GM / R^2。')],
       formulas: [        formula('Local g from universal law', '由万有引力定律导出局部 g', 'g=\frac{GM}{r^2}'),
         formula('Weight near surface', '表面附近的重力', 'W=mg')]
     },
     {
       heading: text('3. Common mistakes', '3. 常见错误'),
       bullets: [        text('Thinking g = 9.8 m/s^2 everywhere in the universe.', '以为 g = 9.8 m/s^2 在宇宙任何地方都成立。'),
-        text('Confusing G (universal constant) with g (local field strength).', '混淆 G（万有引力常数）和 g（局部场强）。')]
+        text('Confusing G (universal constant) with g (local field strength).', '混淆 G(万有引力常数)和 g(局部场强)。')]
     },
     {
       heading: text('4. Formula summary', '4. 本节核心公式'),
@@ -1030,24 +1030,24 @@ const gravitationalForceUnit2Lesson: CurriculumLesson = {
 
 const frictionSpringsCircularMotionUnit2Lesson: CurriculumLesson = {
   title: text('Friction, Springs, and Circular Motion', '摩擦力、弹簧力与圆周运动'),
-  description: text('Model three specific force types: friction, spring force, and the net force required for circular motion.', '建模三种特定的力类型：摩擦力、弹簧力和圆周运动所需的合力。'),
+  description: text('Model three specific force types: friction, spring force, and the net force required for circular motion.', '建模三种特定的力类型:摩擦力、弹簧力和圆周运动所需的合力。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题？'),
+      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
       paragraphs: [        text('Not all forces are constant. Friction depends on whether the object is moving. Spring force depends on stretch. Circular motion requires a net force toward the center.', '不是所有的力都是恒定的。摩擦力取决于物体是否在运动。弹簧力取决于拉伸量。圆周运动需要一个指向中心的合力。')]
     },
     {
       heading: text('1. Friction', '1. 摩擦力'),
-      paragraphs: [        text('Static friction prevents motion up to a maximum value. Kinetic friction opposes motion once the object is sliding.', '静摩擦力阻止运动，直到达到最大值。动摩擦力在物体滑动时阻碍运动。')],
-      bullets: [        text('Static friction adjusts to match the applied force, up to its maximum.', '静摩擦力会调节以匹配外力，直到最大值。'),
+      paragraphs: [        text('Static friction prevents motion up to a maximum value. Kinetic friction opposes motion once the object is sliding.', '静摩擦力阻止运动,直到达到最大值。动摩擦力在物体滑动时阻碍运动。')],
+      bullets: [        text('Static friction adjusts to match the applied force, up to its maximum.', '静摩擦力会调节以匹配外力,直到最大值。'),
         text('mu_k is typically less than mu_s.', 'mu_k 通常小于 mu_s。')],
       formulas: [        formula('Static friction (maximum)', '最大静摩擦力', 'f_{s,\max}=\mu_s N'),
         formula('Kinetic friction', '动摩擦力', 'f_k=\mu_k N')]
     },
     {
       heading: text('2. Spring force', '2. 弹簧力'),
-      paragraphs: [        text('A spring exerts a restoring force proportional to how far it is displaced from equilibrium.', '弹簧施加一个回复力，与它偏离平衡位置的距离成正比。')],
-      bullets: [        text('k is the spring constant. x is displacement from equilibrium, not total length.', 'k 是弹簧常数。x 是偏离平衡的位移，不是总长度。')],
+      paragraphs: [        text('A spring exerts a restoring force proportional to how far it is displaced from equilibrium.', '弹簧施加一个回复力,与它偏离平衡位置的距离成正比。')],
+      bullets: [        text('k is the spring constant. x is displacement from equilibrium, not total length.', 'k 是弹簧常数。x 是偏离平衡的位移,不是总长度。')],
       formulas: [        formula('Hooke law', '胡克定律', 'F_s=-kx')]
     },
     {
@@ -1059,19 +1059,19 @@ const frictionSpringsCircularMotionUnit2Lesson: CurriculumLesson = {
         formula('Centripetal force', '向心力', '\sum F_r=m\frac{v^2}{r}')]
     },
     {
-      heading: text('4. Classroom check: friction', '4. 课堂题：摩擦力'),
+      heading: text('4. Classroom check: friction', '4. 课堂题:摩擦力'),
       classroomQuestions: [        {
           id: 'friction-static-vs-kinetic',
-          title: text('Classroom Check: static vs kinetic friction', '课堂题：静摩擦与动摩擦'),
-          prompt: text('A 10 kg box sits on a horizontal floor. mu_s = 0.5 and mu_k = 0.3. You push horizontally with a force of 40 N. Does the box move? What is the friction force?', '一个 10 kg 的箱子放在水平地面上。mu_s = 0.5，mu_k = 0.3。你用 40 N 的力水平推它。箱子会动吗？摩擦力多大？'),
+          title: text('Classroom Check: static vs kinetic friction', '课堂题:静摩擦与动摩擦'),
+          prompt: text('A 10 kg box sits on a horizontal floor. mu_s = 0.5 and mu_k = 0.3. You push horizontally with a force of 40 N. Does the box move? What is the friction force?', '一个 10 kg 的箱子放在水平地面上。mu_s = 0.5,mu_k = 0.3。你用 40 N 的力水平推它。箱子会动吗?摩擦力多大?'),
           choices: [
-            { label: 'A', text: text('Yes, it moves. Friction = 30 N (kinetic).', '会动。摩擦力 = 30 N（动摩擦）。') },
-            { label: 'B', text: text('No, it stays. Friction = 40 N (static, matching the push).', '不动。摩擦力 = 40 N（静摩擦，与推力匹配）。') },
-            { label: 'C', text: text('No, it stays. Friction = 50 N (maximum static).', '不动。摩擦力 = 50 N（最大静摩擦）。') },
+            { label: 'A', text: text('Yes, it moves. Friction = 30 N (kinetic).', '会动。摩擦力 = 30 N(动摩擦)。') },
+            { label: 'B', text: text('No, it stays. Friction = 40 N (static, matching the push).', '不动。摩擦力 = 40 N(静摩擦,与推力匹配)。') },
+            { label: 'C', text: text('No, it stays. Friction = 50 N (maximum static).', '不动。摩擦力 = 50 N(最大静摩擦)。') },
             { label: 'D', text: text('Yes, it moves. Friction = 50 N.', '会动。摩擦力 = 50 N。') },
           ],
           correctAnswer: 'B',
-          feedback: text('Maximum static friction = mu_s * N = 0.5 * 10 * 10 = 50 N. Since 40 N < 50 N, the box does not move. Static friction adjusts to exactly match: f_s = 40 N.', '最大静摩擦力 = mu_s * N = 0.5 * 10 * 10 = 50 N。因为 40 N < 50 N，箱子不动。静摩擦力调节到刚好等于推力：f_s = 40 N。'),
+          feedback: text('Maximum static friction = mu_s * N = 0.5 * 10 * 10 = 50 N. Since 40 N < 50 N, the box does not move. Static friction adjusts to exactly match: f_s = 40 N.', '最大静摩擦力 = mu_s * N = 0.5 * 10 * 10 = 50 N。因为 40 N < 50 N,箱子不动。静摩擦力调节到刚好等于推力:f_s = 40 N。'),
         }]
     },
     {
