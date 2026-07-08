@@ -205,8 +205,8 @@ const ConceptDiagram: React.FC<{ diagram: CurriculumDiagram; language: 'en' | 'z
   })();
 
   return (
-    <figure className="rounded-lg border border-slate-200 bg-[#ffffff] p-4">
-      <svg viewBox="0 0 280 180" className="h-44 w-full text-[14px] font-semibold text-slate-700" role="img" aria-label={diagram.title[language]}>
+    <figure className="rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
+      <svg viewBox="0 0 280 180" className="h-36 w-full text-[14px] font-semibold text-slate-700 sm:h-44" role="img" aria-label={diagram.title[language]}>
         <defs>
           <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
             <path d="M0,0 L0,6 L8,3 z" fill={accent} />
@@ -269,18 +269,18 @@ export const CurriculumSection: React.FC = () => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
-      className="space-y-8"
+      className="space-y-6 sm:space-y-8"
     >
       <div className="max-w-3xl">
         <div className="mb-4 flex items-center gap-2 text-nebula">
           <BookOpenCheck className="h-4 w-4" />
           <span className="text-xs font-bold uppercase tracking-widest">{t.curriculum.sectionLabel}</span>
         </div>
-        <h2 className="text-3xl font-light md:text-4xl">{t.curriculum.title}</h2>
+        <h2 className="text-balance text-3xl font-light md:text-4xl">{t.curriculum.title}</h2>
         <p className="mt-4 text-sm leading-7 text-slate-600 md:text-base">{t.curriculum.description}</p>
       </div>
 
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4" role="tablist" aria-label={t.curriculum.systemSelector}>
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4" role="tablist" aria-label={t.curriculum.systemSelector}>
         {learningSystems.map((system) => {
           const active = system.id === systemId;
           return (
@@ -290,7 +290,7 @@ export const CurriculumSection: React.FC = () => {
               role="tab"
               aria-selected={active}
               onClick={() => selectSystem(system.id)}
-              className={`min-h-28 rounded-lg border px-4 py-4 text-left transition-colors ${
+              className={`min-h-24 rounded-lg border px-4 py-4 text-left transition-colors sm:min-h-28 ${
                 active
                   ? 'border-nebula bg-white/10 text-nebula'
                   : 'border-white/10 bg-white/5 text-slate-600 hover:border-white/30 hover:text-starlight'
@@ -307,7 +307,7 @@ export const CurriculumSection: React.FC = () => {
       </div>
 
       {!course ? (
-        <div className="rounded-lg border border-slate-200 bg-[#ffffff] p-6">
+        <div className="rounded-lg border border-slate-200 bg-[#ffffff] p-5 sm:p-6">
           <p className="text-xs font-semibold uppercase tracking-widest text-nebula">{selectedSystem.status[language]}</p>
           <h3 className="mt-3 text-xl font-semibold">{selectedSystem.label[language]}</h3>
           <p className="mt-2 text-sm leading-6 text-slate-500">{selectedSystem.sourceNote[language]}</p>
@@ -315,7 +315,7 @@ export const CurriculumSection: React.FC = () => {
       ) : (
         <>
           {selectedSystem.courses.length > 1 && (
-            <div className="grid grid-cols-2 gap-2 lg:grid-cols-4" role="tablist" aria-label={t.curriculum.courseSelector}>
+            <div className="grid grid-cols-1 gap-2 min-[420px]:grid-cols-2 lg:grid-cols-4" role="tablist" aria-label={t.curriculum.courseSelector}>
               {selectedSystem.courses.map((item) => {
                 const active = item.id === course.id;
                 return (
@@ -325,7 +325,7 @@ export const CurriculumSection: React.FC = () => {
                     role="tab"
                     aria-selected={active}
                     onClick={() => selectCourse(item.id)}
-                    className={`min-h-16 rounded-lg border px-3 py-3 text-left transition-colors ${
+                    className={`min-h-14 rounded-lg border px-3 py-3 text-left transition-colors sm:min-h-16 ${
                       active
                         ? 'border-nebula bg-white/10 text-nebula'
                         : 'border-white/10 bg-white/5 text-slate-600 hover:border-white/30 hover:text-starlight'
@@ -339,19 +339,19 @@ export const CurriculumSection: React.FC = () => {
             </div>
           )}
 
-          <div className="flex flex-col gap-4 border-b border-slate-200 pb-5 sm:flex-row sm:items-end sm:justify-between">
-            <div>
+          <div className="flex flex-col gap-4 border-b border-slate-200 pb-5 md:flex-row md:items-end md:justify-between">
+            <div className="min-w-0">
               <p className="text-xs uppercase tracking-widest text-nebula">{course.level[language]}</p>
-              <h3 className="mt-2 text-2xl font-semibold">{course.name[language]}</h3>
+              <h3 className="mt-2 text-balance text-2xl font-semibold">{course.name[language]}</h3>
               <p className="mt-2 text-sm text-slate-500">
                 {course.units.length} {t.curriculum.units} · {topicCount} {t.curriculum.topics}
               </p>
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex flex-col gap-3 sm:flex-row md:shrink-0">
               <button
                 type="button"
                 onClick={toggleAll}
-                className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-white/10 px-3 text-xs font-semibold text-slate-600 transition-colors hover:border-white/30 hover:text-nebula"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-white/10 px-3 text-xs font-semibold text-slate-600 transition-colors hover:border-white/30 hover:text-nebula"
               >
                 <Layers3 className="h-4 w-4" />
                 {allOpen ? t.curriculum.collapseAll : t.curriculum.expandAll}
@@ -360,7 +360,7 @@ export const CurriculumSection: React.FC = () => {
                 href={course.sourceUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-white/10 px-3 text-xs font-semibold text-slate-600 transition-colors hover:border-white/30 hover:text-nebula"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-white/10 px-3 text-xs font-semibold text-slate-600 transition-colors hover:border-white/30 hover:text-nebula"
               >
                 {course.sourceLabel?.[language] ?? t.curriculum.officialSource}
                 <ExternalLink className="h-4 w-4" />
@@ -379,9 +379,9 @@ export const CurriculumSection: React.FC = () => {
                     onClick={() => toggleUnit(unit.number)}
                     aria-expanded={open}
                     aria-controls={panelId}
-                    className="group flex w-full items-center gap-4 py-5 text-left"
+                    className="group flex w-full items-center gap-3 py-4 text-left sm:gap-4 sm:py-5"
                   >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/10 text-sm font-bold text-nebula">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10 text-sm font-bold text-nebula sm:h-10 sm:w-10">
                       {unit.number}
                     </span>
                     <span className="min-w-0 flex-1">
@@ -392,7 +392,7 @@ export const CurriculumSection: React.FC = () => {
                         {unit.title[language]}
                       </span>
                     </span>
-                    <span className="hidden text-xs text-slate-500 sm:block">
+                    <span className="hidden text-xs text-slate-500 md:block">
                       {unit.weighting} {t.curriculum.examWeight}
                     </span>
                     <ChevronDown className={`h-5 w-5 shrink-0 text-slate-500 transition-transform ${open ? 'rotate-180' : ''}`} />
@@ -405,7 +405,7 @@ export const CurriculumSection: React.FC = () => {
                       animate={{ opacity: 1, height: 'auto' }}
                       className="overflow-hidden"
                     >
-                      <div className="pb-7 sm:pl-14">
+                      <div className="pb-6 sm:pb-7 md:pl-14">
                         {unit.summary && <p className="mb-5 max-w-3xl text-sm leading-7 text-slate-600">{unit.summary[language]}</p>}
 
                         <div className="grid gap-4 xl:grid-cols-[1fr_1fr]">
@@ -429,7 +429,7 @@ export const CurriculumSection: React.FC = () => {
                               <ListChecks className="h-4 w-4" />
                               <h4 className="text-sm font-semibold">{t.curriculum.checklistTitle}</h4>
                             </div>
-                            <div className="grid gap-2 sm:grid-cols-2">
+                            <div className="grid gap-2 min-[520px]:grid-cols-2">
                               {unit.topics.map((item) => (
                                 <div key={item.id} className="flex min-h-12 items-start gap-3 rounded-md bg-slate-50 px-3 py-2">
                                   <span className="mt-0.5 shrink-0 font-mono text-xs font-semibold text-nebula">{item.id}</span>
@@ -441,7 +441,7 @@ export const CurriculumSection: React.FC = () => {
                         </div>
 
                         {!!unit.formulas?.length && (
-                          <section className="mt-4 rounded-lg border border-slate-200 bg-[#ffffff] p-4">
+                          <section className="mt-4 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
                             <div className="mb-3 flex items-center gap-2 text-nebula">
                               <FunctionSquare className="h-4 w-4" />
                               <h4 className="text-sm font-semibold">{t.curriculum.formulasTitle}</h4>
@@ -459,12 +459,12 @@ export const CurriculumSection: React.FC = () => {
                         )}
 
                         {!!unit.diagrams?.length && (
-                          <section className="mt-4 rounded-lg border border-slate-200 bg-[#ffffff] p-4">
+                          <section className="mt-4 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
                             <div className="mb-3 flex items-center gap-2 text-nebula">
                               <ImageIcon className="h-4 w-4" />
                               <h4 className="text-sm font-semibold">{t.curriculum.diagramsTitle}</h4>
                             </div>
-                            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                               {unit.diagrams.map((item) => (
                                 <ConceptDiagram key={`${item.kind}-${item.title.en}`} diagram={item} language={language} />
                               ))}
