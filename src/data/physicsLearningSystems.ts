@@ -222,48 +222,6 @@ const impulseMomentumLesson: CurriculumLesson = {
   ],
 };
 
-const linearMomentumLabDesignLesson: CurriculumLesson = {
-  title: text('Lab Design: Testing Linear Momentum Conservation', '实验设计：验证线动量守恒'),
-  description: text(
-    'An AP Physics C style written-response task for designing and analyzing a momentum conservation experiment.',
-    '一道 AP Physics C 风格的书面题，用于设计并分析线动量守恒实验。',
-  ),
-  sections: [
-    {
-      heading: text('0. Classroom written task', '0. 课堂书面题'),
-      paragraphs: [
-        text(
-          'This task belongs in Linear Momentum because it asks students to design an experiment around system choice, external impulse, total momentum before and after an interaction, and data analysis.',
-          '这道题属于 Linear Momentum，因为它要求学生围绕系统选择、外力冲量、相互作用前后的总动量以及数据分析来设计实验。',
-        ),
-      ],
-      classroomQuestions: [
-        {
-          id: 'apc-linear-momentum-lab-design',
-          mode: 'written',
-          title: text('Written Response: design a momentum conservation experiment', '书面题：设计一个验证动量守恒的实验'),
-          prompt: text(
-            'Design an experiment to test whether linear momentum is conserved in a one-dimensional collision between two low-friction carts. Your answer should include: the equipment you would use, the quantities you would measure, a clear procedure, how you would calculate the total momentum before and after the collision, and how you would use sample data to decide whether momentum was conserved.',
-            '设计一个实验，验证两个低摩擦小车发生一维碰撞时线动量是否守恒。你的答案需要包括：实验器材、需要测量的物理量、清晰的实验步骤、如何计算碰撞前后的系统总动量，以及如何用一组示例数据判断动量是否守恒。',
-          ),
-          sampleAnswer: text(
-            'Use two dynamics carts on a level low-friction track. Measure the masses $m_1$ and $m_2$ with a balance. Use motion sensors, photogates, or video analysis to measure $v_{1i}$, $v_{2i}$, $v_{1f}$, and $v_{2f}$. Choose the two carts as the system and make the track level so the net external impulse along the track is small. Run the collision several times, then calculate $p_i=m_1v_{1i}+m_2v_{2i}$ and $p_f=m_1v_{1f}+m_2v_{2f}$. If $p_i$ and $p_f$ agree within experimental uncertainty, the data support conservation of linear momentum.',
-            '使用两辆动力学小车和一条水平、低摩擦轨道。用天平测量 $m_1$ 和 $m_2$。用运动传感器、光电门或视频分析测量 $v_{1i}$、$v_{2i}$、$v_{1f}$ 和 $v_{2f}$。选择两辆小车作为系统，并让轨道保持水平，使沿轨道方向的合外力冲量尽量小。重复实验多次，计算 $p_i=m_1v_{1i}+m_2v_{2i}$ 与 $p_f=m_1v_{1f}+m_2v_{2f}$。如果 $p_i$ 和 $p_f$ 在实验不确定度范围内一致，则数据支持线动量守恒。',
-          ),
-          explanation: text(
-            'The key idea is not that every collision conserves kinetic energy; it is that total linear momentum is conserved when the net external impulse on the chosen system is negligible. A strong experimental design must name the system, reduce or account for external forces, define a positive direction, measure velocities immediately before and after collision, and compare total momentum with uncertainty rather than expecting exact equality.',
-            '关键点不是每一次碰撞都守恒动能，而是当所选系统受到的合外力冲量可忽略时，系统总线动量守恒。好的实验设计必须说明系统是什么，减少或说明外力影响，定义正方向，测量碰撞前后瞬间的速度，并用不确定度比较总动量，而不是期待完全精确相等。',
-          ),
-        },
-      ],
-      takeaway: text(
-        'A good AP Physics C experiment answer must connect the apparatus to the physics model and the data analysis equation.',
-        '好的 AP Physics C 实验题答案，必须把实验装置、物理模型和数据分析方程连接起来。',
-      ),
-    },
-  ],
-};
-
 const centerOfMassDiscreteLesson: CurriculumLesson = {
   title: text('Center of Mass: Discrete Systems', 'Center of Mass（质心）：离散系统'),
   description: text(
@@ -916,7 +874,7 @@ const apEnrichment: Record<string, Enrichment> = {
       ['Apply center-of-mass reasoning to multi-object systems.', '用质心思想分析多物体系统。'],
       ['Combine momentum and energy constraints in collisions.', '在碰撞中结合动量和能量约束。'],
     ]),
-    lessons: [impulseMomentumLesson, linearMomentumLabDesignLesson, centerOfMassCalculusLesson],
+    lessons: [impulseMomentumLesson, centerOfMassCalculusLesson],
   },
   'mechanics:5': enrich('rotation', 'rotation', 'rotation', [
     ['Use rotational kinematics and torque with calculus notation.', '用微积分符号处理转动运动学和力矩。'],
