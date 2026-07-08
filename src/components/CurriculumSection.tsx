@@ -4,7 +4,7 @@ import { BookOpenCheck, ChevronDown, ExternalLink, FunctionSquare, Image as Imag
 import { motion } from 'motion/react';
 import { useLanguage } from '../LanguageContext';
 import { learningSystems, type LearningSystemId } from '../data/physicsLearningSystems';
-import type { CurriculumDiagram } from '../data/apPhysicsCurriculum';
+import type { CurriculumDiagram, CurriculumVideo } from '../data/apPhysicsCurriculum';
 
 const renderMath = (value: string) =>
   katex.renderToString(value, {
@@ -18,6 +18,34 @@ const MathBlock: React.FC<{ value: string }> = ({ value }) => (
     className="curriculum-formula"
     dangerouslySetInnerHTML={{ __html: renderMath(value) }}
   />
+);
+
+const LessonVideo: React.FC<{ video: CurriculumVideo; language: 'en' | 'zh' }> = ({ video, language }) => (
+  <figure className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
+    <div className="aspect-video w-full bg-slate-100">
+      <iframe
+        className="h-full w-full"
+        src={video.embedUrl}
+        title={video.title[language]}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+        loading="lazy"
+        referrerPolicy="strict-origin-when-cross-origin"
+      />
+    </div>
+    <figcaption className="flex flex-wrap items-center justify-between gap-2 px-3 py-2 text-xs text-slate-500">
+      <span className="font-medium text-slate-700">{video.title[language]}</span>
+      <a
+        href={video.sourceUrl}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center gap-1 font-semibold text-nebula hover:text-nebula-dark"
+      >
+        {video.sourceLabel[language]}
+        <ExternalLink className="h-3.5 w-3.5" />
+      </a>
+    </figcaption>
+  </figure>
 );
 
 const ConceptDiagram: React.FC<{ diagram: CurriculumDiagram; language: 'en' | 'zh' }> = ({ diagram, language }) => {
@@ -464,6 +492,9 @@ export const CurriculumSection: React.FC = () => {
                                           <ChevronDown className="h-4 w-4 shrink-0 text-slate-400 transition-transform group-open:rotate-180" />
                                         </summary>
                                         <div className="space-y-3 pb-2 pt-3">
+                                          {section.videos?.map((video) => (
+                                            <LessonVideo key={video.sourceUrl} video={video} language={language} />
+                                          ))}
                                           {section.paragraphs?.map((paragraph) => (
                                             <p key={paragraph.en} className="text-sm leading-7 text-slate-600">
                                               {paragraph[language]}

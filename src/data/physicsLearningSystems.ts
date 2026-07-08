@@ -50,6 +50,15 @@ const centerOfMassDiscreteLesson: CurriculumLesson = {
   sections: [
     {
       heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题？'),
+      videos: [
+        {
+          provider: 'youtube',
+          title: text('Center of Mass demonstration', 'Center of Mass 演示视频'),
+          embedUrl: 'https://www.youtube-nocookie.com/embed/DY3LYQv22qY',
+          sourceUrl: 'https://www.youtube.com/watch?v=DY3LYQv22qY',
+          sourceLabel: text('Source: YouTube', '来源：YouTube'),
+        },
+      ],
       paragraphs: [
         text(
           'In momentum and collision problems, many parts of a system can move in complicated ways. A firework may explode into fragments, two people may push away on ice, and a thrown wrench may rotate while moving through the air.',
