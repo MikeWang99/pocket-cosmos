@@ -41,6 +41,187 @@ const diagram = (kind: string, titleEn: string, titleZh: string, captionEn: stri
 
 const focus = (...items: Array<[string, string]>): LocalizedText[] => items.map(([en, zh]) => text(en, zh));
 
+const kinematicsGraphSignLesson: CurriculumLesson = {
+  title: text('Velocity-Time Graphs: Direction vs Speed', '速度-时间图像：方向与速率'),
+  description: text(
+    'A classroom-focused guide for reading velocity graphs without confusing velocity value, direction, and speed.',
+    '用于课堂讲解速度图像，避免混淆速度数值、运动方向和速率。',
+  ),
+  sections: [
+    {
+      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题？'),
+      paragraphs: [
+        text(
+          'Students often say a velocity is "increasing" when they mean the speed is increasing. On a velocity-time graph, the sign of velocity carries direction, so a line moving downward can still describe an object speeding up in the negative direction.',
+          '学生常常说 velocity 在“增加”，但其实想表达的是 speed 在增加。在速度-时间图像中，速度的正负包含方向，所以一条向下走的线，也可能表示物体在负方向上越来越快。',
+        ),
+      ],
+      takeaway: text(
+        'Always separate three ideas: velocity value, direction of motion, and speed.',
+        '一定要区分三个概念：速度数值、运动方向和速率。',
+      ),
+    },
+    {
+      heading: text('1. Choose the positive direction first', '1. 先选正方向'),
+      paragraphs: [
+        text(
+          'A velocity-time graph only makes sense after a positive direction has been chosen. For a ball on a ramp, if uphill is positive, then downhill velocity is negative.',
+          '速度-时间图像必须先选定正方向才有意义。比如斜面上如果规定向上为正，那么向下运动的速度就是负值。',
+        ),
+      ],
+      formulas: [
+        formula('Velocity sign', '速度符号', 'v>0\\Rightarrow \\text{motion in the positive direction},\\quad v<0\\Rightarrow \\text{motion in the negative direction}'),
+        formula('Speed is magnitude', '速率是速度大小', '\\text{speed}=|v|'),
+      ],
+    },
+    {
+      heading: text('2. Slope tells acceleration, not speed directly', '2. 斜率表示加速度，不是直接表示速率'),
+      paragraphs: [
+        text(
+          'The slope of a velocity-time graph is acceleration. If two balls are on the same frictionless ramp, they have the same acceleration along the ramp, so their velocity-time graphs should be parallel.',
+          '速度-时间图像的斜率是加速度。如果两个球在同一个无摩擦斜面上运动，它们沿斜面的加速度相同，所以速度-时间图像应该互相平行。',
+        ),
+      ],
+      formulas: [
+        formula('Graph slope', '图像斜率', 'a=\\frac{dv}{dt}'),
+        formula('Same ramp acceleration', '同一斜面上的加速度相同', 'a_1=a_2=-g\\sin\\theta\\quad \\text{if uphill is positive}'),
+      ],
+    },
+    {
+      heading: text('3. Classroom check: two balls on a ramp', '3. 课堂题：斜面上的两个小球'),
+      classroomQuestions: [
+        {
+          id: 'kinematics-ramp-velocity-graph',
+          title: text('Classroom Check: reading velocity signs', '课堂题：读取速度符号'),
+          prompt: text(
+            'Ball 1 is launched up a ramp with initial velocity $+v_0$. Ball 2 is released from rest at the top of the same ramp. Choose uphill as positive. Which description best matches their velocity-time graphs before collision?',
+            '小球 1 以初速度 $+v_0$ 沿斜面向上运动；小球 2 从同一斜面顶端由静止释放。规定沿斜面向上为正。下列哪一个描述最符合两个小球的速度-时间图像？',
+          ),
+          choices: [
+            {
+              label: 'A',
+              text: text('Ball 1 starts positive and decreases linearly through zero; Ball 2 starts at zero and becomes more negative. The two lines are parallel.', '小球 1 从正速度开始并线性减小、穿过零；小球 2 从零开始并变得越来越负。两条线互相平行。'),
+            },
+            {
+              label: 'B',
+              text: text('Ball 1 starts positive and decreases; Ball 2 starts at zero and becomes more positive because its speed increases.', '小球 1 从正速度开始并减小；小球 2 从零开始并变得越来越正，因为它的速率增加。'),
+            },
+            {
+              label: 'C',
+              text: text('Ball 1 and Ball 2 must have opposite accelerations because they initially move in opposite directions.', '小球 1 和小球 2 的初始运动方向相反，所以它们的加速度也必须相反。'),
+            },
+            {
+              label: 'D',
+              text: text('The graph cannot include direction; it only shows speed.', '速度-时间图像不能包含方向，只能表示速率。'),
+            },
+          ],
+          correctAnswer: 'A',
+          feedback: text(
+            'The graph does include direction because velocity is signed. With uphill positive, gravity gives both balls the same negative acceleration along the ramp. Ball 2 speeds up downhill, but its velocity becomes more negative, not more positive.',
+            '速度-时间图像包含方向，因为 velocity 是带符号的。规定向上为正时，重力让两个小球沿斜面都有相同的负加速度。小球 2 向下越来越快，但它的速度数值是越来越负，而不是越来越正。',
+          ),
+        },
+      ],
+    },
+    {
+      heading: text('4. Common mistakes', '4. 常见错误'),
+      bullets: [
+        text('Confusing velocity with speed.', '把 velocity 和 speed 混为一谈。'),
+        text('Thinking a decreasing velocity graph always means the object is slowing down.', '以为速度图像下降就一定表示物体在减速。'),
+        text('Forgetting that negative velocity can have increasing magnitude.', '忘记负速度的大小也可以增加。'),
+        text('Assuming opposite motion directions imply opposite accelerations.', '以为运动方向相反就意味着加速度方向相反。'),
+      ],
+    },
+  ],
+};
+
+const impulseMomentumLesson: CurriculumLesson = {
+  title: text('Impulse and Momentum: What Actually Changes?', '冲量与动量：到底什么在变化？'),
+  description: text(
+    'A compact clarification of force, impulse, momentum, and the condition for momentum conservation.',
+    '澄清力、冲量、动量以及动量守恒条件的课堂小节。',
+  ),
+  sections: [
+    {
+      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题？'),
+      paragraphs: [
+        text(
+          'In collision and explosion problems, students often mix up force, impulse, momentum, and kinetic energy. The safest path is to ask what the net external force does to the total momentum of the chosen system.',
+          '在碰撞和爆炸问题中，学生很容易混淆力、冲量、动量和动能。最稳妥的路径是先问：合外力如何改变所选系统的总动量？',
+        ),
+      ],
+    },
+    {
+      heading: text('1. Force is the rate of change of momentum', '1. 力是动量的变化率'),
+      paragraphs: [
+        text(
+          'Net external force is not momentum itself. It is the time rate at which total momentum changes.',
+          '合外力不是动量本身，而是系统总动量随时间变化的速率。',
+        ),
+      ],
+      formulas: [
+        formula('Newton’s second law in momentum form', '动量形式的牛顿第二定律', '\\vec F_{\\mathrm{ext,net}}=\\frac{d\\vec p_{\\mathrm{total}}}{dt}'),
+        formula('Impulse changes momentum', '冲量改变动量', '\\vec J=\\int \\vec F_{\\mathrm{ext,net}}\\,dt=\\Delta \\vec p_{\\mathrm{total}}'),
+        formula('Final momentum', '末动量', '\\vec p_f=\\vec p_i+\\vec J'),
+      ],
+      takeaway: text(
+        'If net external force is zero, momentum is constant; it does not have to be zero.',
+        '如果合外力为零，动量是常量；但它不一定等于零。',
+      ),
+    },
+    {
+      heading: text('2. Classroom check: zero force does not mean zero momentum', '2. 课堂题：合外力为零不等于动量为零'),
+      classroomQuestions: [
+        {
+          id: 'zero-force-momentum-constant',
+          title: text('Classroom Check: momentum conservation', '课堂题：动量守恒'),
+          prompt: text(
+            'A system has no net external force for several seconds. Its initial total momentum is $\\vec p_i\\ne 0$. What must be true?',
+            '一个系统在几秒内合外力为零。它的初始总动量为 $\\vec p_i\\ne 0$。下列哪项一定正确？',
+          ),
+          choices: [
+            {
+              label: 'A',
+              text: text('The final total momentum must be zero.', '末总动量一定为零。'),
+            },
+            {
+              label: 'B',
+              text: text('The final total momentum equals the initial total momentum.', '末总动量等于初始总动量。'),
+            },
+            {
+              label: 'C',
+              text: text('The kinetic energy must be conserved.', '动能一定守恒。'),
+            },
+            {
+              label: 'D',
+              text: text('The impulse is equal to the final momentum.', '冲量等于末动量。'),
+            },
+          ],
+          correctAnswer: 'B',
+          feedback: text(
+            'Since $\\vec F_{\\mathrm{ext,net}}=d\\vec p_{\\mathrm{total}}/dt=0$, the total momentum is constant. Constant does not mean zero. Also, impulse equals change in momentum, not final momentum itself.',
+            '因为 $\\vec F_{\\mathrm{ext,net}}=d\\vec p_{\\mathrm{total}}/dt=0$，所以系统总动量保持常量。常量不等于零。另外，冲量等于动量变化量，不等于末动量本身。',
+          ),
+        },
+      ],
+    },
+    {
+      heading: text('3. Collision energy is a separate question', '3. 碰撞中的能量是另一个问题'),
+      paragraphs: [
+        text(
+          'Momentum conservation depends on net external impulse. Kinetic energy conservation depends on the type of collision. Elastic collisions conserve kinetic energy; inelastic collisions do not; perfectly inelastic collisions stick together after collision.',
+          '动量守恒取决于合外力冲量。动能是否守恒取决于碰撞类型。弹性碰撞动能守恒；非弹性碰撞动能不守恒；完全非弹性碰撞后物体粘在一起运动。',
+        ),
+      ],
+      bullets: [
+        text('Elastic collision: momentum conserved and kinetic energy conserved.', '弹性碰撞：动量守恒，动能也守恒。'),
+        text('Inelastic collision: momentum conserved if external impulse is negligible, but kinetic energy is not conserved.', '非弹性碰撞：若外力冲量可忽略，动量守恒，但动能不守恒。'),
+        text('Perfectly inelastic collision: objects stick together, so they share one final velocity.', '完全非弹性碰撞：物体粘在一起，所以有共同末速度。'),
+      ],
+    },
+  ],
+};
+
 const centerOfMassDiscreteLesson: CurriculumLesson = {
   title: text('Center of Mass: Discrete Systems', 'Center of Mass（质心）：离散系统'),
   description: text(
@@ -323,6 +504,10 @@ const centerOfMassCalculusLesson: CurriculumLesson = {
               '对每一个微小质量元 dm，牛顿第二定律给出一个微小的受力贡献。把整个系统加起来时，内力成对抵消，只剩合外力。',
             ),
             text(
+              'The step that moves the time derivative outside the mass integral depends on a physical assumption: we are tracking the same material mass elements, so each dm is not changing with time.',
+              '把时间导数移到质量积分外面的那一步依赖一个物理假设：我们追踪的是同一批物质质量元，所以每个 dm 不随时间改变。',
+            ),
+            text(
               'To make the system behave like one object of total mass M, the representative point must have the mass-weighted average position of all the mass elements.',
               '为了让系统整体表现得像一个总质量为 M 的物体，这个代表点的位置就必须是所有质量元位置的质量加权平均。',
             ),
@@ -332,6 +517,7 @@ const centerOfMassCalculusLesson: CurriculumLesson = {
             formula('Total mass', '系统总质量', 'M=\\int dm'),
             formula('Add Newton’s second law for every mass element', '把每个质量元的牛顿第二定律加起来', '\\vec F_{\\mathrm{ext,net}}=\\int \\vec a\\,dm'),
             formula('Acceleration is the second derivative of position', '加速度是位置对时间的二阶导数', '\\vec a=\\frac{d^2\\vec r}{dt^2}'),
+            formula('Fixed mass element assumption', '固定质量元假设', '\\frac{\\partial}{\\partial t}(dm)=0'),
             formula('Move the time derivative outside the mass integral', '把时间导数移到质量积分外', '\\vec F_{\\mathrm{ext,net}}=\\int \\frac{d^2\\vec r}{dt^2}\\,dm=\\frac{d^2}{dt^2}\\int \\vec r\\,dm'),
             formula('Compare with the whole-system equation', '与系统整体方程比较', 'M\\frac{d^2\\vec r_{\\mathrm{cm}}}{dt^2}=\\frac{d^2}{dt^2}\\int \\vec r\\,dm'),
             formula('Definition forced by the equation of motion', '由运动方程反推出质心定义', '\\vec r_{\\mathrm{cm}}=\\frac{1}{M}\\int \\vec r\\,dm'),
@@ -583,11 +769,14 @@ const enrich = (summaryKey: keyof typeof summaries, formulaKey: keyof typeof for
 });
 
 const apEnrichment: Record<string, Enrichment> = {
-  'physics-1:1': enrich('kinematics', 'kinematics', 'kinematics', [
-    ['Distinguish scalars, vectors, components, and reference frames.', '区分标量、矢量、分量与参考系。'],
-    ['Interpret slope and area on position, velocity, and acceleration graphs.', '解释位置、速度、加速度图像的斜率和面积。'],
-    ['Model one- and two-dimensional motion with vector components.', '用矢量分量建立一维和二维运动模型。'],
-  ]),
+  'physics-1:1': {
+    ...enrich('kinematics', 'kinematics', 'kinematics', [
+      ['Distinguish scalars, vectors, components, and reference frames.', '区分标量、矢量、分量与参考系。'],
+      ['Interpret slope and area on position, velocity, and acceleration graphs.', '解释位置、速度、加速度图像的斜率和面积。'],
+      ['Model one- and two-dimensional motion with vector components.', '用矢量分量建立一维和二维运动模型。'],
+    ]),
+    lessons: [kinematicsGraphSignLesson],
+  },
   'physics-1:2': enrich('dynamics', 'dynamics', 'dynamics', [
     ['Represent interactions with system boundaries and free-body diagrams.', '用系统边界和自由体图表示相互作用。'],
     ['Apply Newton’s laws to friction, springs, gravity, and circular motion.', '把牛顿定律应用到摩擦、弹簧、重力和圆周运动。'],
@@ -604,7 +793,7 @@ const apEnrichment: Record<string, Enrichment> = {
       ['Identify when momentum is conserved for a chosen system.', '判断所选系统何时动量守恒。'],
       ['Compare elastic and inelastic collisions using energy and momentum.', '用能量和动量比较弹性与非弹性碰撞。'],
     ]),
-    lessons: [centerOfMassDiscreteLesson],
+    lessons: [impulseMomentumLesson, centerOfMassDiscreteLesson],
   },
   'physics-1:5': enrich('rotation', 'rotation', 'rotation', [
     ['Translate between linear and angular quantities.', '在平动量和转动量之间转换。'],
@@ -661,11 +850,14 @@ const apEnrichment: Record<string, Enrichment> = {
     ['Connect atomic energy levels with emission and absorption.', '把原子能级与发射、吸收联系起来。'],
     ['Distinguish fission, fusion, and radioactive decay models.', '区分裂变、聚变和放射性衰变模型。'],
   ]),
-  'mechanics:1': enrich('kinematics', 'kinematics', 'kinematics', [
-    ['Use derivatives and integrals to move between position, velocity, and acceleration.', '用导数和积分在位置、速度、加速度之间转换。'],
-    ['Handle 2D/3D vectors, parametric motion, and relative motion.', '处理二维/三维矢量、参数运动和相对运动。'],
-    ['Interpret motion graphs quantitatively.', '定量解释运动图像。'],
-  ]),
+  'mechanics:1': {
+    ...enrich('kinematics', 'kinematics', 'kinematics', [
+      ['Use derivatives and integrals to move between position, velocity, and acceleration.', '用导数和积分在位置、速度、加速度之间转换。'],
+      ['Handle 2D/3D vectors, parametric motion, and relative motion.', '处理二维/三维矢量、参数运动和相对运动。'],
+      ['Interpret motion graphs quantitatively.', '定量解释运动图像。'],
+    ]),
+    lessons: [kinematicsGraphSignLesson],
+  },
   'mechanics:2': enrich('dynamics', 'dynamics', 'dynamics', [
     ['Build Newton-law equations from free-body diagrams.', '从自由体图建立牛顿定律方程。'],
     ['Model drag and circular motion with calculus-ready reasoning.', '用适合微积分的方式建模阻力和圆周运动。'],
@@ -682,7 +874,7 @@ const apEnrichment: Record<string, Enrichment> = {
       ['Apply center-of-mass reasoning to multi-object systems.', '用质心思想分析多物体系统。'],
       ['Combine momentum and energy constraints in collisions.', '在碰撞中结合动量和能量约束。'],
     ]),
-    lessons: [centerOfMassCalculusLesson],
+    lessons: [impulseMomentumLesson, centerOfMassCalculusLesson],
   },
   'mechanics:5': enrich('rotation', 'rotation', 'rotation', [
     ['Use rotational kinematics and torque with calculus notation.', '用微积分符号处理转动运动学和力矩。'],
