@@ -176,7 +176,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[120] grid place-items-center bg-[rgba(15,23,42,0.42)] p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[120] grid place-items-end bg-[rgba(15,23,42,0.42)] p-3 backdrop-blur-sm sm:place-items-center sm:p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -186,7 +186,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             role="dialog"
             aria-modal="true"
             aria-labelledby="auth-modal-title"
-            className="relative w-full max-w-md overflow-hidden rounded-2xl bg-[#ffffff] shadow-2xl"
+            className="relative max-h-[calc(100dvh-1.5rem)] w-full max-w-md overflow-y-auto rounded-2xl bg-[#ffffff] shadow-2xl sm:max-h-[calc(100dvh-2rem)]"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -194,10 +194,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="border-b border-[#e5e7eb] px-6 pb-4 pt-6">
+            <div className="border-b border-[#e5e7eb] px-5 pb-4 pt-5 sm:px-6 sm:pt-6">
               <div className="flex items-start justify-between">
                 <div>
-                  <h2 id="auth-modal-title" className="text-2xl font-bold text-[#111827]">
+                  <h2 id="auth-modal-title" className="text-xl font-bold text-[#111827] sm:text-2xl">
                     {mode === 'reset-password' ? t.auth.resetPasswordTitle : mode === 'signup' ? t.auth.signupTab : t.auth.loginTab}
                   </h2>
                   <p className="mt-1 text-sm text-[#6b7280]">
@@ -219,7 +219,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             </div>
 
             {/* Content */}
-            <div className="px-6 py-6">
+            <div className="px-5 py-5 sm:px-6 sm:py-6">
               {!authEnabled || !configured ? (
                 <div className="rounded-lg border border-amber-500/20 bg-amber-50 p-4 text-sm text-amber-800">
                   {t.auth.previewConfig}
