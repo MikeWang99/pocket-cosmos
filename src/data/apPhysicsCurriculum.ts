@@ -28,9 +28,27 @@ export interface CurriculumVideo {
   sourceLabel: LocalizedText;
 }
 
+export interface CurriculumClassroomQuestion {
+  id: string;
+  title: LocalizedText;
+  prompt: LocalizedText;
+  image?: {
+    src: string;
+    alt: string;
+    caption?: LocalizedText;
+  };
+  choices: Array<{
+    label: string;
+    text: LocalizedText;
+  }>;
+  correctAnswer: string;
+  feedback: LocalizedText;
+}
+
 export interface CurriculumLessonSection {
   heading: LocalizedText;
   videos?: CurriculumVideo[];
+  classroomQuestions?: CurriculumClassroomQuestion[];
   paragraphs?: LocalizedText[];
   bullets?: LocalizedText[];
   formulas?: CurriculumFormula[];
