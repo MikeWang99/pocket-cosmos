@@ -93,22 +93,32 @@ const centerOfMassDiscreteLesson: CurriculumLesson = {
       ],
     },
     {
-      heading: text('2. Definition of center of mass', '2. Center of Mass 的定义'),
+      heading: text('2. Deriving the definition from whole-system motion', '2. 从系统整体运动反推出质心定义'),
       paragraphs: [
         text(
-          'For two objects in one dimension, the center of mass is not usually the midpoint; it is the mass-weighted average position.',
-          '对于一维中的两个物体，质心通常不是几何中点，而是质量加权平均位置。',
+          'We do not start by memorizing a formula. We first ask for a single point that can represent the motion of the entire system.',
+          '我们不是一上来背公式，而是先问：能不能找到一个点，用它代表整个系统的整体运动？',
+        ),
+        text(
+          'If internal forces cancel inside the system, the natural whole-system equation should look like Newton’s second law for one object: net external force equals total mass times the acceleration of that representative point.',
+          '如果系统内部的力会相互抵消，那么系统整体的方程就应该像一个物体的牛顿第二定律：合外力等于总质量乘以这个代表点的加速度。',
+        ),
+        text(
+          'For a finite set of objects, adding Newton’s second law for every object shows what the representative acceleration must be. The corresponding representative position is the mass-weighted average position.',
+          '对于有限个物体，把每个物体的牛顿第二定律加起来，就能看出这个代表点的加速度应该是什么。与之对应的代表点位置，就是质量加权平均位置。',
         ),
       ],
       formulas: [
-        formula('Two-object center of mass', '两个物体的质心', 'x_{\\mathrm{cm}}=\\frac{m_1x_1+m_2x_2}{m_1+m_2}'),
-        formula('Many-object center of mass', '多个物体的质心', 'x_{\\mathrm{cm}}=\\frac{\\sum m_ix_i}{\\sum m_i}'),
-        formula('Two-dimensional center of mass', '二维质心', 'x_{\\mathrm{cm}}=\\frac{\\sum m_ix_i}{\\sum m_i},\\quad y_{\\mathrm{cm}}=\\frac{\\sum m_iy_i}{\\sum m_i}'),
-        formula('Three-dimensional center of mass', '三维质心', 'z_{\\mathrm{cm}}=\\frac{\\sum m_iz_i}{\\sum m_i}'),
+        formula('Desired whole-system equation', '我们希望系统整体满足', '\\vec F_{\\mathrm{ext,net}}=M\\vec a_{\\mathrm{cm}}'),
+        formula('Total mass', '系统总质量', 'M=\\sum_i m_i'),
+        formula('Add Newton’s second law for all parts', '把每一部分的牛顿第二定律加起来', '\\vec F_{\\mathrm{ext,net}}=\\sum_i m_i\\vec a_i'),
+        formula('Therefore the representative acceleration must be', '因此代表点的加速度必须是', '\\vec a_{\\mathrm{cm}}=\\frac{\\sum_i m_i\\vec a_i}{\\sum_i m_i}'),
+        formula('So the representative position is defined as', '所以代表点的位置定义为', '\\vec r_{\\mathrm{cm}}=\\frac{\\sum_i m_i\\vec r_i}{\\sum_i m_i}'),
+        formula('Component form', '分量形式', 'x_{\\mathrm{cm}}=\\frac{\\sum_i m_ix_i}{\\sum_i m_i},\\quad y_{\\mathrm{cm}}=\\frac{\\sum_i m_iy_i}{\\sum_i m_i}'),
       ],
       takeaway: text(
-        'The center of mass is a property of the mass distribution, so it does not have to lie inside the material object.',
-        '质心是质量分布的平均位置，因此不一定在物体材料内部。',
+        'The formula is not arbitrary: it is the position that makes the whole system obey Fext = M acm.',
+        '这个公式不是随便定义出来的：它正是让整个系统满足 Fext = M acm 的那个位置。',
       ),
     },
     {
@@ -258,16 +268,38 @@ const centerOfMassCalculusLesson: CurriculumLesson = {
   ),
   sections: centerOfMassDiscreteLesson.sections.map((section) => {
     switch (section.heading.en) {
-      case '2. Definition of center of mass':
+      case '2. Deriving the definition from whole-system motion':
         return {
           ...section,
+          paragraphs: [
+            text(
+              'We do not start with an integral definition. We start with the physical goal: define one point whose acceleration represents the motion of the whole system.',
+              '我们不从积分定义开始，而是先从物理目标出发：定义一个点，让它的加速度代表整个系统的整体运动。',
+            ),
+            text(
+              'For each small mass element dm, Newton’s second law gives a tiny contribution to force. When we add the whole system, internal forces cancel in pairs, so only the net external force remains.',
+              '对每一个微小质量元 dm，牛顿第二定律给出一个微小的受力贡献。把整个系统加起来时，内力成对抵消，只剩合外力。',
+            ),
+            text(
+              'To make the system behave like one object of total mass M, the representative point must have the mass-weighted average position of all the mass elements.',
+              '为了让系统整体表现得像一个总质量为 M 的物体，这个代表点的位置就必须是所有质量元位置的质量加权平均。',
+            ),
+          ],
           formulas: [
-            formula('Discrete-to-continuous bridge', '从离散到连续', '\\sum m_i(\\cdots)\\quad\\longrightarrow\\quad\\int (\\cdots)\\,dm'),
-            formula('Total mass of a continuous object', '连续物体总质量', 'M=\\int dm'),
-            formula('Continuous center of mass', '连续质心矢量形式', '\\vec r_{\\mathrm{cm}}=\\frac{1}{M}\\int \\vec r\\,dm'),
+            formula('Desired whole-system equation', '我们希望系统整体满足', '\\vec F_{\\mathrm{ext,net}}=M\\vec a_{\\mathrm{cm}}'),
+            formula('Total mass', '系统总质量', 'M=\\int dm'),
+            formula('Add Newton’s second law for every mass element', '把每个质量元的牛顿第二定律加起来', '\\vec F_{\\mathrm{ext,net}}=\\int \\vec a\\,dm'),
+            formula('Acceleration is the second derivative of position', '加速度是位置对时间的二阶导数', '\\vec a=\\frac{d^2\\vec r}{dt^2}'),
+            formula('Move the time derivative outside the mass integral', '把时间导数移到质量积分外', '\\vec F_{\\mathrm{ext,net}}=\\int \\frac{d^2\\vec r}{dt^2}\\,dm=\\frac{d^2}{dt^2}\\int \\vec r\\,dm'),
+            formula('Compare with the whole-system equation', '与系统整体方程比较', 'M\\frac{d^2\\vec r_{\\mathrm{cm}}}{dt^2}=\\frac{d^2}{dt^2}\\int \\vec r\\,dm'),
+            formula('Definition forced by the equation of motion', '由运动方程反推出质心定义', '\\vec r_{\\mathrm{cm}}=\\frac{1}{M}\\int \\vec r\\,dm'),
             formula('Component form', '分量形式', 'x_{\\mathrm{cm}}=\\frac{1}{M}\\int x\\,dm,\\quad y_{\\mathrm{cm}}=\\frac{1}{M}\\int y\\,dm,\\quad z_{\\mathrm{cm}}=\\frac{1}{M}\\int z\\,dm'),
             formula('Common mass elements', '常见质量元', 'dm=\\lambda\\,dx,\\quad dm=\\sigma\\,dA,\\quad dm=\\rho\\,dV'),
           ],
+          takeaway: text(
+            'The integral formula is not the starting assumption; it is the definition that makes Fext = M acm true for a continuous system.',
+            '积分公式不是出发点，而是为了让连续系统满足 Fext = M acm 而自然得到的定义。',
+          ),
         };
       case '3. Core theorem: external force controls center-of-mass acceleration':
         return {
