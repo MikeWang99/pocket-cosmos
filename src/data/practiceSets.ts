@@ -2,6 +2,7 @@ import { calculusForPhysicsMeta, calculusForPhysicsSteps } from './calculusForPh
 import { dynamicsMultipleChoiceMeta, dynamicsMultipleChoiceSteps } from './dynamicsMultipleChoice';
 import { practiceSetMeta as frq2025Meta, practiceSteps as frq2025Steps } from './frq2025Mechanics';
 import { kinematicsMultipleChoiceMeta, kinematicsMultipleChoiceSteps } from './kinematicsMultipleChoice';
+import { linearMomentumLabDesignMeta, linearMomentumLabDesignSteps } from './linearMomentumLabDesign';
 import { physicsBowlEmMeta, physicsBowlEmSteps } from './physicsBowlEmQuestionBank';
 import { workEnergyMultipleChoiceMeta, workEnergyMultipleChoiceSteps } from './workEnergyMultipleChoice';
 import type { PracticeStep } from '../types/practice';
@@ -59,6 +60,13 @@ export const practiceSets: PracticeSet[] = [
     label: 'Work & Energy',
     ...workEnergyMultipleChoiceMeta,
     steps: workEnergyMultipleChoiceSteps,
+  },
+  {
+    id: 'linear-momentum-lab-design',
+    category: 'mechanics',
+    label: 'Momentum Lab Design',
+    ...linearMomentumLabDesignMeta,
+    steps: linearMomentumLabDesignSteps,
   },
   {
     id: 'physics-bowl-em-question-bank',

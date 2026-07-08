@@ -232,6 +232,12 @@ export const i18n = {
           eyebrow: 'AP Physics C Mechanics',
           description: 'Practice work, energy conservation, potential energy curves, variable-force integrals, friction energy loss, and power with the full Work and Energy multiple-choice set.',
         },
+        linearMomentumLabDesign: {
+          label: 'Momentum Lab Design',
+          title: 'Linear Momentum Lab Design',
+          eyebrow: 'AP Physics C Mechanics',
+          description: 'Design and justify an experiment that tests conservation of linear momentum using carts, velocity measurements, and uncertainty-aware data comparison.',
+        },
         physicsBowlEmQuestionBank: {
           label: 'Physics Bowl Selected E&M',
           title: 'Physics Bowl Selected E&M Question Bank',
@@ -504,6 +510,12 @@ export const i18n = {
           title: 'AP Physics C：功和能选择题',
           eyebrow: '大学先修物理力学',
           description: '完整练习功、能量守恒、势能图像、变力积分、摩擦能量损失与功率相关选择题。',
+        },
+        linearMomentumLabDesign: {
+          label: '动量实验设计',
+          title: '线动量实验设计',
+          eyebrow: 'AP Physics C：力学',
+          description: '设计并论证一个验证线动量守恒的实验，练习小车碰撞、速度测量和带不确定度的数据比较。',
         },
         physicsBowlEmQuestionBank: {
           label: 'Physics Bowl 物理碗精选题库',
