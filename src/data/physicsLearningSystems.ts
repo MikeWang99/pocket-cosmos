@@ -167,6 +167,48 @@ const centerOfMassDiscreteLesson: CurriculumLesson = {
           '烟花爆炸后，碎片飞向各个方向；但如果忽略空气阻力，所有碎片组成系统的质心仍然沿着只受重力影响的抛体轨迹运动。',
         ),
       ],
+      classroomQuestions: [
+        {
+          id: 'center-of-mass-explosion-fragments',
+          title: text('Classroom Check: exploding falling mass', '课堂题：下落物体爆炸后的质心'),
+          prompt: text(
+            'A mass is falling vertically toward the ground when it explodes into two fragments of masses $m_1$ and $m_2$, which strike the ground at the same time. If the first mass lands a distance $d_1$ from the place it would have landed had the explosion not occurred, what is the final distance between the two masses after they land?',
+            '一个物体正竖直下落，随后爆炸成质量分别为 $m_1$ 和 $m_2$ 的两个碎片，两个碎片同时落地。如果第一个碎片落在距离“没有爆炸时本应落地点” $d_1$ 的位置，那么两个碎片落地后的最终距离是多少？',
+          ),
+          image: {
+            src: '/curriculum-assets/center-of-mass-explosion-fragments.png',
+            alt: 'Two fragments landing on opposite sides of the original vertical path after an explosion.',
+            caption: text('Figure 6.11', 'Figure 6.11'),
+          },
+          choices: [
+            {
+              label: 'A',
+              text: text('Diagram option A from the original source', '原题图像选项 A'),
+            },
+            {
+              label: 'B',
+              text: text('Diagram option B from the original source', '原题图像选项 B'),
+            },
+            {
+              label: 'C',
+              text: text('$d_1\\left(1+\\frac{m_1}{m_2}\\right)$', '$d_1\\left(1+\\frac{m_1}{m_2}\\right)$'),
+            },
+            {
+              label: 'D',
+              text: text('$d_1\\left(1+\\frac{m_2}{m_1}\\right)$', '$d_1\\left(1+\\frac{m_2}{m_1}\\right)$'),
+            },
+            {
+              label: 'E',
+              text: text('Not enough information is given.', '信息不足，无法判断。'),
+            },
+          ],
+          correctAnswer: 'C',
+          feedback: text(
+            'Internal forces cannot change the motion of the center of mass. The center of mass continues to fall along the original vertical line, so take the no-explosion landing point as the origin: $0=m_2d_2-m_1d_1$. Thus $d_2=d_1\\frac{m_1}{m_2}$, and the distance between the fragments is $d_1+d_2=d_1\\left(1+\\frac{m_1}{m_2}\\right)$.',
+            '内力不影响质心运动。质心继续沿原来的竖直线下落，所以把“没有爆炸时本应落地点”作为原点：$0=m_2d_2-m_1d_1$。因此 $d_2=d_1\\frac{m_1}{m_2}$，两个碎片的距离为 $d_1+d_2=d_1\\left(1+\\frac{m_1}{m_2}\\right)$。',
+          ),
+        },
+      ],
       takeaway: text(
         'The explosion changes the relative motion of fragments, not the motion of the system’s center of mass.',
         '爆炸改变的是碎片之间的相对运动，而不是系统质心的整体运动。',
