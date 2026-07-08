@@ -20,6 +20,20 @@ export interface CurriculumDiagram {
   caption: LocalizedText;
 }
 
+export interface CurriculumLessonSection {
+  heading: LocalizedText;
+  paragraphs?: LocalizedText[];
+  bullets?: LocalizedText[];
+  formulas?: CurriculumFormula[];
+  takeaway?: LocalizedText;
+}
+
+export interface CurriculumLesson {
+  title: LocalizedText;
+  description: LocalizedText;
+  sections: CurriculumLessonSection[];
+}
+
 export interface CurriculumUnit {
   number: number;
   title: LocalizedText;
@@ -29,6 +43,7 @@ export interface CurriculumUnit {
   focus?: LocalizedText[];
   formulas?: CurriculumFormula[];
   diagrams?: CurriculumDiagram[];
+  lessons?: CurriculumLesson[];
 }
 
 export interface CurriculumCourse {
