@@ -241,162 +241,84 @@ const centerOfMassDiscreteLesson: CurriculumLesson = {
 };
 
 const centerOfMassCalculusLesson: CurriculumLesson = {
+  ...centerOfMassDiscreteLesson,
   title: text('Center of Mass: Calculus Form', 'Center of Mass（质心）：微积分形式'),
   description: text(
-    'A calculus-based derivation of center-of-mass position, velocity, acceleration, and total momentum for discrete and continuous mass distributions.',
-    '用微积分推导离散与连续质量分布的质心位置、质心速度、质心加速度和系统总动量。',
+    'The same center-of-mass modeling logic as AP Physics 1, with the key formulas written in calculus form for AP Physics C.',
+    '保留与 AP Physics 1 相同的质心建模逻辑和例子，只把关键公式改写成 AP Physics C 需要的微积分形式。',
   ),
-  sections: [
-    {
-      heading: text('0. Why AP Physics C needs a calculus version', '0. 为什么 AP Physics C 需要微积分版本？'),
-      paragraphs: [
-        text(
-          'AP Physics 1 can treat the center of mass as a mass-weighted average over a finite number of particles. AP Physics C should also connect that average to continuous mass distributions and derivatives with respect to time.',
-          'AP Physics 1 可以把质心理解为有限个质点的质量加权平均。AP Physics C 还需要把这个平均推广到连续质量分布，并用对时间求导连接质心速度、质心加速度和动量。',
-        ),
-        text(
-          'The key idea is that a sum over particles becomes an integral over small mass elements when the object is continuous.',
-          '核心思想是：当物体是连续分布时，对质点求和会变成对微小质量元的积分。',
-        ),
-      ],
-      formulas: [
-        formula('Discrete-to-continuous bridge', '从离散到连续', '\\sum m_i(\\cdots)\\quad\\longrightarrow\\quad\\int (\\cdots)\\,dm'),
-      ],
-      takeaway: text(
-        'The calculus version is not a new concept; it is the continuous and derivative form of the same center-of-mass idea.',
-        '微积分版本不是新的概念，而是同一个质心思想的连续形式和求导形式。',
-      ),
-    },
-    {
-      heading: text('1. Discrete center of mass as the starting point', '1. 从离散质点系统出发'),
-      paragraphs: [
-        text(
-          'For a finite set of particles, the center of mass is the mass-weighted average of position vectors. This is the algebraic form that students see first.',
-          '对于有限个质点组成的系统，质心是位置矢量的质量加权平均。这是学生最先看到的代数形式。',
-        ),
-      ],
-      formulas: [
-        formula('Vector center of mass', '矢量形式的质心', '\\vec r_{\\mathrm{cm}}=\\frac{\\sum_i m_i\\vec r_i}{\\sum_i m_i}'),
-        formula('Total mass', '系统总质量', 'M=\\sum_i m_i'),
-        formula('Equivalent form', '等价形式', 'M\\vec r_{\\mathrm{cm}}=\\sum_i m_i\\vec r_i'),
-      ],
-    },
-    {
-      heading: text('2. Continuous mass distribution', '2. 连续质量分布的质心'),
-      paragraphs: [
-        text(
-          'For an extended object, divide the object into tiny mass elements. Each element has mass dm and position vector r. Taking the limit turns the sum into an integral.',
-          '对于有尺寸的连续物体，把物体切成很多微小质量元。每个质量元的质量为 dm，位置矢量为 r。取极限后，求和变成积分。',
-        ),
-      ],
-      formulas: [
-        formula('Total mass of a continuous object', '连续物体总质量', 'M=\\int dm'),
-        formula('Continuous center of mass', '连续质心矢量形式', '\\vec r_{\\mathrm{cm}}=\\frac{1}{M}\\int \\vec r\\,dm'),
-        formula('Component form', '分量形式', 'x_{\\mathrm{cm}}=\\frac{1}{M}\\int x\\,dm,\\quad y_{\\mathrm{cm}}=\\frac{1}{M}\\int y\\,dm,\\quad z_{\\mathrm{cm}}=\\frac{1}{M}\\int z\\,dm'),
-      ],
-      takeaway: text(
-        'In AP Physics C, the hard part is usually not the formula; it is choosing dm correctly.',
-        '在 AP Physics C 中，难点通常不是公式本身，而是如何正确选择 dm。',
-      ),
-    },
-    {
-      heading: text('3. Choosing dm from density', '3. 如何根据密度选择 dm'),
-      paragraphs: [
-        text(
-          'The mass element depends on the geometry of the object. Use linear density for rods, area density for plates, and volume density for three-dimensional objects.',
-          '质量元取决于物体的几何结构。细杆用线密度，薄板用面密度，三维物体用体密度。',
-        ),
-      ],
-      formulas: [
-        formula('Linear density', '线密度', 'dm=\\lambda(x)\\,dx'),
-        formula('Area density', '面密度', 'dm=\\sigma(x,y)\\,dA'),
-        formula('Volume density', '体密度', 'dm=\\rho(x,y,z)\\,dV'),
-      ],
-      bullets: [
-        text('Uniform thin rod: lambda is constant, so dm = lambda dx.', '均匀细杆：线密度 lambda 为常数，所以 dm = lambda dx。'),
-        text('Nonuniform rod: lambda may depend on position, so it must stay inside the integral.', '非均匀细杆：lambda 可能随位置变化，因此必须保留在积分中。'),
-        text('Symmetry can reduce the number of components that need to be calculated.', '对称性可以减少需要计算的质心分量。'),
-      ],
-    },
-    {
-      heading: text('4. Deriving center-of-mass velocity', '4. 质心速度的推导'),
-      paragraphs: [
-        text(
-          'Assume the system mass is constant. Differentiate the center-of-mass position with respect to time to get the center-of-mass velocity.',
-          '假设系统总质量不变。对质心位置关于时间求导，就得到质心速度。',
-        ),
-      ],
-      formulas: [
-        formula('Start from center-of-mass position', '从质心位置出发', '\\vec r_{\\mathrm{cm}}=\\frac{1}{M}\\int \\vec r\\,dm'),
-        formula('Differentiate with respect to time', '对时间求导', '\\vec v_{\\mathrm{cm}}=\\frac{d\\vec r_{\\mathrm{cm}}}{dt}=\\frac{1}{M}\\int \\frac{d\\vec r}{dt}\\,dm'),
-        formula('Velocity form', '质心速度形式', '\\vec v_{\\mathrm{cm}}=\\frac{1}{M}\\int \\vec v\\,dm'),
-      ],
-      takeaway: text(
-        'The center-of-mass velocity is the mass-weighted average of all velocity elements.',
-        '质心速度是所有质量元速度的质量加权平均。',
-      ),
-    },
-    {
-      heading: text('5. Deriving total momentum relation', '5. 推导总动量与质心速度的关系'),
-      paragraphs: [
-        text(
-          'For a continuous system, total momentum is the integral of velocity times mass element. Comparing this with the expression for center-of-mass velocity gives the key relation.',
-          '对于连续系统，总动量是速度乘以质量元的积分。把它与质心速度表达式比较，就得到关键关系。',
-        ),
-      ],
-      formulas: [
-        formula('Total momentum', '系统总动量', '\\vec p_{\\mathrm{total}}=\\int \\vec v\\,dm'),
-        formula('Center-of-mass velocity relation', '质心速度关系', 'M\\vec v_{\\mathrm{cm}}=\\int \\vec v\\,dm'),
-        formula('Momentum of the whole system', '系统整体动量', '\\vec p_{\\mathrm{total}}=M\\vec v_{\\mathrm{cm}}'),
-      ],
-      takeaway: text(
-        'The whole system behaves, in momentum, like one object of mass M moving at the center-of-mass velocity.',
-        '从动量角度看，整个系统就像一个质量为 M、以质心速度运动的物体。',
-      ),
-    },
-    {
-      heading: text('6. Deriving the center-of-mass equation of motion', '6. 推导质心运动方程'),
-      paragraphs: [
-        text(
-          'Differentiate total momentum with respect to time. Internal forces cancel in pairs, so only the net external force changes the total momentum of the system.',
-          '对系统总动量关于时间求导。内力成对抵消，因此只有合外力会改变系统总动量。',
-        ),
-      ],
-      formulas: [
-        formula('Momentum derivative', '动量对时间求导', '\\frac{d\\vec p_{\\mathrm{total}}}{dt}=\\frac{d}{dt}(M\\vec v_{\\mathrm{cm}})'),
-        formula('Constant-mass system', '系统质量不变时', '\\frac{d\\vec p_{\\mathrm{total}}}{dt}=M\\vec a_{\\mathrm{cm}}'),
-        formula('External-force equation', '质心运动方程', '\\vec F_{\\mathrm{ext,net}}=M\\vec a_{\\mathrm{cm}}'),
-      ],
-      takeaway: text(
-        'Internal forces can rearrange the system internally, but only external forces accelerate the center of mass.',
-        '内力可以改变系统内部结构和相对运动，但只有外力能让质心加速。',
-      ),
-    },
-    {
-      heading: text('7. What AP Physics C students should be able to do', '7. AP Physics C 学生应该会什么？'),
-      bullets: [
-        text('Convert a discrete sum into a continuous integral for an extended object.', '把离散求和推广为连续物体上的积分。'),
-        text('Choose dm using lambda dx, sigma dA, or rho dV depending on the geometry.', '根据几何结构选择 dm：lambda dx、sigma dA 或 rho dV。'),
-        text('Use symmetry to decide which center-of-mass coordinates are zero or obvious.', '用对称性判断哪些质心坐标为零或显然可得。'),
-        text('Differentiate center-of-mass position to obtain center-of-mass velocity and acceleration.', '对质心位置求导，得到质心速度和质心加速度。'),
-        text('Connect total momentum with M times the center-of-mass velocity.', '把系统总动量与 M 倍质心速度联系起来。'),
-      ],
-    },
-    {
-      heading: text('8. Formula summary', '8. 本节核心公式总结'),
-      formulas: [
-        formula('Continuous center of mass', '连续质心', '\\vec r_{\\mathrm{cm}}=\\frac{1}{M}\\int \\vec r\\,dm'),
-        formula('Mass element choices', '质量元选择', 'dm=\\lambda\\,dx,\\quad dm=\\sigma\\,dA,\\quad dm=\\rho\\,dV'),
-        formula('Center-of-mass velocity', '质心速度', '\\vec v_{\\mathrm{cm}}=\\frac{1}{M}\\int \\vec v\\,dm'),
-        formula('Total momentum', '系统总动量', '\\vec p_{\\mathrm{total}}=M\\vec v_{\\mathrm{cm}}'),
-        formula('Center-of-mass equation of motion', '质心运动方程', '\\vec F_{\\mathrm{ext,net}}=M\\vec a_{\\mathrm{cm}}'),
-      ],
-      takeaway: text(
-        'For AP Physics C, center of mass is both a modeling idea and a calculus tool for systems of particles and continuous bodies.',
-        '对 AP Physics C 来说，质心既是系统建模思想，也是处理质点系和连续物体的微积分工具。',
-      ),
-    },
-  ],
+  sections: centerOfMassDiscreteLesson.sections.map((section) => {
+    switch (section.heading.en) {
+      case '2. Definition of center of mass':
+        return {
+          ...section,
+          formulas: [
+            formula('Discrete-to-continuous bridge', '从离散到连续', '\\sum m_i(\\cdots)\\quad\\longrightarrow\\quad\\int (\\cdots)\\,dm'),
+            formula('Total mass of a continuous object', '连续物体总质量', 'M=\\int dm'),
+            formula('Continuous center of mass', '连续质心矢量形式', '\\vec r_{\\mathrm{cm}}=\\frac{1}{M}\\int \\vec r\\,dm'),
+            formula('Component form', '分量形式', 'x_{\\mathrm{cm}}=\\frac{1}{M}\\int x\\,dm,\\quad y_{\\mathrm{cm}}=\\frac{1}{M}\\int y\\,dm,\\quad z_{\\mathrm{cm}}=\\frac{1}{M}\\int z\\,dm'),
+            formula('Common mass elements', '常见质量元', 'dm=\\lambda\\,dx,\\quad dm=\\sigma\\,dA,\\quad dm=\\rho\\,dV'),
+          ],
+        };
+      case '3. Core theorem: external force controls center-of-mass acceleration':
+        return {
+          ...section,
+          formulas: [
+            formula('Center-of-mass acceleration', '质心加速度', '\\vec a_{\\mathrm{cm}}=\\frac{d^2\\vec r_{\\mathrm{cm}}}{dt^2}'),
+            formula('Center-of-mass form of Newton’s second law', '质心形式的牛顿第二定律', '\\vec F_{\\mathrm{ext,net}}=\\frac{d}{dt}(M\\vec v_{\\mathrm{cm}})=M\\vec a_{\\mathrm{cm}}'),
+            formula('External force determines acceleration, not velocity directly', '外力决定加速度，而不是直接决定速度', '\\vec F_{\\mathrm{ext,net}}\\rightarrow \\frac{d^2\\vec r_{\\mathrm{cm}}}{dt^2}'),
+          ],
+        };
+      case '5. Firework explosion':
+        return {
+          ...section,
+          formulas: [
+            formula('Center-of-mass motion after explosion', '爆炸后质心运动', '\\vec F_{\\mathrm{ext,net}}=M\\vec g\\quad\\Rightarrow\\quad \\frac{d^2\\vec r_{\\mathrm{cm}}}{dt^2}=\\vec g'),
+          ],
+        };
+      case '6. Two people pushing off on ice':
+        return {
+          ...section,
+          formulas: [
+            formula('No net horizontal external force', '水平方向没有合外力', '\\vec F_{\\mathrm{ext,net}}=0'),
+            formula('No center-of-mass acceleration', '质心加速度为零', '\\frac{d^2\\vec r_{\\mathrm{cm}}}{dt^2}=0'),
+            formula('Constant center-of-mass velocity', '质心速度保持不变', '\\vec r_{\\mathrm{cm}}(t)=\\vec r_{\\mathrm{cm}}(0)+\\vec v_{\\mathrm{cm}}(0)t'),
+          ],
+        };
+      case '7. Relationship between center of mass and momentum':
+        return {
+          ...section,
+          formulas: [
+            formula('Total momentum', '系统总动量', '\\vec p_{\\mathrm{total}}=\\int \\vec v\\,dm'),
+            formula('Total mass', '系统总质量', 'M=\\int dm'),
+            formula('Center-of-mass velocity', '质心速度', '\\vec v_{\\mathrm{cm}}=\\frac{d\\vec r_{\\mathrm{cm}}}{dt}=\\frac{1}{M}\\int \\vec v\\,dm'),
+            formula('Momentum and center-of-mass velocity', '总动量和质心速度', '\\vec p_{\\mathrm{total}}=M\\vec v_{\\mathrm{cm}}'),
+          ],
+        };
+      case '8. Core theorem: no external force means constant center-of-mass velocity':
+        return {
+          ...section,
+          formulas: [
+            formula('Zero net external force', '合外力为零', '\\vec F_{\\mathrm{ext,net}}=\\frac{d\\vec p_{\\mathrm{total}}}{dt}=0'),
+            formula('Momentum conservation', '动量守恒', '\\vec p_{\\mathrm{total}}=\\mathrm{constant}'),
+            formula('Constant center-of-mass velocity', '质心速度不变', '\\frac{d\\vec r_{\\mathrm{cm}}}{dt}=\\vec v_{\\mathrm{cm}}=\\mathrm{constant}'),
+          ],
+        };
+      case '11. Formula summary':
+        return {
+          ...section,
+          formulas: [
+            formula('Continuous center-of-mass position', '连续质心位置', '\\vec r_{\\mathrm{cm}}=\\frac{1}{M}\\int \\vec r\\,dm,\\quad M=\\int dm'),
+            formula('Mass element choices', '质量元选择', 'dm=\\lambda\\,dx,\\quad dm=\\sigma\\,dA,\\quad dm=\\rho\\,dV'),
+            formula('Center-of-mass motion', '质心运动和合外力', '\\vec F_{\\mathrm{ext,net}}=\\frac{d}{dt}(M\\vec v_{\\mathrm{cm}})=M\\frac{d^2\\vec r_{\\mathrm{cm}}}{dt^2}'),
+            formula('Momentum and center-of-mass velocity', '总动量和质心速度', '\\vec p_{\\mathrm{total}}=\\int \\vec v\\,dm=M\\vec v_{\\mathrm{cm}}'),
+            formula('No external force', '没有合外力时', '\\vec F_{\\mathrm{ext,net}}=0\\quad\\Rightarrow\\quad \\vec p_{\\mathrm{total}}=\\mathrm{constant},\\quad \\vec v_{\\mathrm{cm}}=\\mathrm{constant}'),
+          ],
+        };
+      default:
+        return section;
+    }
+  }),
 };
 
 const summaries: Record<string, LocalizedText> = {
