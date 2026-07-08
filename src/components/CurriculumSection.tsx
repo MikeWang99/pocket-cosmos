@@ -119,7 +119,7 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
             <button
               type="button"
               onClick={() => setShowSampleAnswer((current) => !current)}
-              className="inline-flex min-h-10 items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-nebula"
+              className="inline-flex min-h-10 items-center justify-center rounded-full border border-nebula/30 bg-[#ffffff] px-4 py-2 text-xs font-bold uppercase tracking-widest text-nebula transition-colors hover:border-nebula/60 hover:bg-nebula/5"
             >
               {showSampleAnswer
                 ? language === 'zh' ? '收起答案' : 'Hide answer'

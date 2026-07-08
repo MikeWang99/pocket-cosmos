@@ -29,6 +29,7 @@ export interface PracticeStep {
     text: string;
   }>;
   correctAnswer?: string;
+  sampleAnswer?: string;
   solution?: string;
 }
 

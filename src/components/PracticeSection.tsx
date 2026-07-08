@@ -175,7 +175,7 @@ const QuestionMedia: React.FC<{ step: PracticeStep; label: string }> = ({ step, 
 };
 
 export const PracticeSection: React.FC = () => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const { authEnabled, configured, user } = useAuth();
   const [activeSetId, setActiveSetId] = useState('kinematics-multiple-choice');
   const [activeIndex, setActiveIndex] = useState(0);
@@ -192,6 +192,7 @@ export const PracticeSection: React.FC = () => {
     if (setId === 'frq-2025-mechanics') return t.practice.sets.frq2025;
     if (setId === 'dynamics-multiple-choice') return t.practice.sets.dynamicsMultipleChoice;
     if (setId === 'work-energy-multiple-choice') return t.practice.sets.workEnergyMultipleChoice;
+    if (setId === 'linear-momentum-lab-design') return t.practice.sets.linearMomentumLabDesign;
     if (setId === 'physics-bowl-em-question-bank') return t.practice.sets.physicsBowlEmQuestionBank;
     return t.practice.sets.kinematicsMultipleChoice;
   };
@@ -628,6 +629,30 @@ export const PracticeSection: React.FC = () => {
                       className="min-h-[180px] w-full rounded-lg border border-white/10 bg-black/30 p-4 text-base leading-relaxed text-white outline-none transition-colors placeholder:text-slate-600 focus:border-nebula/70 sm:text-sm"
                       placeholder={t.practice.answerPlaceholder}
                     />
+                    {(activeStep.sampleAnswer || activeStep.solution) && (
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {activeStep.sampleAnswer && (
+                          <details className="group rounded-lg border border-white/10 bg-white/[0.03] p-3">
+                            <summary className="cursor-pointer list-none text-xs font-bold uppercase tracking-widest text-nebula">
+                              {language === 'zh' ? '露出答案' : 'Reveal answer'}
+                            </summary>
+                            <p className="mt-3 text-sm leading-7 text-slate-300">
+                              <MathText>{activeStep.sampleAnswer}</MathText>
+                            </p>
+                          </details>
+                        )}
+                        {activeStep.solution && (
+                          <details className="group rounded-lg border border-white/10 bg-white/[0.03] p-3">
+                            <summary className="cursor-pointer list-none text-xs font-bold uppercase tracking-widest text-nebula">
+                              {language === 'zh' ? '解析' : 'Explanation'}
+                            </summary>
+                            <p className="mt-3 text-sm leading-7 text-slate-300">
+                              <MathText>{activeStep.solution}</MathText>
+                            </p>
+                          </details>
+                        )}
+                      </div>
+                    )}
                   </>
                 )}
 
