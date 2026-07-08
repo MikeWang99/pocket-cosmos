@@ -174,18 +174,31 @@ textarea::placeholder {
 }
 
 .math-inline {
-  display: inline-block;
+  display: inline;
   max-width: 100%;
-  overflow-x: auto;
   vertical-align: baseline;
+  line-height: inherit;
+  white-space: nowrap;
 }
 
 .math-inline .katex {
-  font-size: 1.04em;
+  font-size: 1em;
+  line-height: 1;
+  vertical-align: baseline;
+}
+
+.math-inline .katex-html {
+  line-height: 1;
+}
+
+.math-inline .mspace {
+  background: transparent !important;
 }
 
 .practice-equation .math-inline {
+  display: inline-block;
   min-width: max-content;
+  overflow-x: auto;
 }
 
 .practice-media-image {
