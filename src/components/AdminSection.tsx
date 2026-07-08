@@ -254,12 +254,12 @@ export const AdminSection: React.FC = () => {
   if (!configured) {
     return (
       <section className="max-w-4xl">
-        <div className="glass-panel rounded-lg p-8">
+        <div className="glass-panel rounded-lg p-5 sm:p-8">
           <div className="flex items-center gap-3 text-amber-600">
             <ShieldCheck className="h-5 w-5" />
             <span className="text-xs font-semibold uppercase tracking-widest">{t.admin.title}</span>
           </div>
-          <h1 className="mt-4 font-serif text-4xl font-light text-white">{t.admin.configTitle}</h1>
+          <h1 className="mt-4 font-serif text-3xl font-light text-white sm:text-4xl">{t.admin.configTitle}</h1>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-500">{t.admin.configText}</p>
         </div>
       </section>
@@ -273,12 +273,12 @@ export const AdminSection: React.FC = () => {
   if (!user || !isAdmin) {
     return (
       <section className="max-w-4xl">
-        <div className="glass-panel rounded-lg p-8">
+        <div className="glass-panel rounded-lg p-5 sm:p-8">
           <div className="flex items-center gap-3 text-nebula">
             <ShieldCheck className="h-5 w-5" />
             <span className="text-xs font-semibold uppercase tracking-widest">{t.admin.restricted}</span>
           </div>
-          <h1 className="mt-4 font-serif text-4xl font-light text-white">{t.admin.lockedTitle}</h1>
+          <h1 className="mt-4 font-serif text-3xl font-light text-white sm:text-4xl">{t.admin.lockedTitle}</h1>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-500">{t.admin.lockedText}</p>
         </div>
       </section>
@@ -288,27 +288,27 @@ export const AdminSection: React.FC = () => {
   return (
     <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-7xl">
       <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-        <div>
+        <div className="min-w-0">
           <div className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-widest text-nebula">
             <ShieldCheck className="h-4 w-4" />
             {t.admin.eyebrow}
           </div>
-          <h1 className="font-serif text-4xl font-light leading-tight text-white md:text-6xl">{t.admin.title}</h1>
-          <p className="mt-4 max-w-2xl leading-relaxed text-slate-400">{t.admin.description}</p>
+          <h1 className="font-serif text-3xl font-light leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">{t.admin.title}</h1>
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-400 sm:mt-4 sm:text-base">{t.admin.description}</p>
         </div>
 
-        <div className="grid min-w-[280px] grid-cols-3 gap-3">
-          <div className="glass-panel rounded-lg p-4">
+        <div className="grid w-full grid-cols-3 gap-2 sm:gap-3 lg:w-auto lg:min-w-[280px]">
+          <div className="glass-panel rounded-lg p-3 sm:p-4">
             <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.students}</div>
-            <div className="mt-1 text-2xl font-semibold">{students.length}</div>
+            <div className="mt-1 text-xl font-semibold sm:text-2xl">{students.length}</div>
           </div>
-          <div className="glass-panel rounded-lg p-4">
+          <div className="glass-panel rounded-lg p-3 sm:p-4">
             <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.records}</div>
-            <div className="mt-1 text-2xl font-semibold">{attempts.length}</div>
+            <div className="mt-1 text-xl font-semibold sm:text-2xl">{attempts.length}</div>
           </div>
-          <div className="glass-panel rounded-lg p-4">
+          <div className="glass-panel rounded-lg p-3 sm:p-4">
             <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.accuracy}</div>
-            <div className="mt-1 text-2xl font-semibold">
+            <div className="mt-1 text-xl font-semibold sm:text-2xl">
               {attempts.length ? Math.round((attempts.filter((attempt) => attempt.is_correct).length / attempts.length) * 100) : 0}%
             </div>
           </div>
@@ -317,13 +317,13 @@ export const AdminSection: React.FC = () => {
 
       {error && <div className="mb-6 rounded-lg border border-rose-500/25 bg-rose-500/10 p-4 text-sm text-rose-700">{error}</div>}
 
-      <div className="grid gap-6 xl:grid-cols-[340px_minmax(0,1fr)]">
-        <aside className="glass-panel h-fit rounded-lg p-3">
+      <div className="grid gap-5 xl:grid-cols-[320px_minmax(0,1fr)] xl:gap-6 2xl:grid-cols-[340px_minmax(0,1fr)]">
+        <aside className="glass-panel h-fit rounded-lg p-3 xl:sticky xl:top-6">
           <div className="flex items-center gap-2 px-3 py-3 text-[10px] uppercase tracking-widest text-slate-500">
             <UsersRound className="h-4 w-4" />
             {t.admin.studentList}
           </div>
-          <div className="space-y-2">
+          <div className="flex gap-2 overflow-x-auto pb-1 xl:block xl:space-y-2 xl:overflow-visible xl:pb-0">
             {students.map((student) => {
               const isSelected = student.studentId === selectedStudent?.studentId;
               return (
@@ -334,7 +334,7 @@ export const AdminSection: React.FC = () => {
                     setSelectedStudentId(student.studentId);
                     setSelectedQuestionId(null);
                   }}
-                  className={`w-full rounded-md border p-4 text-left transition-colors ${
+                  className={`min-w-[250px] rounded-md border p-4 text-left transition-colors xl:w-full xl:min-w-0 ${
                     isSelected
                       ? 'border-nebula/70 bg-white/8 text-white'
                       : 'border-white/5 bg-white/[0.02] text-slate-400 hover:border-white/20 hover:text-white'
@@ -362,13 +362,13 @@ export const AdminSection: React.FC = () => {
         <div className="space-y-6">
           {selectedStudent && selectedSet && selectedStep ? (
             <>
-              <div className="glass-panel rounded-lg p-5">
+              <div className="glass-panel rounded-lg p-4 sm:p-5">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                  <div>
+                  <div className="min-w-0">
                     <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.selectedStudent}</div>
-                    <h2 className="mt-1 text-2xl font-serif text-white">{selectedStudent.email}</h2>
+                    <h2 className="mt-1 truncate font-serif text-xl text-white sm:text-2xl">{selectedStudent.email}</h2>
                   </div>
-                  <div className="grid grid-cols-3 gap-3 text-center">
+                  <div className="grid grid-cols-3 gap-2 text-center sm:gap-3">
                     <div className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3">
                       <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.records}</div>
                       <div className="mt-1 text-xl font-semibold">{selectedStudent.completed}</div>
@@ -384,7 +384,7 @@ export const AdminSection: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mt-5 flex flex-wrap gap-2">
+                <div className="mt-5 flex gap-2 overflow-x-auto pb-1 sm:flex-wrap">
                   {availableSets.map((set) => {
                     const isSelected = set.id === selectedSet.id;
                     return (
@@ -395,7 +395,7 @@ export const AdminSection: React.FC = () => {
                           setSelectedSetId(set.id);
                           setSelectedQuestionId(null);
                         }}
-                        className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
+                        className={`min-h-10 shrink-0 rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
                           isSelected
                             ? 'border-nebula/70 bg-nebula/15 text-white'
                             : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/30 hover:text-white'
@@ -408,7 +408,7 @@ export const AdminSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="grid gap-6 lg:grid-cols-[260px_minmax(0,1fr)]">
+              <div className="grid gap-5 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-6 xl:grid-cols-[260px_minmax(0,1fr)]">
                 <aside className="glass-panel h-fit rounded-lg p-3">
                   <div className="flex items-center gap-2 px-3 py-2 text-[10px] uppercase tracking-widest text-slate-500">
                     <ClipboardList className="h-4 w-4" />
@@ -424,7 +424,7 @@ export const AdminSection: React.FC = () => {
                           type="button"
                           disabled={!attempt}
                           onClick={() => setSelectedQuestionId(step.id)}
-                          className={`min-w-[170px] rounded-md border px-3 py-3 text-left transition-colors lg:min-w-0 ${
+                          className={`min-w-[150px] rounded-md border px-3 py-3 text-left transition-colors sm:min-w-[170px] lg:min-w-0 ${
                             isSelected
                               ? 'border-nebula/70 bg-white/8 text-white'
                               : attempt
@@ -453,11 +453,11 @@ export const AdminSection: React.FC = () => {
 
                 <section className="space-y-6">
                   <div className="glass-panel overflow-hidden rounded-lg">
-                    <div className="border-b border-white/10 p-6 md:p-8">
+                    <div className="border-b border-white/10 p-4 sm:p-6 md:p-8">
                       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                        <div>
+                        <div className="min-w-0">
                           <div className="mb-3 text-xs uppercase tracking-widest text-nebula">{selectedStep.source}</div>
-                          <h2 className="font-serif text-2xl text-white md:text-3xl">{selectedStep.title}</h2>
+                          <h2 className="text-balance font-serif text-2xl text-white md:text-3xl">{selectedStep.title}</h2>
                           {selectedStep.tags?.length ? (
                             <div className="mt-4 flex flex-wrap gap-2">
                               {selectedStep.tags.map((tag) => (
@@ -479,7 +479,7 @@ export const AdminSection: React.FC = () => {
                         </div>
                       </div>
 
-                      <div className="mt-6 grid gap-4 md:grid-cols-[1fr_1.2fr]">
+                      <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_1.2fr]">
                         <div className="rounded-lg border border-white/5 bg-black/20 p-4">
                           <div className="mb-2 text-[10px] uppercase tracking-widest text-slate-500">{t.practice.setup}</div>
                           <p className="text-sm leading-relaxed text-slate-300">
@@ -504,7 +504,7 @@ export const AdminSection: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="p-6 md:p-8">
+                    <div className="p-4 sm:p-6 md:p-8">
                       {selectedStep.choices?.length ? (
                         <div>
                           <div className="mb-3 text-xs uppercase tracking-widest text-slate-500">{t.admin.answerReview}</div>
@@ -515,7 +515,7 @@ export const AdminSection: React.FC = () => {
                               return (
                                 <div
                                   key={choice.label}
-                                  className={`grid grid-cols-[40px_minmax(0,1fr)] gap-3 rounded-lg border p-4 text-left ${
+                                  className={`grid grid-cols-[34px_minmax(0,1fr)] gap-3 rounded-lg border p-3 text-left sm:grid-cols-[40px_minmax(0,1fr)] sm:p-4 ${
                                     isCorrectChoice
                                       ? 'border-emerald-500/50 bg-emerald-500/10'
                                       : isStudentAnswer
@@ -543,7 +543,7 @@ export const AdminSection: React.FC = () => {
                         </div>
                       )}
 
-                      <div className="mt-5 grid gap-4 md:grid-cols-3">
+                      <div className="mt-5 grid gap-3 sm:grid-cols-3 sm:gap-4">
                         <div className="rounded-lg border border-white/10 bg-white/[0.03] p-4">
                           <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.studentAnswer}</div>
                           <div className="mt-1 text-2xl font-semibold">{selectedAttempt?.answer || '-'}</div>
@@ -574,7 +574,7 @@ export const AdminSection: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="glass-panel rounded-lg p-6">
+                  <div className="glass-panel rounded-lg p-5 sm:p-6">
                     <div className="mb-4 flex items-center gap-2 text-xs uppercase tracking-widest text-slate-500">
                       <BarChart3 className="h-4 w-4" />
                       {t.admin.resultDetails}
