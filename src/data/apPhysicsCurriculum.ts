@@ -30,6 +30,7 @@ export interface CurriculumVideo {
 
 export interface CurriculumClassroomQuestion {
   id: string;
+  mode?: 'multiple_choice' | 'written';
   title: LocalizedText;
   prompt: LocalizedText;
   image?: {
@@ -37,12 +38,14 @@ export interface CurriculumClassroomQuestion {
     alt: string;
     caption?: LocalizedText;
   };
-  choices: Array<{
+  choices?: Array<{
     label: string;
     text: LocalizedText;
   }>;
-  correctAnswer: string;
-  feedback: LocalizedText;
+  correctAnswer?: string;
+  feedback?: LocalizedText;
+  sampleAnswer?: LocalizedText;
+  explanation?: LocalizedText;
 }
 
 export interface CurriculumLessonSection {

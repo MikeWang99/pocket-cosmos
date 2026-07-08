@@ -77,8 +77,12 @@ const LessonVideo: React.FC<{ video: CurriculumVideo; language: 'en' | 'zh' }> =
 const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; language: 'en' | 'zh' }> = ({ question, language }) => {
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [checkedAnswer, setCheckedAnswer] = useState('');
+  const [writtenAnswer, setWrittenAnswer] = useState('');
+  const [showSampleAnswer, setShowSampleAnswer] = useState(false);
+  const [showExplanation, setShowExplanation] = useState(false);
+  const isWrittenQuestion = question.mode === 'written';
   const hasChecked = Boolean(checkedAnswer);
-  const isCorrect = checkedAnswer === question.correctAnswer;
+  const isCorrect = Boolean(question.correctAnswer) && checkedAnswer === question.correctAnswer;
 
   return (
     <article className="rounded-lg border border-slate-200 bg-slate-50 p-3 sm:p-4">
@@ -102,77 +106,129 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
         </figure>
       )}
 
-      <div className="mt-4 grid gap-2" role="radiogroup" aria-label={question.title[language]}>
-        {question.choices.map((choice) => {
-          const isSelected = selectedAnswer === choice.label;
-          const isCorrectChoice = hasChecked && choice.label === question.correctAnswer;
-          const isWrongChoice = hasChecked && isSelected && choice.label !== question.correctAnswer;
+      {isWrittenQuestion ? (
+        <>
+          <textarea
+            value={writtenAnswer}
+            onChange={(event) => setWrittenAnswer(event.target.value)}
+            className="mt-4 min-h-32 w-full rounded-lg border border-slate-200 bg-[#ffffff] p-3 text-sm leading-6 text-slate-800 outline-none transition-colors placeholder:text-slate-400 focus:border-nebula/60"
+            placeholder={language === 'zh' ? '在这里写下你的实验设计思路。' : 'Write your experimental design here.'}
+          />
 
-          return (
+          <div className="mt-4 flex flex-wrap gap-2">
             <button
-              key={choice.label}
               type="button"
-              onClick={() => {
-                if (!hasChecked) setSelectedAnswer(choice.label);
-              }}
-              aria-pressed={isSelected}
-              className={`grid grid-cols-[32px_minmax(0,1fr)] gap-3 rounded-lg border p-3 text-left transition-colors ${
-                isCorrectChoice
-                  ? 'border-emerald-500/45 bg-emerald-500/10'
-                  : isWrongChoice
-                    ? 'border-rose-500/45 bg-rose-500/10'
-                    : isSelected
-                      ? 'border-nebula/60 bg-nebula/10'
-                      : 'border-slate-200 bg-[#ffffff] hover:border-nebula/50'
-              }`}
+              onClick={() => setShowSampleAnswer((current) => !current)}
+              className="inline-flex min-h-10 items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-nebula"
             >
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-slate-900 text-xs font-bold text-white">
-                {choice.label}
-              </span>
-              <span className="self-center text-sm leading-6 text-slate-700">
-                <InlineMathText>{choice.text[language]}</InlineMathText>
-              </span>
+              {showSampleAnswer
+                ? language === 'zh' ? '收起答案' : 'Hide answer'
+                : language === 'zh' ? '露出答案' : 'Reveal answer'}
             </button>
-          );
-        })}
-      </div>
-
-      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <button
-          type="button"
-          onClick={() => setCheckedAnswer(selectedAnswer)}
-          disabled={!selectedAnswer || hasChecked}
-          className="inline-flex min-h-10 items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-nebula disabled:opacity-35"
-        >
-          {language === 'zh' ? '检查答案' : 'Check answer'}
-        </button>
-        {hasChecked && (
-          <button
-            type="button"
-            onClick={() => {
-              setSelectedAnswer('');
-              setCheckedAnswer('');
-            }}
-            className="text-left text-xs font-semibold text-slate-500 transition-colors hover:text-nebula sm:text-right"
-          >
-            {language === 'zh' ? '重做本题' : 'Try again'}
-          </button>
-        )}
-      </div>
-
-      {hasChecked && (
-        <div className={`mt-4 rounded-lg border p-3 text-sm leading-6 ${
-          isCorrect
-            ? 'border-emerald-500/25 bg-emerald-500/10 text-emerald-800'
-            : 'border-amber-500/25 bg-amber-500/10 text-slate-700'
-        }`}>
-          <div className="mb-1 text-xs font-bold uppercase tracking-widest">
-            {isCorrect
-              ? language === 'zh' ? '正确' : 'Correct'
-              : language === 'zh' ? `再想一下，正确答案是 ${question.correctAnswer}` : `Not quite. The correct answer is ${question.correctAnswer}`}
+            <button
+              type="button"
+              onClick={() => setShowExplanation((current) => !current)}
+              className="inline-flex min-h-10 items-center justify-center rounded-full border border-slate-300 bg-[#ffffff] px-4 py-2 text-xs font-bold uppercase tracking-widest text-slate-700 transition-colors hover:border-nebula/60 hover:text-nebula"
+            >
+              {showExplanation
+                ? language === 'zh' ? '收起解析' : 'Hide explanation'
+                : language === 'zh' ? '解析' : 'Explanation'}
+            </button>
           </div>
-          <InlineMathText>{question.feedback[language]}</InlineMathText>
-        </div>
+
+          {showSampleAnswer && question.sampleAnswer && (
+            <div className="mt-4 rounded-lg border border-emerald-500/25 bg-emerald-500/10 p-3 text-sm leading-6 text-slate-700">
+              <div className="mb-1 text-xs font-bold uppercase tracking-widest text-emerald-800">
+                {language === 'zh' ? '参考答案' : 'Sample answer'}
+              </div>
+              <InlineMathText>{question.sampleAnswer[language]}</InlineMathText>
+            </div>
+          )}
+
+          {showExplanation && question.explanation && (
+            <div className="mt-4 rounded-lg border border-nebula/20 bg-nebula/5 p-3 text-sm leading-6 text-slate-700">
+              <div className="mb-1 text-xs font-bold uppercase tracking-widest text-nebula">
+                {language === 'zh' ? '解析' : 'Explanation'}
+              </div>
+              <InlineMathText>{question.explanation[language]}</InlineMathText>
+            </div>
+          )}
+        </>
+      ) : (
+        <>
+          <div className="mt-4 grid gap-2" role="radiogroup" aria-label={question.title[language]}>
+            {question.choices?.map((choice) => {
+              const isSelected = selectedAnswer === choice.label;
+              const isCorrectChoice = hasChecked && choice.label === question.correctAnswer;
+              const isWrongChoice = hasChecked && isSelected && choice.label !== question.correctAnswer;
+
+              return (
+                <button
+                  key={choice.label}
+                  type="button"
+                  onClick={() => {
+                    if (!hasChecked) setSelectedAnswer(choice.label);
+                  }}
+                  aria-pressed={isSelected}
+                  className={`grid grid-cols-[32px_minmax(0,1fr)] gap-3 rounded-lg border p-3 text-left transition-colors ${
+                    isCorrectChoice
+                      ? 'border-emerald-500/45 bg-emerald-500/10'
+                      : isWrongChoice
+                        ? 'border-rose-500/45 bg-rose-500/10'
+                        : isSelected
+                          ? 'border-nebula/60 bg-nebula/10'
+                          : 'border-slate-200 bg-[#ffffff] hover:border-nebula/50'
+                  }`}
+                >
+                  <span className="grid h-8 w-8 place-items-center rounded-full bg-slate-900 text-xs font-bold text-white">
+                    {choice.label}
+                  </span>
+                  <span className="self-center text-sm leading-6 text-slate-700">
+                    <InlineMathText>{choice.text[language]}</InlineMathText>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <button
+              type="button"
+              onClick={() => setCheckedAnswer(selectedAnswer)}
+              disabled={!selectedAnswer || hasChecked}
+              className="inline-flex min-h-10 items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-nebula disabled:opacity-35"
+            >
+              {language === 'zh' ? '检查答案' : 'Check answer'}
+            </button>
+            {hasChecked && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedAnswer('');
+                  setCheckedAnswer('');
+                }}
+                className="text-left text-xs font-semibold text-slate-500 transition-colors hover:text-nebula sm:text-right"
+              >
+                {language === 'zh' ? '重做本题' : 'Try again'}
+              </button>
+            )}
+          </div>
+
+          {hasChecked && question.feedback && (
+            <div className={`mt-4 rounded-lg border p-3 text-sm leading-6 ${
+              isCorrect
+                ? 'border-emerald-500/25 bg-emerald-500/10 text-emerald-800'
+                : 'border-amber-500/25 bg-amber-500/10 text-slate-700'
+            }`}>
+              <div className="mb-1 text-xs font-bold uppercase tracking-widest">
+                {isCorrect
+                  ? language === 'zh' ? '正确' : 'Correct'
+                  : language === 'zh' ? `再想一下，正确答案是 ${question.correctAnswer}` : `Not quite. The correct answer is ${question.correctAnswer}`}
+              </div>
+              <InlineMathText>{question.feedback[language]}</InlineMathText>
+            </div>
+          )}
+        </>
       )}
     </article>
   );
