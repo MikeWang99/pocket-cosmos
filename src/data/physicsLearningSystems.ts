@@ -3,6 +3,7 @@ import {
   type CurriculumCourse,
   type CurriculumDiagram,
   type CurriculumFormula,
+  type CurriculumLesson,
   type CurriculumTopic,
   type CurriculumUnit,
   type LocalizedText,
@@ -39,6 +40,205 @@ const diagram = (kind: string, titleEn: string, titleZh: string, captionEn: stri
 });
 
 const focus = (...items: Array<[string, string]>): LocalizedText[] => items.map(([en, zh]) => text(en, zh));
+
+const centerOfMassLesson: CurriculumLesson = {
+  title: text('Center of Mass', 'Center of Mass（质心）'),
+  description: text(
+    'A system-level model for understanding collisions, explosions, recoil, and the motion of extended objects.',
+    '用来理解碰撞、爆炸、反冲和复杂物体整体运动的系统级模型。',
+  ),
+  sections: [
+    {
+      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题？'),
+      paragraphs: [
+        text(
+          'In momentum and collision problems, many parts of a system can move in complicated ways. A firework may explode into fragments, two people may push away on ice, and a thrown wrench may rotate while moving through the air.',
+          '在动量和碰撞问题中，系统内部很多部分会以复杂方式运动。烟花会爆炸成碎片，两个人会在冰面上互相推开，扳手被扔出后会一边平动一边转动。',
+        ),
+        text(
+          'The center of mass is the point that represents the overall motion of the whole system.',
+          '质心就是用来代表整个系统整体运动的那个点。',
+        ),
+      ],
+      takeaway: text(
+        'When the internal motion is complicated, track the center of mass to describe the system as a whole.',
+        '当系统内部运动很复杂时，用质心来描述系统整体运动。',
+      ),
+    },
+    {
+      heading: text('1. Why do we need center of mass?', '1. 为什么需要 Center of Mass？'),
+      paragraphs: [
+        text(
+          'For a single particle, position, velocity, acceleration, and force are usually enough. For a multi-object system, analyzing every part separately can become messy.',
+          '对于单个小球，位置、速度、加速度和受力通常就够了。但对于多物体系统，逐个分析每一部分会非常复杂。',
+        ),
+        text(
+          'The center of mass lets us replace a complicated system with one representative point when we care about the overall motion.',
+          '当我们关心系统整体运动时，质心可以把复杂系统简化成一个代表点。',
+        ),
+      ],
+      bullets: [
+        text('It represents the mass-weighted average position of the system.', '它代表系统的质量加权平均位置。'),
+        text('A larger mass pulls the center of mass closer to itself.', '质量越大的部分，对质心位置影响越大。'),
+        text('In momentum problems, total momentum can be described using the velocity of the center of mass.', '在动量问题中，系统总动量可以用质心速度来描述。'),
+      ],
+    },
+    {
+      heading: text('2. Definition of center of mass', '2. Center of Mass 的定义'),
+      paragraphs: [
+        text(
+          'For two objects in one dimension, the center of mass is not usually the midpoint; it is the mass-weighted average position.',
+          '对于一维中的两个物体，质心通常不是几何中点，而是质量加权平均位置。',
+        ),
+      ],
+      formulas: [
+        formula('Two-object center of mass', '两个物体的质心', 'x_{\\mathrm{cm}}=\\frac{m_1x_1+m_2x_2}{m_1+m_2}'),
+        formula('Many-object center of mass', '多个物体的质心', 'x_{\\mathrm{cm}}=\\frac{\\sum m_ix_i}{\\sum m_i}'),
+        formula('Two-dimensional center of mass', '二维质心', 'x_{\\mathrm{cm}}=\\frac{\\sum m_ix_i}{\\sum m_i},\\quad y_{\\mathrm{cm}}=\\frac{\\sum m_iy_i}{\\sum m_i}'),
+        formula('Three-dimensional center of mass', '三维质心', 'z_{\\mathrm{cm}}=\\frac{\\sum m_iz_i}{\\sum m_i}'),
+      ],
+      takeaway: text(
+        'The center of mass is a property of the mass distribution, so it does not have to lie inside the material object.',
+        '质心是质量分布的平均位置，因此不一定在物体材料内部。',
+      ),
+    },
+    {
+      heading: text('3. Core theorem: external force controls center-of-mass acceleration', '3. 核心定理一：合外力决定质心加速度'),
+      paragraphs: [
+        text(
+          'A complicated system moves as if all its mass were concentrated at the center of mass, as long as we are describing the motion of the system as a whole.',
+          '当我们描述系统整体运动时，复杂系统可以看成总质量集中在质心上的一个点。',
+        ),
+      ],
+      formulas: [
+        formula('Center-of-mass form of Newton’s second law', '质心形式的牛顿第二定律', '\\vec F_{\\mathrm{ext,net}}=M\\vec a_{\\mathrm{cm}}'),
+        formula('External force determines acceleration, not velocity directly', '外力决定加速度，而不是直接决定速度', '\\vec F_{\\mathrm{ext,net}}\\rightarrow \\vec a_{\\mathrm{cm}}'),
+      ],
+      takeaway: text(
+        'A net external force points in the direction of center-of-mass acceleration, not necessarily in the direction of center-of-mass velocity.',
+        '合外力方向决定质心加速度方向，不一定决定质心速度方向。',
+      ),
+    },
+    {
+      heading: text('4. Internal force vs. external force', '4. Internal Force 和 External Force'),
+      paragraphs: [
+        text(
+          'Internal forces are forces between parts inside the chosen system. External forces are forces exerted on the system by the outside environment.',
+          '内力是系统内部各部分之间的力；外力是系统外部环境对系统施加的力。',
+        ),
+        text(
+          'Internal forces can change the motion of individual parts, but they cannot change the motion of the center of mass of the whole system.',
+          '内力可以改变系统内部各部分的运动，但不能改变整个系统质心的运动。',
+        ),
+      ],
+      formulas: [
+        formula('Newton’s third law pair inside a system', '系统内部的牛顿第三定律力对', '\\vec F_{A\\mathrm{\\ on\\ }B}=-\\vec F_{B\\mathrm{\\ on\\ }A}'),
+      ],
+      bullets: [
+        text('Collision forces between two carts are internal if both carts are in the system.', '如果两辆小车都在系统内，它们碰撞时彼此的作用力就是内力。'),
+        text('Explosion forces between fragments are internal if all fragments are in the system.', '如果所有碎片都在系统内，爆炸力就是内力。'),
+        text('Gravity, normal force, friction, air resistance, and outside pulls are external forces when they come from outside the system.', '重力、支持力、摩擦力、空气阻力和外部拉力通常是外力，前提是它们来自系统外部。'),
+      ],
+    },
+    {
+      heading: text('5. Firework explosion', '5. 典型现象：烟花爆炸'),
+      paragraphs: [
+        text(
+          'After a firework explodes, fragments fly in many directions, but if air resistance is ignored, the center of mass of all fragments continues to follow the projectile path controlled by gravity.',
+          '烟花爆炸后，碎片飞向各个方向；但如果忽略空气阻力，所有碎片组成系统的质心仍然沿着只受重力影响的抛体轨迹运动。',
+        ),
+      ],
+      takeaway: text(
+        'The explosion changes the relative motion of fragments, not the motion of the system’s center of mass.',
+        '爆炸改变的是碎片之间的相对运动，而不是系统质心的整体运动。',
+      ),
+    },
+    {
+      heading: text('6. Two people pushing off on ice', '6. 典型现象：两个人在冰面上互相推开'),
+      paragraphs: [
+        text(
+          'If two people start at rest on nearly frictionless ice and push each other apart, the push is internal to the two-person system. With no horizontal external force, the center of mass remains at rest.',
+          '如果两个人一开始静止在几乎无摩擦的冰面上并互相推开，那么推力是两人系统的内力。水平方向没有合外力时，系统质心保持静止。',
+        ),
+      ],
+      formulas: [
+        formula('No net external force', '没有合外力', '\\vec F_{\\mathrm{ext,net}}=0'),
+        formula('No center-of-mass acceleration', '质心加速度为零', '\\vec a_{\\mathrm{cm}}=0'),
+      ],
+      takeaway: text(
+        'The two people move in opposite directions, but the center of mass of the system can stay in the same place.',
+        '两个人可以分别向相反方向运动，但两人系统的质心可以仍然留在原来的位置。',
+      ),
+    },
+    {
+      heading: text('7. Relationship between center of mass and momentum', '7. Center of Mass 和 Momentum 的关系'),
+      paragraphs: [
+        text(
+          'The total momentum of a system can be written as the total mass multiplied by the center-of-mass velocity.',
+          '系统总动量可以写成系统总质量乘以质心速度。',
+        ),
+      ],
+      formulas: [
+        formula('Total momentum', '系统总动量', '\\vec p_{\\mathrm{total}}=\\sum m_i\\vec v_i'),
+        formula('Total mass', '系统总质量', 'M=\\sum m_i'),
+        formula('Center-of-mass velocity', '质心速度', '\\vec v_{\\mathrm{cm}}=\\frac{\\sum m_i\\vec v_i}{\\sum m_i}'),
+        formula('Momentum and center-of-mass velocity', '总动量和质心速度', '\\vec p_{\\mathrm{total}}=M\\vec v_{\\mathrm{cm}}'),
+      ],
+      takeaway: text(
+        'Knowing how the center of mass moves tells us how the total momentum of the system changes.',
+        '知道质心如何运动，就能理解系统总动量如何变化。',
+      ),
+    },
+    {
+      heading: text('8. Core theorem: no external force means constant center-of-mass velocity', '8. 核心定理二：没有合外力时，质心速度不变'),
+      paragraphs: [
+        text(
+          'If the system mass is constant and the net external force is zero, total momentum is conserved and the center-of-mass velocity remains constant.',
+          '如果系统质量不变，并且合外力为零，那么系统总动量守恒，质心速度保持不变。',
+        ),
+      ],
+      formulas: [
+        formula('Zero net external force', '合外力为零', '\\vec F_{\\mathrm{ext,net}}=0'),
+        formula('Momentum conservation', '动量守恒', '\\vec p_{\\mathrm{total}}=\\mathrm{constant}'),
+        formula('Constant center-of-mass velocity', '质心速度不变', '\\vec v_{\\mathrm{cm}}=\\mathrm{constant}'),
+      ],
+      takeaway: text(
+        'Momentum conservation and constant center-of-mass velocity are two ways of saying the same system-level idea.',
+        '动量守恒和质心速度不变，是同一个系统级思想的两种表达。',
+      ),
+    },
+    {
+      heading: text('9. Where this appears in momentum problems', '9. Center of Mass 在 Momentum 章节中的作用'),
+      bullets: [
+        text('Collisions: if external impulse is negligible, collisions do not change the center-of-mass velocity.', '碰撞：如果外力冲量可忽略，碰撞不会改变系统质心速度。'),
+        text('Explosions: fragments separate, but the system cannot gain new total momentum from internal forces alone.', '爆炸：碎片会分开，但系统不能只靠内力凭空获得新的总动量。'),
+        text('Recoil: one part moves one way and another part moves the opposite way so total momentum remains unchanged.', '反冲：系统一部分向某方向运动，另一部分向相反方向运动，从而保持总动量不变。'),
+      ],
+    },
+    {
+      heading: text('10. Common mistakes', '10. 学生最容易犯的错误'),
+      bullets: [
+        text('Thinking the center of mass must be inside the object.', '以为质心一定在物体内部。'),
+        text('Thinking internal forces can change the motion of the whole system.', '以为内力可以改变系统整体运动。'),
+        text('Thinking no external force means every object in the system keeps the same velocity.', '以为没有外力时，系统里每个物体速度都不变。'),
+        text('Thinking external force directly determines the direction of center-of-mass velocity.', '以为外力方向直接决定质心速度方向。'),
+      ],
+    },
+    {
+      heading: text('11. Formula summary', '11. 本节核心公式总结'),
+      formulas: [
+        formula('Center-of-mass position', '质心位置', 'x_{\\mathrm{cm}}=\\frac{\\sum m_ix_i}{\\sum m_i},\\quad y_{\\mathrm{cm}}=\\frac{\\sum m_iy_i}{\\sum m_i}'),
+        formula('Center-of-mass motion', '质心运动和合外力', '\\vec F_{\\mathrm{ext,net}}=M\\vec a_{\\mathrm{cm}}'),
+        formula('Momentum and center-of-mass velocity', '总动量和质心速度', '\\vec p_{\\mathrm{total}}=M\\vec v_{\\mathrm{cm}}'),
+        formula('No external force', '没有合外力时', '\\vec F_{\\mathrm{ext,net}}=0,\\quad \\vec a_{\\mathrm{cm}}=0,\\quad \\vec v_{\\mathrm{cm}}=\\mathrm{constant},\\quad \\vec p_{\\mathrm{total}}=\\mathrm{constant}'),
+      ],
+      takeaway: text(
+        'Center of mass is the point used to describe the overall motion of a complex system.',
+        'Center of mass 是用来描述复杂系统整体运动的点。',
+      ),
+    },
+  ],
+};
 
 const summaries: Record<string, LocalizedText> = {
   kinematics: text(
@@ -209,7 +409,7 @@ const diagrams = {
   astronomy: [diagram('orbit-star', 'Orbit and Star', '轨道与恒星', 'Gravity links orbital motion with stellar and cosmic scales.', '引力把轨道运动与恒星、宇宙尺度联系起来。')],
 };
 
-type Enrichment = Pick<CurriculumUnit, 'summary' | 'focus' | 'formulas' | 'diagrams'>;
+type Enrichment = Pick<CurriculumUnit, 'summary' | 'focus' | 'formulas' | 'diagrams' | 'lessons'>;
 
 const enrich = (summaryKey: keyof typeof summaries, formulaKey: keyof typeof formulas, diagramKey: keyof typeof diagrams, focusItems: Array<[string, string]>): Enrichment => ({
   summary: summaries[summaryKey],
@@ -224,11 +424,14 @@ const apEnrichment: Record<string, Enrichment> = {
     ['Interpret slope and area on position, velocity, and acceleration graphs.', '解释位置、速度、加速度图像的斜率和面积。'],
     ['Model one- and two-dimensional motion with vector components.', '用矢量分量建立一维和二维运动模型。'],
   ]),
-  'physics-1:2': enrich('dynamics', 'dynamics', 'dynamics', [
-    ['Represent interactions with system boundaries and free-body diagrams.', '用系统边界和自由体图表示相互作用。'],
-    ['Apply Newton’s laws to friction, springs, gravity, and circular motion.', '把牛顿定律应用到摩擦、弹簧、重力和圆周运动。'],
-    ['Separate internal forces from external forces before writing equations.', '列方程前先区分内力与外力。'],
-  ]),
+  'physics-1:2': {
+    ...enrich('dynamics', 'dynamics', 'dynamics', [
+      ['Represent interactions with system boundaries and free-body diagrams.', '用系统边界和自由体图表示相互作用。'],
+      ['Apply Newton’s laws to friction, springs, gravity, and circular motion.', '把牛顿定律应用到摩擦、弹簧、重力和圆周运动。'],
+      ['Separate internal forces from external forces before writing equations.', '列方程前先区分内力与外力。'],
+    ]),
+    lessons: [centerOfMassLesson],
+  },
   'physics-1:3': enrich('energy', 'energy', 'energy', [
     ['Connect work to energy transfer and changes in kinetic or potential energy.', '把功和能量转移、动能或势能变化连接起来。'],
     ['Use system choice to decide whether energy is conserved.', '通过系统选择判断机械能是否守恒。'],
@@ -299,11 +502,14 @@ const apEnrichment: Record<string, Enrichment> = {
     ['Handle 2D/3D vectors, parametric motion, and relative motion.', '处理二维/三维矢量、参数运动和相对运动。'],
     ['Interpret motion graphs quantitatively.', '定量解释运动图像。'],
   ]),
-  'mechanics:2': enrich('dynamics', 'dynamics', 'dynamics', [
-    ['Build Newton-law equations from free-body diagrams.', '从自由体图建立牛顿定律方程。'],
-    ['Model drag and circular motion with calculus-ready reasoning.', '用适合微积分的方式建模阻力和圆周运动。'],
-    ['Choose coordinates that simplify force components.', '选择能简化力分量的坐标系。'],
-  ]),
+  'mechanics:2': {
+    ...enrich('dynamics', 'dynamics', 'dynamics', [
+      ['Build Newton-law equations from free-body diagrams.', '从自由体图建立牛顿定律方程。'],
+      ['Model drag and circular motion with calculus-ready reasoning.', '用适合微积分的方式建模阻力和圆周运动。'],
+      ['Choose coordinates that simplify force components.', '选择能简化力分量的坐标系。'],
+    ]),
+    lessons: [centerOfMassLesson],
+  },
   'mechanics:3': enrich('energy', 'energy', 'energy', [
     ['Evaluate work by dot products and integrals.', '用点积和积分计算功。'],
     ['Connect conservative forces with potential energy functions.', '把保守力与势能函数连接起来。'],
