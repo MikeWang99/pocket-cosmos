@@ -4,7 +4,7 @@ import { BookOpenCheck, ChevronDown, ExternalLink, FunctionSquare, Image as Imag
 import { motion } from 'motion/react';
 import { useLanguage } from '../LanguageContext';
 import { learningSystems, type LearningSystemId } from '../data/physicsLearningSystems';
-import type { CurriculumDiagram, CurriculumVideo } from '../data/apPhysicsCurriculum';
+import type { CurriculumClassroomQuestion, CurriculumDiagram, CurriculumVideo } from '../data/apPhysicsCurriculum';
 
 const renderMath = (value: string) =>
   katex.renderToString(value, {
@@ -19,6 +19,32 @@ const MathBlock: React.FC<{ value: string }> = ({ value }) => (
     dangerouslySetInnerHTML={{ __html: renderMath(value) }}
   />
 );
+
+const InlineMathText: React.FC<{ children: string }> = ({ children }) => {
+  const parts = children.split(/(\$[^$]+\$|\\\([^)]+\\\))/g).filter(Boolean);
+
+  return (
+    <>
+      {parts.map((part, index) => {
+        const isDollarMath = part.startsWith('$') && part.endsWith('$');
+        const isParenMath = part.startsWith('\\(') && part.endsWith('\\)');
+
+        if (!isDollarMath && !isParenMath) {
+          return <React.Fragment key={`${part}-${index}`}>{part}</React.Fragment>;
+        }
+
+        const expression = isDollarMath ? part.slice(1, -1) : part.slice(2, -2);
+        return (
+          <span
+            key={`${part}-${index}`}
+            className="math-inline"
+            dangerouslySetInnerHTML={{ __html: renderMath(expression) }}
+          />
+        );
+      })}
+    </>
+  );
+};
 
 const LessonVideo: React.FC<{ video: CurriculumVideo; language: 'en' | 'zh' }> = ({ video, language }) => (
   <figure className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
@@ -47,6 +73,110 @@ const LessonVideo: React.FC<{ video: CurriculumVideo; language: 'en' | 'zh' }> =
     </figcaption>
   </figure>
 );
+
+const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; language: 'en' | 'zh' }> = ({ question, language }) => {
+  const [selectedAnswer, setSelectedAnswer] = useState('');
+  const [checkedAnswer, setCheckedAnswer] = useState('');
+  const hasChecked = Boolean(checkedAnswer);
+  const isCorrect = checkedAnswer === question.correctAnswer;
+
+  return (
+    <article className="rounded-lg border border-slate-200 bg-slate-50 p-3 sm:p-4">
+      <div className="mb-3 flex items-center gap-2 text-nebula">
+        <ListChecks className="h-4 w-4" />
+        <h6 className="text-sm font-semibold text-slate-900">{question.title[language]}</h6>
+      </div>
+
+      <p className="text-sm leading-7 text-slate-700">
+        <InlineMathText>{question.prompt[language]}</InlineMathText>
+      </p>
+
+      {question.image && (
+        <figure className="mt-3 overflow-hidden rounded-lg border border-slate-200 bg-[#ffffff]">
+          <img src={question.image.src} alt={question.image.alt} className="w-full object-contain" />
+          {question.image.caption && (
+            <figcaption className="border-t border-slate-200 px-3 py-2 text-xs text-slate-500">
+              {question.image.caption[language]}
+            </figcaption>
+          )}
+        </figure>
+      )}
+
+      <div className="mt-4 grid gap-2" role="radiogroup" aria-label={question.title[language]}>
+        {question.choices.map((choice) => {
+          const isSelected = selectedAnswer === choice.label;
+          const isCorrectChoice = hasChecked && choice.label === question.correctAnswer;
+          const isWrongChoice = hasChecked && isSelected && choice.label !== question.correctAnswer;
+
+          return (
+            <button
+              key={choice.label}
+              type="button"
+              onClick={() => {
+                if (!hasChecked) setSelectedAnswer(choice.label);
+              }}
+              aria-pressed={isSelected}
+              className={`grid grid-cols-[32px_minmax(0,1fr)] gap-3 rounded-lg border p-3 text-left transition-colors ${
+                isCorrectChoice
+                  ? 'border-emerald-500/45 bg-emerald-500/10'
+                  : isWrongChoice
+                    ? 'border-rose-500/45 bg-rose-500/10'
+                    : isSelected
+                      ? 'border-nebula/60 bg-nebula/10'
+                      : 'border-slate-200 bg-[#ffffff] hover:border-nebula/50'
+              }`}
+            >
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-slate-900 text-xs font-bold text-white">
+                {choice.label}
+              </span>
+              <span className="self-center text-sm leading-6 text-slate-700">
+                <InlineMathText>{choice.text[language]}</InlineMathText>
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <button
+          type="button"
+          onClick={() => setCheckedAnswer(selectedAnswer)}
+          disabled={!selectedAnswer || hasChecked}
+          className="inline-flex min-h-10 items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-nebula disabled:opacity-35"
+        >
+          {language === 'zh' ? '检查答案' : 'Check answer'}
+        </button>
+        {hasChecked && (
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedAnswer('');
+              setCheckedAnswer('');
+            }}
+            className="text-left text-xs font-semibold text-slate-500 transition-colors hover:text-nebula sm:text-right"
+          >
+            {language === 'zh' ? '重做本题' : 'Try again'}
+          </button>
+        )}
+      </div>
+
+      {hasChecked && (
+        <div className={`mt-4 rounded-lg border p-3 text-sm leading-6 ${
+          isCorrect
+            ? 'border-emerald-500/25 bg-emerald-500/10 text-emerald-800'
+            : 'border-amber-500/25 bg-amber-500/10 text-slate-700'
+        }`}>
+          <div className="mb-1 text-xs font-bold uppercase tracking-widest">
+            {isCorrect
+              ? language === 'zh' ? '正确' : 'Correct'
+              : language === 'zh' ? `再想一下，正确答案是 ${question.correctAnswer}` : `Not quite. The correct answer is ${question.correctAnswer}`}
+          </div>
+          <InlineMathText>{question.feedback[language]}</InlineMathText>
+        </div>
+      )}
+    </article>
+  );
+};
 
 const ConceptDiagram: React.FC<{ diagram: CurriculumDiagram; language: 'en' | 'zh' }> = ({ diagram, language }) => {
   const stroke = '#4f46e5';
@@ -499,6 +629,9 @@ export const CurriculumSection: React.FC = () => {
                                             <p key={paragraph.en} className="text-sm leading-7 text-slate-600">
                                               {paragraph[language]}
                                             </p>
+                                          ))}
+                                          {section.classroomQuestions?.map((question) => (
+                                            <ClassroomQuestionCard key={question.id} question={question} language={language} />
                                           ))}
                                           {!!section.bullets?.length && (
                                             <ul className="space-y-2">
