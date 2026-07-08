@@ -536,10 +536,10 @@ export const PracticeSection: React.FC = () => {
 
                 <div className="mt-6">
                   <div className="rounded-lg border border-white/10 bg-white/[0.04] p-4 sm:p-5 md:p-6">
-                    <div className="space-y-3 text-base leading-relaxed text-white md:text-lg">
+                    <div className="space-y-3 whitespace-pre-line text-base leading-relaxed text-white md:text-lg">
                       {splitPromptParts(activeStep.prompt).map((part) => (
                         <p key={part}>
-                          {isActiveMultipleChoice ? <MathText>{part}</MathText> : <RichText>{part}</RichText>}
+                          {isActiveMultipleChoice ? <MathText>{part}</MathText> : <MathText>{part}</MathText>}
                         </p>
                       ))}
                     </div>
