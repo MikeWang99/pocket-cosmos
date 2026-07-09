@@ -189,10 +189,11 @@ const updatePracticeUrl = (setId: string, questionId: string, mode: 'push' | 're
 
   const url = new URL(window.location.href);
   url.pathname = '/';
+  url.hash = '';
   url.searchParams.set('tab', 'practice');
   url.searchParams.set('set', setId);
   url.searchParams.set('q', questionId);
-  const nextUrl = `${url.pathname}${url.search}${url.hash}`;
+  const nextUrl = `${url.pathname}${url.search}`;
   if (nextUrl !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
     window.history[mode === 'replace' ? 'replaceState' : 'pushState']({}, '', nextUrl);
   }

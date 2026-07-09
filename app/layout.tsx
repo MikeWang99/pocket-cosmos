@@ -33,10 +33,10 @@ export const metadata: Metadata = {
     siteName: 'Pocket Cosmos',
     images: [
       {
-        url: '/assets/poco-logo.png',
-        width: 754,
-        height: 628,
-        alt: 'Pocket Cosmos logo',
+        url: '/assets/pocket-cosmos-og.png',
+        width: 1200,
+        height: 630,
+        alt: 'Pocket Cosmos AP Physics learning material preview',
       },
     ],
     locale: 'en_US',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     title: 'Pocket Cosmos | AP Physics Learning Material',
     description:
       'One-stop AP Physics learning material, practice questions, knowledge maps, diagrams, and bilingual self-study resources.',
-    images: ['/assets/poco-logo.png'],
+    images: ['/assets/pocket-cosmos-og.png'],
   },
   robots: {
     index: true,
