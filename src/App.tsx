@@ -15,6 +15,38 @@ import { AnimatePresence } from 'motion/react';
 import { useLanguage } from './LanguageContext';
 import { useAuth } from './auth/AuthContext';
 
+const validTabs = new Set(['curriculum', 'practice', 'admin']);
+
+const readTabFromUrl = () => {
+  if (typeof window === 'undefined') return 'curriculum';
+  const tab = new URLSearchParams(window.location.search).get('tab');
+  return tab && validTabs.has(tab) ? tab : 'curriculum';
+};
+
+const normalizeUrlForTab = (tab: string, mode: 'push' | 'replace' = 'push') => {
+  if (typeof window === 'undefined') return;
+
+  const url = new URL(window.location.href);
+  url.pathname = '/';
+
+  if (tab === 'curriculum') {
+    url.searchParams.delete('tab');
+    url.searchParams.delete('set');
+    url.searchParams.delete('q');
+  } else {
+    url.searchParams.set('tab', tab);
+    if (tab !== 'practice') {
+      url.searchParams.delete('set');
+      url.searchParams.delete('q');
+    }
+  }
+
+  const nextUrl = `${url.pathname}${url.search}${url.hash}`;
+  if (nextUrl !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
+    window.history[mode === 'replace' ? 'replaceState' : 'pushState']({}, '', nextUrl);
+  }
+};
+
 export default function App() {
   const [activeTab, setActiveTab] = useState('curriculum');
   const { t, language } = useLanguage();
@@ -22,18 +54,34 @@ export default function App() {
 
   const selectTab = (tab: string) => {
     setActiveTab(tab);
+    normalizeUrlForTab(tab);
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   useEffect(() => {
+    const initialTab = readTabFromUrl();
+    setActiveTab(initialTab);
+    normalizeUrlForTab(initialTab, 'replace');
+
+    const handlePopState = () => {
+      setActiveTab(readTabFromUrl());
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  useEffect(() => {
     if (activeTab === 'physics' || activeTab === 'about' || activeTab === 'books') {
       setActiveTab('curriculum');
+      normalizeUrlForTab('curriculum', 'replace');
       return;
     }
     if (!isAdmin && activeTab === 'admin') {
       setActiveTab('practice');
+      normalizeUrlForTab('practice', 'replace');
     }
   }, [activeTab, isAdmin]);
 
