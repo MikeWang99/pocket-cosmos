@@ -347,6 +347,22 @@ const ConceptDiagram: React.FC<{ diagram: CurriculumDiagram; language: 'en' | 'z
             <text x="24" y="38">v</text>
           </>
         );
+      case 'projectile-motion':
+        return (
+          <>
+            <path d="M38 138 C78 82 126 52 174 64 C210 72 232 102 244 138" fill="none" stroke={stroke} strokeWidth="4" />
+            <line x1="34" y1="146" x2="250" y2="146" stroke={muted} strokeWidth="2" />
+            <circle cx="78" cy="94" r="7" fill={accent} />
+            <line x1="78" y1="94" x2="132" y2="94" stroke={accent} strokeWidth="3" markerEnd="url(#arrow)" />
+            <line x1="78" y1="94" x2="78" y2="58" stroke={stroke} strokeWidth="3" markerEnd="url(#arrow)" />
+            <line x1="174" y1="64" x2="214" y2="64" stroke={accent} strokeWidth="3" markerEnd="url(#arrow)" />
+            <line x1="174" y1="64" x2="174" y2="104" stroke={stroke} strokeWidth="3" markerEnd="url(#arrow)" />
+            <text x="111" y="86">vₓ</text>
+            <text x="84" y="68">vᵧ</text>
+            <text x="194" y="58">vₓ</text>
+            <text x="181" y="99">g</text>
+          </>
+        );
       case 'free-body':
         return (
           <>
