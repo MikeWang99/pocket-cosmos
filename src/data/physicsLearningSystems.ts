@@ -606,20 +606,20 @@ const scalarsVectors1DLesson: CurriculumLesson = {
       bullets: [        text('Scalar examples: mass, temperature, speed, distance, time.', '标量示例:质量、温度、速率、路程、时间。'),
         text('Vector examples in 1D: displacement, velocity, acceleration.', '一维矢量示例:位移、速度、加速度。'),
         text('In 1D, a vector is a signed number: +3 m/s means 3 m/s in the positive direction.', '在一维中,矢量是带正负号的数:+3 m/s 表示正方向 3 m/s。')],
-      formulas: [        formula('Speed is magnitude of velocity', '速率是速度的大小', '\text{speed}=|v|')]
+      formulas: [        formula('Speed is magnitude of velocity', '速率是速度的大小', '\\text{speed}=|v|')]
     },
     {
       heading: text('2. Displacement vs distance', '2. 位移与路程'),
       paragraphs: [        text('Distance counts every meter traveled, regardless of direction. Displacement only cares about the starting point and the ending point.', '路程统计走过的每一米,不管方向。位移只关心起点和终点。'),
         text('If you walk 3 m forward and 2 m backward, distance = 5 m but displacement = +1 m (assuming forward is positive).', '如果你向前走 3 m 再向后走 2 m,路程 = 5 m,但位移 = +1 m(假设向前为正)。')],
-      formulas: [        formula('Displacement', '位移', '\Delta x=x_f-x_i'),
-        formula('Distance', '路程', 'd=\text{total path length}')]
+      formulas: [        formula('Displacement', '位移', '\\Delta x=x_f-x_i'),
+        formula('Distance', '路程', 'd=\\text{total path length}')]
     },
     {
       heading: text('3. Average velocity vs average speed', '3. 平均速度与平均速率'),
       paragraphs: [        text('Average velocity = displacement / time. Average speed = total distance / time. These can be very different.', '平均速度 = 位移 / 时间。平均速率 = 总路程 / 时间。两者可能差别很大。')],
-      formulas: [        formula('Average velocity', '平均速度', 'v_{\mathrm{avg}}=\frac{\Delta x}{\Delta t}'),
-        formula('Average speed', '平均速率', '\text{average speed}=\frac{\text{total distance}}{\Delta t}')]
+      formulas: [        formula('Average velocity', '平均速度', 'v_{\\mathrm{avg}}=\\frac{\\Delta x}{\\Delta t}'),
+        formula('Average speed', '平均速率', '\\text{average speed}=\\frac{\\text{total distance}}{\\Delta t}')]
     },
     {
       heading: text('4. Classroom check: round trip', '4. 课堂题:往返运动'),
@@ -646,10 +646,10 @@ const scalarsVectors1DLesson: CurriculumLesson = {
     },
     {
       heading: text('6. Formula summary', '6. 本节核心公式'),
-      formulas: [        formula('Displacement', '位移', '\Delta x=x_f-x_i'),
-        formula('Average velocity', '平均速度', 'v_{\mathrm{avg}}=\frac{\Delta x}{\Delta t}'),
-        formula('Average speed', '平均速率', '\text{average speed}=\frac{\text{total distance}}{\Delta t}'),
-        formula('Speed from velocity', '由速度求速率', '\text{speed}=|v|')]
+      formulas: [        formula('Displacement', '位移', '\\Delta x=x_f-x_i'),
+        formula('Average velocity', '平均速度', 'v_{\\mathrm{avg}}=\\frac{\\Delta x}{\\Delta t}'),
+        formula('Average speed', '平均速率', '\\text{average speed}=\\frac{\\text{total distance}}{\\Delta t}'),
+        formula('Speed from velocity', '由速度求速率', '\\text{speed}=|v|')]
     }
   ],
 };
@@ -666,8 +666,8 @@ const positionVelocityAccelerationLesson: CurriculumLesson = {
     {
       heading: text('1. Definitions', '1. 定义'),
       paragraphs: [        text('Velocity is the rate of change of position. Acceleration is the rate of change of velocity.', '速度是位置的变化率。加速度是速度的变化率。')],
-      formulas: [        formula('Instantaneous velocity', '瞬时速度', 'v=\frac{dx}{dt}'),
-        formula('Instantaneous acceleration', '瞬时加速度', 'a=\frac{dv}{dt}=\frac{d^2x}{dt^2}')]
+      formulas: [        formula('Instantaneous velocity', '瞬时速度', 'v=\\frac{dx}{dt}'),
+        formula('Instantaneous acceleration', '瞬时加速度', 'a=\\frac{dv}{dt}=\\frac{d^2x}{dt^2}')]
     },
     {
       heading: text('2. The meaning of acceleration', '2. 加速度的含义'),
@@ -676,14 +676,14 @@ const positionVelocityAccelerationLesson: CurriculumLesson = {
     {
       heading: text('3. Reading motion graphs', '3. 读取运动图像'),
       paragraphs: [        text('The slope of a position-time graph gives velocity. The slope of a velocity-time graph gives acceleration. The area under a velocity-time graph gives displacement.', '位置-时间图像的斜率给出速度。速度-时间图像的斜率给出加速度。速度-时间图像下的面积给出位移。')],
-      formulas: [        formula('From graph slope', '从图像斜率', 'v=\frac{dx}{dt},\quad a=\frac{dv}{dt}'),
-        formula('From graph area', '从图像面积', '\Delta x=\int v\,dt,\quad \Delta v=\int a\,dt')]
+      formulas: [        formula('From graph slope', '从图像斜率', 'v=\\frac{dx}{dt},\\quad a=\\frac{dv}{dt}'),
+        formula('From graph area', '从图像面积', '\\Delta x=\\int v\\,dt,\\quad \\Delta v=\\int a\\,dt')]
     },
     {
       heading: text('4. Constant-acceleration model', '4. 匀加速模型'),
       paragraphs: [        text('When acceleration is constant, we can derive simple equations that connect position, velocity, and time.', '当加速度恒定时,我们可以推导出简单的方程来连接位置、速度和时间。')],
       formulas: [        formula('Velocity-time', '速度-时间关系', 'v=v_0+at'),
-        formula('Position-time', '位置-时间关系', 'x=x_0+v_0t+\frac12at^2'),
+        formula('Position-time', '位置-时间关系', 'x=x_0+v_0t+\\frac12at^2'),
         formula('Velocity-position', '速度-位移关系', 'v^2=v_0^2+2a(x-x_0)')],
       takeaway: text('These equations only work when acceleration is constant. Always check this condition first.', '这些方程只在加速度恒定时成立。使用前一定要先检查这个条件。')
     },
@@ -706,7 +706,7 @@ const positionVelocityAccelerationLesson: CurriculumLesson = {
     {
       heading: text('6. Free fall as a constant-acceleration example', '6. 自由落体:匀加速的实例'),
       paragraphs: [        text('Near the surface, a falling object (ignoring air resistance) experiences constant downward acceleration of about 9.8 m/s^2.', '在地球表面附近,下落物体(忽略空气阻力)受到恒定的向下加速度,约 9.8 m/s^2。')],
-      formulas: [        formula('Free-fall acceleration', '自由落体加速度', 'a_y=-g\approx-9.8\ \text{m/s}^2\quad(\text{taking up as positive})')]
+      formulas: [        formula('Free-fall acceleration', '自由落体加速度', 'a_y=-g\\approx-9.8\\,\\text{m/s}^2\\quad(\\text{taking up as positive})')]
     },
     {
       heading: text('7. Common mistakes', '7. 常见错误'),
@@ -717,8 +717,8 @@ const positionVelocityAccelerationLesson: CurriculumLesson = {
     },
     {
       heading: text('8. Formula summary', '8. 本节核心公式'),
-      formulas: [        formula('Definitions', '定义', 'v=\frac{dx}{dt},\quad a=\frac{dv}{dt}'),
-        formula('Constant-acceleration equations', '匀加速方程', 'v=v_0+at,\quad x=x_0+v_0t+\frac12at^2,\quad v^2=v_0^2+2a\Delta x'),
+      formulas: [        formula('Definitions', '定义', 'v=\\frac{dx}{dt},\\quad a=\\frac{dv}{dt}'),
+        formula('Constant-acceleration equations', '匀加速方程', 'v=v_0+at,\\quad x=x_0+v_0t+\\frac12at^2,\\quad v^2=v_0^2+2a\\Delta x'),
         formula('Free fall', '自由落体', 'a=-g')]
     }
   ],
@@ -766,7 +766,7 @@ const referenceFramesRelativeMotionLesson: CurriculumLesson = {
     },
     {
       heading: text('5. Formula summary', '5. 本节核心公式'),
-      formulas: [        formula('Relative velocity', '相对速度', '\vec v_{BC}=\vec v_{BA}+\vec v_{AC}')]
+      formulas: [        formula('Relative velocity', '相对速度', '\\vec v_{BC}=\\vec v_{BA}+\\vec v_{AC}')]
     }
   ],
 };
@@ -790,14 +790,14 @@ const systemsCenterOfMassUnit2Lesson: CurriculumLesson = {
     {
       heading: text('2. Internal vs external forces', '2. 内力与外力'),
       paragraphs: [        text('Internal forces always come in equal-and-opposite pairs. When you add the force equations for all parts of a system, internal forces cancel. Only external forces determine the system overall acceleration.', '内力总是成对出现、大小相等方向相反。把系统各部分的力方程加起来时,内力抵消。只有外力决定系统的整体加速度。')],
-      formulas: [        formula('Internal force pair', '内力对', '\vec F_{AB}=-\vec F_{BA}'),
-        formula('System equation', '系统方程', '\sum \vec F_{\mathrm{ext}}=M\vec a_{\mathrm{cm}}')]
+      formulas: [        formula('Internal force pair', '内力对', '\\vec F_{AB}=-\\vec F_{BA}'),
+        formula('System equation', '系统方程', '\\sum \\vec F_{\\mathrm{ext}}=M\\vec a_{\\mathrm{cm}}')]
     },
     {
       heading: text('3. Center of mass as the representative point', '3. 质心作为代表点'),
       paragraphs: [        text('For an extended object or a multi-object system, the center of mass is the point that moves as if all the mass were concentrated there and all external forces acted there.', '对于一个有尺寸的物体或多物体系统,质心就是那个表现得像所有质量都集中在那里、所有外力都作用在那里的点。')],
-      formulas: [        formula('Center of mass (discrete)', '质心(离散)', 'x_{\mathrm{cm}}=\frac{\sum m_ix_i}{\sum m_i}'),
-        formula('System Newton second law', '系统牛顿第二定律', '\sum \vec F_{\mathrm{ext}}=M\vec a_{\mathrm{cm}}')]
+      formulas: [        formula('Center of mass (discrete)', '质心(离散)', 'x_{\\mathrm{cm}}=\\frac{\\sum m_ix_i}{\\sum m_i}'),
+        formula('System Newton second law', '系统牛顿第二定律', '\\sum \\vec F_{\\mathrm{ext}}=M\\vec a_{\\mathrm{cm}}')]
     },
     {
       heading: text('4. Classroom check: system choice', '4. 课堂题:系统选择'),
@@ -823,8 +823,8 @@ const systemsCenterOfMassUnit2Lesson: CurriculumLesson = {
     },
     {
       heading: text('6. Formula summary', '6. 本节核心公式'),
-      formulas: [        formula('Center of mass (1D)', '质心(一维)', 'x_{\mathrm{cm}}=\frac{\sum m_ix_i}{\sum m_i}'),
-        formula('System Newton second law', '系统牛顿第二定律', '\sum \vec F_{\mathrm{ext}}=M\vec a_{\mathrm{cm}}')]
+      formulas: [        formula('Center of mass (1D)', '质心(一维)', 'x_{\\mathrm{cm}}=\\frac{\\sum m_ix_i}{\\sum m_i}'),
+        formula('System Newton second law', '系统牛顿第二定律', '\\sum \\vec F_{\\mathrm{ext}}=M\\vec a_{\\mathrm{cm}}')]
     }
   ],
 };
@@ -856,7 +856,7 @@ const forcesFreeBodyDiagramsUnit2Lesson: CurriculumLesson = {
     {
       heading: text('3. From FBD to equations', '3. 从自由体图到方程'),
       paragraphs: [        text('Once the FBD is drawn, write Newton second law for each axis separately.', '画好自由体图后,对每个坐标轴分别写出牛顿第二定律。')],
-      formulas: [        formula('Newton second law (component form)', '牛顿第二定律(分量形式)', '\sum F_x=ma_x,\quad \sum F_y=ma_y')]
+      formulas: [        formula('Newton second law (component form)', '牛顿第二定律(分量形式)', '\\sum F_x=ma_x,\\quad \\sum F_y=ma_y')]
     },
     {
       heading: text('4. Classroom check: block on a ramp', '4. 课堂题:斜面上的方块'),
@@ -882,14 +882,14 @@ const forcesFreeBodyDiagramsUnit2Lesson: CurriculumLesson = {
     },
     {
       heading: text('6. Formula summary', '6. 本节核心公式'),
-      formulas: [        formula('Newton second law', '牛顿第二定律', '\sum \vec F=m\vec a'),
+      formulas: [        formula('Newton second law', '牛顿第二定律', '\\sum \\vec F=m\\vec a'),
         formula('Weight', '重力', 'W=mg')]
     }
   ],
 };
 
 const newtonsThirdLawUnit2Lesson: CurriculumLesson = {
-  title: text('Newton\\\'s Third Law: Action and Reaction', '牛顿第三定律:作用力与反作用力'),
+  title: text("Newton's Third Law: Action and Reaction", '牛顿第三定律:作用力与反作用力'),
   description: text('Understand that forces always come in pairs between two objects, and why these pairs never cancel when analyzing a single object.', '理解力总是成对出现在两个物体之间,以及为什么分析单个物体时这些力对不会抵消。'),
   sections: [
     {
@@ -903,7 +903,7 @@ const newtonsThirdLawUnit2Lesson: CurriculumLesson = {
       bullets: [        text('The two forces act on different objects.', '两个力作用在不同物体上。'),
         text('The two forces are the same type.', '两个力是同一类型的。'),
         text('They are simultaneous, neither causes the other.', '它们是同时的,没有一个导致另一个。')],
-      formulas: [        formula('Newton third law', '牛顿第三定律', '\vec F_{A\mathrm{\ on\ }B}=-\vec F_{B\mathrm{\ on\ }A}')]
+      formulas: [        formula('Newton third law', '牛顿第三定律', '\\vec F_{A\\text{ on }B}=-\\vec F_{B\\text{ on }A}')]
     },
     {
       heading: text('2. Why do not they cancel?', '2. 为什么它们不抵消?'),
@@ -932,13 +932,13 @@ const newtonsThirdLawUnit2Lesson: CurriculumLesson = {
     },
     {
       heading: text('5. Formula summary', '5. 本节核心公式'),
-      formulas: [        formula('Newton third law', '牛顿第三定律', '\vec F_{A\mathrm{\ on\ }B}=-\vec F_{B\mathrm{\ on\ }A}')]
+      formulas: [        formula('Newton third law', '牛顿第三定律', '\\vec F_{A\\text{ on }B}=-\\vec F_{B\\text{ on }A}')]
     }
   ],
 };
 
 const newtonsFirstSecondLawUnit2Lesson: CurriculumLesson = {
-  title: text('Newton\\\'s First and Second Laws', '牛顿第一和第二定律'),
+  title: text("Newton's First and Second Laws", '牛顿第一和第二定律'),
   description: text('Connect force, mass, and acceleration. Understand inertia, equilibrium, and how to build equations from free-body diagrams.', '连接力、质量和加速度。理解惯性、平衡状态,以及如何从自由体图建立方程。'),
   sections: [
     {
@@ -956,8 +956,8 @@ const newtonsFirstSecondLawUnit2Lesson: CurriculumLesson = {
     {
       heading: text('2. Newton Second Law', '2. 牛顿第二定律'),
       paragraphs: [        text('The acceleration of an object is directly proportional to the net force acting on it and inversely proportional to its mass.', '物体的加速度与作用在它上面的合外力成正比,与它的质量成反比。')],
-      formulas: [        formula('Newton second law', '牛顿第二定律', '\sum \vec F=m\vec a'),
-        formula('Component form', '分量形式', '\sum F_x=ma_x,\quad \sum F_y=ma_y')]
+      formulas: [        formula('Newton second law', '牛顿第二定律', '\\sum \\vec F=m\\vec a'),
+        formula('Component form', '分量形式', '\\sum F_x=ma_x,\\quad \\sum F_y=ma_y')]
     },
     {
       heading: text('3. Problem-solving recipe', '3. 解题步骤'),
@@ -988,9 +988,9 @@ const newtonsFirstSecondLawUnit2Lesson: CurriculumLesson = {
     },
     {
       heading: text('6. Formula summary', '6. 本节核心公式'),
-      formulas: [        formula('Newton second law', '牛顿第二定律', '\sum \vec F=m\vec a'),
+      formulas: [        formula('Newton second law', '牛顿第二定律', '\\sum \\vec F=m\\vec a'),
         formula('Weight', '重力', 'W=mg'),
-        formula('Equilibrium', '平衡条件', '\sum \vec F=0\Rightarrow \vec a=0')]
+        formula('Equilibrium', '平衡条件', '\\sum \\vec F=0\\Rightarrow \\vec a=0')]
     }
   ],
 };
@@ -1007,12 +1007,12 @@ const gravitationalForceUnit2Lesson: CurriculumLesson = {
     {
       heading: text('1. The universal law of gravitation', '1. 万有引力定律'),
       paragraphs: [        text('Every pair of masses attracts each other with a force proportional to the product of their masses and inversely proportional to the square of the distance between them.', '每一对质量之间的引力与它们的质量乘积成正比,与它们之间距离的平方成反比。')],
-      formulas: [        formula('Universal gravitation', '万有引力定律', 'F_g=G\frac{m_1m_2}{r^2}')]
+      formulas: [        formula('Universal gravitation', '万有引力定律', 'F_g=G\\frac{m_1m_2}{r^2}')]
     },
     {
       heading: text('2. Connecting W = mg to the universal law', '2. W = mg 与万有引力定律的联系'),
       paragraphs: [        text('Near the surface, r is approximately the Earth radius, so g = GM / R^2.', '在表面附近,r 约等于地球半径,所以 g = GM / R^2。')],
-      formulas: [        formula('Local g from universal law', '由万有引力定律导出局部 g', 'g=\frac{GM}{r^2}'),
+      formulas: [        formula('Local g from universal law', '由万有引力定律导出局部 g', 'g=\\frac{GM}{r^2}'),
         formula('Weight near surface', '表面附近的重力', 'W=mg')]
     },
     {
@@ -1022,7 +1022,7 @@ const gravitationalForceUnit2Lesson: CurriculumLesson = {
     },
     {
       heading: text('4. Formula summary', '4. 本节核心公式'),
-      formulas: [        formula('Universal gravitation', '万有引力定律', 'F_g=G\frac{m_1m_2}{r^2}'),
+      formulas: [        formula('Universal gravitation', '万有引力定律', 'F_g=G\\frac{m_1m_2}{r^2}'),
         formula('Local weight', '局部重力', 'W=mg')]
     }
   ],
@@ -1041,8 +1041,8 @@ const frictionSpringsCircularMotionUnit2Lesson: CurriculumLesson = {
       paragraphs: [        text('Static friction prevents motion up to a maximum value. Kinetic friction opposes motion once the object is sliding.', '静摩擦力阻止运动,直到达到最大值。动摩擦力在物体滑动时阻碍运动。')],
       bullets: [        text('Static friction adjusts to match the applied force, up to its maximum.', '静摩擦力会调节以匹配外力,直到最大值。'),
         text('mu_k is typically less than mu_s.', 'mu_k 通常小于 mu_s。')],
-      formulas: [        formula('Static friction (maximum)', '最大静摩擦力', 'f_{s,\max}=\mu_s N'),
-        formula('Kinetic friction', '动摩擦力', 'f_k=\mu_k N')]
+      formulas: [        formula('Static friction (maximum)', '最大静摩擦力', 'f_{s,\\mathrm{max}}=\\mu_s N'),
+        formula('Kinetic friction', '动摩擦力', 'f_k=\\mu_k N')]
     },
     {
       heading: text('2. Spring force', '2. 弹簧力'),
@@ -1055,8 +1055,8 @@ const frictionSpringsCircularMotionUnit2Lesson: CurriculumLesson = {
       paragraphs: [        text('An object moving in a circle at constant speed still has acceleration toward the center. This requires a net force in the same direction.', '一个以恒定速率做圆周运动的物体仍然有向心加速度。这需要一个同方向的合力。')],
       bullets: [        text('Centripetal force is not a new force. It is the net force toward the center.', '向心力不是新力。它是向中心的合力。'),
         text('Never draw centripetal force as a separate force on an FBD.', '永远不要把向心力作为单独的力画在自由体图上。')],
-      formulas: [        formula('Centripetal acceleration', '向心加速度', 'a_c=\frac{v^2}{r}=\omega^2r'),
-        formula('Centripetal force', '向心力', '\sum F_r=m\frac{v^2}{r}')]
+      formulas: [        formula('Centripetal acceleration', '向心加速度', 'a_c=\\frac{v^2}{r}=\\omega^2r'),
+        formula('Centripetal force', '向心力', '\\sum F_r=m\\frac{v^2}{r}')]
     },
     {
       heading: text('4. Classroom check: friction', '4. 课堂题:摩擦力'),
@@ -1082,10 +1082,10 @@ const frictionSpringsCircularMotionUnit2Lesson: CurriculumLesson = {
     },
     {
       heading: text('6. Formula summary', '6. 本节核心公式'),
-      formulas: [        formula('Static friction', '静摩擦力', 'f_s\le \mu_s N'),
-        formula('Kinetic friction', '动摩擦力', 'f_k=\mu_k N'),
+      formulas: [        formula('Static friction', '静摩擦力', 'f_s\\le \\mu_s N'),
+        formula('Kinetic friction', '动摩擦力', 'f_k=\\mu_k N'),
         formula('Hooke law', '胡克定律', 'F_s=-kx'),
-        formula('Centripetal force', '向心力', '\sum F_r=m\frac{v^2}{r}')]
+        formula('Centripetal force', '向心力', '\\sum F_r=m\\frac{v^2}{r}')]
     }
   ],
 };
