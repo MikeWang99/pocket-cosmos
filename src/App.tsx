@@ -28,6 +28,7 @@ const normalizeUrlForTab = (tab: string, mode: 'push' | 'replace' = 'push') => {
 
   const url = new URL(window.location.href);
   url.pathname = '/';
+  url.hash = '';
 
   if (tab === 'curriculum') {
     url.searchParams.delete('tab');
@@ -41,7 +42,7 @@ const normalizeUrlForTab = (tab: string, mode: 'push' | 'replace' = 'push') => {
     }
   }
 
-  const nextUrl = `${url.pathname}${url.search}${url.hash}`;
+  const nextUrl = `${url.pathname}${url.search}`;
   if (nextUrl !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
     window.history[mode === 'replace' ? 'replaceState' : 'pushState']({}, '', nextUrl);
   }
