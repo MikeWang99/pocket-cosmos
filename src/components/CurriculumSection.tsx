@@ -6,11 +6,11 @@ import { useLanguage } from '../LanguageContext';
 import { learningSystems, type LearningSystemId } from '../data/physicsLearningSystems';
 import type { CurriculumClassroomQuestion, CurriculumDiagram, CurriculumVideo } from '../data/apPhysicsCurriculum';
 
-const renderMath = (value: string) =>
+const renderMath = (value: string, displayMode = true) =>
   katex.renderToString(value, {
     throwOnError: false,
     strict: false,
-    displayMode: true,
+    displayMode,
   });
 
 const MathBlock: React.FC<{ value: string }> = ({ value }) => (
@@ -38,7 +38,7 @@ const InlineMathText: React.FC<{ children: string }> = ({ children }) => {
           <span
             key={`${part}-${index}`}
             className="math-inline"
-            dangerouslySetInnerHTML={{ __html: renderMath(expression) }}
+            dangerouslySetInnerHTML={{ __html: renderMath(expression, false) }}
           />
         );
       })}
@@ -683,7 +683,7 @@ export const CurriculumSection: React.FC = () => {
                                           ))}
                                           {section.paragraphs?.map((paragraph) => (
                                             <p key={paragraph.en} className="text-sm leading-7 text-slate-600">
-                                              {paragraph[language]}
+                                              <InlineMathText>{paragraph[language]}</InlineMathText>
                                             </p>
                                           ))}
                                           {section.classroomQuestions?.map((question) => (
@@ -694,7 +694,7 @@ export const CurriculumSection: React.FC = () => {
                                               {section.bullets.map((item) => (
                                                 <li key={item.en} className="flex gap-2 text-sm leading-6 text-slate-600">
                                                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-nebula" />
-                                                  <span>{item[language]}</span>
+                                                  <span><InlineMathText>{item[language]}</InlineMathText></span>
                                                 </li>
                                               ))}
                                             </ul>
@@ -711,7 +711,7 @@ export const CurriculumSection: React.FC = () => {
                                           )}
                                           {section.takeaway && (
                                             <div className="rounded-lg border border-nebula/15 bg-nebula/5 p-3 text-sm leading-6 text-slate-700">
-                                              {section.takeaway[language]}
+                                              <InlineMathText>{section.takeaway[language]}</InlineMathText>
                                             </div>
                                           )}
                                         </div>
