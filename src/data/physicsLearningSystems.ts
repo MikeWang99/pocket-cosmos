@@ -44,16 +44,16 @@ const focus = (...items: Array<[string, string]>): LocalizedText[] => items.map(
 const kinematicsGraphSignLesson: CurriculumLesson = {
   title: text('Velocity-Time Graphs: Direction vs Speed', '速度-时间图像:方向与速率'),
   description: text(
-    'A classroom-focused guide for reading velocity graphs without confusing velocity value, direction, and speed.',
-    '用于课堂讲解速度图像,避免混淆速度数值、运动方向和速率。',
+    'A guide for reading velocity graphs without confusing velocity value, direction, and speed.',
+    '一份用于读懂速度图像的学习指南,帮助区分速度数值、运动方向和速率。',
   ),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      heading: text('0. What real phenomenon does this lesson explain?', '0. 这一节解释什么真实现象?'),
       paragraphs: [
         text(
-          'Students often say a velocity is "increasing" when they mean the speed is increasing. On a velocity-time graph, the sign of velocity carries direction, so a line moving downward can still describe an object speeding up in the negative direction.',
-          '学生常常说 velocity 在"增加",但其实想表达的是 speed 在增加。在速度-时间图像中,速度的正负包含方向,所以一条向下走的线,也可能表示物体在负方向上越来越快。',
+          'A ball rolling downhill can speed up while its velocity value becomes more negative. On a velocity-time graph, the sign of velocity carries direction, so a line moving downward can still describe an object speeding up in the negative direction.',
+          '一个小球沿斜面向下滚时,速率可能越来越大,但速度数值却越来越负。在速度-时间图像中,速度的正负包含方向,所以一条向下走的线,也可能表示物体在负方向上越来越快。',
         ),
       ],
       takeaway: text(
@@ -139,15 +139,15 @@ const impulseMomentumLesson: CurriculumLesson = {
   title: text('Impulse and Momentum: What Actually Changes?', '冲量与动量:到底什么在变化?'),
   description: text(
     'A compact clarification of force, impulse, momentum, and the condition for momentum conservation.',
-    '澄清力、冲量、动量以及动量守恒条件的课堂小节。',
+    '澄清力、冲量、动量以及动量守恒条件的学习小节。',
   ),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      heading: text('0. What real phenomenon does this lesson explain?', '0. 这一节解释什么真实现象?'),
       paragraphs: [
         text(
-          'In collision and explosion problems, students often mix up force, impulse, momentum, and kinetic energy. The safest path is to ask what the net external force does to the total momentum of the chosen system.',
-          '在碰撞和爆炸问题中,学生很容易混淆力、冲量、动量和动能。最稳妥的路径是先问:合外力如何改变所选系统的总动量?',
+          'A tennis ball changes motion sharply when it hits a racket, while two carts can collide and still keep the same total momentum. Impulse and momentum explain what changes during the short contact time and what remains fixed for the chosen system.',
+          '网球撞到球拍时运动状态会迅速改变,两辆小车碰撞时系统总动量却可能保持不变。冲量与动量解释的是:短暂接触时间内什么发生了变化,以及所选系统中什么保持不变。',
         ),
       ],
     },
@@ -230,7 +230,7 @@ const centerOfMassDiscreteLesson: CurriculumLesson = {
   ),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      heading: text('0. What real phenomenon does this lesson explain?', '0. 这一节解释什么真实现象?'),
       videos: [
         {
           provider: 'youtube',
@@ -458,7 +458,7 @@ const centerOfMassDiscreteLesson: CurriculumLesson = {
       ],
     },
     {
-      heading: text('10. Common mistakes', '10. 学生最容易犯的错误'),
+      heading: text('10. Common mistakes', '10. 常见错误'),
       bullets: [
         text('Thinking the center of mass must be inside the object.', '以为质心一定在物体内部。'),
         text('Thinking internal forces can change the motion of the whole system.', '以为内力可以改变系统整体运动。'),
@@ -595,7 +595,7 @@ const scalarsVectors1DLesson: CurriculumLesson = {
   description: text('Build the foundation of motion description: scalars vs vectors, displacement vs distance, velocity vs speed, and how to choose a reference frame.', '建立运动描述的基础:标量与矢量、位移与路程、速度与速率,以及如何建立参考系。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      heading: text('0. What real phenomenon does this lesson explain?', '0. 这一节解释什么真实现象?'),
       paragraphs: [        text('When we describe how something moves, words like "fast" or "far" are not enough for physics. We need quantities that carry both size and direction, and a rule for measuring them consistently.', '当我们描述一个物体的运动,光说"快"或"远"在物理中是不够的。我们需要同时包含大小和方向的量,以及一套一致的测量规则。'),
         text('This lesson introduces scalars (numbers only), vectors (numbers with direction), and how to use them to describe one-dimensional motion.', '本节介绍标量(只有数值)、矢量(数值加方向),以及如何用它们描述一维运动。')],
       takeaway: text('Scalars tell you "how much." Vectors tell you "how much and which way."', '标量告诉你"有多少"。矢量告诉你"有多少,向哪边"。')
@@ -659,7 +659,7 @@ const positionVelocityAccelerationLesson: CurriculumLesson = {
   description: text('Connect the three core kinematic quantities through definitions, graphs, and the constant-acceleration model.', '通过定义、图像和匀加速模型连接位置、速度、加速度三个核心运动学量。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      heading: text('0. What real phenomenon does this lesson explain?', '0. 这一节解释什么真实现象?'),
       paragraphs: [        text('If you know where an object is at every moment, can you predict where it will be next? The answers depend on understanding the relationship between position, velocity, and acceleration.', '如果你知道一个物体每一时刻的位置,能预测它下一刻在哪里吗?答案取决于你对位置、速度和加速度之间关系的理解。')],
       takeaway: text('Position tells you where. Velocity tells you where you are going. Acceleration tells you how velocity is changing.', '位置告诉你在哪里。速度告诉你往哪走。加速度告诉你速度怎么变。')
     },
@@ -729,7 +729,7 @@ const referenceFramesRelativeMotionLesson: CurriculumLesson = {
   description: text('Why the same motion looks different from different viewpoints, and how to translate between reference frames.', '为什么同一个运动在不同视角下看起来不同,以及如何在参考系之间转换。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      heading: text('0. What real phenomenon does this lesson explain?', '0. 这一节解释什么真实现象?'),
       paragraphs: [        text('If you sit on a train and watch another train pass by, is it moving or are you moving? Both answers can be correct, depending on your reference frame.', '如果你坐在火车上看另一列火车经过,是它在动还是你在动?两个答案都可以正确,取决于你的参考系。')],
       takeaway: text('Motion is always measured relative to a chosen reference frame. State your frame first.', '运动总是相对于某个选定的参考系来测量的。先说清你的参考系。')
     },
@@ -779,7 +779,7 @@ const projectileMotionLesson: CurriculumLesson = {
   ),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      heading: text('0. What real phenomenon does this lesson explain?', '0. 这一节解释什么真实现象?'),
       paragraphs: [
         text(
           'A launched ball, a water fountain stream, or a basketball shot does not move only horizontally or only vertically. Projectile motion gives us a clean way to predict the path of an object moving in two dimensions under constant vertical acceleration.',
@@ -872,7 +872,7 @@ const systemsCenterOfMassUnit2Lesson: CurriculumLesson = {
   description: text('Define what a system means in physics, distinguish internal from external forces, and use center of mass to represent the motion of complex objects.', '定义物理中的系统概念,区分内力与外力,用质心代表复杂物体的运动。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      heading: text('0. What real phenomenon does this lesson explain?', '0. 这一节解释什么真实现象?'),
       paragraphs: [        text('Before writing any force equation, you must decide what you are analyzing. The choice of system determines which forces are internal and which are external, and only external forces appear in the system equation.', '在写任何力的方程之前,你必须决定你要分析什么。系统的选择决定了哪些力是内力、哪些是外力,而只有外力出现在系统方程中。')],
       takeaway: text('Choose your system first. Everything else follows from that choice.', '先选系统。其他一切都从这个选择出发。')
     },
@@ -930,7 +930,7 @@ const forcesFreeBodyDiagramsUnit2Lesson: CurriculumLesson = {
   description: text('Identify all forces acting on a chosen system, draw a clean free-body diagram, and translate it into a Newton equation.', '识别作用在所选系统上的所有力,画出清晰的自由体图,并将其转化为牛顿方程。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      heading: text('0. What real phenomenon does this lesson explain?', '0. 这一节解释什么真实现象?'),
       paragraphs: [        text('Real objects are pushed, pulled, and twisted by many forces at once. To predict motion, we must identify every force, represent it as a vector, and add them correctly. The free-body diagram is the single most important tool for doing this.', '真实物体同时被很多力推、拉、扭曲。要预测运动,我们必须识别每一个力,把它表示为矢量,然后正确地相加。自由体图是做到这一点的最重要工具。')],
       takeaway: text('A good free-body diagram is half the solution.', '一张好的自由体图就是解题的一半。')
     },
@@ -989,7 +989,7 @@ const newtonsThirdLawUnit2Lesson: CurriculumLesson = {
   description: text('Understand that forces always come in pairs between two objects, and why these pairs never cancel when analyzing a single object.', '理解力总是成对出现在两个物体之间,以及为什么分析单个物体时这些力对不会抵消。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      heading: text('0. What real phenomenon does this lesson explain?', '0. 这一节解释什么真实现象?'),
       paragraphs: [        text('When you push a wall, the wall pushes back. Forces are interactions between two objects, not properties of a single object. The third law formalizes this idea.', '你推墙时,墙也推你。力是两个物体之间的相互作用,不是单个物体的属性。第三定律将这个思想形式化。')],
       takeaway: text('Forces come in pairs. Each force in the pair acts on a different object.', '力成对出现。力对中的每个力作用在不同的物体上。')
     },
@@ -1038,7 +1038,7 @@ const newtonsFirstSecondLawUnit2Lesson: CurriculumLesson = {
   description: text('Connect force, mass, and acceleration. Understand inertia, equilibrium, and how to build equations from free-body diagrams.', '连接力、质量和加速度。理解惯性、平衡状态,以及如何从自由体图建立方程。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      heading: text('0. What real phenomenon does this lesson explain?', '0. 这一节解释什么真实现象?'),
       paragraphs: [        text('Why does a hockey puck glide across ice for so long, but a book slides to a stop on a table? Why does a heavy truck need more force to accelerate than a bicycle? Newton first two laws give us the connection.', '为什么冰球能在冰上滑行很久,而书在桌上会停下来?为什么卡车比自行车需要更大的力才能加速?牛顿的前两个定律给出了这个联系。')],
       takeaway: text('Force changes motion. Mass resists that change.', '力改变运动。质量抵抗这种改变。')
     },
@@ -1096,7 +1096,7 @@ const gravitationalForceUnit2Lesson: CurriculumLesson = {
   description: text('Understand the difference between the local model W = mg and the universal law of gravitation, and when to use each.', '理解局部模型 W = mg 与万有引力定律的区别,以及何时使用哪个。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      heading: text('0. What real phenomenon does this lesson explain?', '0. 这一节解释什么真实现象?'),
       paragraphs: [        text('Near the surface, we use W = mg. But what about the Moon or a satellite? The universal law of gravitation works everywhere.', '在表面附近,我们用 W = mg。但月球呢?轨道卫星呢?万有引力定律在任何地方都适用。')],
       takeaway: text('W = mg is a shortcut near the surface. The universal law works everywhere.', 'W = mg 是表面附近的便捷公式。万有引力定律在任何地方都有效。')
     },
@@ -1129,7 +1129,7 @@ const frictionSpringsCircularMotionUnit2Lesson: CurriculumLesson = {
   description: text('Model three specific force types: friction, spring force, and the net force required for circular motion.', '建模三种特定的力类型:摩擦力、弹簧力和圆周运动所需的合力。'),
   sections: [
     {
-      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      heading: text('0. What real phenomenon does this lesson explain?', '0. 这一节解释什么真实现象?'),
       paragraphs: [        text('Not all forces are constant. Friction depends on whether the object is moving. Spring force depends on stretch. Circular motion requires a net force toward the center.', '不是所有的力都是恒定的。摩擦力取决于物体是否在运动。弹簧力取决于拉伸量。圆周运动需要一个指向中心的合力。')]
     },
     {
@@ -1189,16 +1189,16 @@ const frictionSpringsCircularMotionUnit2Lesson: CurriculumLesson = {
 const apPhysics1Unit1StudioLesson: CurriculumLesson = {
   title: text('Unit 1 Studio Map: Kinematics', 'Unit 1 Studio Map: 运动学'),
   description: text(
-    'A teaching-ready roadmap for AP Physics 1 Unit 1: why motion models matter, how the topics connect, and where graphs, vectors, and experiments should enter.',
-    '面向课堂使用的 AP 物理 1 Unit 1 路线图:为什么要学运动模型、知识点如何连接,以及图像、矢量和实验应该放在哪里。',
+    'A learning roadmap for AP Physics 1 Unit 1: why motion models matter, how the topics connect, and how graphs, vectors, and measurements describe motion.',
+    'AP 物理 1 Unit 1 学习路线图:为什么要学运动模型、知识点如何连接,以及图像、矢量和测量如何描述运动。',
   ),
   sections: [
     {
       heading: text('0. Learning motivation', '0. 学习动机'),
       paragraphs: [
         text(
-          'Kinematics is the language for describing motion before asking what caused it. It lets students predict where a runner, cart, ball, drone, or planet will be at a later time using position, velocity, acceleration, and graphs.',
-          '运动学是在追问“为什么会这样运动”之前,先准确描述运动的语言。它让学生用位置、速度、加速度和图像预测跑者、小车、小球、无人机或行星在之后的位置。',
+          'A runner crossing a finish line, a cart rolling down a ramp, a ball flying through the air, and a drone changing altitude all raise the same first question: where is it, how fast is it moving, and how is that motion changing?',
+          '跑者冲过终点、小车沿斜面下滑、小球在空中飞行、无人机改变高度,都会先引出同一个问题:它在哪里、运动有多快、运动状态如何改变?',
         ),
         text(
           'The unit should feel like building a GPS for physics: choose a reference frame, decide what counts as positive, represent motion with vectors and graphs, then translate between words, equations, and measurements.',
@@ -1232,8 +1232,8 @@ const apPhysics1Unit1StudioLesson: CurriculumLesson = {
           '图像不是装饰。$x$-$t$ 图像斜率给速度;$v$-$t$ 图像斜率给加速度;$v$-$t$ 图像下方面积给位移。',
         ),
         text(
-          'For two-dimensional motion, teach students to split vectors first, solve each axis separately, and only recombine at the end. This prevents projectile motion from becoming a formula-matching exercise.',
-          '二维运动中,先让学生分解矢量,分别处理每个坐标轴,最后再合成。这样抛体运动就不会变成套公式。',
+          'For two-dimensional motion, vectors are split first, each axis is analyzed separately, and the components are recombined at the end. This keeps projectile motion connected to the physical path instead of turning it into formula matching.',
+          '二维运动中,先分解矢量,分别处理每个坐标轴,最后再合成。这样抛体运动会始终连接真实轨迹,而不是变成套公式。',
         ),
         text(
           'Do not let Topic 1.5 remain only a vector slogan. In AP Physics 1 it must become the practical skill of projectile motion: $a_x=0$, $a_y=-g$, shared time $t$, and independent horizontal and vertical equations.',
@@ -1249,11 +1249,11 @@ const apPhysics1Unit1StudioLesson: CurriculumLesson = {
       ],
     },
     {
-      heading: text('3. Teaching and media suggestions', '3. 教学与素材建议'),
+      heading: text('3. Resource and interaction suggestions', '3. 素材与互动建议'),
       bullets: [
-        text('Use a motion sensor or phone video analysis demo for a cart moving toward and away from a detector; let students predict the sign of velocity before seeing the graph.', '用运动传感器或手机视频分析演示小车靠近/远离探测器;先让学生预测速度正负,再看图像。'),
-        text('Add a slow-motion projectile video when moving from one-dimensional to two-dimensional motion; pause at the top and ask whether acceleration is zero.', '从一维进入二维时加入慢动作抛体视频;在最高点暂停并追问加速度是否为零。'),
-        text('Use one classroom question after each representation change: words to graph, graph to equation, equation to physical interpretation.', '每次表示方式转换后放一道课堂题:文字到图像、图像到方程、方程到物理解释。'),
+        text('A motion sensor or phone video analysis clip of a cart moving toward and away from a detector makes the sign of velocity visible before the graph appears.', '小车靠近/远离探测器的运动传感器或手机视频分析片段,能在图像出现前先把速度正负变得可见。'),
+        text('A slow-motion projectile video makes the transition from one-dimensional to two-dimensional motion concrete; the top of the path is a natural place to examine velocity and acceleration separately.', '慢动作抛体视频能让一维到二维运动的过渡更具体;轨迹最高点很适合分别观察速度和加速度。'),
+        text('A short check question works well after each representation change: words to graph, graph to equation, equation to physical interpretation.', '每次表示方式转换后都适合放一个短检查题:文字到图像、图像到方程、方程到物理解释。'),
       ],
     },
     {
@@ -1286,21 +1286,21 @@ const apPhysics1Unit1StudioLesson: CurriculumLesson = {
 const apPhysics1Unit2StudioLesson: CurriculumLesson = {
   title: text('Unit 2 Studio Map: Force and Translational Dynamics', 'Unit 2 Studio Map: 力与平动动力学'),
   description: text(
-    'A teaching-ready roadmap for AP Physics 1 Unit 2: how to choose systems, draw forces, and turn Newton’s laws into predictions.',
-    '面向课堂使用的 AP 物理 1 Unit 2 路线图:如何选择系统、画受力图,并把牛顿定律变成可检验的预测。',
+    'A learning roadmap for AP Physics 1 Unit 2: how systems, forces, free-body diagrams, and Newton’s laws turn interactions into predictions.',
+    'AP 物理 1 Unit 2 学习路线图:系统、力、自由体图和牛顿定律如何把相互作用变成可检验的预测。',
   ),
   sections: [
     {
       heading: text('0. Learning motivation', '0. 学习动机'),
       paragraphs: [
         text(
-          'Dynamics answers the question kinematics leaves open: what interaction caused the velocity to change? The core skill is not memorizing force names; it is choosing the system and representing every external interaction consistently.',
-          '动力学回答运动学留下的问题:是什么相互作用导致速度改变?核心能力不是背力的名字,而是选择系统并一致地表示每一个外部相互作用。',
+          'A scale reading changes in an accelerating elevator, a box may start or fail to slide when pushed, and a car turning a corner needs an inward force. Dynamics explains how interactions produce acceleration.',
+          '电梯加速时体重秤读数会变化,箱子被推时可能开始滑动也可能保持静止,汽车转弯时需要指向内侧的力。动力学解释的正是相互作用如何产生加速度。',
         ),
       ],
       takeaway: text(
-        'The unit becomes much easier when students treat $\\sum \\vec F=m\\vec a$ as a modeling sentence: external interactions determine acceleration.',
-        '当学生把 $\\sum \\vec F=m\\vec a$ 当作一句建模语言:外部相互作用决定加速度,这一单元会清晰很多。',
+        '$\\sum \\vec F=m\\vec a$ is a modeling sentence: external interactions determine acceleration.',
+        '$\\sum \\vec F=m\\vec a$ 是一句建模语言:外部相互作用决定加速度。',
       ),
     },
     {
@@ -1317,12 +1317,12 @@ const apPhysics1Unit2StudioLesson: CurriculumLesson = {
       heading: text('2. Problem-solving structure', '2. 解题结构'),
       paragraphs: [
         text(
-          'The safest classroom routine is: choose the system, draw the free-body diagram, choose axes, write component equations, then interpret the sign of acceleration.',
-          '最稳的课堂流程是:选系统、画自由体图、选坐标轴、写分量方程,最后解释加速度符号。',
+          'The most reliable modeling sequence is: choose the system, draw the free-body diagram, choose axes, write component equations, then interpret the sign of acceleration.',
+          '最可靠的建模顺序是:选系统、画自由体图、选坐标轴、写分量方程,最后解释加速度符号。',
         ),
         text(
-          'Teach Newton’s third law before heavy equation work. It prevents students from saying one object “wins” the interaction by exerting a larger force.',
-          '在大量列方程之前先讲牛顿第三定律。这样可以防止学生认为相互作用中某个物体会“赢”,施加更大的力。',
+          'Newton’s third law keeps interaction pairs straight: the two forces in a pair are equal in magnitude, opposite in direction, and act on different objects.',
+          '牛顿第三定律能厘清相互作用力对:一对力大小相等、方向相反,并且作用在不同物体上。',
         ),
       ],
       formulas: [
@@ -1334,11 +1334,11 @@ const apPhysics1Unit2StudioLesson: CurriculumLesson = {
       ],
     },
     {
-      heading: text('3. Teaching and media suggestions', '3. 教学与素材建议'),
+      heading: text('3. Resource and interaction suggestions', '3. 素材与互动建议'),
       bullets: [
-        text('Use an elevator-scale video or live phone accelerometer demo to show why scale reading is a normal force, not mass.', '用电梯秤视频或手机加速度计现场演示,说明秤读数是支持力,不是质量。'),
-        text('Use a low-friction cart and hanging mass to make the system choice visible: cart alone vs cart plus hanging mass.', '用低摩擦小车和悬挂砝码演示系统选择:只选小车 vs 小车加悬挂砝码。'),
-        text('For circular motion, show a ball on a string or turntable demo and insist that centripetal force is not an extra force on the diagram.', '讲圆周运动时用绳上小球或转盘演示,并强调向心力不是自由体图上的额外一种力。'),
+        text('An elevator-scale video or phone accelerometer demo makes it clear that a scale reading is a normal force, not mass.', '电梯秤视频或手机加速度计演示能说明:秤读数是支持力,不是质量。'),
+        text('A low-friction cart with a hanging mass makes system choice visible: cart alone and cart plus hanging mass lead to different internal/external force boundaries.', '低摩擦小车和悬挂砝码能让系统选择变得可见:只选小车和选择“小车+悬挂砝码”会得到不同的内外力边界。'),
+        text('A ball on a string or turntable demo makes circular motion concrete and shows why centripetal force is not an extra force on the diagram.', '绳上小球或转盘演示能让圆周运动更具体,也能说明向心力不是自由体图上的额外一种力。'),
       ],
     },
     {
@@ -1426,11 +1426,11 @@ const emConductorsCapacitorsLesson: CurriculumLesson = {
       ],
     },
     {
-      heading: text('3. Teaching and media suggestions', '3. 教学与素材建议'),
+      heading: text('3. Resource and interaction suggestions', '3. 素材与互动建议'),
       bullets: [
-        text('Use a Faraday cage or charge-on-conductor demo before formulas; students need to see why charge moves to surfaces.', '公式之前先用法拉第笼或导体带电演示;学生需要先看见为什么电荷会跑到表面。'),
-        text('Use a real capacitor disassembly/photo or a variable parallel-plate capacitor demo to connect $A$, $d$, and dielectric material to capacitance.', '用真实电容拆解图或可调平行板电容演示,把 $A$、$d$ 和电介质材料与电容联系起来。'),
-        text('Add one conceptual question that distinguishes battery connected vs battery disconnected when a dielectric is inserted.', '加入一道概念题,专门区分插入电介质时“仍接电池”和“已断开电池”的不同。'),
+        text('A Faraday cage or charge-on-conductor demo makes charge redistribution visible before the formulas appear.', '法拉第笼或导体带电演示能在公式出现前,先让电荷重分布变得可见。'),
+        text('A real capacitor photo, disassembly image, or variable parallel-plate capacitor demo connects $A$, $d$, and dielectric material to capacitance.', '真实电容照片、拆解图或可调平行板电容演示,能把 $A$、$d$ 和电介质材料与电容联系起来。'),
+        text('A conceptual check about inserting a dielectric can separate two physical cases: battery connected and battery disconnected.', '关于插入电介质的概念检查题,可以区分两个物理情形:仍接电池与已断开电池。'),
       ],
     },
     {
@@ -1518,11 +1518,11 @@ const emElectricCircuitsLesson: CurriculumLesson = {
       ],
     },
     {
-      heading: text('3. Teaching and media suggestions', '3. 教学与素材建议'),
+      heading: text('3. Resource and interaction suggestions', '3. 素材与互动建议'),
       bullets: [
-        text('Use a water-flow analogy only briefly; then return to charge conservation and energy-per-charge to avoid misleading “current gets used up” language.', '水流类比只短暂使用;随后回到电荷守恒和单位电荷能量,避免学生产生“电流被用完”的错误语言。'),
-        text('Use a live RC charging demo with a voltage sensor so students see the exponential curve and the meaning of one time constant.', '用电压传感器做 RC 充电现场演示,让学生看到指数曲线和一个时间常数的含义。'),
-        text('For compound circuits, add at least one practice problem where students must choose independent loop equations instead of guessing equivalent resistance.', '复合电路至少放一道题,要求学生选择独立回路方程,而不是盲猜等效电阻。'),
+        text('A water-flow analogy can be useful only as a temporary picture; charge conservation and energy per charge give the more reliable circuit model.', '水流类比只适合作为临时图像;电荷守恒和单位电荷能量才是更可靠的电路模型。'),
+        text('An RC charging demo with a voltage sensor makes the exponential curve and the meaning of one time constant visible.', '带电压传感器的 RC 充电演示能让指数曲线和一个时间常数的含义变得可见。'),
+        text('Compound circuits become clearer with a practice problem that requires independent loop equations instead of guessing equivalent resistance.', '复合电路适合搭配一道需要选择独立回路方程的练习题,而不是盲猜等效电阻。'),
       ],
     },
     {
