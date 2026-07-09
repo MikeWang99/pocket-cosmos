@@ -1089,6 +1089,367 @@ const frictionSpringsCircularMotionUnit2Lesson: CurriculumLesson = {
     }
   ],
 };
+
+const apPhysics1Unit1StudioLesson: CurriculumLesson = {
+  title: text('Unit 1 Studio Map: Kinematics', 'Unit 1 Studio Map: 运动学'),
+  description: text(
+    'A teaching-ready roadmap for AP Physics 1 Unit 1: why motion models matter, how the topics connect, and where graphs, vectors, and experiments should enter.',
+    '面向课堂使用的 AP 物理 1 Unit 1 路线图:为什么要学运动模型、知识点如何连接,以及图像、矢量和实验应该放在哪里。',
+  ),
+  sections: [
+    {
+      heading: text('0. Learning motivation', '0. 学习动机'),
+      paragraphs: [
+        text(
+          'Kinematics is the language for describing motion before asking what caused it. It lets students predict where a runner, cart, ball, drone, or planet will be at a later time using position, velocity, acceleration, and graphs.',
+          '运动学是在追问“为什么会这样运动”之前,先准确描述运动的语言。它让学生用位置、速度、加速度和图像预测跑者、小车、小球、无人机或行星在之后的位置。',
+        ),
+        text(
+          'The unit should feel like building a GPS for physics: choose a reference frame, decide what counts as positive, represent motion with vectors and graphs, then translate between words, equations, and measurements.',
+          '这一单元应该像给物理搭建一个 GPS:先选参考系,规定正方向,再用矢量和图像表示运动,最后在文字、方程和测量数据之间互相翻译。',
+        ),
+      ],
+      takeaway: text(
+        'Do not start with memorizing equations. Start with the question: how can we represent motion so precisely that another person can reconstruct it?',
+        '不要从背公式开始。先问:我们怎样描述运动,才能让另一个人准确复原这个运动?',
+      ),
+    },
+    {
+      heading: text('1. Official topic path', '1. 官方知识点路径'),
+      bullets: [
+        text('1.1 Scalars and vectors in one dimension: separate quantities that only have size from quantities that also need direction.', '1.1 一维标量与矢量:区分只有大小的量,以及还需要方向的量。'),
+        text('1.2 Displacement, velocity, and acceleration: define the core quantities and keep distance/speed separate from displacement/velocity.', '1.2 位移、速度与加速度:定义核心运动量,并区分路程/速率与位移/速度。'),
+        text('1.3 Representing motion: translate among motion diagrams, graphs, tables, and algebraic models.', '1.3 运动表示:在运动图、图像、表格和代数模型之间转换。'),
+        text('1.4 Reference frames and relative motion: state what observer or coordinate system the measurement belongs to.', '1.4 参考系与相对运动:说明测量是相对于哪个观察者或坐标系。'),
+        text('1.5 Vectors and motion in two dimensions: split motion into independent perpendicular components.', '1.5 二维运动中的矢量:把运动分解成互相垂直的独立分量。'),
+      ],
+    },
+    {
+      heading: text('2. Concept connections and derivation flow', '2. 知识连接与推导逻辑'),
+      paragraphs: [
+        text(
+          'Begin with a coordinate system. Once positive direction and origin are chosen, displacement becomes $\\Delta x=x_f-x_i$, average velocity becomes $v_{\\mathrm{avg}}=\\Delta x/\\Delta t$, and acceleration becomes the rate at which velocity changes.',
+          '从坐标系开始。一旦选定正方向和原点,位移就是 $\\Delta x=x_f-x_i$,平均速度就是 $v_{\\mathrm{avg}}=\\Delta x/\\Delta t$,加速度就是速度变化的快慢。',
+        ),
+        text(
+          'Graphs are not decoration. The slope of $x$ vs. $t$ gives velocity; the slope of $v$ vs. $t$ gives acceleration; the area under a $v$ vs. $t$ graph gives displacement.',
+          '图像不是装饰。$x$-$t$ 图像斜率给速度;$v$-$t$ 图像斜率给加速度;$v$-$t$ 图像下方面积给位移。',
+        ),
+        text(
+          'For two-dimensional motion, teach students to split vectors first, solve each axis separately, and only recombine at the end. This prevents projectile motion from becoming a formula-matching exercise.',
+          '二维运动中,先让学生分解矢量,分别处理每个坐标轴,最后再合成。这样抛体运动就不会变成套公式。',
+        ),
+      ],
+      formulas: [
+        formula('Average velocity', '平均速度', 'v_{\\mathrm{avg}}=\\frac{\\Delta x}{\\Delta t}'),
+        formula('Average acceleration', '平均加速度', 'a_{\\mathrm{avg}}=\\frac{\\Delta v}{\\Delta t}'),
+        formula('Constant acceleration', '匀加速关系', 'v=v_0+at,\\quad x=x_0+v_0t+\\frac12at^2,\\quad v^2=v_0^2+2a\\Delta x'),
+        formula('Vector components', '矢量分量', 'A_x=A\\cos\\theta,\\quad A_y=A\\sin\\theta,\\quad A=\\sqrt{A_x^2+A_y^2}'),
+      ],
+    },
+    {
+      heading: text('3. Teaching and media suggestions', '3. 教学与素材建议'),
+      bullets: [
+        text('Use a motion sensor or phone video analysis demo for a cart moving toward and away from a detector; let students predict the sign of velocity before seeing the graph.', '用运动传感器或手机视频分析演示小车靠近/远离探测器;先让学生预测速度正负,再看图像。'),
+        text('Add a slow-motion projectile video when moving from one-dimensional to two-dimensional motion; pause at the top and ask whether acceleration is zero.', '从一维进入二维时加入慢动作抛体视频;在最高点暂停并追问加速度是否为零。'),
+        text('Use one classroom question after each representation change: words to graph, graph to equation, equation to physical interpretation.', '每次表示方式转换后放一道课堂题:文字到图像、图像到方程、方程到物理解释。'),
+      ],
+    },
+    {
+      heading: text('4. Classroom check: graph meaning', '4. 课堂题:图像含义'),
+      classroomQuestions: [
+        {
+          id: 'ap1-u1-graph-area-check',
+          title: text('Classroom Check: slope and area', '课堂题:斜率与面积'),
+          prompt: text(
+            'A cart moves along a straight track. From $t=0$ to $t=4\\,\\mathrm{s}$, its velocity increases linearly from $1\\,\\mathrm{m/s}$ to $5\\,\\mathrm{m/s}$. What displacement does the cart have during this interval?',
+            '一辆小车沿直线轨道运动。从 $t=0$ 到 $t=4\\,\\mathrm{s}$,它的速度从 $1\\,\\mathrm{m/s}$ 线性增加到 $5\\,\\mathrm{m/s}$。这段时间内位移是多少?',
+          ),
+          choices: [
+            { label: 'A', text: text('$4\\,\\mathrm{m}$', '$4\\,\\mathrm{m}$') },
+            { label: 'B', text: text('$12\\,\\mathrm{m}$', '$12\\,\\mathrm{m}$') },
+            { label: 'C', text: text('$20\\,\\mathrm{m}$', '$20\\,\\mathrm{m}$') },
+            { label: 'D', text: text('$24\\,\\mathrm{m}$', '$24\\,\\mathrm{m}$') },
+          ],
+          correctAnswer: 'B',
+          feedback: text(
+            'Displacement is the area under the velocity-time graph. Average velocity is $(1+5)/2=3\\,\\mathrm{m/s}$, so $\\Delta x=(3)(4)=12\\,\\mathrm{m}$.',
+            '位移是速度-时间图像下方面积。平均速度为 $(1+5)/2=3\\,\\mathrm{m/s}$,所以 $\\Delta x=(3)(4)=12\\,\\mathrm{m}$。',
+          ),
+        },
+      ],
+    },
+  ],
+};
+
+const apPhysics1Unit2StudioLesson: CurriculumLesson = {
+  title: text('Unit 2 Studio Map: Force and Translational Dynamics', 'Unit 2 Studio Map: 力与平动动力学'),
+  description: text(
+    'A teaching-ready roadmap for AP Physics 1 Unit 2: how to choose systems, draw forces, and turn Newton’s laws into predictions.',
+    '面向课堂使用的 AP 物理 1 Unit 2 路线图:如何选择系统、画受力图,并把牛顿定律变成可检验的预测。',
+  ),
+  sections: [
+    {
+      heading: text('0. Learning motivation', '0. 学习动机'),
+      paragraphs: [
+        text(
+          'Dynamics answers the question kinematics leaves open: what interaction caused the velocity to change? The core skill is not memorizing force names; it is choosing the system and representing every external interaction consistently.',
+          '动力学回答运动学留下的问题:是什么相互作用导致速度改变?核心能力不是背力的名字,而是选择系统并一致地表示每一个外部相互作用。',
+        ),
+      ],
+      takeaway: text(
+        'The unit becomes much easier when students treat $\\sum \\vec F=m\\vec a$ as a modeling sentence: external interactions determine acceleration.',
+        '当学生把 $\\sum \\vec F=m\\vec a$ 当作一句建模语言:外部相互作用决定加速度,这一单元会清晰很多。',
+      ),
+    },
+    {
+      heading: text('1. Official topic path', '1. 官方知识点路径'),
+      bullets: [
+        text('2.1 Systems and center of mass: decide what object or collection of objects is being analyzed.', '2.1 系统与质心:决定分析对象是单个物体还是物体系统。'),
+        text('2.2 Forces and free-body diagrams: draw only forces acting on the chosen system.', '2.2 力与自由体图:只画作用在所选系统上的力。'),
+        text('2.3 Newton’s third law: identify paired interactions acting on different objects.', '2.3 牛顿第三定律:识别作用在不同物体上的相互作用力对。'),
+        text('2.4-2.5 Newton’s first and second laws: connect equilibrium, net force, mass, and acceleration.', '2.4-2.5 牛顿第一、第二定律:连接平衡、合力、质量和加速度。'),
+        text('2.6-2.9 Gravitational force, friction, springs, and circular motion: apply force models in specific physical contexts.', '2.6-2.9 重力、摩擦、弹簧与圆周运动:把力模型应用到具体物理场景。'),
+      ],
+    },
+    {
+      heading: text('2. Problem-solving structure', '2. 解题结构'),
+      paragraphs: [
+        text(
+          'The safest classroom routine is: choose the system, draw the free-body diagram, choose axes, write component equations, then interpret the sign of acceleration.',
+          '最稳的课堂流程是:选系统、画自由体图、选坐标轴、写分量方程,最后解释加速度符号。',
+        ),
+        text(
+          'Teach Newton’s third law before heavy equation work. It prevents students from saying one object “wins” the interaction by exerting a larger force.',
+          '在大量列方程之前先讲牛顿第三定律。这样可以防止学生认为相互作用中某个物体会“赢”,施加更大的力。',
+        ),
+      ],
+      formulas: [
+        formula('Newton second law', '牛顿第二定律', '\\sum \\vec F=m\\vec a'),
+        formula('Component equations', '分量方程', '\\sum F_x=ma_x,\\quad \\sum F_y=ma_y'),
+        formula('Friction models', '摩擦力模型', 'f_s\\le \\mu_sN,\\quad f_k=\\mu_kN'),
+        formula('Spring force', '弹簧力', 'F_s=-kx'),
+        formula('Circular motion', '圆周运动', 'a_c=\\frac{v^2}{r},\\quad \\sum F_r=m\\frac{v^2}{r}'),
+      ],
+    },
+    {
+      heading: text('3. Teaching and media suggestions', '3. 教学与素材建议'),
+      bullets: [
+        text('Use an elevator-scale video or live phone accelerometer demo to show why scale reading is a normal force, not mass.', '用电梯秤视频或手机加速度计现场演示,说明秤读数是支持力,不是质量。'),
+        text('Use a low-friction cart and hanging mass to make the system choice visible: cart alone vs cart plus hanging mass.', '用低摩擦小车和悬挂砝码演示系统选择:只选小车 vs 小车加悬挂砝码。'),
+        text('For circular motion, show a ball on a string or turntable demo and insist that centripetal force is not an extra force on the diagram.', '讲圆周运动时用绳上小球或转盘演示,并强调向心力不是自由体图上的额外一种力。'),
+      ],
+    },
+    {
+      heading: text('4. Classroom check: system choice', '4. 课堂题:系统选择'),
+      classroomQuestions: [
+        {
+          id: 'ap1-u2-system-choice-check',
+          title: text('Classroom Check: internal vs external force', '课堂题:内力与外力'),
+          prompt: text(
+            'A person pushes a box across a rough floor. If the chosen system is the box alone, which force must be included on the box free-body diagram?',
+            '一个人推着箱子在粗糙地面上运动。如果所选系统只有箱子,下列哪一个力必须画在箱子的自由体图上?',
+          ),
+          choices: [
+            { label: 'A', text: text('The force of the box on the person', '箱子对人的力') },
+            { label: 'B', text: text('The force of the person on the box', '人对箱子的力') },
+            { label: 'C', text: text('The acceleration $m\\vec a$ as a force', '把加速度 $m\\vec a$ 作为一个力') },
+            { label: 'D', text: text('Only gravity, because applied forces are internal', '只画重力,因为推力是内力') },
+          ],
+          correctAnswer: 'B',
+          feedback: text(
+            'For the box-alone system, the person is outside the system, so the force of the person on the box is external and belongs on the free-body diagram. The force of the box on the person acts on a different object.',
+            '如果系统只选箱子,人就在系统外,所以人对箱子的力是外力,必须画在自由体图上。箱子对人的力作用在另一个物体上。',
+          ),
+        },
+      ],
+    },
+  ],
+};
+
+const emConductorsCapacitorsLesson: CurriculumLesson = {
+  title: text('Unit 10 Studio Map: Conductors and Capacitors', 'Unit 10 Studio Map: 导体与电容器'),
+  description: text(
+    'A calculus-based roadmap for conductors, charge redistribution, capacitance, dielectrics, and stored electric-field energy.',
+    '面向微积分电磁学的导体、电荷重分布、电容、电介质和电场储能路线图。',
+  ),
+  sections: [
+    {
+      heading: text('0. Learning motivation', '0. 学习动机'),
+      paragraphs: [
+        text(
+          'Conductors and capacitors explain how circuits can store charge and energy even before current begins to flow. This is the bridge from electrostatic fields to real electronic devices.',
+          '导体与电容器解释了电流真正流动之前,电路如何储存电荷和能量。这是从静电场走向真实电子器件的桥梁。',
+        ),
+        text(
+          'A useful starting question is: if charges are free to move in a conductor, where do they end up, and what electric field remains?',
+          '一个很好的起点问题是:如果电荷可以在导体中自由移动,它们最终会停在哪里,剩下怎样的电场?',
+        ),
+      ],
+      takeaway: text(
+        'Capacitance is not “how much charge a plate has.” It is the geometry-and-material relationship between stored charge and potential difference.',
+        '电容不是“板上有多少电荷”,而是由几何结构和材料决定的“储存电荷与电势差之间的关系”。',
+      ),
+    },
+    {
+      heading: text('1. Official topic path', '1. 官方知识点路径'),
+      bullets: [
+        text('10.1 Electrostatics with conductors: electric field is zero inside a conductor at electrostatic equilibrium; conductors are equipotential.', '10.1 导体静电学:静电平衡时导体内部电场为零;导体是等势体。'),
+        text('10.2 Redistribution of charge between conductors: connected conductors share final potential while total charge is conserved.', '10.2 导体间电荷重分布:相连导体最终电势相同,总电荷守恒。'),
+        text('10.3 Capacitors: define capacitance, connect charge, potential difference, electric field, and stored energy.', '10.3 电容器:定义电容,连接电荷、电势差、电场和储能。'),
+        text('10.4 Dielectrics: describe how insulating material changes field, capacitance, voltage, and energy depending on battery connection.', '10.4 电介质:描述绝缘材料如何改变电场、电容、电压和能量,并区分是否连接电池。'),
+      ],
+    },
+    {
+      heading: text('2. Core reasoning chain', '2. 核心推导链条'),
+      paragraphs: [
+        text(
+          'Electrostatic equilibrium comes first. If an electric field remained inside a conductor, free charges would accelerate, so equilibrium requires $\\vec E=0$ inside the conducting material.',
+          '先讲静电平衡。如果导体内部仍有电场,自由电荷就会继续加速,所以平衡时导体材料内部必须满足 $\\vec E=0$。',
+        ),
+        text(
+          'For a parallel-plate capacitor, Gauss’s law gives approximately $E=\\sigma/\\epsilon_0$ between the plates. Since $\\Delta V=Ed$ and $Q=\\sigma A$, the geometry result is $C=Q/\\Delta V=\\epsilon_0A/d$.',
+          '对平行板电容器,高斯定律给出板间近似 $E=\\sigma/\\epsilon_0$。又因为 $\\Delta V=Ed$ 且 $Q=\\sigma A$,所以几何结果是 $C=Q/\\Delta V=\\epsilon_0A/d$。',
+        ),
+        text(
+          'Energy can be derived from assembling charge: adding a small charge $dq$ at potential $V=q/C$ requires $dU=V\\,dq$, so $U=\\int_0^Q(q/C)\\,dq=Q^2/(2C)$.',
+          '能量可以从逐步搬运电荷推导:当已有电荷为 $q$ 时,再搬入 $dq$ 需要 $dU=V\\,dq=(q/C)dq$,因此 $U=\\int_0^Q(q/C)\\,dq=Q^2/(2C)$。',
+        ),
+      ],
+      formulas: [
+        formula('Capacitance definition', '电容定义', 'C=\\frac{Q}{\\Delta V}'),
+        formula('Parallel-plate capacitor', '平行板电容', 'C=\\kappa\\epsilon_0\\frac{A}{d}'),
+        formula('Stored energy', '电容储能', 'U=\\frac12Q\\Delta V=\\frac{Q^2}{2C}=\\frac12C(\\Delta V)^2'),
+        formula('Energy density', '电场能量密度', 'u_E=\\frac12\\epsilon E^2'),
+        formula('Connected conductors', '相连导体', 'V_1=V_2,\\quad Q_{\\mathrm{total}}=Q_1+Q_2'),
+      ],
+    },
+    {
+      heading: text('3. Teaching and media suggestions', '3. 教学与素材建议'),
+      bullets: [
+        text('Use a Faraday cage or charge-on-conductor demo before formulas; students need to see why charge moves to surfaces.', '公式之前先用法拉第笼或导体带电演示;学生需要先看见为什么电荷会跑到表面。'),
+        text('Use a real capacitor disassembly/photo or a variable parallel-plate capacitor demo to connect $A$, $d$, and dielectric material to capacitance.', '用真实电容拆解图或可调平行板电容演示,把 $A$、$d$ 和电介质材料与电容联系起来。'),
+        text('Add one conceptual question that distinguishes battery connected vs battery disconnected when a dielectric is inserted.', '加入一道概念题,专门区分插入电介质时“仍接电池”和“已断开电池”的不同。'),
+      ],
+    },
+    {
+      heading: text('4. Classroom check: dielectric insertion', '4. 课堂题:插入电介质'),
+      classroomQuestions: [
+        {
+          id: 'em-u10-dielectric-battery-disconnected',
+          title: text('Classroom Check: isolated capacitor', '课堂题:孤立电容器'),
+          prompt: text(
+            'A charged parallel-plate capacitor is disconnected from the battery. A dielectric with constant $\\kappa>1$ is inserted fully between the plates. What happens to the capacitance and voltage?',
+            '一个已充电的平行板电容器与电池断开。把介电常数 $\\kappa>1$ 的电介质完全插入板间。电容和电压如何变化?',
+          ),
+          choices: [
+            { label: 'A', text: text('$C$ increases and $\\Delta V$ decreases.', '$C$ 增大,$\\Delta V$ 减小。') },
+            { label: 'B', text: text('$C$ decreases and $\\Delta V$ increases.', '$C$ 减小,$\\Delta V$ 增大。') },
+            { label: 'C', text: text('Both $C$ and $\\Delta V$ increase.', '$C$ 和 $\\Delta V$ 都增大。') },
+            { label: 'D', text: text('Both $C$ and $\\Delta V$ stay the same.', '$C$ 和 $\\Delta V$ 都不变。') },
+          ],
+          correctAnswer: 'A',
+          feedback: text(
+            'Disconnected means charge $Q$ is fixed. The dielectric increases capacitance to $\\kappa C_0$. Since $\\Delta V=Q/C$, the voltage decreases.',
+            '断开电池意味着电荷 $Q$ 固定。电介质使电容增大到 $\\kappa C_0$。因为 $\\Delta V=Q/C$,所以电压减小。',
+          ),
+        },
+      ],
+    },
+  ],
+};
+
+const emElectricCircuitsLesson: CurriculumLesson = {
+  title: text('Unit 11 Studio Map: Electric Circuits', 'Unit 11 Studio Map: 电路'),
+  description: text(
+    'A calculus-based roadmap for current, resistance, electric power, Kirchhoff rules, compound circuits, and RC transients.',
+    '面向微积分电磁学的电流、电阻、电功率、基尔霍夫定律、复合电路和 RC 暂态路线图。',
+  ),
+  sections: [
+    {
+      heading: text('0. Learning motivation', '0. 学习动机'),
+      paragraphs: [
+        text(
+          'Electric circuits turn field ideas into working devices. The same conservation laws reappear in a new language: charge conservation becomes the junction rule, and energy conservation becomes the loop rule.',
+          '电路把电场思想变成真实工作的装置。同样的守恒律换了一种语言出现:电荷守恒变成节点定律,能量守恒变成回路定律。',
+        ),
+      ],
+      takeaway: text(
+        'A circuit is not solved by “following the current.” It is solved by enforcing conservation of charge and conservation of energy across the whole network.',
+        '电路不是靠“沿着电流看”来解,而是靠在整个网络中强制满足电荷守恒和能量守恒。',
+      ),
+    },
+    {
+      heading: text('1. Official topic path', '1. 官方知识点路径'),
+      bullets: [
+        text('11.1 Electric current: current is the rate of charge flow, $I=dq/dt$.', '11.1 电流:电流是电荷流动速率,$I=dq/dt$。'),
+        text('11.2 Simple circuits: batteries, resistors, wires, ammeters, and voltmeters form the basic model.', '11.2 简单电路:电池、电阻、导线、电流表和电压表构成基础模型。'),
+        text('11.3 Resistance, resistivity, and Ohm’s law: connect material, geometry, field, and current density.', '11.3 电阻、电阻率与欧姆定律:连接材料、几何、电场和电流密度。'),
+        text('11.4 Electric power: track the rate of electrical energy transfer.', '11.4 电功率:追踪电能转移的速率。'),
+        text('11.5-11.7 Compound DC circuits and Kirchhoff rules: solve multi-branch networks with loop and junction equations.', '11.5-11.7 复合直流电路与基尔霍夫定律:用回路和节点方程求解多支路网络。'),
+        text('11.8 RC circuits: model charging and discharging with exponential functions and time constant $\\tau=RC$.', '11.8 RC 电路:用指数函数和时间常数 $\\tau=RC$ 建模充放电。'),
+      ],
+    },
+    {
+      heading: text('2. Core reasoning chain', '2. 核心推导链条'),
+      paragraphs: [
+        text(
+          'Start from current as a flow rate, $I=dq/dt$. In a steady-state junction, charge cannot pile up, so the sum of currents entering equals the sum leaving.',
+          '从电流是流率开始,$I=dq/dt$。在稳态节点,电荷不能持续堆积,所以流入电流之和等于流出电流之和。',
+        ),
+        text(
+          'Resistance connects microscopic material behavior with circuit behavior: $\\vec J=\\sigma\\vec E$, $\\rho=1/\\sigma$, and for a uniform wire $R=\\rho L/A$.',
+          '电阻把微观材料行为与电路行为连接起来:$\\vec J=\\sigma\\vec E$,$\\rho=1/\\sigma$,均匀导线有 $R=\\rho L/A$。',
+        ),
+        text(
+          'For an RC charging circuit, the loop equation is $\\mathcal{E}-q/C-IR=0$ with $I=dq/dt$. Solving the differential equation gives exponential charging and discharging.',
+          '对 RC 充电电路,回路方程是 $\\mathcal{E}-q/C-IR=0$,且 $I=dq/dt$。解这个微分方程得到指数形式的充放电。',
+        ),
+      ],
+      formulas: [
+        formula('Current', '电流', 'I=\\frac{dq}{dt}'),
+        formula('Microscopic Ohm law', '微观欧姆定律', '\\vec J=\\sigma\\vec E,\\quad \\vec E=\\rho\\vec J'),
+        formula('Resistance of a uniform wire', '均匀导线电阻', 'R=\\rho\\frac{L}{A}'),
+        formula('Power', '电功率', 'P=I\\Delta V=I^2R=\\frac{(\\Delta V)^2}{R}'),
+        formula('Kirchhoff rules', '基尔霍夫定律', '\\sum I_{\\mathrm{in}}=\\sum I_{\\mathrm{out}},\\quad \\sum \\Delta V=0'),
+        formula('RC charging', 'RC 充电', 'q(t)=C\\mathcal{E}\\left(1-e^{-t/RC}\\right),\\quad I(t)=\\frac{\\mathcal{E}}{R}e^{-t/RC}'),
+        formula('RC discharging', 'RC 放电', 'q(t)=Q_0e^{-t/RC},\\quad I(t)=-\\frac{Q_0}{RC}e^{-t/RC}'),
+      ],
+    },
+    {
+      heading: text('3. Teaching and media suggestions', '3. 教学与素材建议'),
+      bullets: [
+        text('Use a water-flow analogy only briefly; then return to charge conservation and energy-per-charge to avoid misleading “current gets used up” language.', '水流类比只短暂使用;随后回到电荷守恒和单位电荷能量,避免学生产生“电流被用完”的错误语言。'),
+        text('Use a live RC charging demo with a voltage sensor so students see the exponential curve and the meaning of one time constant.', '用电压传感器做 RC 充电现场演示,让学生看到指数曲线和一个时间常数的含义。'),
+        text('For compound circuits, add at least one practice problem where students must choose independent loop equations instead of guessing equivalent resistance.', '复合电路至少放一道题,要求学生选择独立回路方程,而不是盲猜等效电阻。'),
+      ],
+    },
+    {
+      heading: text('4. Classroom check: RC time constant', '4. 课堂题:RC 时间常数'),
+      classroomQuestions: [
+        {
+          id: 'em-u11-rc-time-constant',
+          title: text('Classroom Check: charging capacitor', '课堂题:电容充电'),
+          prompt: text(
+            'A capacitor charges through a resistor with time constant $\\tau=RC=2.0\\,\\mathrm{s}$. After one time constant, approximately what fraction of the final charge is on the capacitor?',
+            '一个电容通过电阻充电,时间常数 $\\tau=RC=2.0\\,\\mathrm{s}$。经过一个时间常数后,电容上的电荷大约达到最终电荷的多少?',
+          ),
+          choices: [
+            { label: 'A', text: text('$37\\%$', '$37\\%$') },
+            { label: 'B', text: text('$50\\%$', '$50\\%$') },
+            { label: 'C', text: text('$63\\%$', '$63\\%$') },
+            { label: 'D', text: text('$100\\%$', '$100\\%$') },
+          ],
+          correctAnswer: 'C',
+          feedback: text(
+            'For charging, $q(t)=Q_f(1-e^{-t/RC})$. At $t=RC$, $q/Q_f=1-e^{-1}\\approx0.63$.',
+            '充电时 $q(t)=Q_f(1-e^{-t/RC})$。当 $t=RC$,$q/Q_f=1-e^{-1}\\approx0.63$。',
+          ),
+        },
+      ],
+    },
+  ],
+};
 const summaries: Record<string, LocalizedText> = {
   kinematics: text(
     'Use graphs, vectors, and calculus relationships to connect position, velocity, and acceleration.',
@@ -1275,6 +1636,7 @@ const apEnrichment: Record<string, Enrichment> = {
       ['Model one- and two-dimensional motion with vector components.', '用矢量分量建立一维和二维运动模型。'],
     ]),
     lessons: [
+      apPhysics1Unit1StudioLesson,
       scalarsVectors1DLesson,
       positionVelocityAccelerationLesson,
       referenceFramesRelativeMotionLesson,
@@ -1288,6 +1650,7 @@ const apEnrichment: Record<string, Enrichment> = {
       ['Separate internal forces from external forces before writing equations.', '列方程前先区分内力与外力。'],
     ]),
     lessons: [
+      apPhysics1Unit2StudioLesson,
       systemsCenterOfMassUnit2Lesson,
       forcesFreeBodyDiagramsUnit2Lesson,
       newtonsThirdLawUnit2Lesson,
@@ -1415,16 +1778,47 @@ const apEnrichment: Record<string, Enrichment> = {
     ['Use integrals for potential from charge distributions.', '用积分求电荷分布产生的电势。'],
     ['Apply electric energy conservation to moving charges.', '用电能守恒分析运动电荷。'],
   ]),
-  'electricity-magnetism:10': enrich('electric', 'electric', 'electric', [
-    ['Describe electrostatic equilibrium in conductors.', '描述导体静电平衡。'],
-    ['Analyze capacitance, dielectric effects, and stored energy.', '分析电容、电介质效应和储能。'],
-    ['Track charge redistribution between conductors.', '追踪导体之间的电荷重新分布。'],
-  ]),
-  'electricity-magnetism:11': enrich('circuits', 'circuits', 'circuits', [
-    ['Use Kirchhoff rules with calculus-based transient reasoning.', '结合微积分暂态思想使用基尔霍夫定律。'],
-    ['Analyze resistance, resistivity, current density, and power.', '分析电阻、电阻率、电流密度和功率。'],
-    ['Model RC circuits using exponential functions and time constants.', '用指数函数和时间常数建模 RC 电路。'],
-  ]),
+  'electricity-magnetism:10': {
+    ...enrich('electric', 'electric', 'electric', [
+      ['Describe electrostatic equilibrium in conductors.', '描述导体静电平衡。'],
+      ['Analyze capacitance, dielectric effects, and stored energy.', '分析电容、电介质效应和储能。'],
+      ['Track charge redistribution between conductors.', '追踪导体之间的电荷重新分布。'],
+    ]),
+    formulas: [
+      ...formulas.electric,
+      formula('Capacitance definition', '电容定义', 'C=\\frac{Q}{\\Delta V}'),
+      formula('Parallel-plate capacitor', '平行板电容', 'C=\\kappa\\epsilon_0\\frac{A}{d}'),
+      formula('Capacitor energy', '电容储能', 'U=\\frac12Q\\Delta V=\\frac{Q^2}{2C}=\\frac12C(\\Delta V)^2'),
+      formula('Electric-field energy density', '电场能量密度', 'u_E=\\frac12\\epsilon E^2'),
+    ],
+    diagrams: [
+      ...diagrams.electric,
+      diagram('capacitor-plates', 'Parallel-Plate Capacitor', '平行板电容器', 'Plate area, separation, and dielectric material determine capacitance.', '极板面积、间距和电介质材料共同决定电容。'),
+      diagram('conductor-equilibrium', 'Conductor at Electrostatic Equilibrium', '静电平衡导体', 'Charge resides on the surface and the electric field inside the conductor is zero.', '电荷分布在表面,导体内部电场为零。'),
+    ],
+    lessons: [emConductorsCapacitorsLesson],
+  },
+  'electricity-magnetism:11': {
+    ...enrich('circuits', 'circuits', 'circuits', [
+      ['Use Kirchhoff rules with calculus-based transient reasoning.', '结合微积分暂态思想使用基尔霍夫定律。'],
+      ['Analyze resistance, resistivity, current density, and power.', '分析电阻、电阻率、电流密度和功率。'],
+      ['Model RC circuits using exponential functions and time constants.', '用指数函数和时间常数建模 RC 电路。'],
+    ]),
+    formulas: [
+      ...formulas.circuits,
+      formula('Current as charge flow', '电流是电荷流率', 'I=\\frac{dq}{dt}'),
+      formula('Material relation', '材料关系', '\\vec J=\\sigma\\vec E,\\quad R=\\rho\\frac{L}{A}'),
+      formula('Electric power', '电功率', 'P=I\\Delta V=I^2R=\\frac{(\\Delta V)^2}{R}'),
+      formula('Kirchhoff rules', '基尔霍夫定律', '\\sum I_{\\mathrm{in}}=\\sum I_{\\mathrm{out}},\\quad \\sum\\Delta V=0'),
+      formula('RC time constant', 'RC 时间常数', '\\tau=RC'),
+    ],
+    diagrams: [
+      ...diagrams.circuits,
+      diagram('rc-transient', 'RC Transient Graph', 'RC 暂态图像', 'Charging rises toward a final value; discharging decays exponentially.', '充电逐渐接近最终值,放电按指数衰减。'),
+      diagram('kirchhoff-network', 'Compound Circuit Network', '复合电路网络', 'Junctions encode charge conservation; loops encode energy conservation.', '节点体现电荷守恒,回路体现能量守恒。'),
+    ],
+    lessons: [emElectricCircuitsLesson],
+  },
   'electricity-magnetism:12': enrich('magnetism', 'magnetism', 'magnetism', [
     ['Use Biot-Savart and Ampere\'s law for magnetic fields.', '用毕奥-萨伐尔定律和安培定律求磁场。'],
     ['Predict magnetic forces on charges, wires, and loops.', '预测电荷、导线和线圈受到的磁力。'],
