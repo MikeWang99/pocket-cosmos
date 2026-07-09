@@ -4,7 +4,7 @@ import { BookOpenCheck, ChevronDown, ExternalLink, FunctionSquare, Image as Imag
 import { motion } from 'motion/react';
 import { useLanguage } from '../LanguageContext';
 import { learningSystems, type LearningSystemId } from '../data/physicsLearningSystems';
-import type { CurriculumClassroomQuestion, CurriculumDiagram, CurriculumVideo } from '../data/apPhysicsCurriculum';
+import type { CurriculumClassroomQuestion, CurriculumDiagram, CurriculumLesson, CurriculumUnit, CurriculumVideo } from '../data/apPhysicsCurriculum';
 
 const renderMath = (value: string, displayMode = true) =>
   katex.renderToString(value, {
@@ -43,6 +43,101 @@ const InlineMathText: React.FC<{ children: string }> = ({ children }) => {
         );
       })}
     </>
+  );
+};
+
+const unitAnchorBase = (courseId: string, unitNumber: number) => `${courseId}-unit-${unitNumber}`;
+
+const directoryCopy = {
+  en: {
+    title: 'Unit directory',
+    focus: 'Learning focus',
+    topics: 'Knowledge checklist',
+    lessons: 'Lesson maps',
+    formulas: 'Key formulas',
+    diagrams: 'Diagrams',
+    sections: 'Sections',
+  },
+  zh: {
+    title: '单元目录',
+    focus: '学习重点',
+    topics: '知识清单',
+    lessons: '课程地图',
+    formulas: '重点公式',
+    diagrams: '图像与模型',
+    sections: '小节',
+  },
+};
+
+const anchorLinkClass =
+  'rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-left text-xs font-semibold leading-5 text-slate-700 transition-colors hover:border-nebula/50 hover:bg-nebula/5 hover:text-nebula';
+
+const lessonAnchorId = (courseId: string, unitNumber: number, lessonIndex: number) =>
+  `${unitAnchorBase(courseId, unitNumber)}-lesson-${lessonIndex + 1}`;
+
+const lessonSectionAnchorId = (courseId: string, unitNumber: number, lessonIndex: number, sectionIndex: number) =>
+  `${lessonAnchorId(courseId, unitNumber, lessonIndex)}-section-${sectionIndex + 1}`;
+
+const UnitDirectory: React.FC<{
+  unit: CurriculumUnit;
+  courseId: string;
+  language: 'en' | 'zh';
+}> = ({ unit, courseId, language }) => {
+  const copy = directoryCopy[language];
+  const base = unitAnchorBase(courseId, unit.number);
+  const topLinks = [
+    { id: `${base}-focus`, label: copy.focus, count: unit.focus?.length ?? 0 },
+    { id: `${base}-topics`, label: copy.topics, count: unit.topics.length },
+    { id: `${base}-lessons`, label: copy.lessons, count: unit.lessons?.length ?? 0 },
+    { id: `${base}-formulas`, label: copy.formulas, count: unit.formulas?.length ?? 0 },
+    { id: `${base}-diagrams`, label: copy.diagrams, count: unit.diagrams?.length ?? 0 },
+  ].filter((item) => item.count > 0);
+
+  return (
+    <nav className="mb-5 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4" aria-label={copy.title}>
+      <div className="mb-3 flex items-center gap-2 text-nebula">
+        <ListChecks className="h-4 w-4" />
+        <h4 className="text-sm font-semibold">{copy.title}</h4>
+      </div>
+
+      <div className="grid gap-2 min-[520px]:grid-cols-2 lg:grid-cols-5">
+        {topLinks.map((item) => (
+          <a key={item.id} href={`#${item.id}`} className={anchorLinkClass}>
+            <span className="block">{item.label}</span>
+            <span className="mt-0.5 block text-[10px] font-medium text-slate-500">{item.count}</span>
+          </a>
+        ))}
+      </div>
+
+      {!!unit.lessons?.length && (
+        <div className="mt-3 max-h-72 overflow-y-auto rounded-lg border border-slate-200 bg-slate-50 p-2">
+          <div className="mb-2 px-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">{copy.sections}</div>
+          <div className="space-y-2">
+            {unit.lessons.map((lesson: CurriculumLesson, lessonIndex) => (
+              <div key={lesson.title.en} className="rounded-md bg-[#ffffff] p-2">
+                <a
+                  href={`#${lessonAnchorId(courseId, unit.number, lessonIndex)}`}
+                  className="block text-xs font-semibold leading-5 text-slate-800 hover:text-nebula"
+                >
+                  {lesson.title[language]}
+                </a>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {lesson.sections.map((section, sectionIndex) => (
+                    <a
+                      key={section.heading.en}
+                      href={`#${lessonSectionAnchorId(courseId, unit.number, lessonIndex, sectionIndex)}`}
+                      className="rounded-full border border-slate-200 px-2 py-1 text-[10px] font-medium leading-4 text-slate-600 transition-colors hover:border-nebula/50 hover:text-nebula"
+                    >
+                      {section.heading[language]}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </nav>
   );
 };
 
@@ -586,6 +681,7 @@ export const CurriculumSection: React.FC = () => {
             {course.units.map((unit) => {
               const open = openUnits.has(unit.number);
               const panelId = `${course.id}-unit-${unit.number}`;
+              const baseId = unitAnchorBase(course.id, unit.number);
               return (
                 <article key={unit.number}>
                   <button
@@ -620,10 +716,16 @@ export const CurriculumSection: React.FC = () => {
                       className="overflow-hidden"
                     >
                       <div className="pb-6 sm:pb-7 md:pl-14">
-                        {unit.summary && <p className="mb-5 max-w-3xl text-sm leading-7 text-slate-600">{unit.summary[language]}</p>}
+                        {unit.summary && (
+                          <p className="mb-5 max-w-3xl text-sm leading-7 text-slate-600">
+                            <InlineMathText>{unit.summary[language]}</InlineMathText>
+                          </p>
+                        )}
+
+                        <UnitDirectory unit={unit} courseId={course.id} language={language} />
 
                         <div className="grid gap-4 xl:grid-cols-[1fr_1fr]">
-                          <section className="rounded-lg border border-slate-200 bg-[#ffffff] p-4">
+                          <section id={`${baseId}-focus`} className="scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-4">
                             <div className="mb-3 flex items-center gap-2 text-nebula">
                               <ListChecks className="h-4 w-4" />
                               <h4 className="text-sm font-semibold">{t.curriculum.focusTitle}</h4>
@@ -632,13 +734,13 @@ export const CurriculumSection: React.FC = () => {
                               {(unit.focus ?? []).map((item) => (
                                 <li key={item.en} className="flex gap-2 text-sm leading-6 text-slate-600">
                                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-nebula" />
-                                  <span>{item[language]}</span>
+                                  <span><InlineMathText>{item[language]}</InlineMathText></span>
                                 </li>
                               ))}
                             </ul>
                           </section>
 
-                          <section className="rounded-lg border border-slate-200 bg-[#ffffff] p-4">
+                          <section id={`${baseId}-topics`} className="scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-4">
                             <div className="mb-3 flex items-center gap-2 text-nebula">
                               <ListChecks className="h-4 w-4" />
                               <h4 className="text-sm font-semibold">{t.curriculum.checklistTitle}</h4>
@@ -655,23 +757,30 @@ export const CurriculumSection: React.FC = () => {
                         </div>
 
                         {!!unit.lessons?.length && (
-                          <section className="mt-4 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
+                          <section id={`${baseId}-lessons`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
                             <div className="mb-3 flex items-center gap-2 text-nebula">
                               <NotebookText className="h-4 w-4" />
                               <h4 className="text-sm font-semibold">{t.curriculum.lessonsTitle}</h4>
                             </div>
                             <div className="space-y-4">
-                              {unit.lessons.map((lesson) => (
-                                <article key={lesson.title.en} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+                              {unit.lessons.map((lesson, lessonIndex) => (
+                                <article
+                                  key={lesson.title.en}
+                                  id={lessonAnchorId(course.id, unit.number, lessonIndex)}
+                                  className="scroll-mt-24 rounded-lg border border-slate-200 bg-slate-50 p-4"
+                                >
                                   <h5 className="text-base font-semibold text-slate-900">{lesson.title[language]}</h5>
-                                  <p className="mt-2 text-sm leading-6 text-slate-600">{lesson.description[language]}</p>
+                                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                                    <InlineMathText>{lesson.description[language]}</InlineMathText>
+                                  </p>
 
                                   <div className="mt-4 space-y-2">
                                     {lesson.sections.map((section, index) => (
                                       <details
                                         key={section.heading.en}
-                                        open={index === 0}
-                                        className="group rounded-lg border border-slate-200 bg-[#ffffff] px-3 py-2"
+                                        id={lessonSectionAnchorId(course.id, unit.number, lessonIndex, index)}
+                                        open={lessonIndex === 0 && index === 0}
+                                        className="group scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] px-3 py-2"
                                       >
                                         <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-1 text-sm font-semibold text-slate-800">
                                           <span>{section.heading[language]}</span>
@@ -725,7 +834,7 @@ export const CurriculumSection: React.FC = () => {
                         )}
 
                         {!!unit.formulas?.length && (
-                          <section className="mt-4 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
+                          <section id={`${baseId}-formulas`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
                             <div className="mb-3 flex items-center gap-2 text-nebula">
                               <FunctionSquare className="h-4 w-4" />
                               <h4 className="text-sm font-semibold">{t.curriculum.formulasTitle}</h4>
@@ -743,7 +852,7 @@ export const CurriculumSection: React.FC = () => {
                         )}
 
                         {!!unit.diagrams?.length && (
-                          <section className="mt-4 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
+                          <section id={`${baseId}-diagrams`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
                             <div className="mb-3 flex items-center gap-2 text-nebula">
                               <ImageIcon className="h-4 w-4" />
                               <h4 className="text-sm font-semibold">{t.curriculum.diagramsTitle}</h4>
