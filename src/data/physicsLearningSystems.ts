@@ -1369,73 +1369,192 @@ const apPhysics1Unit2StudioLesson: CurriculumLesson = {
 };
 
 const emConductorsCapacitorsLesson: CurriculumLesson = {
-  title: text('Unit 10 Studio Map: Conductors and Capacitors', 'Unit 10 Studio Map: 导体与电容器'),
+  title: text('Unit 10 Studio Map: Capacitors and Capacitance', 'Unit 10 Studio Map: 电容器与电容'),
   description: text(
-    'A calculus-based roadmap for conductors, charge redistribution, capacitance, dielectrics, and stored electric-field energy.',
-    '面向微积分电磁学的导体、电荷重分布、电容、电介质和电场储能路线图。',
+    'A phenomenon-first AP Physics C: E&M map that starts from burst power and voltage cost, then derives capacitance, capacitor energy, and dielectric behavior.',
+    '面向 AP Physics C: E&M 的现象优先知识地图:先从瞬时功率和电压代价出发,再推导电容、电容储能和电介质行为。',
   ),
   sections: [
     {
-      heading: text('0. Learning motivation', '0. 学习动机'),
+      heading: text('0. Phenomenon hook: why store charge first?', '0. 现象钩子:为什么要先储存电荷?'),
       paragraphs: [
         text(
-          'Conductors and capacitors explain how circuits can store charge and energy even before current begins to flow. This is the bridge from electrostatic fields to real electronic devices.',
-          '导体与电容器解释了电流真正流动之前,电路如何储存电荷和能量。这是从静电场走向真实电子器件的桥梁。',
+          'A flashlight or camera flash creates a familiar puzzle: a small battery may contain enough total energy, but it may not be able to deliver that energy in a tiny fraction of a second. The issue is not only energy; it is instantaneous power, $P=\\Delta E/\\Delta t$.',
+          '手电筒或相机闪光灯提供了一个熟悉的问题:小电池也许拥有足够的总能量,但未必能在极短时间内把这些能量全部送出去。问题不只是能量,而是瞬时功率 $P=\\Delta E/\\Delta t$。',
         ),
         text(
-          'A useful starting question is: if charges are free to move in a conductor, where do they end up, and what electric field remains?',
-          '一个很好的起点问题是:如果电荷可以在导体中自由移动,它们最终会停在哪里,剩下怎样的电场?',
+          'The water analogy is a tank and a pipe. A narrow pipe can slowly provide enough water, but if a huge burst is needed, the pipe first fills a tank. Opening the gate then releases a large flow quickly. In circuits, a capacitor plays the reservoir role: it can accumulate separated charge and electric-field energy, then release them when the circuit demands a burst.',
+          '水的类比是水箱和水管。细水管可以慢慢提供足够的水,但如果需要瞬间爆发式水流,就要先把水储存在水箱里,再打开闸门。在电路中,电容器扮演类似的储能容器:它先积累分离电荷和电场能量,再在电路需要时快速释放。',
+        ),
+        text(
+          'This is also why capacitance should not be introduced as a naked definition. The real question is: for a given voltage limit, what physical structure can store more separated charge and more usable electric energy without the voltage becoming unmanageably large?',
+          '这也是为什么不应该一上来就把电容讲成一个裸公式。真正的问题是:在给定电压限制下,什么样的物理结构可以储存更多分离电荷和更多可用电能,同时不让电压变得过高、漏电、击穿或损坏器件?',
         ),
       ],
       takeaway: text(
-        'Capacitance is not “how much charge a plate has.” It is the geometry-and-material relationship between stored charge and potential difference.',
-        '电容不是“板上有多少电荷”,而是由几何结构和材料决定的“储存电荷与电势差之间的关系”。',
+        'Capacitance measures how much charge separation a structure can hold per volt of potential difference; it is a property of the geometry and dielectric environment, not the amount of charge currently sitting there.',
+        '电容衡量的是一个结构在每 1 V 电势差下能维持多少分离电荷;它是几何结构和介质环境的性质,不是“现在已经装了多少电”。',
       ),
     },
     {
-      heading: text('1. Official topic path', '1. 官方知识点路径'),
+      heading: text('1. Official AP topic path', '1. AP 官方知识点路径'),
       bullets: [
         text('10.1 Electrostatics with conductors: electric field is zero inside a conductor at electrostatic equilibrium; conductors are equipotential.', '10.1 导体静电学:静电平衡时导体内部电场为零;导体是等势体。'),
         text('10.2 Redistribution of charge between conductors: connected conductors share final potential while total charge is conserved.', '10.2 导体间电荷重分布:相连导体最终电势相同,总电荷守恒。'),
-        text('10.3 Capacitors: define capacitance, connect charge, potential difference, electric field, and stored energy.', '10.3 电容器:定义电容,连接电荷、电势差、电场和储能。'),
+        text('10.3 Capacitors: connect plate charge, potential difference, electric field, capacitance, and stored energy.', '10.3 电容器:连接极板电荷、电势差、电场、电容和储能。'),
         text('10.4 Dielectrics: describe how insulating material changes field, capacitance, voltage, and energy depending on battery connection.', '10.4 电介质:描述绝缘材料如何改变电场、电容、电压和能量,并区分是否连接电池。'),
       ],
     },
     {
-      heading: text('2. Core reasoning chain', '2. 核心推导链条'),
+      heading: text('2. From need to definition: what should capacitance measure?', '2. 从需求到定义:capacitance 应该衡量什么?'),
       paragraphs: [
         text(
-          'Electrostatic equilibrium comes first. If an electric field remained inside a conductor, free charges would accelerate, so equilibrium requires $\\vec E=0$ inside the conducting material.',
-          '先讲静电平衡。如果导体内部仍有电场,自由电荷就会继续加速,所以平衡时导体材料内部必须满足 $\\vec E=0$。',
+          'Adding charge to a conductor generally raises its electric potential. Voltage is therefore the “cost” of storing separated charge: if $\\Delta V$ becomes too large, charge may leak away, air may ionize, insulation may fail, or the device may simply become unsafe.',
+          '给导体继续加入电荷通常会提高它的电势。因此电压可以理解成储存分离电荷的“代价”:如果 $\\Delta V$ 过大,电荷可能泄漏,空气可能电离,绝缘层可能击穿,器件也可能变得不安全。',
         ),
         text(
-          'For a parallel-plate capacitor, Gauss’s law gives approximately $E=\\sigma/\\epsilon_0$ between the plates. Since $\\Delta V=Ed$ and $Q=\\sigma A$, the geometry result is $C=Q/\\Delta V=\\epsilon_0A/d$.',
-          '对平行板电容器,高斯定律给出板间近似 $E=\\sigma/\\epsilon_0$。又因为 $\\Delta V=Ed$ 且 $Q=\\sigma A$,所以几何结果是 $C=Q/\\Delta V=\\epsilon_0A/d$。',
+          'So the useful comparison between devices is not “which one has charge right now?” but “at the same potential difference, which structure can maintain more separated charge?” That comparison naturally becomes the ratio $Q/\\Delta V$.',
+          '所以比较不同装置时,有意义的问题不是“哪个现在有电荷”,而是“在同样的电势差下,哪个结构能维持更多分离电荷?” 这个比较自然变成比例 $Q/\\Delta V$。',
         ),
         text(
-          'Energy can be derived from assembling charge: adding a small charge $dq$ at potential $V=q/C$ requires $dU=V\\,dq$, so $U=\\int_0^Q(q/C)\\,dq=Q^2/(2C)$.',
-          '能量可以从逐步搬运电荷推导:当已有电荷为 $q$ 时,再搬入 $dq$ 需要 $dU=V\\,dq=(q/C)dq$,因此 $U=\\int_0^Q(q/C)\\,dq=Q^2/(2C)$。',
+          'This defines capacitance: $C=Q/\\Delta V$. Here $Q$ means the magnitude of charge on one plate, not the net charge of the whole capacitor. A normal capacitor has $+Q$ on one conductor, $-Q$ on the other, and approximately zero net charge overall.',
+          '这就引出电容定义:$C=Q/\\Delta V$。这里的 $Q$ 是一块极板上电荷量的大小,不是整个电容器的净电荷。普通电容器一块导体带 $+Q$,另一块带 $-Q$,整体净电荷通常近似为 0。',
         ),
       ],
       formulas: [
-        formula('Capacitance definition', '电容定义', 'C=\\frac{Q}{\\Delta V}'),
-        formula('Parallel-plate capacitor', '平行板电容', 'C=\\kappa\\epsilon_0\\frac{A}{d}'),
-        formula('Stored energy', '电容储能', 'U=\\frac12Q\\Delta V=\\frac{Q^2}{2C}=\\frac12C(\\Delta V)^2'),
-        formula('Energy density', '电场能量密度', 'u_E=\\frac12\\epsilon E^2'),
-        formula('Connected conductors', '相连导体', 'V_1=V_2,\\quad Q_{\\mathrm{total}}=Q_1+Q_2'),
+        formula('Capacitance as storage per volt', '每伏可储存的分离电荷', 'C=\\frac{Q}{\\Delta V}'),
+        formula('Charge-voltage relation', '电荷-电压关系', 'Q=C\\Delta V'),
+        formula('Power demand', '瞬时功率需求', 'P=\\frac{\\Delta E}{\\Delta t}'),
       ],
     },
     {
-      heading: text('3. Resource and interaction suggestions', '3. 素材与互动建议'),
+      heading: text('3. Conductors set the stage', '3. 导体行为为电容器铺路'),
+      paragraphs: [
+        text(
+          'Capacitors are built from conductors, so electrostatic equilibrium comes first. If an electric field remained inside a conductor, free charges would accelerate; equilibrium requires $\\vec E=0$ inside the conducting material.',
+          '电容器由导体构成,所以要先理解静电平衡。如果导体内部仍有电场,自由电荷就会继续加速;平衡时导体材料内部必须满足 $\\vec E=0$。',
+        ),
+        text(
+          'Because charges stop moving only when there is no tangential field along the surface, a conductor at electrostatic equilibrium is an equipotential object. Excess charge resides on the surface, and the field just outside the surface is perpendicular to it.',
+          '由于只有表面切向电场消失时电荷才会停止沿表面移动,静电平衡导体是等势体。多余电荷分布在表面,表面外侧电场方向垂直于表面。',
+        ),
+        text(
+          'Two separated conductors can therefore become two equipotential plates with opposite charge. The potential difference between them tells us how hard it is to maintain that charge separation.',
+          '因此,两个分开的导体可以成为两块带等量异号电荷的等势极板。它们之间的电势差告诉我们:维持这种电荷分离有多“吃力”。',
+        ),
+      ],
+      formulas: [
+        formula('Electrostatic equilibrium in conductor', '导体静电平衡', '\\vec E_{\\mathrm{inside}}=0'),
+        formula('Connected conductors at equilibrium', '相连导体的平衡条件', 'V_1=V_2,\\quad Q_{\\mathrm{total}}=Q_1+Q_2'),
+      ],
+    },
+    {
+      heading: text('4. Parallel-plate capacitor: deriving the formula', '4. 平行板电容器:从电场推导公式'),
+      paragraphs: [
+        text(
+          'The parallel-plate formula should come from electric field and potential, not memorization. For two large plates with equal and opposite charge, Gauss’s law gives an approximately uniform field $E=\\sigma/\\epsilon_0$ between the plates.',
+          '平行板电容公式应该从电场和电势推出,而不是背下来。对两块带等量异号电荷的大平行板,高斯定律给出板间近似均匀电场 $E=\\sigma/\\epsilon_0$。',
+        ),
+        text(
+          'Since $\\sigma=Q/A$ and the field is nearly uniform, $\\Delta V=Ed=Qd/(\\epsilon_0A)$. Putting this into $C=Q/\\Delta V$ gives $C=\\epsilon_0A/d$.',
+          '因为 $\\sigma=Q/A$,且板间电场近似均匀,所以 $\\Delta V=Ed=Qd/(\\epsilon_0A)$。代入 $C=Q/\\Delta V$,得到 $C=\\epsilon_0A/d$。',
+        ),
+        text(
+          'The result matches the physical intuition: larger plate area stores more charge at the same voltage, while larger separation makes the same charge separation require more voltage.',
+          '这个结果和直觉一致:极板面积越大,同样电压下能维持更多电荷;板间距越大,同样电荷分离需要更高电压。',
+        ),
+      ],
+      formulas: [
+        formula('Field between large parallel plates', '大平行板间电场', 'E=\\frac{\\sigma}{\\epsilon_0}'),
+        formula('Potential difference from field', '由电场得到电势差', '\\Delta V=Ed'),
+        formula('Parallel-plate capacitance', '平行板电容', 'C=\\epsilon_0\\frac{A}{d}'),
+        formula('With dielectric filling the gap', '介质填满板间时', 'C=\\kappa\\epsilon_0\\frac{A}{d}'),
+      ],
+    },
+    {
+      heading: text('5. Energy: why storing more charge matters', '5. 能量:为什么“能储存更多电荷”有意义'),
+      paragraphs: [
+        text(
+          'A capacitor is valuable because it separates slow energy accumulation from fast energy release. A battery may slowly charge the capacitor; the capacitor can then release stored electric-field energy quickly into a flash tube, LED driver, defibrillator circuit, or pulsed device.',
+          '电容器有价值,是因为它把“慢慢积累能量”和“快速释放能量”分开了。电池可以慢慢给电容充电;电容随后可以把储存在电场中的能量快速释放到闪光灯管、LED 驱动、电击除颤器或脉冲设备中。',
+        ),
+        text(
+          'The energy is the work required to build up charge separation. When the capacitor already has charge $q$, adding $dq$ requires $dU=V\\,dq=(q/C)\\,dq$. Integrating from $0$ to $Q$ gives $U=Q^2/(2C)$.',
+          '这部分能量就是建立电荷分离所需的功。当电容器上已有电荷 $q$ 时,再加入 $dq$ 需要 $dU=V\\,dq=(q/C)\\,dq$。从 $0$ 积分到 $Q$,得到 $U=Q^2/(2C)$。',
+        ),
+        text(
+          'A $V$ versus $Q$ graph makes this visible: because $V=Q/C$, the stored energy is the triangular area under the line, $U=\\frac12Q\\Delta V$.',
+          '$V$-$Q$ 图像能把这个过程看清楚:因为 $V=Q/C$,储存能量就是直线下方的三角形面积 $U=\\frac12Q\\Delta V$。',
+        ),
+      ],
+      formulas: [
+        formula('Work to assemble charge', '逐步搬运电荷的功', 'dU=V\\,dq=\\frac{q}{C}\\,dq'),
+        formula('Stored energy', '电容储能', 'U=\\int_0^Q\\frac{q}{C}\\,dq=\\frac{Q^2}{2C}=\\frac12Q\\Delta V=\\frac12C(\\Delta V)^2'),
+        formula('Electric-field energy density', '电场能量密度', 'u_E=\\frac12\\epsilon E^2'),
+      ],
+    },
+    {
+      heading: text('6. Dielectrics: increasing storage without freely conducting', '6. 电介质:不导电也能提高储能能力'),
+      paragraphs: [
+        text(
+          'A dielectric is not a conductor. Its charges cannot travel freely across the material, but molecules polarize in an external field. That polarization creates an induced field opposite the original field.',
+          '电介质不是导体。它内部的电荷不能在材料中自由长距离移动,但分子会在外电场中极化。极化产生的感应电场方向与原电场相反。',
+        ),
+        text(
+          'For an isolated charged capacitor, inserting a dielectric keeps $Q$ fixed but reduces the net field and voltage. Because $C=Q/\\Delta V$, the capacitance increases.',
+          '对已经断开电池的带电电容器,插入电介质时 $Q$ 保持不变,但净电场和电压下降。由于 $C=Q/\\Delta V$,电容增大。',
+        ),
+        text(
+          'For a capacitor still connected to a battery, the battery fixes $\\Delta V$. Inserting a dielectric increases $C$, so additional charge flows from the battery until $Q=C\\Delta V$ is larger.',
+          '对仍连接电池的电容器,电池固定 $\\Delta V$。插入电介质会增大 $C$,所以电池继续输送电荷,直到 $Q=C\\Delta V$ 变大。',
+        ),
+      ],
+      formulas: [
+        formula('Dielectric field reduction', '电介质减弱电场', 'E=\\frac{E_0}{\\kappa}'),
+        formula('Dielectric capacitance', '含电介质电容', 'C=\\kappa C_0'),
+        formula('Battery connected', '连接电池', '\\Delta V=\\mathrm{constant},\\quad Q=C\\Delta V'),
+        formula('Battery disconnected', '断开电池', 'Q=\\mathrm{constant},\\quad \\Delta V=\\frac{Q}{C}'),
+      ],
+    },
+    {
+      heading: text('7. Common traps and AP-style checks', '7. 常见误区与 AP 题型检查'),
       bullets: [
-        text('A Faraday cage or charge-on-conductor demo makes charge redistribution visible before the formulas appear.', '法拉第笼或导体带电演示能在公式出现前,先让电荷重分布变得可见。'),
-        text('A real capacitor photo, disassembly image, or variable parallel-plate capacitor demo connects $A$, $d$, and dielectric material to capacitance.', '真实电容照片、拆解图或可调平行板电容演示,能把 $A$、$d$ 和电介质材料与电容联系起来。'),
-        text('A conceptual check about inserting a dielectric can separate two physical cases: battery connected and battery disconnected.', '关于插入电介质的概念检查题,可以区分两个物理情形:仍接电池与已断开电池。'),
+        text('Capacitance is not the same thing as charge. It is the slope-like relationship between $Q$ and $\\Delta V$ for a physical structure.', '电容不等于电荷量。它描述的是一个物理结构中 $Q$ 与 $\\Delta V$ 的比例关系。'),
+        text('The $Q$ in $C=Q/\\Delta V$ is the magnitude on one plate; the capacitor as a whole normally has zero net charge.', '$C=Q/\\Delta V$ 中的 $Q$ 是单块极板电荷量的大小;整个电容器通常净电荷为零。'),
+        text('Changing geometry or inserting a dielectric must be handled by first asking what is fixed: battery connected means fixed $\\Delta V$; battery disconnected means fixed $Q$.', '改变几何参数或插入电介质时,先判断哪个量固定:接电池意味着 $\\Delta V$ 固定;断开电池意味着 $Q$ 固定。'),
+        text('For non-parallel-plate capacitors in AP Physics C, use Gauss’s law to find $E(r)$, integrate $\\Delta V=-\\int \\vec E\\cdot d\\vec r$, then compute $C=Q/\\Delta V$.', '对 AP Physics C 中的非平行板电容器,先用高斯定律求 $E(r)$,再积分 $\\Delta V=-\\int \\vec E\\cdot d\\vec r$,最后计算 $C=Q/\\Delta V$。'),
       ],
     },
     {
-      heading: text('4. Classroom check: dielectric insertion', '4. 课堂题:插入电介质'),
+      heading: text('8. Resource and interaction suggestions', '8. 素材与互动建议'),
+      bullets: [
+        text('A camera flash or defibrillator video is the cleanest opening demonstration because it separates slow charging from fast discharge.', '相机闪光灯或除颤器视频最适合作为开场演示,因为它清楚地区分慢充电与快放电。'),
+        text('A tank-and-pipe diagram helps connect voltage to pressure, charge to stored water, and power to flow rate.', '水箱-水管图可以把电压类比为压力,电荷类比为储水量,功率类比为流量。'),
+        text('A variable parallel-plate capacitor demo connects area $A$, separation $d$, and dielectric insertion to the formula $C=\\kappa\\epsilon_0A/d$.', '可调平行板电容演示能把面积 $A$、间距 $d$ 和电介质插入与公式 $C=\\kappa\\epsilon_0A/d$ 联系起来。'),
+      ],
+    },
+    {
+      heading: text('9. Classroom check: why add a capacitor?', '9. 课堂题:为什么要加电容器?'),
       classroomQuestions: [
+        {
+          id: 'em-u10-flash-capacitor-motivation',
+          title: text('Classroom Check: flashlight burst', '课堂题:闪光灯的瞬时爆发'),
+          prompt: text(
+            'A small battery can provide enough total energy for a bright flash, but it cannot deliver that energy in a few milliseconds without a large voltage drop. Which statement best explains why a capacitor is useful here?',
+            '一个小电池可以提供一次强闪光所需的总能量,但无法在几毫秒内输出这些能量而不出现明显电压下降。哪句话最能解释为什么这里需要电容器?',
+          ),
+          choices: [
+            { label: 'A', text: text('The capacitor creates extra net charge from nothing.', '电容器可以凭空创造额外净电荷。') },
+            { label: 'B', text: text('The capacitor slowly stores separated charge and electric-field energy, then releases energy quickly when the circuit demands high power.', '电容器先慢慢储存分离电荷和电场能量,再在电路需要高功率时快速释放能量。') },
+            { label: 'C', text: text('The capacitor keeps the voltage zero so charge can move without energy.', '电容器把电压保持为零,所以电荷可以不消耗能量地运动。') },
+            { label: 'D', text: text('The capacitor changes electric charge into mass before the flash.', '电容器在闪光前把电荷转化为质量。') },
+          ],
+          correctAnswer: 'B',
+          feedback: text(
+            'A capacitor is an energy reservoir, not a charge generator. It separates slow charging from fast discharging, which is why it is useful when the required instantaneous power exceeds what the source can deliver directly.',
+            '电容器是能量储存器,不是电荷发生器。它把慢充电和快放电分开,所以当瞬时功率需求超过电源直接输出能力时非常有用。',
+          ),
+        },
         {
           id: 'em-u10-dielectric-battery-disconnected',
           title: text('Classroom Check: isolated capacitor', '课堂题:孤立电容器'),
@@ -1893,7 +2012,7 @@ const apEnrichment: Record<string, Enrichment> = {
   'electricity-magnetism:10': {
     ...enrich('electric', 'electric', 'electric', [
       ['Describe electrostatic equilibrium in conductors.', '描述导体静电平衡。'],
-      ['Analyze capacitance, dielectric effects, and stored energy.', '分析电容、电介质效应和储能。'],
+      ['Explain why capacitors store separated charge and electric-field energy for controlled or burst release.', '解释电容器为什么能储存分离电荷和电场能量,并用于受控释放或瞬时释放。'],
       ['Track charge redistribution between conductors.', '追踪导体之间的电荷重新分布。'],
     ]),
     formulas: [
