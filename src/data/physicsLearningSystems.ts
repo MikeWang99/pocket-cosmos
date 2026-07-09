@@ -771,6 +771,102 @@ const referenceFramesRelativeMotionLesson: CurriculumLesson = {
   ],
 };
 
+const projectileMotionLesson: CurriculumLesson = {
+  title: text('Projectile Motion: Two-Dimensional Kinematics', 'Projectile Motion: 斜抛运动与二维运动学'),
+  description: text(
+    'Make Topic 1.5 explicit: projectile motion is the central AP Physics 1 example of separating two-dimensional motion into independent one-dimensional motions.',
+    '把 Topic 1.5 显性展开:斜抛运动是 AP 物理 1 中“把二维运动分解成两个独立一维运动”的核心例子。',
+  ),
+  sections: [
+    {
+      heading: text('0. What problem does this lesson solve?', '0. 这一节要解决什么问题?'),
+      paragraphs: [
+        text(
+          'A launched ball, a water fountain stream, or a basketball shot does not move only horizontally or only vertically. Projectile motion gives us a clean way to predict the path of an object moving in two dimensions under constant vertical acceleration.',
+          '被抛出的球、喷泉水流或篮球投篮都不是只沿水平或竖直方向运动。斜抛运动给我们一种清晰方法,用来预测物体在恒定竖直加速度下的二维轨迹。',
+        ),
+        text(
+          'College Board places this under Topic 1.5, Vectors and Motion in Two Dimensions. The essential idea is that motion in two dimensions can be analyzed with one-dimensional kinematics after the motion is separated into components.',
+          'College Board 把它放在 Topic 1.5: Vectors and Motion in Two Dimensions 下面。核心思想是:只要把运动分解成分量,二维运动就可以用一维运动学关系来分析。',
+        ),
+      ],
+      takeaway: text(
+        'Projectile motion is not a new set of magic formulas. It is one-dimensional kinematics used twice: once horizontally and once vertically.',
+        '斜抛运动不是一套新的神秘公式。它就是把一维运动学用两次:水平方向一次,竖直方向一次。',
+      ),
+    },
+    {
+      heading: text('1. Official requirement inside Topic 1.5', '1. Topic 1.5 下的官方要求'),
+      bullets: [
+        text('1.5.A: Resolve vectors into perpendicular components using a chosen coordinate system and trigonometric relationships.', '1.5.A: 用选定坐标系和三角函数关系把矢量分解成互相垂直的分量。'),
+        text('1.5.B: Describe the motion of an object moving in two dimensions.', '1.5.B: 描述物体在二维空间中的运动。'),
+        text('Essential Knowledge 1.5.B.1: Two-dimensional motion can be analyzed with one-dimensional kinematic relationships if the motion is separated into components.', 'Essential Knowledge 1.5.B.1: 若把运动分解成分量,二维运动可以用一维运动学关系分析。'),
+        text('Essential Knowledge 1.5.B.2: Projectile motion is the special case with zero acceleration in one dimension and constant nonzero acceleration in the other.', 'Essential Knowledge 1.5.B.2: 斜抛运动是二维运动的特殊情况:一个方向加速度为零,另一个方向加速度恒定且非零。'),
+      ],
+    },
+    {
+      heading: text('2. Component model', '2. 分量模型'),
+      paragraphs: [
+        text(
+          'After launch, ignoring air resistance, the only acceleration is gravity. If horizontal is $x$ and vertical is $y$, then $a_x=0$ and $a_y=-g$ when upward is positive.',
+          '物体离手后,若忽略空气阻力,唯一加速度来自重力。如果水平方向为 $x$,竖直方向为 $y$,并规定向上为正,则 $a_x=0$ 且 $a_y=-g$。',
+        ),
+        text(
+          'The horizontal motion has constant velocity. The vertical motion is constant-acceleration motion. Time is the shared variable that connects the two directions.',
+          '水平方向做匀速运动。竖直方向做匀加速运动。时间是连接两个方向的共同变量。',
+        ),
+      ],
+      formulas: [
+        formula('Initial velocity components', '初速度分量', 'v_{0x}=v_0\\cos\\theta,\\quad v_{0y}=v_0\\sin\\theta'),
+        formula('Horizontal motion', '水平运动', 'a_x=0,\\quad v_x=v_{0x},\\quad x=x_0+v_{0x}t'),
+        formula('Vertical motion', '竖直运动', 'a_y=-g,\\quad v_y=v_{0y}-gt,\\quad y=y_0+v_{0y}t-\\frac12gt^2'),
+      ],
+    },
+    {
+      heading: text('3. Typical problem types', '3. 典型题型'),
+      bullets: [
+        text('Horizontal launch: an object leaves a table with $v_{0y}=0$ and lands below the launch point.', '水平抛出:物体以 $v_{0y}=0$ 离开桌面并落到较低位置。'),
+        text('Angled launch from ground level: find time of flight, maximum height, range, or impact velocity.', '地面斜抛:求飞行时间、最大高度、射程或落地速度。'),
+        text('Graph translation: draw or interpret $x$-$t$, $v_x$-$t$, $a_x$-$t$, $y$-$t$, $v_y$-$t$, and $a_y$-$t$ graphs.', '图像转换:绘制或解释 $x$-$t$、$v_x$-$t$、$a_x$-$t$、$y$-$t$、$v_y$-$t$ 和 $a_y$-$t$ 图像。'),
+        text('Experimental design: use measured height, horizontal range, and time to infer an initial velocity component.', '实验设计:用测得的高度、水平距离和时间反推初速度分量。'),
+      ],
+    },
+    {
+      heading: text('4. Classroom check: horizontal launch', '4. 课堂题:水平抛出'),
+      classroomQuestions: [
+        {
+          id: 'ap1-u1-projectile-horizontal-launch',
+          title: text('Classroom Check: component independence', '课堂题:分量独立性'),
+          prompt: text(
+            'A ball rolls horizontally off a table with speed $3.0\\,\\mathrm{m/s}$. It lands after $0.80\\,\\mathrm{s}$. Ignoring air resistance, how far from the table edge does it land?',
+            '一个小球以 $3.0\\,\\mathrm{m/s}$ 的水平速度滚下桌边,经过 $0.80\\,\\mathrm{s}$ 落地。忽略空气阻力,它落地点离桌边的水平距离是多少?',
+          ),
+          choices: [
+            { label: 'A', text: text('$1.2\\,\\mathrm{m}$', '$1.2\\,\\mathrm{m}$') },
+            { label: 'B', text: text('$2.4\\,\\mathrm{m}$', '$2.4\\,\\mathrm{m}$') },
+            { label: 'C', text: text('$3.8\\,\\mathrm{m}$', '$3.8\\,\\mathrm{m}$') },
+            { label: 'D', text: text('$6.4\\,\\mathrm{m}$', '$6.4\\,\\mathrm{m}$') },
+          ],
+          correctAnswer: 'B',
+          feedback: text(
+            'Use the horizontal component only: $a_x=0$, so $\\Delta x=v_xt=(3.0)(0.80)=2.4\\,\\mathrm{m}$. Gravity affects the time in the air, but once time is known it does not change the horizontal velocity.',
+            '只用水平分量:$a_x=0$,所以 $\\Delta x=v_xt=(3.0)(0.80)=2.4\\,\\mathrm{m}$。重力影响在空中的时间,但时间已知后不会改变水平速度。',
+          ),
+        },
+      ],
+    },
+    {
+      heading: text('5. Common mistakes', '5. 常见错误'),
+      bullets: [
+        text('Thinking the projectile has horizontal acceleration after launch.', '以为物体离手后仍有水平加速度。'),
+        text('Using the total launch speed in the vertical equation instead of $v_{0y}$.', '在竖直方程中误用总初速度,而不是 $v_{0y}$。'),
+        text('Saying velocity is zero at the top. Only $v_y$ is zero at the top; $v_x$ is still nonzero unless the launch was vertical.', '说最高点速度为零。最高点只有 $v_y$ 为零;$v_x$ 仍不为零,除非是竖直上抛。'),
+        text('Trying to solve range first before finding or using the shared time variable.', '还没找到或使用共同时间变量,就急着先求射程。'),
+      ],
+    },
+  ],
+};
+
 const systemsCenterOfMassUnit2Lesson: CurriculumLesson = {
   title: text('Systems and Center of Mass', '系统与质心'),
   description: text('Define what a system means in physics, distinguish internal from external forces, and use center of mass to represent the motion of complex objects.', '定义物理中的系统概念,区分内力与外力,用质心代表复杂物体的运动。'),
@@ -1121,7 +1217,7 @@ const apPhysics1Unit1StudioLesson: CurriculumLesson = {
         text('1.2 Displacement, velocity, and acceleration: define the core quantities and keep distance/speed separate from displacement/velocity.', '1.2 位移、速度与加速度:定义核心运动量,并区分路程/速率与位移/速度。'),
         text('1.3 Representing motion: translate among motion diagrams, graphs, tables, and algebraic models.', '1.3 运动表示:在运动图、图像、表格和代数模型之间转换。'),
         text('1.4 Reference frames and relative motion: state what observer or coordinate system the measurement belongs to.', '1.4 参考系与相对运动:说明测量是相对于哪个观察者或坐标系。'),
-        text('1.5 Vectors and motion in two dimensions: split motion into independent perpendicular components.', '1.5 二维运动中的矢量:把运动分解成互相垂直的独立分量。'),
+        text('1.5 Vectors and motion in two dimensions: split motion into independent perpendicular components, with projectile motion as the central AP example.', '1.5 二维运动中的矢量:把运动分解成互相垂直的独立分量,并把斜抛/平抛运动作为 AP 的核心例子。'),
       ],
     },
     {
@@ -1139,12 +1235,17 @@ const apPhysics1Unit1StudioLesson: CurriculumLesson = {
           'For two-dimensional motion, teach students to split vectors first, solve each axis separately, and only recombine at the end. This prevents projectile motion from becoming a formula-matching exercise.',
           '二维运动中,先让学生分解矢量,分别处理每个坐标轴,最后再合成。这样抛体运动就不会变成套公式。',
         ),
+        text(
+          'Do not let Topic 1.5 remain only a vector slogan. In AP Physics 1 it must become the practical skill of projectile motion: $a_x=0$, $a_y=-g$, shared time $t$, and independent horizontal and vertical equations.',
+          '不要让 Topic 1.5 只停留在“矢量分解”这句话上。在 AP 物理 1 中,它必须落实为斜抛运动的实用能力:$a_x=0$、$a_y=-g$、共同时间 $t$,以及水平和竖直方向相互独立的方程。',
+        ),
       ],
       formulas: [
         formula('Average velocity', '平均速度', 'v_{\\mathrm{avg}}=\\frac{\\Delta x}{\\Delta t}'),
         formula('Average acceleration', '平均加速度', 'a_{\\mathrm{avg}}=\\frac{\\Delta v}{\\Delta t}'),
         formula('Constant acceleration', '匀加速关系', 'v=v_0+at,\\quad x=x_0+v_0t+\\frac12at^2,\\quad v^2=v_0^2+2a\\Delta x'),
         formula('Vector components', '矢量分量', 'A_x=A\\cos\\theta,\\quad A_y=A\\sin\\theta,\\quad A=\\sqrt{A_x^2+A_y^2}'),
+        formula('Projectile components', '斜抛运动分量', 'a_x=0,\\quad a_y=-g,\\quad v_{0x}=v_0\\cos\\theta,\\quad v_{0y}=v_0\\sin\\theta'),
       ],
     },
     {
@@ -1633,13 +1734,24 @@ const apEnrichment: Record<string, Enrichment> = {
     ...enrich('kinematics', 'kinematics', 'kinematics', [
       ['Distinguish scalars, vectors, components, and reference frames.', '区分标量、矢量、分量与参考系。'],
       ['Interpret slope and area on position, velocity, and acceleration graphs.', '解释位置、速度、加速度图像的斜率和面积。'],
+      ['Analyze projectile motion by separating horizontal and vertical components.', '通过分解水平和竖直分量分析斜抛运动。'],
       ['Model one- and two-dimensional motion with vector components.', '用矢量分量建立一维和二维运动模型。'],
     ]),
+    formulas: [
+      ...formulas.kinematics,
+      formula('Projectile components', '斜抛初速度分量', 'v_{0x}=v_0\\cos\\theta,\\quad v_{0y}=v_0\\sin\\theta'),
+      formula('Projectile acceleration', '斜抛加速度', 'a_x=0,\\quad a_y=-g'),
+    ],
+    diagrams: [
+      ...diagrams.kinematics,
+      diagram('projectile-motion', 'Projectile Motion Components', '斜抛运动分量', 'Horizontal velocity stays constant while vertical velocity changes under gravity.', '水平方向速度保持不变,竖直方向速度在重力作用下改变。'),
+    ],
     lessons: [
       apPhysics1Unit1StudioLesson,
       scalarsVectors1DLesson,
       positionVelocityAccelerationLesson,
       referenceFramesRelativeMotionLesson,
+      projectileMotionLesson,
       kinematicsGraphSignLesson,
     ],
   },
