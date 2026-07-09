@@ -8,6 +8,7 @@ import {
   Cloud,
   CloudOff,
   FileText,
+  Link2,
   Mic,
   RotateCcw,
   Sparkles,
@@ -162,6 +163,71 @@ const MathText: React.FC<{ children: string; className?: string }> = ({ children
 const isMultipleChoiceStep = (step: PracticeStep) =>
   step.mode === 'multiple_choice' && Boolean(step.choices?.length && step.correctAnswer);
 
+const readPracticeSelectionFromUrl = () => {
+  if (typeof window === 'undefined') {
+    return { setId: 'kinematics-multiple-choice', questionId: null as string | null };
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  return {
+    setId: params.get('set') || 'kinematics-multiple-choice',
+    questionId: params.get('q') || params.get('question'),
+  };
+};
+
+const getSafePracticeSelection = (setId: string, questionId: string | null) => {
+  const set = practiceSets.find((item) => item.id === setId) ?? practiceSets[0];
+  const index = questionId ? set.steps.findIndex((step) => step.id === questionId) : 0;
+  return {
+    setId: set.id,
+    index: index >= 0 ? index : 0,
+  };
+};
+
+const updatePracticeUrl = (setId: string, questionId: string, mode: 'push' | 'replace' = 'push') => {
+  if (typeof window === 'undefined') return;
+
+  const url = new URL(window.location.href);
+  url.pathname = '/';
+  url.searchParams.set('tab', 'practice');
+  url.searchParams.set('set', setId);
+  url.searchParams.set('q', questionId);
+  const nextUrl = `${url.pathname}${url.search}${url.hash}`;
+  if (nextUrl !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
+    window.history[mode === 'replace' ? 'replaceState' : 'pushState']({}, '', nextUrl);
+  }
+};
+
+const buildPracticeShareUrl = (setId: string, questionId: string) => {
+  if (typeof window === 'undefined') return '';
+  const url = new URL(window.location.origin);
+  url.searchParams.set('tab', 'practice');
+  url.searchParams.set('set', setId);
+  url.searchParams.set('q', questionId);
+  return url.toString();
+};
+
+const copyTextToClipboard = async (value: string) => {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(value);
+      return;
+    } catch {
+      // Fall back below when the browser exposes Clipboard API but denies permission.
+    }
+  }
+
+  const textArea = document.createElement('textarea');
+  textArea.value = value;
+  textArea.setAttribute('readonly', '');
+  textArea.style.position = 'fixed';
+  textArea.style.opacity = '0';
+  document.body.appendChild(textArea);
+  textArea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textArea);
+};
+
 const QuestionMedia: React.FC<{ step: PracticeStep; label: string }> = ({ step, label }) => {
   if (!step.image) return null;
 
@@ -177,11 +243,16 @@ const QuestionMedia: React.FC<{ step: PracticeStep; label: string }> = ({ step, 
 export const PracticeSection: React.FC = () => {
   const { language, t } = useLanguage();
   const { authEnabled, configured, user } = useAuth();
-  const [activeSetId, setActiveSetId] = useState('kinematics-multiple-choice');
-  const [activeIndex, setActiveIndex] = useState(0);
+  const initialSelection = useMemo(() => getSafePracticeSelection(
+    readPracticeSelectionFromUrl().setId,
+    readPracticeSelectionFromUrl().questionId,
+  ), []);
+  const [activeSetId, setActiveSetId] = useState(initialSelection.setId);
+  const [activeIndex, setActiveIndex] = useState(initialSelection.index);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [results, setResults] = useState<Record<string, EvaluationResult>>({});
   const [isListening, setIsListening] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const { resetSavedAttempts, savedAttempts, saveAttempt, syncError, syncState } = usePracticeProgress(activeSetId);
 
@@ -237,6 +308,24 @@ export const PracticeSection: React.FC = () => {
   useEffect(() => {
     return () => recognitionRef.current?.stop();
   }, []);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const next = readPracticeSelectionFromUrl();
+      const safe = getSafePracticeSelection(next.setId, next.questionId);
+      setActiveSetId(safe.setId);
+      setActiveIndex(safe.index);
+      setShareCopied(false);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  useEffect(() => {
+    if (!activeStep) return;
+    updatePracticeUrl(activeSet.id, activeStep.id, 'replace');
+  }, [activeSet.id, activeStep?.id]);
 
   useEffect(() => {
     const attempts = Object.values(savedAttempts) as SavedPracticeAttempt[];
@@ -333,17 +422,23 @@ export const PracticeSection: React.FC = () => {
   const goToStep = (index: number) => {
     recognitionRef.current?.stop();
     setIsListening(false);
-    setActiveIndex(Math.min(Math.max(index, 0), practiceSteps.length - 1));
+    setShareCopied(false);
+    const nextIndex = Math.min(Math.max(index, 0), practiceSteps.length - 1);
+    setActiveIndex(nextIndex);
+    updatePracticeUrl(activeSet.id, practiceSteps[nextIndex].id);
   };
 
   const selectPracticeSet = (setId: string) => {
     if (setId === activeSetId) return;
     recognitionRef.current?.stop();
     setIsListening(false);
+    setShareCopied(false);
+    const nextSet = practiceSets.find((set) => set.id === setId) ?? practiceSets[0];
     setActiveSetId(setId);
     setAnswers({});
     setResults({});
     setActiveIndex(0);
+    updatePracticeUrl(nextSet.id, nextSet.steps[0].id);
   };
 
   const resetPractice = () => {
@@ -352,7 +447,18 @@ export const PracticeSection: React.FC = () => {
     setAnswers({});
     setResults({});
     setActiveIndex(0);
+    setShareCopied(false);
+    updatePracticeUrl(activeSet.id, practiceSteps[0].id, 'replace');
     resetSavedAttempts();
+  };
+
+  const copyCurrentQuestionLink = async () => {
+    const shareUrl = buildPracticeShareUrl(activeSet.id, activeStep.id);
+    if (!shareUrl) return;
+
+    await copyTextToClipboard(shareUrl);
+    setShareCopied(true);
+    window.setTimeout(() => setShareCopied(false), 1800);
   };
 
   const toggleSpeech = () => {
@@ -529,8 +635,18 @@ export const PracticeSection: React.FC = () => {
                     <div className="text-xs uppercase tracking-widest text-nebula mb-3">{activeStep.source}</div>
                     <h2 className="text-balance font-serif text-2xl text-white md:text-3xl">{activeStep.title}</h2>
                   </div>
-                  <div className="rounded-full border border-white/10 px-4 py-2 text-sm text-slate-300 w-fit">
-                    {activeIndex + 1} / {practiceSteps.length}
+                  <div className="flex shrink-0 flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={copyCurrentQuestionLink}
+                      className="inline-flex min-h-10 items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs font-semibold text-slate-300 transition-colors hover:border-nebula/50 hover:text-nebula"
+                    >
+                      <Link2 className="h-4 w-4" />
+                      {shareCopied ? t.practice.linkCopied : t.practice.shareQuestion}
+                    </button>
+                    <div className="rounded-full border border-white/10 px-4 py-2 text-sm text-slate-300 w-fit">
+                      {activeIndex + 1} / {practiceSteps.length}
+                    </div>
                   </div>
                 </div>
 
