@@ -322,7 +322,17 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
                           : 'border-slate-200 bg-[#ffffff] hover:border-nebula/50'
                   }`}
                 >
-                  <span className="grid h-8 w-8 place-items-center rounded-full bg-slate-900 text-xs font-bold text-white">
+                  <span
+                    className={`grid h-8 w-8 place-items-center rounded-full border text-xs font-bold transition-colors ${
+                      isCorrectChoice
+                        ? 'border-emerald-500/50 bg-emerald-50 text-emerald-800'
+                        : isWrongChoice
+                          ? 'border-rose-500/50 bg-rose-50 text-rose-800'
+                          : isSelected
+                            ? 'border-nebula bg-nebula text-[#ffffff]'
+                            : 'border-slate-300 bg-slate-50 text-slate-700'
+                    }`}
+                  >
                     {choice.label}
                   </span>
                   <span className="self-center text-sm leading-6 text-slate-700">
@@ -338,7 +348,7 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
               type="button"
               onClick={() => setCheckedAnswer(selectedAnswer)}
               disabled={!selectedAnswer || hasChecked}
-              className="inline-flex min-h-10 items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-nebula disabled:opacity-35"
+              className="inline-flex min-h-10 items-center justify-center rounded-full border border-nebula bg-nebula px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#ffffff] transition-colors hover:bg-nebula/90 disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-[#ffffff] disabled:text-slate-400 disabled:opacity-100"
             >
               {language === 'zh' ? '检查答案' : 'Check answer'}
             </button>
