@@ -4,6 +4,7 @@ import {
   type CurriculumDiagram,
   type CurriculumFormula,
   type CurriculumLesson,
+  type CurriculumLessonContent,
   type CurriculumTopic,
   type CurriculumUnit,
   type LocalizedText,
@@ -480,6 +481,124 @@ const centerOfMassDiscreteLesson: CurriculumLesson = {
       ),
     },
   ],
+};
+
+const capacitorsStudentVersion: CurriculumLessonContent = {
+    title: text('Capacitors and Capacitance: Core Map', '电容器与电容:核心知识地图'),
+    description: text(
+      'A compact route from the need for rapid energy release to capacitance, parallel-plate derivation, stored energy, and dielectrics.',
+      '从快速释能需求出发,浓缩呈现电容定义、平行板推导、储能和电介质效应。',
+    ),
+    sections: [
+      {
+        heading: text('0. Motivation: why a capacitor is needed', '0. 动机:为什么需要电容器'),
+        bullets: [
+          text('A source may contain enough total energy but still be unable to deliver it quickly enough for a brief high-power event.', '电源可能拥有足够总能量,却无法为短时高功率过程快速输出。'),
+          text('A capacitor separates slow energy accumulation from fast energy release, like a tank filled by a limited-flow pipe.', '电容器把慢速积累与快速释放分开,类似细水管先把水箱装满。'),
+        ],
+        formulas: [formula('Power over a short interval', '短时间内的功率', 'P=\\frac{\\Delta E}{\\Delta t}')],
+      },
+      {
+        heading: text('1. What is stored', '1. 储存的是什么'),
+        bullets: [
+          text('The two plates carry equal-magnitude opposite charges: $+Q$ and $-Q$.', '两块极板带等量异号电荷:$+Q$ 和 $-Q$。'),
+          text('The capacitor usually has zero net charge; the useful physical change is charge separation.', '电容器整体通常净电荷为零;关键变化是电荷分离。'),
+          text('Energy is stored in the electric field created by the separated charges.', '能量储存在分离电荷所建立的电场中。'),
+        ],
+        formulas: [formula('Net charge', '净电荷', 'Q_{\\mathrm{net}}=(+Q)+(-Q)=0')],
+      },
+      {
+        heading: text('2. Why define capacitance', '2. 为什么要定义电容'),
+        bullets: [
+          text('Adding plate charge increases the field and voltage; excessive field can cause dielectric breakdown.', '增加极板电荷会提高电场和电压;电场过强可能导致介质击穿。'),
+          text('Capacitance measures how much separated charge a structure maintains per volt.', '电容衡量一个结构每伏能维持多少分离电荷。'),
+          text('For an ideal linear capacitor, $C$ is a property of geometry and material, not the current amount of charge.', '对理想线性电容器,$C$ 是几何与材料的性质,不取决于当前电荷量。'),
+        ],
+        formulas: [
+          formula('Definition', '定义', 'C=\\frac{Q}{\\Delta V}'),
+          formula('Charge-voltage relation', '电荷-电压关系', 'Q=C\\Delta V'),
+        ],
+      },
+      {
+        heading: text('3. Parallel-plate derivation', '3. 平行板电容推导'),
+        bullets: [
+          text('Use $\\sigma=Q/A$ to express surface charge density.', '用 $\\sigma=Q/A$ 表示面电荷密度。'),
+          text('Gauss’s law gives the nearly uniform field between large plates.', '高斯定律给出大平行板之间近似均匀的电场。'),
+          text('Use $\\Delta V=Ed$, then substitute into $C=Q/\\Delta V$.', '利用 $\\Delta V=Ed$,再代入 $C=Q/\\Delta V$。'),
+        ],
+        formulas: [
+          formula('Surface charge density', '面电荷密度', '\\sigma=\\frac{Q}{A}'),
+          formula('Field', '电场', 'E=\\frac{\\sigma}{\\epsilon_0}=\\frac{Q}{\\epsilon_0A}'),
+          formula('Potential difference', '电势差', '\\Delta V=Ed=\\frac{Qd}{\\epsilon_0A}'),
+          formula('Result', '结论', 'C=\\epsilon_0\\frac{A}{d}'),
+        ],
+        takeaway: text(
+          '$Q\\rightarrow E\\rightarrow\\Delta V\\rightarrow C$ is the complete derivation chain.',
+          '$Q\\rightarrow E\\rightarrow\\Delta V\\rightarrow C$ 是完整推导链。',
+        ),
+      },
+      {
+        heading: text('4. What determines capacitance', '4. 什么决定电容'),
+        bullets: [
+          text('Larger plate area gives larger capacitance.', '极板面积越大,电容越大。'),
+          text('Larger plate separation gives smaller capacitance.', '板间距越大,电容越小。'),
+          text('A dielectric increases capacitance through polarization.', '电介质通过极化作用增大电容。'),
+        ],
+        formulas: [formula('Geometry and material', '几何与材料', 'C=\\kappa\\epsilon_0\\frac{A}{d}')],
+        classroomQuestions: [
+          {
+            id: 'em-u10-student-capacitance-geometry-check',
+            title: text('Quick check: change the geometry', '快速检查:改变几何结构'),
+            prompt: text(
+              'The area of an air-filled parallel-plate capacitor doubles while the plate separation is halved. What happens to its capacitance?',
+              '一个空气平行板电容器的极板面积加倍,板间距减半。它的电容如何变化?',
+            ),
+            choices: [
+              { label: 'A', text: text('It becomes $4C_0$.', '变为 $4C_0$。') },
+              { label: 'B', text: text('It becomes $2C_0$.', '变为 $2C_0$。') },
+              { label: 'C', text: text('It remains $C_0$.', '保持 $C_0$。') },
+              { label: 'D', text: text('It becomes $C_0/4$.', '变为 $C_0/4$。') },
+            ],
+            correctAnswer: 'A',
+            feedback: text(
+              'Since $C\\propto A/d$, doubling $A$ contributes a factor of 2 and halving $d$ contributes another factor of 2.',
+              '因为 $C\\propto A/d$,面积加倍贡献 2 倍,间距减半再贡献 2 倍。',
+            ),
+          },
+        ],
+      },
+      {
+        heading: text('5. Stored energy', '5. 电容储能'),
+        bullets: [
+          text('Charging requires work because each additional charge is moved across an increasing potential difference.', '充电需要做功,因为后续电荷要跨越越来越大的电势差。'),
+          text('The stored energy equals the area under the $V$-$Q$ graph.', '储存能量等于 $V$-$Q$ 图像下方的面积。'),
+        ],
+        formulas: [
+          formula('Energy', '能量', 'U=\\frac12Q\\Delta V=\\frac{Q^2}{2C}=\\frac12C(\\Delta V)^2'),
+          formula('Field-energy density', '电场能量密度', 'u_E=\\frac12\\epsilon E^2'),
+        ],
+      },
+      {
+        heading: text('6. Dielectric decision rule', '6. 电介质题的判断规则'),
+        bullets: [
+          text('Battery disconnected: plate charge $Q$ stays fixed.', '断开电池:$Q$ 保持不变。'),
+          text('Battery connected: potential difference $\\Delta V$ stays fixed.', '连接电池:$\\Delta V$ 保持不变。'),
+          text('Identify the fixed quantity before predicting changes in $E$, $\\Delta V$, $Q$, and $U$.', '预测 $E$、$\\Delta V$、$Q$ 和 $U$ 前,先判断固定量。'),
+        ],
+        formulas: [
+          formula('Dielectric effect', '电介质效应', 'C=\\kappa C_0'),
+          formula('Disconnected', '断开电池', 'Q=\\mathrm{constant}'),
+          formula('Connected', '连接电池', '\\Delta V=\\mathrm{constant}'),
+        ],
+      },
+      {
+        heading: text('7. Core logic chain', '7. 核心逻辑链'),
+        takeaway: text(
+          'High-power need $\\rightarrow$ advance energy storage $\\rightarrow$ charge separation $\\rightarrow$ voltage cost $\\rightarrow$ capacitance $\\rightarrow$ geometry and material $\\rightarrow$ field energy.',
+          '高功率需求 $\\rightarrow$ 提前储能 $\\rightarrow$ 电荷分离 $\\rightarrow$ 电压代价 $\\rightarrow$ 电容定义 $\\rightarrow$ 几何与材料 $\\rightarrow$ 电场能量。',
+        ),
+      },
+    ],
 };
 
 const centerOfMassCalculusLesson: CurriculumLesson = {
@@ -1747,6 +1866,7 @@ const emConductorsCapacitorsLesson: CurriculumLesson = {
       ),
     },
   ],
+  studentVersion: capacitorsStudentVersion,
 };
 
 const emElectricCircuitsLesson: CurriculumLesson = {
