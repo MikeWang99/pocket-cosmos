@@ -1,10 +1,16 @@
 import React, { useMemo, useState } from 'react';
 import katex from 'katex';
-import { BookOpenCheck, ChevronDown, ExternalLink, FunctionSquare, Image as ImageIcon, Layers3, ListChecks, NotebookText } from 'lucide-react';
+import { BookOpenCheck, ChevronDown, ExternalLink, FunctionSquare, GraduationCap, Image as ImageIcon, Layers3, ListChecks, NotebookText, Presentation } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useLanguage } from '../LanguageContext';
+import { useAuth } from '../auth/AuthContext';
 import { learningSystems, type LearningSystemId } from '../data/physicsLearningSystems';
-import type { CurriculumClassroomQuestion, CurriculumDiagram, CurriculumLesson, CurriculumUnit, CurriculumVideo } from '../data/apPhysicsCurriculum';
+import type { CurriculumClassroomQuestion, CurriculumDiagram, CurriculumLesson, CurriculumLessonContent, CurriculumUnit, CurriculumVideo } from '../data/apPhysicsCurriculum';
+
+type CurriculumContentMode = 'teacher' | 'student';
+
+const lessonContentForMode = (lesson: CurriculumLesson, mode: CurriculumContentMode): CurriculumLessonContent =>
+  mode === 'student' && lesson.studentVersion ? lesson.studentVersion : lesson;
 
 const renderMath = (value: string, displayMode = true) =>
   katex.renderToString(value, {
@@ -84,8 +90,9 @@ const UnitDirectory: React.FC<{
   unit: CurriculumUnit;
   courseId: string;
   language: 'en' | 'zh';
+  contentMode: CurriculumContentMode;
   className?: string;
-}> = ({ unit, courseId, language, className = '' }) => {
+}> = ({ unit, courseId, language, contentMode, className = '' }) => {
   const copy = directoryCopy[language];
   const base = unitAnchorBase(courseId, unit.number);
   const topLinks = [
@@ -116,27 +123,30 @@ const UnitDirectory: React.FC<{
         <div className="mt-3 max-h-72 overflow-y-auto rounded-lg border border-slate-200 bg-slate-50 p-2">
           <div className="mb-2 px-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">{copy.sections}</div>
           <div className="space-y-2">
-            {unit.lessons.map((lesson: CurriculumLesson, lessonIndex) => (
-              <div key={lesson.title.en} className="rounded-md bg-[#ffffff] p-2">
-                <a
-                  href={`#${lessonAnchorId(courseId, unit.number, lessonIndex)}`}
-                  className="block text-xs font-semibold leading-5 text-slate-800 hover:text-nebula"
-                >
-                  {lesson.title[language]}
-                </a>
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  {lesson.sections.map((section, sectionIndex) => (
-                    <a
-                      key={section.heading.en}
-                      href={`#${lessonSectionAnchorId(courseId, unit.number, lessonIndex, sectionIndex)}`}
-                      className="rounded-full border border-slate-200 px-2 py-1 text-[10px] font-medium leading-4 text-slate-600 transition-colors hover:border-nebula/50 hover:text-nebula"
-                    >
-                      {section.heading[language]}
-                    </a>
-                  ))}
+            {unit.lessons.map((lesson: CurriculumLesson, lessonIndex) => {
+              const content = lessonContentForMode(lesson, contentMode);
+              return (
+                <div key={lesson.title.en} className="rounded-md bg-[#ffffff] p-2">
+                  <a
+                    href={`#${lessonAnchorId(courseId, unit.number, lessonIndex)}`}
+                    className="block text-xs font-semibold leading-5 text-slate-800 hover:text-nebula"
+                  >
+                    {content.title[language]}
+                  </a>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {content.sections.map((section, sectionIndex) => (
+                      <a
+                        key={section.heading.en}
+                        href={`#${lessonSectionAnchorId(courseId, unit.number, lessonIndex, sectionIndex)}`}
+                        className="rounded-full border border-slate-200 px-2 py-1 text-[10px] font-medium leading-4 text-slate-600 transition-colors hover:border-nebula/50 hover:text-nebula"
+                      >
+                        {section.heading[language]}
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
@@ -606,6 +616,9 @@ const ConceptDiagram: React.FC<{ diagram: CurriculumDiagram; language: 'en' | 'z
 
 export const CurriculumSection: React.FC = () => {
   const { language, t } = useLanguage();
+  const { isAdmin } = useAuth();
+  const [adminContentMode, setAdminContentMode] = useState<CurriculumContentMode>('teacher');
+  const contentMode: CurriculumContentMode = isAdmin ? adminContentMode : 'student';
   const [systemId, setSystemId] = useState<LearningSystemId>('ap');
   const selectedSystem = learningSystems.find((item) => item.id === systemId) ?? learningSystems[0];
   const [courseId, setCourseId] = useState(selectedSystem.courses[0]?.id ?? '');
@@ -661,13 +674,49 @@ export const CurriculumSection: React.FC = () => {
       exit={{ opacity: 0, y: -10 }}
       className="space-y-6 sm:space-y-8"
     >
-      <div className="max-w-3xl">
-        <div className="mb-4 flex items-center gap-2 text-nebula">
-          <BookOpenCheck className="h-4 w-4" />
-          <span className="text-xs font-bold uppercase tracking-widest">{t.curriculum.sectionLabel}</span>
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+        <div className="max-w-3xl">
+          <div className="mb-4 flex items-center gap-2 text-nebula">
+            <BookOpenCheck className="h-4 w-4" />
+            <span className="text-xs font-bold uppercase tracking-widest">{t.curriculum.sectionLabel}</span>
+          </div>
+          <h2 className="text-balance text-3xl font-light md:text-4xl">{t.curriculum.title}</h2>
+          <p className="mt-4 text-sm leading-7 text-slate-600 md:text-base">{t.curriculum.description}</p>
         </div>
-        <h2 className="text-balance text-3xl font-light md:text-4xl">{t.curriculum.title}</h2>
-        <p className="mt-4 text-sm leading-7 text-slate-600 md:text-base">{t.curriculum.description}</p>
+        {isAdmin && (
+          <div
+            role="group"
+            aria-label={t.curriculum.contentMode}
+            className="grid shrink-0 grid-cols-2 gap-1 self-start rounded-lg border border-slate-200 bg-[#ffffff] p-1"
+          >
+            <button
+              type="button"
+              onClick={() => setAdminContentMode('teacher')}
+              aria-pressed={contentMode === 'teacher'}
+              className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-md px-3 text-xs font-semibold transition-colors ${
+                contentMode === 'teacher'
+                  ? 'bg-nebula text-[#ffffff]'
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-nebula'
+              }`}
+            >
+              <Presentation className="h-4 w-4" />
+              {t.curriculum.teacherMode}
+            </button>
+            <button
+              type="button"
+              onClick={() => setAdminContentMode('student')}
+              aria-pressed={contentMode === 'student'}
+              className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-md px-3 text-xs font-semibold transition-colors ${
+                contentMode === 'student'
+                  ? 'bg-nebula text-[#ffffff]'
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-nebula'
+              }`}
+            >
+              <GraduationCap className="h-4 w-4" />
+              {t.curriculum.studentMode}
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4" role="tablist" aria-label={t.curriculum.systemSelector}>
@@ -806,7 +855,7 @@ export const CurriculumSection: React.FC = () => {
                         )}
 
                         <div className="grid gap-4 lg:grid-cols-[280px_minmax(0,1fr)]">
-                          <UnitDirectory unit={unit} courseId={course.id} language={language} className="lg:sticky lg:top-6 lg:max-h-[calc(100vh-3rem)] lg:overflow-y-auto" />
+                          <UnitDirectory unit={unit} courseId={course.id} language={language} contentMode={contentMode} className="lg:sticky lg:top-6 lg:max-h-[calc(100vh-3rem)] lg:overflow-y-auto" />
 
                           <div className="min-w-0">
                             <div className="grid gap-4 xl:grid-cols-[1fr_1fr]">
@@ -843,24 +892,26 @@ export const CurriculumSection: React.FC = () => {
 
                             {!!unit.lessons?.length && (
                               <section id={`${baseId}-lessons`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
-                            <div className="mb-3 flex items-center gap-2 text-nebula">
-                              <NotebookText className="h-4 w-4" />
-                              <h4 className="text-sm font-semibold">{t.curriculum.lessonsTitle}</h4>
-                            </div>
-                            <div className="space-y-4">
-                              {unit.lessons.map((lesson, lessonIndex) => (
-                                <article
-                                  key={lesson.title.en}
-                                  id={lessonAnchorId(course.id, unit.number, lessonIndex)}
-                                  className="scroll-mt-24 rounded-lg border border-slate-200 bg-slate-50 p-4"
-                                >
-                                  <h5 className="text-base font-semibold text-slate-900">{lesson.title[language]}</h5>
-                                  <p className="mt-2 text-sm leading-6 text-slate-600">
-                                    <InlineMathText>{lesson.description[language]}</InlineMathText>
-                                  </p>
+                                <div className="mb-3 flex items-center gap-2 text-nebula">
+                                  <NotebookText className="h-4 w-4" />
+                                  <h4 className="text-sm font-semibold">{t.curriculum.lessonsTitle}</h4>
+                                </div>
+                                <div className="space-y-4">
+                                  {unit.lessons.map((lesson, lessonIndex) => {
+                                    const content = lessonContentForMode(lesson, contentMode);
+                                    return (
+                                      <article
+                                        key={lesson.title.en}
+                                        id={lessonAnchorId(course.id, unit.number, lessonIndex)}
+                                        className="scroll-mt-24 rounded-lg border border-slate-200 bg-slate-50 p-4"
+                                      >
+                                        <h5 className="text-base font-semibold text-slate-900">{content.title[language]}</h5>
+                                        <p className="mt-2 text-sm leading-6 text-slate-600">
+                                          <InlineMathText>{content.description[language]}</InlineMathText>
+                                        </p>
 
-                                  <div className="mt-4 space-y-2">
-                                    {lesson.sections.map((section, index) => (
+                                        <div className="mt-4 space-y-2">
+                                          {content.sections.map((section, index) => (
                                       <details
                                         key={section.heading.en}
                                         id={lessonSectionAnchorId(course.id, unit.number, lessonIndex, index)}
@@ -910,11 +961,12 @@ export const CurriculumSection: React.FC = () => {
                                           )}
                                         </div>
                                       </details>
-                                    ))}
-                                  </div>
-                                </article>
-                              ))}
-                            </div>
+                                          ))}
+                                        </div>
+                                      </article>
+                                    );
+                                  })}
+                                </div>
                               </section>
                             )}
 
