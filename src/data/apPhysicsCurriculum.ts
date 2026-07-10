@@ -58,10 +58,14 @@ export interface CurriculumLessonSection {
   takeaway?: LocalizedText;
 }
 
-export interface CurriculumLesson {
+export interface CurriculumLessonContent {
   title: LocalizedText;
   description: LocalizedText;
   sections: CurriculumLessonSection[];
+}
+
+export interface CurriculumLesson extends CurriculumLessonContent {
+  studentVersion?: CurriculumLessonContent;
 }
 
 export interface CurriculumUnit {

@@ -155,6 +155,9 @@ export const i18n = {
       lessonsTitle: 'Deep Dive Lesson',
       formulasTitle: 'Key Formulas',
       diagramsTitle: 'Diagrams',
+      contentMode: 'Knowledge map content mode',
+      teacherMode: 'Teacher',
+      studentMode: 'Student',
       sourceNote: 'Topic names, unit structure, and exam weightings are based on the official College Board Course and Exam Descriptions. Chinese topic names are translations prepared by Pocket Cosmos for learning reference.',
     },
     practice: {
@@ -436,6 +439,9 @@ export const i18n = {
       lessonsTitle: '专题讲义',
       formulasTitle: '重点公式',
       diagramsTitle: '图像与示意图',
+      contentMode: '知识地图内容模式',
+      teacherMode: '老师模式',
+      studentMode: '学生模式',
       sourceNote: '知识点名称、单元结构与考试占比均参考美国大学理事会官方课程与考试说明；中文名称由口袋宇宙翻译整理，仅供学习参考。',
     },
     practice: {
