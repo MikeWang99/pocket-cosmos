@@ -42,54 +42,161 @@ const diagram = (kind: string, titleEn: string, titleZh: string, captionEn: stri
 
 const focus = (...items: Array<[string, string]>): LocalizedText[] => items.map(([en, zh]) => text(en, zh));
 
-const kinematicsGraphSignLesson: CurriculumLesson = {
-  title: text('Velocity-Time Graphs: Direction vs Speed', '速度-时间图像:方向与速率'),
+const kinematicsGraphSignStudentVersion: CurriculumLessonContent = {
+  title: text('Velocity-Time Graphs: Core Reading Method', '速度-时间图像:核心判断法'),
   description: text(
-    'A guide for reading velocity graphs without confusing velocity value, direction, and speed.',
-    '一份用于读懂速度图像的学习指南,帮助区分速度数值、运动方向和速率。',
+    'A compact method for separating direction, speed, acceleration, and displacement on a velocity-time graph.',
+    '用固定步骤区分速度方向、速率、加速度和位移。',
   ),
   sections: [
     {
-      heading: text('0. What real phenomenon does this lesson explain?', '0. 这一节解释什么真实现象?'),
+      heading: text('0. Core idea', '0. 核心支点'),
+      bullets: [
+        text('The sign of velocity gives direction; the magnitude $|v|$ gives speed.', '速度的正负给方向;大小 $|v|$ 给速率。'),
+        text('The slope of a $v$-$t$ graph gives acceleration.', '$v$-$t$ 图像斜率给加速度。'),
+        text('The signed area between the graph and the time axis gives displacement.', '图像与时间轴之间的有符号面积给位移。'),
+      ],
+    },
+    {
+      heading: text('1. Four-step reading order', '1. 四步判断顺序'),
+      bullets: [
+        text('Fix one positive direction and keep it for the entire graph.', '先规定一个正方向,整张图中都不更换。'),
+        text('Read the sign of $v$ to identify the direction of motion.', '看 $v$ 的正负,判断运动方向。'),
+        text('Read the slope to identify the sign of $a$.', '看斜率,判断 $a$ 的正负。'),
+        text('Same signs for $v$ and $a$ mean speeding up; opposite signs mean slowing down.', '$v$ 与 $a$ 同号表示速率增加;异号表示速率减小。'),
+      ],
+      formulas: [
+        formula('Direction and speed', '方向与速率', 'v>0:\\,+\\text{ direction},\\quad v<0:\\,-\\text{ direction},\\quad \\text{speed}=|v|'),
+        formula('Acceleration', '加速度', 'a=\\text{slope of the }v\\text{-}t\\text{ graph}'),
+      ],
+    },
+    {
+      heading: text('2. Zero crossing and signed area', '2. 过零点与有符号面积'),
+      bullets: [
+        text('At a zero crossing, $v=0$ at that instant; acceleration can still be nonzero.', '穿过零点时,该瞬间 $v=0$;加速度仍可不为零。'),
+        text('A sign change in velocity means the object reverses direction.', '速度变号表示物体改变运动方向。'),
+        text('Area above the axis is positive displacement; area below is negative displacement.', '时间轴上方面积对应正位移;下方面积对应负位移。'),
+      ],
+      formulas: [
+        formula('Displacement', '位移', '\\Delta x=\\int v\\,dt'),
+        formula('Distance', '路程', 'd=\\int |v|\\,dt'),
+      ],
+    },
+    {
+      heading: text('3. Quick check: return to the start', '3. 快速检查:回到起点'),
+      classroomQuestions: [
+        {
+          id: 'kinematics-student-signed-area-return',
+          title: text('Quick Check: displacement and distance', '快速检查:位移与路程'),
+          prompt: text(
+            'A cart moves at $+2.0\\,\\mathrm{m/s}$ from $t=0$ to $2.0\\,\\mathrm{s}$, then at $-1.0\\,\\mathrm{m/s}$ from $t=2.0$ to $6.0\\,\\mathrm{s}$. What are its displacement and total distance?',
+            '小车在 $0$ 到 $2.0\\,\\mathrm{s}$ 以 $+2.0\\,\\mathrm{m/s}$ 运动,随后在 $2.0$ 到 $6.0\\,\\mathrm{s}$ 以 $-1.0\\,\\mathrm{m/s}$ 运动。它的位移和总路程分别是多少?',
+          ),
+          choices: [
+            { label: 'A', text: text('$0\\,\\mathrm{m}$ and $8.0\\,\\mathrm{m}$', '$0\\,\\mathrm{m}$ 和 $8.0\\,\\mathrm{m}$') },
+            { label: 'B', text: text('$8.0\\,\\mathrm{m}$ and $8.0\\,\\mathrm{m}$', '$8.0\\,\\mathrm{m}$ 和 $8.0\\,\\mathrm{m}$') },
+            { label: 'C', text: text('$0\\,\\mathrm{m}$ and $0\\,\\mathrm{m}$', '$0\\,\\mathrm{m}$ 和 $0\\,\\mathrm{m}$') },
+            { label: 'D', text: text('$-4.0\\,\\mathrm{m}$ and $8.0\\,\\mathrm{m}$', '$-4.0\\,\\mathrm{m}$ 和 $8.0\\,\\mathrm{m}$') },
+          ],
+          correctAnswer: 'A',
+          feedback: text(
+            'The signed areas are $(+2)(2)=+4\\,\\mathrm{m}$ and $(-1)(4)=-4\\,\\mathrm{m}$, so displacement is zero. Distance adds the magnitudes: $4+4=8\\,\\mathrm{m}$.',
+            '两段有符号面积分别为 $(+2)(2)=+4\\,\\mathrm{m}$ 和 $(-1)(4)=-4\\,\\mathrm{m}$,所以位移为零。路程相加面积大小:$4+4=8\\,\\mathrm{m}$。',
+          ),
+        },
+      ],
+    },
+  ],
+};
+
+const kinematicsGraphSignLesson: CurriculumLesson = {
+  title: text('Reading Velocity-Time Graphs: Direction, Speed, and Area', '读懂速度-时间图像:方向、速率与面积'),
+  description: text(
+    'A complete route for translating a velocity-time graph into physical motion without changing sign conventions or mixing velocity with speed.',
+    '用一套固定流程把速度-时间图像翻译成真实运动,避免中途更换正方向或混淆速度与速率。',
+  ),
+  sections: [
+    {
+      heading: text('0. Motivation: a cart stops and reverses', '0. 动机:小车停下后反向'),
       paragraphs: [
         text(
-          'A ball rolling downhill can speed up while its velocity value becomes more negative. On a velocity-time graph, the sign of velocity carries direction, so a line moving downward can still describe an object speeding up in the negative direction.',
-          '一个小球沿斜面向下滚时,速率可能越来越大,但速度数值却越来越负。在速度-时间图像中,速度的正负包含方向,所以一条向下走的线,也可能表示物体在负方向上越来越快。',
+          'Imagine a remote-control cart moving to the right, slowing to a stop, then reversing and moving faster to the left. Its speed first decreases to zero and then increases, but its velocity changes continuously from positive to zero to negative.',
+          '想象一辆遥控小车先向右运动,逐渐停下,随后反向并越来越快地向左运动。它的速率先减小到零再增大,但速度会连续地从正值变为零,再变成负值。',
+        ),
+        text(
+          'A velocity-time graph is useful because one line can preserve direction, speed, acceleration, turning points, and displacement. The price is that every sign must be interpreted consistently.',
+          '速度-时间图像很有价值,因为一条线可以同时保留方向、速率、加速度、转向时刻和位移。代价是每一个正负号都必须按照同一套约定解释。',
         ),
       ],
       takeaway: text(
-        'Always separate three ideas: velocity value, direction of motion, and speed.',
-        '一定要区分三个概念:速度数值、运动方向和速率。',
+        'The vertical coordinate is velocity, not speed. A negative value means motion in the chosen negative direction.',
+        '纵坐标是速度,不是速率。负值表示物体沿选定的负方向运动。',
       ),
     },
     {
-      heading: text('1. Choose the positive direction first', '1. 先选正方向'),
+      heading: text('1. Lock the coordinate system before reading', '1. 读图前先锁定坐标系'),
       paragraphs: [
         text(
-          'A velocity-time graph only makes sense after a positive direction has been chosen. For a ball on a ramp, if uphill is positive, then downhill velocity is negative.',
-          '速度-时间图像必须先选定正方向才有意义。比如斜面上如果规定向上为正,那么向下运动的速度就是负值。',
+          'Choose a positive direction once and keep it for the entire problem. If right is positive, motion to the left has negative velocity. Changing the positive direction midway changes the meaning of every sign and makes the graph internally inconsistent.',
+          '先规定一次正方向,并在整道题中保持不变。如果向右为正,向左运动的速度就是负值。中途更换正方向会改变所有符号的含义,使整张图失去一致性。',
         ),
       ],
       formulas: [
-        formula('Velocity sign', '速度符号', 'v>0\\Rightarrow \\text{motion in the positive direction},\\quad v<0\\Rightarrow \\text{motion in the negative direction}'),
-        formula('Speed is magnitude', '速率是速度大小', '\\text{speed}=|v|'),
+        formula('Velocity sign', '速度符号', 'v>0\\Rightarrow +\\text{ direction},\\quad v<0\\Rightarrow -\\text{ direction}'),
+        formula('Speed', '速率', '\\text{speed}=|v|'),
       ],
     },
     {
-      heading: text('2. Slope tells acceleration, not speed directly', '2. 斜率表示加速度,不是直接表示速率'),
+      heading: text('2. Read every interval in the same four steps', '2. 每一段都按同样四步读取'),
       paragraphs: [
         text(
-          'The slope of a velocity-time graph is acceleration. If two balls are on the same frictionless ramp, they have the same acceleration along the ramp, so their velocity-time graphs should be parallel.',
-          '速度-时间图像的斜率是加速度。如果两个球在同一个无摩擦斜面上运动,它们沿斜面的加速度相同,所以速度-时间图像应该互相平行。',
+          'First read the sign of $v$ for direction. Second read $|v|$ for speed. Third read the slope for acceleration. Fourth compare the signs of $v$ and $a$: equal signs increase $|v|$, while opposite signs decrease $|v|$.',
+          '第一步看 $v$ 的正负判断方向;第二步看 $|v|$ 判断速率;第三步看斜率判断加速度;第四步比较 $v$ 和 $a$ 的符号:同号时 $|v|$ 增大,异号时 $|v|$ 减小。',
+        ),
+        text(
+          'This avoids the unreliable shortcut “a downward graph means slowing down.” A line with negative slope can show slowing down while $v>0$, but speeding up after the line crosses into $v<0$.',
+          '这样就不会依赖“图像向下就是减速”这种错误捷径。同一条负斜率直线在 $v>0$ 时表示速率减小,穿过零点进入 $v<0$ 后却表示速率增大。',
         ),
       ],
       formulas: [
-        formula('Graph slope', '图像斜率', 'a=\\frac{dv}{dt}'),
-        formula('Same ramp acceleration', '同一斜面上的加速度相同', 'a_1=a_2=-g\\sin\\theta\\quad \\text{if uphill is positive}'),
+        formula('Acceleration from slope', '由斜率读加速度', 'a=\\frac{\\Delta v}{\\Delta t}'),
+        formula('Speeding up', '速率增加', 'va>0'),
+        formula('Slowing down', '速率减小', 'va<0'),
       ],
     },
     {
-      heading: text('3. Classroom check: two balls on a ramp', '3. 课堂题:斜面上的两个小球'),
+      heading: text('3. What a zero crossing really means', '3. 过零点真正表示什么'),
+      paragraphs: [
+        text(
+          'When the graph crosses the time axis, velocity is zero only at that instant. The object is momentarily at rest. If the graph continues to the other side, the velocity changes sign and the object reverses direction.',
+          '图像穿过时间轴时,只有该瞬间速度为零,物体短暂停止。如果图像继续进入另一侧,速度变号,物体随之反向。',
+        ),
+        text(
+          'Zero velocity does not imply zero acceleration. At the top of a vertical toss, for example, $v=0$ while the slope of the velocity graph remains $-g$.',
+          '速度为零并不代表加速度为零。例如竖直上抛到最高点时,$v=0$,但速度图像斜率仍为 $-g$。',
+        ),
+      ],
+    },
+    {
+      heading: text('4. Area is signed: displacement is not distance', '4. 面积有正负:位移不等于路程'),
+      paragraphs: [
+        text(
+          'The area under a velocity-time graph is an algebraic area. Regions above the time axis contribute positive displacement; regions below contribute negative displacement. Equal areas can cancel when an object returns to its starting position.',
+          '速度-时间图像下方的面积是代数面积。时间轴上方贡献正位移,下方贡献负位移。物体回到起点时,两侧面积可能恰好抵消。',
+        ),
+        text(
+          'Distance is different: it counts every part of the trip positively, so it is found from the area under the speed graph or by adding the magnitudes of the velocity-graph areas.',
+          '路程不同:它把每段运动都按正值累计,所以应计算速率图像下的面积,或把速度图像各区域的面积大小相加。',
+        ),
+      ],
+      formulas: [
+        formula('Displacement', '位移', '\\Delta x=\\int_{t_i}^{t_f}v(t)\\,dt'),
+        formula('Distance', '路程', 'd=\\int_{t_i}^{t_f}|v(t)|\\,dt'),
+      ],
+      classroomQuestions: kinematicsGraphSignStudentVersion.sections[3].classroomQuestions,
+    },
+    {
+      heading: text('5. Classroom check: two balls on a ramp', '5. 课堂题:斜面上的两个小球'),
       classroomQuestions: [
         {
           id: 'kinematics-ramp-velocity-graph',
@@ -99,41 +206,30 @@ const kinematicsGraphSignLesson: CurriculumLesson = {
             '小球 1 以初速度 $+v_0$ 沿斜面向上运动;小球 2 从同一斜面顶端由静止释放。规定沿斜面向上为正。下列哪一个描述最符合两个小球的速度-时间图像?',
           ),
           choices: [
-            {
-              label: 'A',
-              text: text('Ball 1 starts positive and decreases linearly through zero; Ball 2 starts at zero and becomes more negative. The two lines are parallel.', '小球 1 从正速度开始并线性减小、穿过零;小球 2 从零开始并变得越来越负。两条线互相平行。'),
-            },
-            {
-              label: 'B',
-              text: text('Ball 1 starts positive and decreases; Ball 2 starts at zero and becomes more positive because its speed increases.', '小球 1 从正速度开始并减小;小球 2 从零开始并变得越来越正,因为它的速率增加。'),
-            },
-            {
-              label: 'C',
-              text: text('Ball 1 and Ball 2 must have opposite accelerations because they initially move in opposite directions.', '小球 1 和小球 2 的初始运动方向相反,所以它们的加速度也必须相反。'),
-            },
-            {
-              label: 'D',
-              text: text('The graph cannot include direction; it only shows speed.', '速度-时间图像不能包含方向,只能表示速率。'),
-            },
+            { label: 'A', text: text('Ball 1 starts positive and decreases linearly through zero; Ball 2 starts at zero and becomes more negative. The two lines are parallel.', '小球 1 从正速度开始并线性减小、穿过零;小球 2 从零开始并变得越来越负。两条线互相平行。') },
+            { label: 'B', text: text('Ball 1 starts positive and decreases; Ball 2 starts at zero and becomes more positive because its speed increases.', '小球 1 从正速度开始并减小;小球 2 从零开始并变得越来越正,因为它的速率增加。') },
+            { label: 'C', text: text('Ball 1 and Ball 2 must have opposite accelerations because they initially move in opposite directions.', '小球 1 和小球 2 的初始运动方向相反,所以它们的加速度也必须相反。') },
+            { label: 'D', text: text('The graph cannot include direction; it only shows speed.', '速度-时间图像不能包含方向,只能表示速率。') },
           ],
           correctAnswer: 'A',
           feedback: text(
-            'The graph does include direction because velocity is signed. With uphill positive, gravity gives both balls the same negative acceleration along the ramp. Ball 2 speeds up downhill, but its velocity becomes more negative, not more positive.',
-            '速度-时间图像包含方向,因为 velocity 是带符号的。规定向上为正时,重力让两个小球沿斜面都有相同的负加速度。小球 2 向下越来越快,但它的速度数值是越来越负,而不是越来越正。',
+            'With uphill positive, gravity gives both balls the same negative acceleration. Ball 2 speeds up downhill while its velocity becomes more negative.',
+            '规定向上为正时,重力让两个小球具有相同的负加速度。小球 2 向下越来越快,同时它的速度变得越来越负。',
           ),
         },
       ],
     },
     {
-      heading: text('4. Common mistakes', '4. 常见错误'),
+      heading: text('6. Precision checklist', '6. 精确表达检查表'),
       bullets: [
-        text('Confusing velocity with speed.', '把 velocity 和 speed 混为一谈。'),
-        text('Thinking a decreasing velocity graph always means the object is slowing down.', '以为速度图像下降就一定表示物体在减速。'),
-        text('Forgetting that negative velocity can have increasing magnitude.', '忘记负速度的大小也可以增加。'),
-        text('Assuming opposite motion directions imply opposite accelerations.', '以为运动方向相反就意味着加速度方向相反。'),
+        text('Say “velocity is negative,” not “speed is negative.”', '应说“速度为负”,不要说“速率为负”。'),
+        text('Say “the velocity value decreases” or “the speed increases”; the word “faster” alone does not show direction.', '应明确说“速度数值减小”或“速率增大”;只说“更快”不能表达方向。'),
+        text('Negative acceleration does not automatically mean slowing down.', '负加速度不自动等于减速。'),
+        text('Do not change the positive direction while interpreting the same graph.', '解释同一张图时不要中途更换正方向。'),
       ],
     },
   ],
+  studentVersion: kinematicsGraphSignStudentVersion,
 };
 
 const impulseMomentumLesson: CurriculumLesson = {
@@ -832,7 +928,7 @@ const positionVelocityAccelerationLesson: CurriculumLesson = {
       bullets: [        text('Confusing acceleration with velocity.', '把加速度和速度混为一谈。'),
         text('Thinking negative acceleration always means slowing down.', '以为负加速度就一定在减速。'),
         text('Using constant-acceleration equations when acceleration is not constant.', '加速度不恒定时仍然使用匀加速方程。'),
-        text('Forgetting that at the peak of a projectile, velocity is zero but acceleration is not.', '忘记抛体最高点速度为零但加速度不为零。')]
+        text('Forgetting that at the peak of an angled projectile, the vertical velocity component is zero but the acceleration is not.', '忘记斜抛物体最高点只有竖直速度分量为零,加速度仍不为零。')]
     },
     {
       heading: text('8. Formula summary', '8. 本节核心公式'),
@@ -890,75 +986,239 @@ const referenceFramesRelativeMotionLesson: CurriculumLesson = {
   ],
 };
 
-const projectileMotionLesson: CurriculumLesson = {
-  title: text('Projectile Motion: Two-Dimensional Kinematics', 'Projectile Motion: 斜抛运动与二维运动学'),
+const projectileMotionStudentVersion: CurriculumLessonContent = {
+  title: text('Projectile Motion: Core Map', '抛体运动:核心知识地图'),
   description: text(
-    'Make Topic 1.5 explicit: projectile motion is the central AP Physics 1 example of separating two-dimensional motion into independent one-dimensional motions.',
-    '把 Topic 1.5 显性展开:斜抛运动是 AP 物理 1 中“把二维运动分解成两个独立一维运动”的核心例子。',
+    'A compact model for initial velocity, component motion, shared time, vertical velocity graphs, and equation choice.',
+    '浓缩呈现初速度、分量运动、共同时间、竖直速度图像和公式选择。',
   ),
   sections: [
     {
-      heading: text('0. What real phenomenon does this lesson explain?', '0. 这一节解释什么真实现象?'),
-      paragraphs: [
-        text(
-          'A launched ball, a water fountain stream, or a basketball shot does not move only horizontally or only vertically. Projectile motion gives us a clean way to predict the path of an object moving in two dimensions under constant vertical acceleration.',
-          '被抛出的球、喷泉水流或篮球投篮都不是只沿水平或竖直方向运动。斜抛运动给我们一种清晰方法,用来预测物体在恒定竖直加速度下的二维轨迹。',
-        ),
-        text(
-          'College Board places this under Topic 1.5, Vectors and Motion in Two Dimensions. The essential idea is that motion in two dimensions can be analyzed with one-dimensional kinematics after the motion is separated into components.',
-          'College Board 把它放在 Topic 1.5: Vectors and Motion in Two Dimensions 下面。核心思想是:只要把运动分解成分量,二维运动就可以用一维运动学关系来分析。',
-        ),
+      heading: text('0. One motion, two component models', '0. 一个运动,两个分量模型'),
+      bullets: [
+        text('After release, ignoring air resistance, gravity changes only the vertical component of velocity.', '物体离手后,忽略空气阻力时,重力只改变速度的竖直分量。'),
+        text('Horizontal and vertical motion share the same elapsed time.', '水平和竖直运动共享同一个时间。'),
+      ],
+      formulas: [
+        formula('Acceleration components', '加速度分量', 'a_x=0,\\quad a_y=-g\\quad(\\text{upward positive})'),
+      ],
+    },
+    {
+      heading: text('1. Initial velocity at release', '1. 离手瞬间的初速度'),
+      bullets: [
+        text('A thrown object is already moving when it leaves the hand, so its initial velocity is generally not zero.', '被抛出的物体离手时已经在运动,所以初速度通常不为零。'),
+        text('A horizontal launch has $v_{0y}=0$, not $v_0=0$.', '水平抛出满足 $v_{0y}=0$,而不是 $v_0=0$。'),
+        text('For an angled launch, resolve the launch velocity before using kinematics.', '斜抛时先分解初速度,再使用运动学方程。'),
+      ],
+      formulas: [
+        formula('Launch components', '初速度分量', 'v_{0x}=v_0\\cos\\theta,\\quad v_{0y}=v_0\\sin\\theta'),
+      ],
+    },
+    {
+      heading: text('2. Component equations', '2. 分量方程'),
+      formulas: [
+        formula('Horizontal', '水平方向', 'v_x=v_{0x},\\quad \\Delta x=v_{0x}t'),
+        formula('Vertical', '竖直方向', 'v_y=v_{0y}-gt,\\quad \\Delta y=v_{0y}t-\\frac12gt^2'),
       ],
       takeaway: text(
-        'Projectile motion is not a new set of magic formulas. It is one-dimensional kinematics used twice: once horizontally and once vertically.',
-        '斜抛运动不是一套新的神秘公式。它就是把一维运动学用两次:水平方向一次,竖直方向一次。',
+        'Find time from the direction whose information is known, then use that same time in the other direction.',
+        '先在信息足够的方向求时间,再把同一个时间代入另一个方向。',
       ),
     },
     {
-      heading: text('1. Official requirement inside Topic 1.5', '1. Topic 1.5 下的官方要求'),
+      heading: text('3. Vertical velocity graph', '3. 竖直速度图像'),
       bullets: [
-        text('1.5.A: Resolve vectors into perpendicular components using a chosen coordinate system and trigonometric relationships.', '1.5.A: 用选定坐标系和三角函数关系把矢量分解成互相垂直的分量。'),
-        text('1.5.B: Describe the motion of an object moving in two dimensions.', '1.5.B: 描述物体在二维空间中的运动。'),
-        text('Essential Knowledge 1.5.B.1: Two-dimensional motion can be analyzed with one-dimensional kinematic relationships if the motion is separated into components.', 'Essential Knowledge 1.5.B.1: 若把运动分解成分量,二维运动可以用一维运动学关系分析。'),
-        text('Essential Knowledge 1.5.B.2: Projectile motion is the special case with zero acceleration in one dimension and constant nonzero acceleration in the other.', 'Essential Knowledge 1.5.B.2: 斜抛运动是二维运动的特殊情况:一个方向加速度为零,另一个方向加速度恒定且非零。'),
+        text('With upward positive, the $v_y$-$t$ graph has constant slope $-g$.', '规定向上为正时,$v_y$-$t$ 图像斜率恒为 $-g$。'),
+        text('At the highest point, $v_y=0$ but $a_y=-g$.', '最高点处 $v_y=0$,但 $a_y=-g$。'),
+        text('The signed area under $v_y(t)$ gives vertical displacement; the area before the apex gives the rise to maximum height.', '$v_y(t)$ 下的有符号面积给竖直位移;最高点之前的面积给最大上升高度。'),
+      ],
+      formulas: [
+        formula('Vertical displacement from graph', '由图像求竖直位移', '\\Delta y=\\int v_y\\,dt'),
       ],
     },
     {
-      heading: text('2. Component model', '2. 分量模型'),
+      heading: text('4. Equation condition', '4. 公式适用条件'),
+      bullets: [
+        text('The general vertical equation includes the initial vertical velocity term.', '通用竖直方程包含初始竖直速度项。'),
+        text('Only when $v_{0y}=0$ may it be simplified to $\\Delta y=\\frac12a_yt^2$.', '只有 $v_{0y}=0$ 时,才能简化为 $\\Delta y=\\frac12a_yt^2$。'),
+      ],
+      formulas: [
+        formula('General form', '通用形式', '\\Delta y=v_{0y}t+\\frac12a_yt^2'),
+        formula('Special case', '特殊情况', 'v_{0y}=0\\Rightarrow \\Delta y=\\frac12a_yt^2'),
+      ],
+    },
+    {
+      heading: text('5. Quick check: angled launch', '5. 快速检查:斜抛'),
+      classroomQuestions: [
+        {
+          id: 'ap1-u1-student-projectile-components',
+          title: text('Quick Check: horizontal displacement', '快速检查:水平位移'),
+          prompt: text(
+            'A ball is launched at $10\\,\\mathrm{m/s}$ and $60^\\circ$ above the horizontal. After $2.0\\,\\mathrm{s}$, what is its horizontal displacement? Ignore air resistance.',
+            '一个球以 $10\\,\\mathrm{m/s}$、仰角 $60^\\circ$ 抛出。忽略空气阻力,经过 $2.0\\,\\mathrm{s}$ 后水平位移是多少?',
+          ),
+          choices: [
+            { label: 'A', text: text('$5.0\\,\\mathrm{m}$', '$5.0\\,\\mathrm{m}$') },
+            { label: 'B', text: text('$10\\,\\mathrm{m}$', '$10\\,\\mathrm{m}$') },
+            { label: 'C', text: text('$17.3\\,\\mathrm{m}$', '$17.3\\,\\mathrm{m}$') },
+            { label: 'D', text: text('$20\\,\\mathrm{m}$', '$20\\,\\mathrm{m}$') },
+          ],
+          correctAnswer: 'B',
+          feedback: text(
+            '$v_{0x}=v_0\\cos60^\\circ=5.0\\,\\mathrm{m/s}$ and $\\Delta x=v_{0x}t=(5.0)(2.0)=10\\,\\mathrm{m}$.',
+            '$v_{0x}=v_0\\cos60^\\circ=5.0\\,\\mathrm{m/s}$,所以 $\\Delta x=v_{0x}t=(5.0)(2.0)=10\\,\\mathrm{m}$。',
+          ),
+        },
+      ],
+    },
+  ],
+};
+
+const projectileMotionLesson: CurriculumLesson = {
+  title: text('Projectile Motion: From Release to Two Component Models', '抛体运动:从离手瞬间到二维分量模型'),
+  description: text(
+    'A complete teaching route for why a released object has initial velocity, why projectile motion must be separated into components, and how graphs and equations stay consistent.',
+    '完整解释物体离手时为何具有初速度、为什么要把抛体运动分解为分量,以及如何让图像与方程保持一致。',
+  ),
+  sections: [
+    {
+      heading: text('0. Motivation: why does horizontal speed not delay the fall?', '0. 动机:水平速度为什么不会延迟下落?'),
       paragraphs: [
         text(
-          'After launch, ignoring air resistance, the only acceleration is gravity. If horizontal is $x$ and vertical is $y$, then $a_x=0$ and $a_y=-g$ when upward is positive.',
-          '物体离手后,若忽略空气阻力,唯一加速度来自重力。如果水平方向为 $x$,竖直方向为 $y$,并规定向上为正,则 $a_x=0$ 且 $a_y=-g$。',
+          'Drop one ball from a table while launching another horizontally from the same height. Ignoring air resistance and Earth curvature, both balls reach the floor at the same time even though one travels sideways.',
+          '从同一张桌子的同一高度释放一个球,同时把另一个球水平抛出。忽略空气阻力和地球曲率时,两个球会同时落地,尽管其中一个还在向侧面运动。',
         ),
         text(
-          'The horizontal motion has constant velocity. The vertical motion is constant-acceleration motion. Time is the shared variable that connects the two directions.',
-          '水平方向做匀速运动。竖直方向做匀加速运动。时间是连接两个方向的共同变量。',
+          'This is the reason projectile motion needs a component model. One two-dimensional path is produced by two simultaneous one-dimensional motions: constant horizontal velocity and constant vertical acceleration.',
+          '这正是抛体运动需要分量模型的原因。一条二维轨迹由两个同时发生的一维运动组成:水平方向速度恒定,竖直方向加速度恒定。',
+        ),
+      ],
+      takeaway: text(
+        'Projectile motion is one-dimensional kinematics used twice, connected by one shared clock.',
+        '抛体运动就是把一维运动学使用两次,并由同一个时钟连接。',
+      ),
+    },
+    {
+      heading: text('1. The object is already moving at release', '1. 物体离手时已经在运动'),
+      paragraphs: [
+        text(
+          'An object held in a moving hand shares the hand’s velocity immediately before release. Once contact ends, the object does not lose that velocity; it continues with the release velocity while gravity changes its vertical component.',
+          '物体在运动的手中时,离手前一刻与手具有相同速度。接触结束后,物体不会丢失这份速度;它以离手速度继续运动,同时重力改变其竖直分量。',
+        ),
+        text(
+          '“Released from rest” and “thrown” are different initial conditions. A dropped object can have $v_0=0$. A horizontally thrown object has $v_{0x}\\ne0$ and $v_{0y}=0$. An angled launch generally has both components nonzero.',
+          '“由静止释放”和“抛出”是不同的初始条件。静止释放可以有 $v_0=0$;水平抛出满足 $v_{0x}\\ne0$ 且 $v_{0y}=0$;斜抛通常两个分量都不为零。',
         ),
       ],
       formulas: [
-        formula('Initial velocity components', '初速度分量', 'v_{0x}=v_0\\cos\\theta,\\quad v_{0y}=v_0\\sin\\theta'),
-        formula('Horizontal motion', '水平运动', 'a_x=0,\\quad v_x=v_{0x},\\quad x=x_0+v_{0x}t'),
-        formula('Vertical motion', '竖直运动', 'a_y=-g,\\quad v_y=v_{0y}-gt,\\quad y=y_0+v_{0y}t-\\frac12gt^2'),
+        formula('Horizontal release', '水平抛出', 'v_{0x}=v_0,\\quad v_{0y}=0'),
+        formula('Angled release', '斜抛', 'v_{0x}=v_0\\cos\\theta,\\quad v_{0y}=v_0\\sin\\theta'),
       ],
     },
     {
-      heading: text('3. Typical problem types', '3. 典型题型'),
-      bullets: [
-        text('Horizontal launch: an object leaves a table with $v_{0y}=0$ and lands below the launch point.', '水平抛出:物体以 $v_{0y}=0$ 离开桌面并落到较低位置。'),
-        text('Angled launch from ground level: find time of flight, maximum height, range, or impact velocity.', '地面斜抛:求飞行时间、最大高度、射程或落地速度。'),
-        text('Graph translation: draw or interpret $x$-$t$, $v_x$-$t$, $a_x$-$t$, $y$-$t$, $v_y$-$t$, and $a_y$-$t$ graphs.', '图像转换:绘制或解释 $x$-$t$、$v_x$-$t$、$a_x$-$t$、$y$-$t$、$v_y$-$t$ 和 $a_y$-$t$ 图像。'),
-        text('Experimental design: use measured height, horizontal range, and time to infer an initial velocity component.', '实验设计:用测得的高度、水平距离和时间反推初速度分量。'),
+      heading: text('2. Choose axes once and keep them', '2. 坐标轴只选一次并保持不变'),
+      paragraphs: [
+        text(
+          'Any coordinate choice is valid if it is used consistently. A convenient standard is rightward $+x$ and upward $+y$. Gravity then has $a_x=0$ and $a_y=-g$. Do not switch to downward-positive halfway through the same graph or calculation.',
+          '只要保持一致,任何坐标选择都可以。常用约定是向右为 $+x$、向上为 $+y$,此时重力满足 $a_x=0$、$a_y=-g$。不要在同一张图或同一次计算中途改成向下为正。',
+        ),
+      ],
+      formulas: [
+        formula('Fixed acceleration components', '固定加速度分量', 'a_x=0,\\quad a_y=-g'),
       ],
     },
     {
-      heading: text('4. Classroom check: horizontal launch', '4. 课堂题:水平抛出'),
+      heading: text('3. Why component separation solves the problem', '3. 为什么分解分量就能解决问题'),
+      paragraphs: [
+        text(
+          'College Board Topic 1.5 requires vectors to be resolved into perpendicular components and two-dimensional motion to be described using one-dimensional kinematic relationships. The horizontal and vertical motions are independent in acceleration but share the same elapsed time.',
+          'College Board Topic 1.5 要求把矢量分解为互相垂直的分量,并用一维运动学关系描述二维运动。两个方向的加速度彼此独立,但共享同一个经过时间。',
+        ),
+        text(
+          'The solution pattern is therefore stable: draw axes, resolve the initial velocity, write one equation for each direction, find time from the direction with enough information, and transfer that time to the other direction.',
+          '因此解题流程非常稳定:画坐标轴、分解初速度、分别写出两个方向的方程、在信息足够的方向求时间,再把该时间带到另一个方向。',
+        ),
+      ],
+      formulas: [
+        formula('Horizontal motion', '水平运动', 'v_x=v_{0x},\\quad \\Delta x=v_{0x}t'),
+        formula('Vertical motion', '竖直运动', 'v_y=v_{0y}-gt,\\quad \\Delta y=v_{0y}t-\\frac12gt^2'),
+      ],
+    },
+    {
+      heading: text('4. Horizontal launch: zero vertical component is not zero velocity', '4. 水平抛出:$v_{0y}=0$ 不等于总速度为零'),
+      paragraphs: [
+        text(
+          'For a horizontal launch, the vertical motion begins like a dropped object because $v_{0y}=0$. The flight time follows from the vertical height and gravity, not from $v_{0x}$. Once time is known, the horizontal range is $v_{0x}t$.',
+          '水平抛出时,由于 $v_{0y}=0$,竖直运动的初始状态与静止落下相同。飞行时间由竖直高度和重力决定,不由 $v_{0x}$ 决定。时间确定后,水平距离为 $v_{0x}t$。',
+        ),
+      ],
       classroomQuestions: [
         {
-          id: 'ap1-u1-projectile-horizontal-launch',
-          title: text('Classroom Check: component independence', '课堂题:分量独立性'),
+          id: 'ap1-u1-projectile-fall-time',
+          title: text('Classroom Check: same fall time', '课堂题:相同下落时间'),
           prompt: text(
-            'A ball rolls horizontally off a table with speed $3.0\\,\\mathrm{m/s}$. It lands after $0.80\\,\\mathrm{s}$. Ignoring air resistance, how far from the table edge does it land?',
-            '一个小球以 $3.0\\,\\mathrm{m/s}$ 的水平速度滚下桌边,经过 $0.80\\,\\mathrm{s}$ 落地。忽略空气阻力,它落地点离桌边的水平距离是多少?',
+            'At the same instant, Ball A is dropped from rest from a balcony and Ball B is launched horizontally from the same height. Ignoring air resistance, which reaches the ground first?',
+            '同一时刻,小球 A 从阳台由静止落下,小球 B 从相同高度水平抛出。忽略空气阻力,哪一个先落地?',
+          ),
+          choices: [
+            { label: 'A', text: text('Ball A', '小球 A') },
+            { label: 'B', text: text('Ball B', '小球 B') },
+            { label: 'C', text: text('They reach the ground together.', '它们同时落地。') },
+            { label: 'D', text: text('It depends on Ball B’s horizontal speed.', '取决于小球 B 的水平速度。') },
+          ],
+          correctAnswer: 'C',
+          feedback: text(
+            'Both balls have the same initial vertical velocity, the same vertical acceleration, and the same vertical displacement. Their vertical motions therefore take the same time.',
+            '两个球的初始竖直速度、竖直加速度和竖直位移都相同,因此竖直运动所需时间相同。',
+          ),
+        },
+      ],
+    },
+    {
+      heading: text('5. Angled launch and the vertical velocity graph', '5. 斜抛与竖直速度图像'),
+      paragraphs: [
+        text(
+          'With upward positive, $v_y$ starts at $v_0\\sin\\theta$ and decreases linearly with slope $-g$. It reaches zero at the highest point, then becomes negative as the object falls. The acceleration never becomes zero during ideal projectile motion.',
+          '规定向上为正时,$v_y$ 从 $v_0\\sin\\theta$ 开始,并以斜率 $-g$ 线性减小。到最高点时 $v_y=0$,随后物体下落,$v_y$ 变为负值。理想抛体运动中加速度始终不为零。',
+        ),
+        text(
+          'The signed area under the $v_y$-$t$ graph gives vertical displacement. The positive area up to the zero crossing is the maximum rise above the launch point. If the object returns to its launch height, the total positive and negative areas cancel.',
+          '$v_y$-$t$ 图像下的有符号面积给竖直位移。到过零点为止的正面积是相对发射点的最大上升高度。如果物体回到发射高度,总正面积和负面积相互抵消。',
+        ),
+      ],
+      formulas: [
+        formula('Vertical velocity', '竖直速度', 'v_y(t)=v_{0y}-gt'),
+        formula('Time to apex', '到最高点的时间', 't_{\\mathrm{apex}}=\\frac{v_{0y}}{g}'),
+        formula('Vertical displacement from area', '由面积求竖直位移', '\\Delta y=\\int v_y(t)\\,dt'),
+      ],
+    },
+    {
+      heading: text('6. Use the general equation before the shortcut', '6. 先写通用方程,再判断能否简化'),
+      paragraphs: [
+        text(
+          'Free fall means gravity is the only significant force after release; it does not mean the initial velocity must be zero. A vertically thrown ball is also in free fall after release and has nonzero $v_{0y}$.',
+          '自由落体表示离手后重力是唯一不可忽略的力;它不代表初速度一定为零。竖直上抛的球离手后同样处于自由落体,但 $v_{0y}$ 不为零。',
+        ),
+        text(
+          'Start from the general constant-acceleration equation. Remove the $v_{0y}t$ term only when the initial vertical component is actually zero, such as a horizontal launch or an object dropped from rest.',
+          '应先写通用匀加速方程。只有初始竖直分量确实为零时,例如水平抛出或由静止落下,才可以删去 $v_{0y}t$ 项。',
+        ),
+      ],
+      formulas: [
+        formula('General vertical equation', '通用竖直方程', '\\Delta y=v_{0y}t+\\frac12a_yt^2'),
+        formula('Valid shortcut', '可用简化式的条件', 'v_{0y}=0\\Rightarrow \\Delta y=\\frac12a_yt^2'),
+      ],
+    },
+    {
+      heading: text('7. Classroom checks: components and range', '7. 课堂题:分量与水平距离'),
+      classroomQuestions: [
+        ...(projectileMotionStudentVersion.sections[5].classroomQuestions ?? []),
+        {
+          id: 'ap1-u1-projectile-horizontal-launch',
+          title: text('Classroom Check: known flight time', '课堂题:已知飞行时间'),
+          prompt: text(
+            'A ball rolls horizontally off a table with speed $3.0\\,\\mathrm{m/s}$. It lands after $0.80\\,\\mathrm{s}$. How far from the table edge does it land?',
+            '一个小球以 $3.0\\,\\mathrm{m/s}$ 的水平速度滚下桌边,经过 $0.80\\,\\mathrm{s}$ 落地。它落地点离桌边的水平距离是多少?',
           ),
           choices: [
             { label: 'A', text: text('$1.2\\,\\mathrm{m}$', '$1.2\\,\\mathrm{m}$') },
@@ -968,22 +1228,40 @@ const projectileMotionLesson: CurriculumLesson = {
           ],
           correctAnswer: 'B',
           feedback: text(
-            'Use the horizontal component only: $a_x=0$, so $\\Delta x=v_xt=(3.0)(0.80)=2.4\\,\\mathrm{m}$. Gravity affects the time in the air, but once time is known it does not change the horizontal velocity.',
-            '只用水平分量:$a_x=0$,所以 $\\Delta x=v_xt=(3.0)(0.80)=2.4\\,\\mathrm{m}$。重力影响在空中的时间,但时间已知后不会改变水平速度。',
+            '$a_x=0$, so $\\Delta x=v_xt=(3.0)(0.80)=2.4\\,\\mathrm{m}$.',
+            '$a_x=0$,所以 $\\Delta x=v_xt=(3.0)(0.80)=2.4\\,\\mathrm{m}$。',
           ),
         },
       ],
     },
     {
-      heading: text('5. Common mistakes', '5. 常见错误'),
+      heading: text('8. Free fall, mass, and the ideal model', '8. 自由落体、质量与理想模型'),
+      paragraphs: [
+        text(
+          'In a vacuum or when air resistance is negligible, objects near Earth’s surface have the same downward gravitational acceleration regardless of mass. A vacuum demonstration isolates this model more cleanly than an ordinary drop through air.',
+          '在真空中或空气阻力可忽略时,地表附近物体无论质量大小都具有相同的向下重力加速度。真空演示比普通空气中的下落实验更清楚地隔离出这个理想模型。',
+        ),
+        text(
+          'Dynamics later explains why: gravitational force is proportional to mass, while acceleration is force divided by mass, so the mass cancels. The statement applies to the ideal gravitational model, not to situations where drag matters.',
+          '动力学会进一步解释原因:重力与质量成正比,而加速度等于力除以质量,因此质量约去。这个结论适用于理想重力模型,不适用于空气阻力不可忽略的情况。',
+        ),
+      ],
+      formulas: [
+        formula('Dynamics connection', '与动力学的连接', 'F_g=mg,\\quad a=\\frac{F_g}{m}=g'),
+      ],
+    },
+    {
+      heading: text('9. Common mistakes', '9. 常见错误'),
       bullets: [
-        text('Thinking the projectile has horizontal acceleration after launch.', '以为物体离手后仍有水平加速度。'),
-        text('Using the total launch speed in the vertical equation instead of $v_{0y}$.', '在竖直方程中误用总初速度,而不是 $v_{0y}$。'),
-        text('Saying velocity is zero at the top. Only $v_y$ is zero at the top; $v_x$ is still nonzero unless the launch was vertical.', '说最高点速度为零。最高点只有 $v_y$ 为零;$v_x$ 仍不为零,除非是竖直上抛。'),
-        text('Trying to solve range first before finding or using the shared time variable.', '还没找到或使用共同时间变量,就急着先求射程。'),
+        text('Changing the vertical positive direction midway through a graph or calculation.', '在同一张图或同一次计算中途更换竖直正方向。'),
+        text('Treating $v_{0y}=0$ as if the total initial velocity were zero.', '把 $v_{0y}=0$ 误认为总初速度为零。'),
+        text('Using the total launch speed in a vertical equation instead of $v_{0y}$.', '在竖直方程中使用总初速度,而不是 $v_{0y}$。'),
+        text('Saying the projectile’s total velocity is zero at the top; only $v_y$ is zero for an angled launch.', '说斜抛物体最高点总速度为零;实际上只有 $v_y=0$。'),
+        text('Treating unsigned geometric area as displacement.', '把没有正负号的几何面积直接当成位移。'),
       ],
     },
   ],
+  studentVersion: projectileMotionStudentVersion,
 };
 
 const systemsCenterOfMassUnit2Lesson: CurriculumLesson = {
