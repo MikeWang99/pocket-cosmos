@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Race cars turning on a banked track</title>
+  <desc id="desc">A curved banked racetrack with velocity tangent to the path and acceleration directed inward.</desc>
+  <rect width="1200" height="700" fill="#f8fafc"/>
+  <path d="M-80 640 C230 180 720 70 1280 280" fill="none" stroke="#cbd5e1" stroke-width="330"/>
+  <path d="M-80 640 C230 180 720 70 1280 280" fill="none" stroke="#475569" stroke-width="250"/>
+  <path d="M-80 640 C230 180 720 70 1280 280" fill="none" stroke="#f8fafc" stroke-width="8" stroke-dasharray="28 24"/>
+  <path d="M80 662 C330 295 760 190 1215 326" fill="none" stroke="#22c55e" stroke-width="14" opacity=".8"/>
+  <g transform="translate(430 300) rotate(-22)">
+    <rect x="-76" y="-34" width="152" height="68" rx="16" fill="#0ea5e9" stroke="#0f172a" stroke-width="8"/>
+    <rect x="-30" y="-22" width="60" height="44" rx="8" fill="#dbeafe"/>
+    <circle cx="-48" cy="40" r="13" fill="#0f172a"/><circle cx="48" cy="40" r="13" fill="#0f172a"/>
+  </g>
+  <g transform="translate(705 198) rotate(-6)">
+    <rect x="-65" y="-30" width="130" height="60" rx="15" fill="#f97316" stroke="#0f172a" stroke-width="8"/>
+    <rect x="-25" y="-19" width="50" height="38" rx="8" fill="#ffedd5"/>
+    <circle cx="-42" cy="35" r="12" fill="#0f172a"/><circle cx="42" cy="35" r="12" fill="#0f172a"/>
+  </g>
+  <defs>
+    <marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#2563eb"/></marker>
+    <marker id="arrow-red" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#dc2626"/></marker>
+  </defs>
+  <line x1="438" y1="248" x2="640" y2="174" stroke="#2563eb" stroke-width="14" marker-end="url(#arrow-blue)"/>
+  <text x="650" y="170" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#1d4ed8">v</text>
+  <line x1="424" y1="322" x2="300" y2="422" stroke="#dc2626" stroke-width="14" marker-end="url(#arrow-red)"/>
+  <text x="238" y="466" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#b91c1c">a<tspan baseline-shift="sub" font-size="28">c</tspan></text>
+  <g transform="translate(895 470)">
+    <path d="M0 120 L245 120 L245 70 L35 15 Z" fill="#e2e8f0" stroke="#334155" stroke-width="8"/>
+    <rect x="94" y="30" width="85" height="42" rx="10" fill="#14b8a6" stroke="#0f172a" stroke-width="7" transform="rotate(15 136 51)"/>
+    <line x1="136" y1="50" x2="85" y2="-55" stroke="#7c3aed" stroke-width="12" marker-end="url(#arrow-blue)"/>
+    <line x1="136" y1="50" x2="136" y2="172" stroke="#dc2626" stroke-width="12" marker-end="url(#arrow-red)"/>
+    <text x="54" y="-66" font-family="Arial, sans-serif" font-size="34" fill="#6d28d9">N</text>
+    <text x="150" y="180" font-family="Arial, sans-serif" font-size="34" fill="#b91c1c">mg</text>
+  </g>
+</svg>
