@@ -9,6 +9,7 @@ import {
   type CurriculumUnit,
   type LocalizedText,
 } from './apPhysicsCurriculum';
+import { circularMotionLessons } from './circularMotionKnowledgeMap';
 
 export type LearningSystemId = 'ap' | 'alevel' | 'ib' | 'competition';
 
@@ -2256,11 +2257,14 @@ const apEnrichment: Record<string, Enrichment> = {
     ]),
     lessons: [kinematicsGraphSignLesson],
   },
-  'mechanics:2': enrich('dynamics', 'dynamics', 'dynamics', [
-    ['Build Newton-law equations from free-body diagrams.', '从自由体图建立牛顿定律方程。'],
-    ['Model drag and circular motion with calculus-ready reasoning.', '用适合微积分的方式建模阻力和圆周运动。'],
-    ['Choose coordinates that simplify force components.', '选择能简化力分量的坐标系。'],
-  ]),
+  'mechanics:2': {
+    ...enrich('dynamics', 'dynamics', 'dynamics', [
+      ['Build Newton-law equations from free-body diagrams.', '从自由体图建立牛顿定律方程。'],
+      ['Model drag and circular motion with calculus-ready reasoning.', '用适合微积分的方式建模阻力和圆周运动。'],
+      ['Choose coordinates that simplify force components.', '选择能简化力分量的坐标系。'],
+    ]),
+    lessons: circularMotionLessons,
+  },
   'mechanics:3': enrich('energy', 'energy', 'energy', [
     ['Evaluate work by dot products and integrals.', '用点积和积分计算功。'],
     ['Connect conservative forces with potential energy functions.', '把保守力与势能函数连接起来。'],

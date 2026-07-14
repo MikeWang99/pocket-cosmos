@@ -28,6 +28,13 @@ export interface CurriculumVideo {
   sourceLabel: LocalizedText;
 }
 
+export interface CurriculumImage {
+  src: string;
+  alt: LocalizedText;
+  caption?: LocalizedText;
+  sourceLabel?: LocalizedText;
+}
+
 export interface CurriculumClassroomQuestion {
   id: string;
   mode?: 'multiple_choice' | 'written';
@@ -51,6 +58,7 @@ export interface CurriculumClassroomQuestion {
 export interface CurriculumLessonSection {
   heading: LocalizedText;
   videos?: CurriculumVideo[];
+  images?: CurriculumImage[];
   classroomQuestions?: CurriculumClassroomQuestion[];
   paragraphs?: LocalizedText[];
   bullets?: LocalizedText[];

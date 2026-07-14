@@ -5,7 +5,7 @@ import { motion } from 'motion/react';
 import { useLanguage } from '../LanguageContext';
 import { useAuth } from '../auth/AuthContext';
 import { learningSystems, type LearningSystemId } from '../data/physicsLearningSystems';
-import type { CurriculumClassroomQuestion, CurriculumDiagram, CurriculumLesson, CurriculumLessonContent, CurriculumUnit, CurriculumVideo } from '../data/apPhysicsCurriculum';
+import type { CurriculumClassroomQuestion, CurriculumDiagram, CurriculumImage, CurriculumLesson, CurriculumLessonContent, CurriculumUnit, CurriculumVideo } from '../data/apPhysicsCurriculum';
 
 type CurriculumContentMode = 'teacher' | 'student';
 
@@ -223,6 +223,25 @@ const LessonVideo: React.FC<{ video: CurriculumVideo; language: 'en' | 'zh' }> =
         <ExternalLink className="h-3.5 w-3.5" />
       </a>
     </figcaption>
+  </figure>
+);
+
+const LessonImage: React.FC<{ image: CurriculumImage; language: 'en' | 'zh' }> = ({ image, language }) => (
+  <figure className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
+    <div className="flex min-h-48 items-center justify-center bg-[#ffffff] p-3 sm:p-4">
+      <img
+        src={image.src}
+        alt={image.alt[language]}
+        loading="lazy"
+        className="max-h-[32rem] w-full object-contain"
+      />
+    </div>
+    {(image.caption || image.sourceLabel) && (
+      <figcaption className="flex flex-col gap-1 border-t border-slate-200 px-3 py-2 text-xs leading-5 text-slate-500 sm:flex-row sm:items-start sm:justify-between">
+        {image.caption && <span>{image.caption[language]}</span>}
+        {image.sourceLabel && <span className="shrink-0 font-semibold text-slate-600">{image.sourceLabel[language]}</span>}
+      </figcaption>
+    )}
   </figure>
 );
 
@@ -925,6 +944,9 @@ export const CurriculumSection: React.FC = () => {
                                         <div className="space-y-3 pb-2 pt-3">
                                           {section.videos?.map((video) => (
                                             <LessonVideo key={video.sourceUrl} video={video} language={language} />
+                                          ))}
+                                          {section.images?.map((image) => (
+                                            <LessonImage key={image.src} image={image} language={language} />
                                           ))}
                                           {section.paragraphs?.map((paragraph) => (
                                             <p key={paragraph.en} className="text-sm leading-7 text-slate-600">
