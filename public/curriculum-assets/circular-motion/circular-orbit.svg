@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" role="img" aria-labelledby="title desc">
+  <title id="title">Circular orbit force and velocity</title>
+  <desc id="desc">A satellite has tangent velocity while gravity points inward toward the planet.</desc>
+  <rect width="1000" height="720" fill="#f8fafc"/>
+  <circle cx="500" cy="390" r="145" fill="#22c55e" stroke="#166534" stroke-width="10"/>
+  <path d="M430 300 C480 270 555 275 602 316" fill="none" stroke="#dbeafe" stroke-width="18"/>
+  <circle cx="500" cy="390" r="285" fill="none" stroke="#4f46e5" stroke-width="10" stroke-dasharray="18 14"/>
+  <g transform="translate(500 105)"><rect x="-52" y="-22" width="104" height="44" rx="9" fill="#f59e0b" stroke="#0f172a" stroke-width="7"/><rect x="-104" y="-10" width="50" height="20" fill="#0ea5e9" stroke="#0f172a" stroke-width="5"/><rect x="54" y="-10" width="50" height="20" fill="#0ea5e9" stroke="#0f172a" stroke-width="5"/></g>
+  <defs><marker id="velocity" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#2563eb"/></marker><marker id="gravity" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#dc2626"/></marker></defs>
+  <line x1="500" y1="105" x2="790" y2="105" stroke="#2563eb" stroke-width="14" marker-end="url(#velocity)"/>
+  <line x1="500" y1="105" x2="500" y2="260" stroke="#dc2626" stroke-width="14" marker-end="url(#gravity)"/>
+  <line x1="500" y1="390" x2="500" y2="125" stroke="#64748b" stroke-width="6" stroke-dasharray="14 12"/>
+  <text x="812" y="120" font-family="Arial, sans-serif" font-size="46" fill="#1d4ed8">v</text>
+  <text x="525" y="230" font-family="Arial, sans-serif" font-size="44" fill="#b91c1c">F<tspan baseline-shift="sub" font-size="28">g</tspan></text>
+  <text x="465" y="250" font-family="Arial, sans-serif" font-size="40" fill="#475569">R</text>
+</svg>

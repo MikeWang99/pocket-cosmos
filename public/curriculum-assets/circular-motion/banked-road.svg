@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" role="img" aria-labelledby="title desc">
+  <title id="title">Forces on a car on a banked road</title>
+  <desc id="desc">Normal force and weight are resolved into vertical and radial directions on a banked curve.</desc>
+  <rect width="1000" height="720" fill="#ffffff"/>
+  <defs><marker id="purple" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#7c3aed"/></marker><marker id="red" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#dc2626"/></marker><marker id="teal" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#0891b2"/></marker></defs>
+  <path d="M100 560 L805 560 L210 250 Z" fill="#e2e8f0" stroke="#334155" stroke-width="12"/>
+  <g transform="translate(445 390) rotate(28)"><rect x="-78" y="-36" width="156" height="72" rx="14" fill="#0ea5e9" stroke="#0f172a" stroke-width="8"/><circle cx="-50" cy="43" r="14"/><circle cx="50" cy="43" r="14"/></g>
+  <circle cx="445" cy="390" r="9" fill="#0f172a"/>
+  <line x1="445" y1="390" x2="290" y2="110" stroke="#7c3aed" stroke-width="14" marker-end="url(#purple)"/>
+  <line x1="445" y1="390" x2="445" y2="640" stroke="#dc2626" stroke-width="14" marker-end="url(#red)"/>
+  <line x1="445" y1="390" x2="760" y2="390" stroke="#0891b2" stroke-width="9" stroke-dasharray="16 12" marker-end="url(#teal)"/>
+  <line x1="445" y1="390" x2="445" y2="95" stroke="#64748b" stroke-width="7" stroke-dasharray="14 12"/>
+  <text x="246" y="108" font-family="Arial, sans-serif" font-size="44" fill="#6d28d9">N</text>
+  <text x="470" y="646" font-family="Arial, sans-serif" font-size="44" fill="#b91c1c">mg</text>
+  <text x="780" y="404" font-family="Arial, sans-serif" font-size="38" fill="#0e7490">radial</text>
+  <path d="M445 245 A145 145 0 0 0 366 268" fill="none" stroke="#f97316" stroke-width="8"/>
+  <text x="370" y="226" font-family="Arial, sans-serif" font-size="42" fill="#c2410c">θ</text>
+</svg>
