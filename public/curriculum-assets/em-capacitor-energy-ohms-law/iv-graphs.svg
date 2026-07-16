@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Current-voltage graphs for ohmic and non-ohmic elements</title>
+  <desc id="desc">An I versus delta V graph with a straight line for an ohmic element and a curved line for a non-ohmic element. The slope of the straight line is one over resistance.</desc>
+  <rect width="1200" height="520" fill="#fff"/>
+  <defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#14213d"/></marker></defs>
+  <style>.axis{stroke:#14213d;stroke-width:6;marker-end:url(#arr)}.grid{stroke:#dce3ee;stroke-width:2}.ohm{fill:none;stroke:#2563eb;stroke-width:9}.non{fill:none;stroke:#d94841;stroke-width:9}.t{font:28px Arial,sans-serif;fill:#14213d}.lab{font:700 29px Arial,sans-serif;fill:#14213d}.note{font:24px Arial,sans-serif;fill:#526078}</style>
+  <g transform="translate(50 40)">
+    <text class="lab" x="250" y="25" text-anchor="middle">Ohmic element</text>
+    <path class="grid" d="M70 85H470M70 155H470M70 225H470M70 295H470M150 65V365M230 65V365M310 65V365M390 65V365"/>
+    <path class="axis" d="M70 365V55M70 365H490"/>
+    <path class="ohm" d="M70 365L440 85"/>
+    <text class="t" x="28" y="70">I</text><text class="t" x="430" y="410">ΔV</text>
+    <text class="note" x="275" y="455" text-anchor="middle">constant slope = 1/R on an I-versus-ΔV graph</text>
+  </g>
+  <g transform="translate(650 40)">
+    <text class="lab" x="250" y="25" text-anchor="middle">Non-ohmic element</text>
+    <path class="grid" d="M70 85H470M70 155H470M70 225H470M70 295H470M150 65V365M230 65V365M310 65V365M390 65V365"/>
+    <path class="axis" d="M70 365V55M70 365H490"/>
+    <path class="non" d="M70 365C170 300 245 250 300 185C350 125 395 95 445 80"/>
+    <text class="t" x="28" y="70">I</text><text class="t" x="430" y="410">ΔV</text>
+    <text class="note" x="275" y="455" text-anchor="middle">changing slope means resistance is not constant</text>
+  </g>
+</svg>
