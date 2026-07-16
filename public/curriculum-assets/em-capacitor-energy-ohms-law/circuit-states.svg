@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+  <title id="title">Closed, open, and short circuit comparison</title>
+  <desc id="desc">Three simple circuit schematics showing a closed loop, an open switch, and a low-resistance short path.</desc>
+  <rect width="1200" height="420" fill="#ffffff"/>
+  <style>
+    .wire{fill:none;stroke:#13213c;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}.accent{fill:none;stroke:#d94841;stroke-width:10;stroke-linecap:round}.label{font:700 30px Arial,sans-serif;fill:#13213c}.note{font:22px Arial,sans-serif;fill:#526078}.battery{stroke:#13213c;stroke-width:8}.switch{stroke:#13213c;stroke-width:9;stroke-linecap:round}.node{fill:#13213c}
+  </style>
+  <g transform="translate(40 35)">
+    <text class="label" x="160" y="30" text-anchor="middle">Closed circuit</text>
+    <path class="wire" d="M45 85H275V285H45Z"/>
+    <line class="battery" x1="130" y1="265" x2="130" y2="305"/><line class="battery" x1="165" y1="250" x2="165" y2="320"/>
+    <circle cx="160" cy="85" r="38" fill="#fff" stroke="#13213c" stroke-width="8"/><path class="accent" d="M145 70l30 30m0-30l-30 30"/>
+    <circle class="node" cx="45" cy="85" r="7"/><circle class="node" cx="45" cy="285" r="7"/>
+    <text class="note" x="160" y="360" text-anchor="middle">A complete path permits charge flow.</text>
+  </g>
+  <g transform="translate(430 35)">
+    <text class="label" x="160" y="30" text-anchor="middle">Open circuit</text>
+    <path class="wire" d="M45 85H125M205 85H275V285H45V85"/>
+    <circle class="node" cx="125" cy="85" r="9"/><circle class="node" cx="205" cy="85" r="9"/><line class="switch" x1="125" y1="85" x2="190" y2="45"/>
+    <line class="battery" x1="130" y1="265" x2="130" y2="305"/><line class="battery" x1="165" y1="250" x2="165" y2="320"/>
+    <circle cx="275" cy="185" r="38" fill="#fff" stroke="#13213c" stroke-width="8"/><path class="accent" d="M260 170l30 30m0-30l-30 30"/>
+    <text class="note" x="160" y="360" text-anchor="middle">A break prevents steady charge flow.</text>
+  </g>
+  <g transform="translate(820 35)">
+    <text class="label" x="160" y="30" text-anchor="middle">Short circuit</text>
+    <path class="wire" d="M45 85H275V285H45Z"/>
+    <line class="battery" x1="130" y1="265" x2="130" y2="305"/><line class="battery" x1="165" y1="250" x2="165" y2="320"/>
+    <circle cx="275" cy="185" r="38" fill="#fff" stroke="#9aa4b4" stroke-width="8"/><path d="M260 170l30 30m0-30l-30 30" fill="none" stroke="#9aa4b4" stroke-width="8"/>
+    <path class="accent" d="M45 85V185H235"/><path class="accent" d="M315 185H355V285" transform="translate(-80 0)"/>
+    <text class="note" x="160" y="360" text-anchor="middle">A near-zero-resistance path bypasses the load.</text>
+  </g>
+</svg>

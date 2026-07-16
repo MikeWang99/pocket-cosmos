@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">Circuit schematic symbols required in AP Physics C Electricity and Magnetism</title>
+  <desc id="desc">Symbols for a wire, battery, bulb, switch, capacitor, resistor, ammeter, voltmeter, and inductor.</desc>
+  <rect width="1200" height="650" fill="#fff"/>
+  <style>.s{fill:none;stroke:#14213d;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}.t{font:25px Arial,sans-serif;fill:#14213d}.m{font:700 28px Arial,sans-serif;fill:#14213d}.a{fill:#fff;stroke:#14213d;stroke-width:7}</style>
+  <text class="m" x="600" y="45" text-anchor="middle">Common circuit schematic symbols</text>
+  <g transform="translate(55 95)">
+    <g transform="translate(0 0)"><path class="s" d="M0 25H190"/><text class="t" x="230" y="34">Wire</text></g>
+    <g transform="translate(0 100)"><path class="s" d="M0 25H70M120 25H190"/><path class="s" d="M70 0V50M120 10V40"/><text class="t" x="230" y="34">Battery</text></g>
+    <g transform="translate(0 200)"><path class="s" d="M0 25H70M120 25H190"/><circle class="a" cx="95" cy="25" r="30"/><path class="s" d="M78 8l34 34m0-34L78 42"/><text class="t" x="230" y="34">Bulb</text></g>
+    <g transform="translate(0 300)"><path class="s" d="M0 25H70M120 25H190"/><circle cx="70" cy="25" r="6" fill="#14213d"/><circle cx="120" cy="25" r="6" fill="#14213d"/><path class="s" d="M70 25L112 0"/><text class="t" x="230" y="34">Switch</text></g>
+    <g transform="translate(0 400)"><path class="s" d="M0 25H75M115 25H190M75 0V50M115 0V50"/><text class="t" x="230" y="34">Capacitor</text></g>
+  </g>
+  <g transform="translate(650 95)">
+    <g transform="translate(0 0)"><path class="s" d="M0 25H35l15-22 25 44 25-44 25 44 25-44 15 22h35"/><text class="t" x="230" y="34">Resistor</text></g>
+    <g transform="translate(0 100)"><path class="s" d="M0 25H65M125 25H190"/><circle class="a" cx="95" cy="25" r="30"/><text class="m" x="95" y="35" text-anchor="middle">A</text><text class="t" x="230" y="34">Ammeter</text></g>
+    <g transform="translate(0 200)"><path class="s" d="M0 25H65M125 25H190"/><circle class="a" cx="95" cy="25" r="30"/><text class="m" x="95" y="35" text-anchor="middle">V</text><text class="t" x="230" y="34">Voltmeter</text></g>
+    <g transform="translate(0 300)"><path class="s" d="M0 25H35C35 -5 65 -5 65 25C65 -5 95 -5 95 25C95 -5 125 -5 125 25C125 -5 155 -5 155 25H190"/><text class="t" x="230" y="34">Inductor</text></g>
+    <g transform="translate(0 400)"><path class="s" d="M0 25H35l15-22 25 44 25-44 25 44 25-44 15 22h35M92 -5l35 -30"/><path class="s" d="M127 -35l-3 17m3-17l-17 3"/><text class="t" x="230" y="34">Variable element</text></g>
+  </g>
+</svg>

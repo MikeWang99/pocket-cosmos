@@ -153,6 +153,26 @@ const checkRadialForce: CurriculumClassroomQuestion = {
   feedback: text('$F_r=mv^2/r$: doubling $v$ multiplies the force by four, and dividing $r$ by four also multiplies it by four.', '$F_r=mv^2/r$:速度加倍使力变为四倍,半径变为四分之一也使力变为四倍。'),
 };
 
+const checkUnderGrip: CurriculumClassroomQuestion = {
+  id: 'apc-cm-03-under-grip-path',
+  title: text('Classroom Check: when grip is insufficient', '课堂题:抓地力不足时'),
+  prompt: text(
+    'A car enters a flat curve too fast for the available static friction. In the road frame, why does its path cross toward the outside of the curve?',
+    '汽车以过高速度进入水平弯道,可用静摩擦力不足。在路面参考系中,为什么它的轨迹会越过弯道外侧?',
+  ),
+  choices: [
+    { label: 'A', text: text('A real outward force pushes the car away from the center.', '一个真实的向外力把汽车推离圆心。') },
+    { label: 'B', text: text('The inward force is too small to turn the velocity direction quickly enough.', '向内合力不足以让速度方向足够快地转向。') },
+    { label: 'C', text: text('The engine cancels gravity and removes the radial acceleration.', '发动机抵消了重力并消除了径向加速度。') },
+    { label: 'D', text: text('The car loses all forward velocity as soon as it slips.', '汽车一打滑就失去全部向前速度。') },
+  ],
+  correctAnswer: 'B',
+  feedback: text(
+    'No outward real force is needed. With less than $mv^2/r$ inward, the velocity direction turns too slowly, so the car crosses outward relative to the curved road.',
+    '不需要真实的向外力。向内合力小于 $mv^2/r$ 时,速度方向转得不够快,因此汽车相对弯曲路面越过外侧。',
+  ),
+};
+
 const checkVerticalLoop: CurriculumClassroomQuestion = {
   id: 'apc-cm-04-loop-threshold',
   title: text('Classroom Check: top-of-loop threshold', '课堂题:圆环顶部临界状态'),
@@ -343,7 +363,16 @@ export const circularMotionLessons: CurriculumLesson[] = [
           text('Never add another force arrow called “centripetal force.”', '不要额外添加一支名为“向心力”的力箭头。'),
         ],
         formulas: [formula('Radial force equation', '径向力方程', '\\sum F_r=ma_c=m\\frac{v^2}{r}')],
-        classroomQuestions: [checkRadialForce],
+        classroomQuestions: [checkRadialForce, checkUnderGrip],
+      },
+      {
+        heading: text('Centripetal and centrifugal are not interchangeable', '向心与离心不能混用'),
+        bullets: [
+          text('“Centripetal” names the inward component of the net real force; it is not an additional interaction.', '“向心”描述真实合力的向内分量,不是额外的相互作用。'),
+          text('“Centrifugal force” is a fictitious force used only in a rotating non-inertial frame.', '“离心力”只是在旋转的非惯性参考系中引入的惯性力。'),
+          text('For standard AP inertial-frame free-body diagrams, draw only real interactions and use $\\sum F_r=mv^2/r$.', '在 AP 常用的惯性参考系自由体图中,只画真实相互作用,并写 $\\sum F_r=mv^2/r$。'),
+          text('For a road car, the engine supplies wheel torque; the road\'s static friction is the external horizontal interaction that changes the car\'s motion.', '对路面汽车而言,发动机向车轮提供转矩;路面对轮胎的静摩擦才是改变汽车运动的水平外部相互作用。'),
+        ],
       },
       {
         heading: text('Optional application: centrifugation', '可选应用:离心分离'),
@@ -356,7 +385,7 @@ export const circularMotionLessons: CurriculumLesson[] = [
       sections: [
         { heading: text('Real force sources', '真实力来源'), images: [radialForceImage], bullets: [text('Tension, friction, normal force, or gravity can supply the inward net force.', '张力、摩擦力、支持力或引力都可能提供向内合力。')] },
         { heading: text('Four-step method', '四步方法'), bullets: [text('Draw the FBD → choose inward → project real forces → set $\\sum F_r=mv^2/r$.', '画自由体图 → 选择向内方向 → 投影真实力 → 写 $\\sum F_r=mv^2/r$。')], formulas: [formula('Radial equation', '径向方程', '\\sum F_r=m\\frac{v^2}{r}')] },
-        { heading: text('Self-check', '自测'), classroomQuestions: [checkRadialForce] },
+        { heading: text('Decision rules', '判断规则'), bullets: [text('Centripetal = inward net-force component. Centrifugal = rotating-frame fictitious force. Neither is an extra real-force arrow on the standard FBD.', '向心 = 合力的向内分量;离心 = 旋转参考系中的惯性力。在标准自由体图中,二者都不是额外的真实力箭头。')], classroomQuestions: [checkRadialForce, checkUnderGrip] },
       ],
     },
   },
@@ -378,6 +407,7 @@ export const circularMotionLessons: CurriculumLesson[] = [
         ],
         bullets: [
           text('At the top, inward is downward. At the bottom, inward is upward.', '在顶部,向内方向向下;在底部,向内方向向上。'),
+          text('At the top: $v>\\sqrt{gr}$ gives $N>0$; $v=\\sqrt{gr}$ gives $N=0$; a slower circular path would require $N<0$, so an ordinary track loses contact.', '在顶部:$v>\\sqrt{gr}$ 时 $N>0$;$v=\\sqrt{gr}$ 时 $N=0$;若更慢仍要维持圆轨道就需要 $N<0$,普通轨道无法拉动物体,因此会失去接触。'),
           text('“Weightless” means the support-force reading is zero, not that gravity disappears.', '“失重”表示支持力读数为零,并不表示重力消失。'),
           text('$v=\\sqrt{gr}$ is a local contact threshold, not the release speed or release height for completing the whole loop.', '$v=\\sqrt{gr}$ 是局部接触临界速率,并不是完成整个圆环所需的释放速率或释放高度。'),
         ],
@@ -389,7 +419,7 @@ export const circularMotionLessons: CurriculumLesson[] = [
       description: text('At the top threshold, set the contact force to zero, not the net force.', '在顶部临界状态下,令接触力为零,而不是令合力为零。'),
       sections: [
         { heading: text('Force picture', '受力图像'), images: [verticalLoopImage] },
-        { heading: text('Core equations and boundary', '核心方程与边界'), formulas: [formula('Top', '顶部', 'mg+N=m\\frac{v^2}{r}'), formula('Threshold', '临界条件', 'N=0\\Rightarrow v_{\\min}=\\sqrt{gr}'), formula('Bottom', '底部', 'N-mg=m\\frac{v^2}{r}')], bullets: [text('The threshold is local. A release-height problem also requires energy.', '该临界条件是局部条件;释放高度问题还需要能量分析。')] },
+        { heading: text('Core equations and boundary', '核心方程与边界'), formulas: [formula('Top', '顶部', 'mg+N=m\\frac{v^2}{r}'), formula('Threshold', '临界条件', 'N=0\\Rightarrow v_{\\min}=\\sqrt{gr}'), formula('Bottom', '底部', 'N-mg=m\\frac{v^2}{r}')], bullets: [text('At the top: $v>\\sqrt{gr}$ gives $N>0$; equality gives $N=0$; a slower object loses contact.', '在顶部:$v>\\sqrt{gr}$ 时 $N>0$;相等时 $N=0$;更慢时物体失去接触。'), text('The threshold is local. A release-height problem also requires energy.', '该临界条件是局部条件;释放高度问题还需要能量分析。')] },
         { heading: text('Self-check', '自测'), classroomQuestions: [checkVerticalLoop] },
       ],
     },
@@ -422,6 +452,11 @@ export const circularMotionLessons: CurriculumLesson[] = [
       {
         heading: text('Conical pendulum', '圆锥摆'),
         images: [conicalPendulumImage],
+        bullets: [
+          text('$\\theta$ is an ordinary plane angle measured from the vertical in a vertical cross section, not a solid angle.', '$\\theta$ 是竖直截面内从竖直方向量起的普通平面角,不是立体角。'),
+          text('Draw only $mg$ and tension, then resolve the tension into vertical and horizontal-inward components.', '只画重力与张力,再把张力分解为竖直分量和水平向内分量。'),
+          text('A unit check catches category errors: $mg\\sin\\theta$ has units of force, not acceleration.', '单位检查可以发现量的类别错误:$mg\\sin\\theta$ 的单位是力,不是加速度。'),
+        ],
         formulas: [
           formula('Vertical component', '竖直分量', 'F_T\\cos\\theta=mg'),
           formula('Radial component', '径向分量', 'F_T\\sin\\theta=m\\frac{v^2}{r}'),
@@ -435,7 +470,7 @@ export const circularMotionLessons: CurriculumLesson[] = [
       description: text('Use vertical balance and a radial force equation in both systems.', '在两类系统中同时使用竖直平衡与径向力方程。'),
       sections: [
         { heading: text('Banked road', '倾斜弯道'), images: [bankedRoadImage], formulas: [formula('No-friction design speed', '无摩擦设计速率', 'v=\\sqrt{rg\\tan\\theta}')], bullets: [text('When friction exists, choose its direction from the slipping tendency.', '存在摩擦时,根据滑动趋势选择摩擦方向。')], classroomQuestions: [checkBankedRoad] },
-        { heading: text('Conical pendulum', '圆锥摆'), images: [conicalPendulumImage], formulas: [formula('Components', '分量方程', 'F_T\\cos\\theta=mg,\\qquad F_T\\sin\\theta=m\\frac{v^2}{r}')], classroomQuestions: [checkConicalPendulum] },
+        { heading: text('Conical pendulum', '圆锥摆'), images: [conicalPendulumImage], bullets: [text('$\\theta$ is a plane angle measured from the vertical. Resolve tension, not weight.', '$\\theta$ 是从竖直方向量起的平面角;分解张力,不是分解重力。'), text('Check units before algebra: $mg\\sin\\theta$ is a force, not an acceleration.', '代数运算前先检查单位:$mg\\sin\\theta$ 是力,不是加速度。')], formulas: [formula('Components', '分量方程', 'F_T\\cos\\theta=mg,\\qquad F_T\\sin\\theta=m\\frac{v^2}{r}')], classroomQuestions: [checkConicalPendulum] },
       ],
     },
   },
@@ -483,7 +518,7 @@ export const circularMotionLessons: CurriculumLesson[] = [
       {
         heading: text('Circular-orbit derivation', '圆轨道推导'),
         bullets: [
-          text('For orbital radius $R$ around central mass $M$, gravity is the only inward force in the ideal model.', '在中心质量为 $M$、轨道半径为 $R$ 的理想模型中,引力是唯一的向内合力。'),
+          text('The satellite is in free fall with no support contact, so there is no normal force. Gravity is the only inward force in the ideal model.', '卫星处于自由落体且没有支撑接触,因此不存在支持力。在理想模型中,引力是唯一的向内合力。'),
           text('Satellite mass cancels. $R$ is measured from the center of the central body, not from its surface.', '卫星质量会约去;$R$ 从中心天体的中心量起,而不是从表面量起。'),
           text('A higher circular orbit has a smaller orbital speed and a longer period.', '更高的圆轨道具有更小的轨道速率和更长的周期。'),
         ],
@@ -503,7 +538,7 @@ export const circularMotionLessons: CurriculumLesson[] = [
       title: text('7. Circular Orbits', '7. 圆轨道'),
       description: text('Gravity supplies the inward force for continuous free fall around a central body.', '引力为绕中心天体持续自由落体提供向内合力。'),
       sections: [
-        { heading: text('Orbit model', '轨道模型'), images: [circularOrbitImage], formulas: [formula('Speed', '速率', 'v=\\sqrt{\\frac{GM}{R}}'), formula('Period', '周期', 'T^2=\\frac{4\\pi^2}{GM}R^3')], bullets: [text('Higher circular orbit: slower speed and longer period. Satellite mass cancels.', '圆轨道越高:速率越小,周期越长;卫星质量会约去。')] },
+        { heading: text('Orbit model', '轨道模型'), images: [circularOrbitImage], formulas: [formula('Speed', '速率', 'v=\\sqrt{\\frac{GM}{R}}'), formula('Period', '周期', 'T^2=\\frac{4\\pi^2}{GM}R^3')], bullets: [text('No contact means no normal force; gravity alone supplies the inward force.', '没有接触就没有支持力;引力独自提供向内合力。'), text('Higher circular orbit: slower speed and longer period. Satellite mass cancels.', '圆轨道越高:速率越小,周期越长;卫星质量会约去。')] },
         { heading: text('Boundary and self-check', '边界与自测'), takeaway: text('Kepler I and II are outside Topic 2.10.', '开普勒第一、第二定律不属于 Topic 2.10。'), classroomQuestions: [checkOrbit] },
       ],
     },

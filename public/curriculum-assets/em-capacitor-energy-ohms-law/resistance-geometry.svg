@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="430" viewBox="0 0 1100 430" role="img" aria-labelledby="title desc">
+  <title id="title">Wire geometry and resistance</title>
+  <desc id="desc">A cylindrical conductor labeled with length L, cross-sectional area A, electric field E, current I, and resistivity rho.</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#2563eb"/></marker></defs>
+  <rect width="1100" height="430" fill="#fff"/>
+  <style>.o{fill:#e9f2ff;stroke:#14213d;stroke-width:7}.l{fill:none;stroke:#14213d;stroke-width:5}.a{fill:none;stroke:#2563eb;stroke-width:8;marker-end:url(#arrow)}.t{font:28px Arial,sans-serif;fill:#14213d}.m{font:italic 34px Georgia,serif;fill:#14213d}</style>
+  <path class="o" d="M210 105H830A105 105 0 0 1 830 315H210Z"/>
+  <ellipse class="o" cx="210" cy="210" rx="70" ry="105"/>
+  <ellipse class="o" cx="830" cy="210" rx="70" ry="105"/>
+  <path class="a" d="M315 210H730"/><text class="m" x="525" y="188" text-anchor="middle">I, E</text>
+  <path class="l" d="M210 360V395M830 360V395M210 380H830"/><path class="l" d="M210 380l18-10m-18 10l18 10m602-10l-18-10m18 10l-18 10"/>
+  <text class="m" x="520" y="420" text-anchor="middle">L</text>
+  <path class="l" d="M830 210H1000"/><text class="m" x="1015" y="220">A</text>
+  <text class="t" x="520" y="70" text-anchor="middle">Uniform conductor with material resistivity ρ</text>
+</svg>
