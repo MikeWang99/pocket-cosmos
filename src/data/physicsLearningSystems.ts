@@ -10,6 +10,10 @@ import {
   type LocalizedText,
 } from './apPhysicsCurriculum';
 import { circularMotionLessons } from './circularMotionKnowledgeMap';
+import {
+  capacitorEnergyAndDielectricLessons,
+  electricCurrentToOhmsLawLessons,
+} from './emCapacitorEnergyToOhmsLawKnowledgeMap';
 
 export type LearningSystemId = 'ap' | 'alevel' | 'ib' | 'competition';
 
@@ -2321,7 +2325,7 @@ const apEnrichment: Record<string, Enrichment> = {
       diagram('capacitor-plates', 'Parallel-Plate Capacitor', '平行板电容器', 'Plate area, separation, and dielectric material determine capacitance.', '极板面积、间距和电介质材料共同决定电容。'),
       diagram('conductor-equilibrium', 'Conductor at Electrostatic Equilibrium', '静电平衡导体', 'Charge resides on the surface and the electric field inside the conductor is zero.', '电荷分布在表面,导体内部电场为零。'),
     ],
-    lessons: [emConductorsCapacitorsLesson],
+    lessons: [emConductorsCapacitorsLesson, ...capacitorEnergyAndDielectricLessons],
   },
   'electricity-magnetism:11': {
     ...enrich('circuits', 'circuits', 'circuits', [
@@ -2342,7 +2346,7 @@ const apEnrichment: Record<string, Enrichment> = {
       diagram('rc-transient', 'RC Transient Graph', 'RC 暂态图像', 'Charging rises toward a final value; discharging decays exponentially.', '充电逐渐接近最终值,放电按指数衰减。'),
       diagram('kirchhoff-network', 'Compound Circuit Network', '复合电路网络', 'Junctions encode charge conservation; loops encode energy conservation.', '节点体现电荷守恒,回路体现能量守恒。'),
     ],
-    lessons: [emElectricCircuitsLesson],
+    lessons: [...electricCurrentToOhmsLawLessons, emElectricCircuitsLesson],
   },
   'electricity-magnetism:12': enrich('magnetism', 'magnetism', 'magnetism', [
     ['Use Biot-Savart and Ampere\'s law for magnetic fields.', '用毕奥-萨伐尔定律和安培定律求磁场。'],
