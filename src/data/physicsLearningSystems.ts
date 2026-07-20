@@ -10,6 +10,7 @@ import {
   type LocalizedText,
 } from './apPhysicsCurriculum';
 import { circularMotionLessons } from './circularMotionKnowledgeMap';
+import { rotationalDynamicsLessons, rotatingSystemsLessons } from './rotationKnowledgeMap';
 import {
   capacitorEnergyAndDielectricLessons,
   electricCurrentToOhmsLawLessons,
@@ -2282,16 +2283,45 @@ const apEnrichment: Record<string, Enrichment> = {
     ]),
     lessons: [impulseMomentumLesson, centerOfMassCalculusLesson],
   },
-  'mechanics:5': enrich('rotation', 'rotation', 'rotation', [
-    ['Use rotational kinematics and torque with calculus notation.', '用微积分符号处理转动运动学和力矩。'],
-    ['Compute or use rotational inertia for extended bodies.', '计算或使用刚体转动惯量。'],
-    ['Analyze rotational equilibrium and angular acceleration.', '分析转动平衡和角加速度。'],
-  ]),
-  'mechanics:6': enrich('rotation', 'rotation', 'rotation', [
-    ['Connect angular work, rotational kinetic energy, and rolling motion.', '连接转动做功、转动动能和滚动运动。'],
-    ['Use angular impulse and angular momentum conservation.', '使用角冲量和角动量守恒。'],
-    ['Analyze satellite motion with energy and angular momentum ideas.', '用能量和角动量思想分析卫星运动。'],
-  ]),
+  'mechanics:5': {
+    ...enrich('rotation', 'rotation', 'rotation', [
+      ['Use rotational kinematics and graph calculus about a specified axis.', '围绕指定转轴使用转动运动学与图像微积分。'],
+      ['Connect force location, direction, torque, and rotational inertia.', '连接力的作用位置、方向、力矩与转动惯量。'],
+      ['Analyze equilibrium and coupled translation-rotation dynamics.', '分析转动平衡以及平动-转动耦合动力学。'],
+    ]),
+    formulas: [
+      formula('Rotational kinematics', '转动运动学', '\\omega=\\frac{d\\theta}{dt},\\quad \\alpha=\\frac{d\\omega}{dt}'),
+      formula('Linear-angular bridge', '线量与角量的联系', 's=r\\Delta\\theta,\\quad v_T=r\\omega,\\quad a_T=r\\alpha'),
+      formula('Torque', '力矩', '\\vec\\tau=\\vec r\\times\\vec F'),
+      formula('Rotational inertia', '转动惯量', 'I=\\sum m_ir_i^2=\\int r^2\\,dm'),
+      formula('Parallel-axis theorem', '平行轴定理', 'I^{\\prime}=I_{cm}+Md^2'),
+      formula('Rotational dynamics', '转动动力学', '\\sum\\tau=I\\alpha'),
+    ],
+    diagrams: [
+      diagram('rotation', 'Torque About a Chosen Axis', '相对指定转轴的力矩', 'Force magnitude, direction, point of application, and axis jointly determine torque.', '力的大小、方向、作用点和转轴共同决定力矩。'),
+    ],
+    lessons: rotationalDynamicsLessons,
+  },
+  'mechanics:6': {
+    ...enrich('rotation', 'rotation', 'rotation', [
+      ['Connect torque through angle with rotational energy transfer.', '把力矩跨越角位移与转动能量转移连接起来。'],
+      ['Use angular impulse, angular momentum, and system selection.', '使用角冲量、角动量与系统选择。'],
+      ['Distinguish no-slip rolling from slipping and apply orbital conservation laws.', '区分无滑动滚动与滑动,并应用轨道守恒定律。'],
+    ]),
+    formulas: [
+      formula('Rotational kinetic energy', '转动动能', 'K_{rot}=\\frac12I\\omega^2'),
+      formula('Work by torque', '力矩做功', 'W=\\int\\tau\\,d\\theta'),
+      formula('Angular momentum', '角动量', '\\vec L=\\vec r\\times\\vec p,\\quad L_{rigid}=I\\omega'),
+      formula('Angular impulse', '角冲量', '\\Delta L=\\int\\tau_{ext}\\,dt'),
+      formula('Rolling without slipping', '无滑动滚动', 'v_{cm}=R\\omega,\\quad a_{cm}=R\\alpha'),
+      formula('Orbital energy and escape', '轨道能量与逃逸', 'E_{circ}=-\\frac{GMm}{2r},\\quad v_{esc}=\\sqrt{\\frac{2GM}{r}}'),
+    ],
+    diagrams: [
+      diagram('energy-bar', 'Rotational Energy Accounting', '转动能量核算', 'Separate center-of-mass translation from rotation about the center of mass.', '把质心平动与绕质心转动分开核算。'),
+      diagram('orbit-star', 'Orbit as a Conserved System', '作为守恒系统的轨道', 'Energy and angular momentum constrain circular and elliptical orbital motion.', '能量与角动量共同约束圆轨道和椭圆轨道运动。'),
+    ],
+    lessons: rotatingSystemsLessons,
+  },
   'mechanics:7': enrich('oscillation', 'oscillation', 'oscillation', [
     ['Derive SHM behavior from differential equations or restoring-force models.', '从微分方程或回复力模型推导简谐运动。'],
     ['Connect phase-space, energy, and sinusoidal graph representations.', '连接相空间、能量和正弦图像表示。'],
