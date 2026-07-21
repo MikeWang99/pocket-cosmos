@@ -224,6 +224,12 @@ const capacitorEnergyLesson: CurriculumLesson = {
       bullets: [text('Battery disconnected: use $Q$ fixed. Battery connected: use $\\Delta V$ fixed.', '断开电池时 $Q$ 固定;连接电池时 $\\Delta V$ 固定。'), text('If geometry changes, recalculate $C$ before comparing energy.', '若几何结构改变,先重新计算 $C$,再比较能量。'), text('Capacitor energy alone need not be conserved: the battery or an external mechanical agent may do work.', '电容器自身的能量不一定守恒:电池或外部机械力可能做功。')],
       classroomQuestions: [capacitorEnergyCheck],
     },
+    {
+      heading: text('Teaching caution: a high voltage is not automatically safe', '教学注意:高电压不等于绝对安全'),
+      paragraphs: [text('A classroom Van de Graaff generator can be modeled approximately as a conducting sphere with capacitance to its surroundings. Its voltage may be large while its stored charge and deliverable sustained current are limited, but this must not be shortened to “high voltage is safe.”', '教学用范德格拉夫起电机可以近似看作相对于周围环境具有电容的导体球。它的电压可能很高,但储存电荷和可持续输出电流通常有限;教学时不能把这一点简化成“高电压是安全的”。')],
+      formulas: [formula('Equivalent energy forms', '等价储能形式', 'U_C=\\frac12C(\\Delta V)^2=\\frac{Q^2}{2C}=\\frac12Q\\Delta V')],
+      bullets: [text('Electrical risk depends on more than voltage: available energy, source impedance, sustained current, exposure duration, and the path through the body all matter.', '电气风险不只由电压决定,还取决于可提供能量、电源阻抗、持续电流、接触时间以及电流通过人体的路径。'), text('Describe a demonstration device as lower risk only under its rated classroom procedure; never describe it as unconditionally safe.', '只能说教学装置在额定课堂操作规范下风险较低,不能表述为无条件安全。')],
+    },
   ],
   studentVersion: {
     title: text('Capacitor Energy', '电容储能'),
@@ -288,6 +294,10 @@ const electricCurrentLesson: CurriculumLesson = {
       bullets: [text('Current $I$ is a scalar with an assigned circuit direction; current density $\\vec J$ is a vector field.', '电流 $I$ 是带指定电路方向的标量;电流密度 $\\vec J$ 是矢量场。'), text('Conventional current follows positive charge. Electron drift in a metal points the other way.', '传统电流方向按正电荷运动定义;金属中的电子漂移方向相反。'), text('Zero current means zero net drift, not zero carrier speed.', '电流为零表示净漂移为零,不是载流子速率为零。')],
       classroomQuestions: [currentCheck],
     },
+    {
+      heading: text('Teaching precision: continuity, direction, and scattering', '教学注意:连续性、方向与散射'),
+      bullets: [text('Say “the current is the same everywhere” only for a steady-state single series path. At a junction, branch currents can differ; during a transient, local charge accumulation can temporarily change the current from place to place.', '只有在稳恒状态的单一串联路径中,才能说“各处电流相同”。在结点处各支路电流可以不同;在暂态过程中,局部电荷积累也可能使不同位置的电流暂时不同。'), text('The steady-series result follows from charge conservation, not from the definition of current alone.', '稳恒串联电路中电流相等来自电荷守恒,并非只由电流定义直接决定。'), text('In an ohmic metal, conventional current and $\\vec J$ point with $\\vec E$, while electron drift points opposite $\\vec E$.', '在欧姆金属中,传统电流和 $\\vec J$ 与 $\\vec E$ 同向,电子漂移则与 $\\vec E$ 反向。'), text('Model resistance as carrier scattering mainly from lattice vibrations, impurities, and defects—not as electrons colliding primarily with one another.', '应把电阻解释为载流子主要受到晶格振动、杂质和缺陷的散射,而不是电子之间相互碰撞。'), text('Use $v_d\\propto E$ only within an ohmic regime for fixed material conditions and approximately constant temperature.', '只有在材料条件固定、温度近似不变的欧姆区间内,才能使用 $v_d\\propto E$。')],
+    },
   ],
   studentVersion: {
     title: text('Electric Current', '电流'),
@@ -313,6 +323,10 @@ const simpleCircuitsLesson: CurriculumLesson = {
       heading: text('Circuit states and loop language', '电路状态与回路语言'),
       bullets: [text('A closed path can support steady current; an open path contains a break.', '闭合路径可以支持稳恒电流;断路路径含有断点。'), text('A short circuit provides a path with negligible potential difference that bypasses a load.', '短路提供近乎无电势差的路径并绕过负载。'), text('A circuit can contain multiple loops, and one element can belong to more than one loop.', '电路可以包含多个回路,同一元件也可以属于多个回路。'), text('Current arrows follow conventional-current direction.', '电流箭头按传统电流方向标注。')],
       classroomQuestions: [circuitCheck],
+    },
+    {
+      heading: text('Teaching caution: do not mix up open circuits, shorts, and electric shock', '教学注意:不要混淆断路、短路与触电'),
+      bullets: [text('A broken lamp filament normally creates an open circuit. A separate low-resistance wire placed across the lamp creates a short that bypasses it.', '灯丝断裂通常形成断路;另加低电阻导线跨接灯泡两端,才会形成绕过灯泡的短路。'), text('Define a short circuit as an unintended very-low-resistance path across a potential difference, usually producing a dangerously large current.', '短路应定义为电势不同的两点之间出现非预期的极低电阻通路,通常会产生危险的大电流。'), text('Touching a live conductor may create a current path through the body to ground or neutral. That is an electric-shock path and should not automatically be labeled a short circuit.', '接触火线可能使人体与地面或中性线之间形成电流通路。这是触电通路,不能自动等同于短路。')],
     },
     {
       heading: text('Schematics preserve topology', '电路图保留连接拓扑'),
@@ -344,6 +358,17 @@ const resistanceLesson: CurriculumLesson = {
       heading: text('From the local material model to resistance', '从局部材料模型到电阻'),
       formulas: [formula('Local material relation', '局部材料关系', '\\vec E=\\rho\\vec J,\\qquad \\sigma=\\frac1\\rho'), formula('Uniform conductor', '均匀导体', 'R=\\rho\\frac{L}{A}'), formula('Position-dependent resistivity', '位置相关电阻率', 'R=\\int_0^L\\frac{\\rho(x)}{A(x)}\\,dx')],
       bullets: [text('Resistivity $\\rho$ characterizes material behavior; resistance $R$ also depends on geometry.', '电阻率 $\\rho$ 描述材料行为;电阻 $R$ 还取决于几何。'), text('For a uniform wire, use $\\Delta V=EL$, $I=JA$, and $E=\\rho J$ to obtain $R=\\Delta V/I=\\rho L/A$.', '对均匀导线,结合 $\\Delta V=EL$、$I=JA$ 与 $E=\\rho J$ 得到 $R=\\Delta V/I=\\rho L/A$。'), text('If $\\rho$ or $A$ varies along the wire, add differential resistances in series using the integral.', '若 $\\rho$ 或 $A$ 沿导线变化,用积分累加串联的微元电阻。')],
+    },
+    {
+      heading: text('Teaching derivation: explain a thin wire without the traffic-jam model', '教学推导:不用“电子堵塞”解释细导线'),
+      paragraphs: [text('For a steady current through the same material, a smaller cross-sectional area requires a larger current density. The local material relation then requires a stronger electric field, so the potential drops more rapidly with distance.', '对于同种材料中的稳恒电流,横截面积越小,所需电流密度越大。局部材料关系进一步要求更强的电场,因此电势随距离下降得更快。')],
+      formulas: [formula('Reasoning chain', '推理链条', 'A\\downarrow\\;\\Longrightarrow\\;J=\\frac{I}{A}\\uparrow\\;\\Longrightarrow\\;E=\\rho J\\uparrow\\;\\Longrightarrow\\;\\left|\\frac{dV}{dx}\\right|\\uparrow'), formula('Uniform-wire derivation', '均匀导线推导', '\\Delta V=EL=\\rho\\frac{I}{A}L,\\qquad R=\\frac{\\Delta V}{I}=\\rho\\frac{L}{A}')],
+      bullets: [text('Do not say that current “moves faster.” The current $I$ remains the same in a steady series path; the drift speed $v_d$ and current density $J$ increase in the thinner section.', '不要说“电流流得更快”。稳恒串联路径中的电流 $I$ 保持相同;增大的是细导线中的漂移速率 $v_d$ 和电流密度 $J$。'), text('Do not say that electrons are too large to fit or continuously pile up at the entrance. A small surface-charge distribution establishes the required internal electric field; bulk charge does not keep accumulating in steady state.', '不要说电子太大而无法通过,也不要说电子持续堆积在入口。微小的表面电荷分布会建立所需的内部电场;稳恒状态下导体内部不会持续积累净电荷。')],
+    },
+    {
+      heading: text('Energy language: keep the sign of charge visible', '能量表述:始终保留电荷符号'),
+      formulas: [formula('Potential-energy change', '电势能变化', '\\Delta U=q\\,\\Delta V'), formula('Power transferred in a resistor', '电阻中的功率转移', 'P=I\\Delta V=I^2R=\\frac{(\\Delta V)^2}{R}')],
+      bullets: [text('A positive charge moving to lower potential loses electric potential energy. An electron has $q<0$ and drifts opposite conventional current, so do not describe every carrier as moving from high potential to low potential.', '正电荷移向低电势时电势能减小。电子满足 $q<0$,且漂移方向与传统电流相反,因此不能把所有载流子都描述成从高电势移向低电势。'), text('The electric field transfers energy to carriers, and scattering transfers that energy to the lattice, producing thermal energy.', '电场向载流子传递能量,载流子再通过散射把能量传给晶格,最终表现为热能。')],
     },
     {
       heading: text('Temperature boundary and geometry check', '温度边界与几何检查'),
