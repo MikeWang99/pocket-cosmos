@@ -1,6 +1,12 @@
 import { calculusForPhysicsMeta, calculusForPhysicsSteps } from './calculusForPhysics';
 import { dynamicsMultipleChoiceMeta, dynamicsMultipleChoiceSteps } from './dynamicsMultipleChoice';
 import { practiceSetMeta as frq2025Meta, practiceSteps as frq2025Steps } from './frq2025Mechanics';
+import {
+  igcseCieChapter1ClassroomMeta,
+  igcseCieChapter1ClassroomSteps,
+  igcseCieChapter1HomeworkMeta,
+  igcseCieChapter1HomeworkSteps,
+} from './igcseCieChapter1MultipleChoice';
 import { kinematicsMultipleChoiceMeta, kinematicsMultipleChoiceSteps } from './kinematicsMultipleChoice';
 import { linearMomentumLabDesignMeta, linearMomentumLabDesignSteps } from './linearMomentumLabDesign';
 import { physicsBowlEmMeta, physicsBowlEmSteps } from './physicsBowlEmQuestionBank';
@@ -9,7 +15,7 @@ import type { PracticeStep } from '../types/practice';
 
 export interface PracticeSet {
   id: string;
-  category: 'mechanics' | 'electromagnetism';
+  category: 'mechanics' | 'electromagnetism' | 'igcse';
   label: string;
   title: string;
   subtitle: string;
@@ -74,5 +80,19 @@ export const practiceSets: PracticeSet[] = [
     label: 'Physics Bowl 物理碗精选题库',
     ...physicsBowlEmMeta,
     steps: physicsBowlEmSteps,
+  },
+  {
+    id: 'igcse-cie-ch1-classroom',
+    category: 'igcse',
+    label: 'Classroom Practice',
+    ...igcseCieChapter1ClassroomMeta,
+    steps: igcseCieChapter1ClassroomSteps,
+  },
+  {
+    id: 'igcse-cie-ch1-homework',
+    category: 'igcse',
+    label: 'Homework',
+    ...igcseCieChapter1HomeworkMeta,
+    steps: igcseCieChapter1HomeworkSteps,
   },
 ];
