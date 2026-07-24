@@ -229,13 +229,26 @@ const copyTextToClipboard = async (value: string) => {
   document.body.removeChild(textArea);
 };
 
-const QuestionMedia: React.FC<{ step: PracticeStep; label: string }> = ({ step, label }) => {
+const QuestionMedia: React.FC<{ step: PracticeStep; label: string; questionLabel: string }> = ({
+  step,
+  label,
+  questionLabel,
+}) => {
   if (!step.image) return null;
+  const isQuestionImage = step.image.role === 'question';
 
   return (
-    <figure className="practice-media">
-      <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-3">{label}</div>
-      <img src={step.image.src} alt={step.image.alt} className="practice-media-image" />
+    <figure className={`practice-media ${isQuestionImage ? 'practice-media--question' : ''}`}>
+      <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-3">
+        {isQuestionImage ? questionLabel : label}
+      </div>
+      <div className={isQuestionImage ? 'practice-question-image-scroll' : undefined}>
+        <img
+          src={step.image.src}
+          alt={step.image.alt}
+          className={`practice-media-image ${isQuestionImage ? 'practice-question-image' : ''}`}
+        />
+      </div>
       {step.image.caption && <figcaption>{step.image.caption}</figcaption>}
     </figure>
   );
@@ -266,6 +279,8 @@ export const PracticeSection: React.FC = () => {
     if (setId === 'work-energy-multiple-choice') return t.practice.sets.workEnergyMultipleChoice;
     if (setId === 'linear-momentum-lab-design') return t.practice.sets.linearMomentumLabDesign;
     if (setId === 'physics-bowl-em-question-bank') return t.practice.sets.physicsBowlEmQuestionBank;
+    if (setId === 'igcse-cie-ch1-classroom') return t.practice.sets.igcseCieChapter1Classroom;
+    if (setId === 'igcse-cie-ch1-homework') return t.practice.sets.igcseCieChapter1Homework;
     return t.practice.sets.kinematicsMultipleChoice;
   };
   const setCopy = getSetCopy(activeSet.id);
@@ -303,6 +318,11 @@ export const PracticeSection: React.FC = () => {
       id: 'electromagnetism',
       label: t.practice.setGroups.electromagnetism,
       sets: practiceSets.filter((set) => set.category === 'electromagnetism'),
+    },
+    {
+      id: 'igcse',
+      label: t.practice.setGroups.igcse,
+      sets: practiceSets.filter((set) => set.category === 'igcse'),
     },
   ].filter((group) => group.sets.length > 0);
 
@@ -635,6 +655,18 @@ export const PracticeSection: React.FC = () => {
                   <div className="min-w-0">
                     <div className="text-xs uppercase tracking-widest text-nebula mb-3">{activeStep.source}</div>
                     <h2 className="text-balance font-serif text-2xl text-white md:text-3xl">{activeStep.title}</h2>
+                    {!!activeStep.tags?.length && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {activeStep.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full border border-nebula/20 bg-nebula/5 px-2.5 py-1 text-[10px] font-semibold text-nebula"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   <div className="flex shrink-0 flex-wrap items-center gap-2">
                     <button
@@ -664,7 +696,11 @@ export const PracticeSection: React.FC = () => {
                 </div>
 
                 <div className="mt-4 grid gap-4">
-                  <QuestionMedia step={activeStep} label={t.practice.diagram} />
+                  <QuestionMedia
+                    step={activeStep}
+                    label={t.practice.diagram}
+                    questionLabel={t.practice.questionImage}
+                  />
                 </div>
               </div>
 
