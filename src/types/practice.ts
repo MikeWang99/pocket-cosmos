@@ -19,6 +19,7 @@ export interface PracticeStep {
     src: string;
     alt: string;
     caption?: string;
+    role?: 'diagram' | 'question';
   };
   maxScore: number;
   source: string;

@@ -101,13 +101,18 @@ export const i18n = {
     curriculum: {
       sectionLabel: 'Physics Knowledge Map',
       title: 'One-Stop Physics Learning Map',
-      description: 'A growing one-stop map for AP Physics, Cambridge A-Level Physics, IB Physics, competition preparation, and independent study. Each unit connects official topic structure with learning focus, key formulas, and original diagrams.',
+      description: 'A growing one-stop map for AP Physics, CIE IGCSE Physics, Cambridge A-Level Physics, IB Physics, competition preparation, and independent study. Each unit connects official topic structure with learning focus, key formulas, and original diagrams.',
       systemSelector: 'Select a physics learning system',
       systems: {
         ap: {
           label: 'AP Physics System',
           description: 'College Board AP Physics 1, 2, C Mechanics, and C Electricity and Magnetism.',
           status: 'Available',
+        },
+        igcse: {
+          label: 'CIE IGCSE Physics System',
+          description: 'Cambridge IGCSE Physics 0625 knowledge maps and chapter question banks.',
+          status: 'Chapter 1 available',
         },
         alevel: {
           label: 'A-Level Physics System',
@@ -142,7 +147,7 @@ export const i18n = {
           description: 'Notes, review sheets, examples, and revision plans will be added as the system expands.',
         },
       ],
-      courseSelector: 'Select an AP Physics course',
+      courseSelector: 'Select a physics course',
       units: 'units',
       topics: 'topics',
       unit: 'Unit',
@@ -171,6 +176,7 @@ export const i18n = {
       task: 'Your Task',
       equations: 'Model / Equation',
       diagram: 'Diagram',
+      questionImage: 'Question',
       knowledgePoints: 'Knowledge Points',
       response: 'Reasoning Response',
       scoreResponse: 'Score Response',
@@ -205,6 +211,7 @@ export const i18n = {
       setGroups: {
         mechanics: 'Mechanics',
         electromagnetism: 'Electricity & Magnetism',
+        igcse: 'CIE IGCSE Physics',
       },
       sets: {
         calculusForPhysics: {
@@ -248,6 +255,18 @@ export const i18n = {
           title: 'Physics Bowl Selected E&M Question Bank',
           eyebrow: 'AP Physics C Electricity and Magnetism',
           description: 'Practice selected Physics Bowl questions on Coulomb’s law, electric fields, electric potential, electric potential energy, and electrostatic conductors.',
+        },
+        igcseCieChapter1Classroom: {
+          label: 'Classroom Practice',
+          title: 'CIE IGCSE Physics: Chapter 1 Classroom Practice',
+          eyebrow: 'CIE IGCSE Physics 0625',
+          description: 'Difficulty 1–2 multiple-choice questions on physical quantities, motion, mass and weight, density, forces, momentum, energy, work, power, and pressure.',
+        },
+        igcseCieChapter1Homework: {
+          label: 'Homework',
+          title: 'CIE IGCSE Physics: Chapter 1 Homework',
+          eyebrow: 'CIE IGCSE Physics 0625',
+          description: 'Difficulty 3–5 multiple-choice questions for independent consolidation and challenge across Chapter 1: Motion, Forces and Energy.',
         },
       },
     },
@@ -385,13 +404,18 @@ export const i18n = {
     curriculum: {
       sectionLabel: '物理知识地图',
       title: '一站式物理学习地图',
-      description: '面向 AP、Cambridge A-Level、IB、竞赛拓展与自主学习的一站式物理知识体系。每个单元会把官方 topic 结构、学习重点、重点公式和原创示意图连接起来。',
+      description: '面向 AP、CIE IGCSE、Cambridge A-Level、IB、竞赛拓展与自主学习的一站式物理知识体系。每个单元会把官方 topic 结构、学习重点、重点公式和原创示意图连接起来。',
       systemSelector: '选择一个物理学习体系',
       systems: {
         ap: {
           label: 'AP 物理体系',
           description: '覆盖 AP 物理 1、2、C 力学与 C 电磁学。',
           status: '已开放',
+        },
+        igcse: {
+          label: 'CIE IGCSE 物理体系',
+          description: 'Cambridge IGCSE Physics 0625 知识地图与分章节题库。',
+          status: 'Chapter 1 已开放',
         },
         alevel: {
           label: 'A-Level 物理体系',
@@ -426,7 +450,7 @@ export const i18n = {
           description: '后续会补充讲义、复习表、例题和阶段学习计划。',
         },
       ],
-      courseSelector: '选择一门大学先修物理课程',
+      courseSelector: '选择一门物理课程',
       units: '个单元',
       topics: '个知识点',
       unit: '单元',
@@ -455,6 +479,7 @@ export const i18n = {
       task: '任务',
       equations: '模型 / 公式',
       diagram: '图像',
+      questionImage: '题目',
       knowledgePoints: '考察知识点',
       response: '作答区',
       scoreResponse: '评分',
@@ -489,6 +514,7 @@ export const i18n = {
       setGroups: {
         mechanics: '力学',
         electromagnetism: '电磁学',
+        igcse: 'CIE IGCSE 物理',
       },
       sets: {
         calculusForPhysics: {
@@ -532,6 +558,18 @@ export const i18n = {
           title: 'Physics Bowl 物理碗精选题库',
           eyebrow: 'AP Physics C：电磁学',
           description: '精选物理碗电磁学习题，覆盖库仑定律、电场、电势、电势能、电能守恒与静电平衡导体等知识点。',
+        },
+        igcseCieChapter1Classroom: {
+          label: '课堂练习',
+          title: 'CIE IGCSE 物理：Chapter 1 课堂练习',
+          eyebrow: 'CIE IGCSE Physics 0625',
+          description: '收录难度 1–2 的选择题，覆盖物理量与测量、运动、质量与重量、密度、力、动量、能量、功、功率和压强。',
+        },
+        igcseCieChapter1Homework: {
+          label: '家庭作业',
+          title: 'CIE IGCSE 物理：Chapter 1 家庭作业',
+          eyebrow: 'CIE IGCSE Physics 0625',
+          description: '收录难度 3–5 的选择题，用于 Chapter 1：Motion, Forces and Energy 的独立巩固与进阶训练。',
         },
       },
     },
