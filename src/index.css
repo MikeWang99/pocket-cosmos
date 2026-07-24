@@ -211,6 +211,22 @@ textarea::placeholder {
   background: #ffffff;
 }
 
+.practice-media--question {
+  overflow: hidden;
+}
+
+.practice-question-image-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+
+.practice-question-image {
+  width: 100%;
+  min-width: 680px;
+  max-height: none;
+}
+
 .practice-media figcaption {
   margin-top: 10px;
   color: #64748b;
@@ -254,6 +270,10 @@ textarea::placeholder {
   .practice-equations,
   .practice-media {
     padding: 12px;
+  }
+
+  .practice-question-image {
+    min-width: 620px;
   }
 
   .practice-equation {

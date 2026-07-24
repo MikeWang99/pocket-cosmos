@@ -16,7 +16,7 @@ import {
   electricCurrentToOhmsLawLessons,
 } from './emCapacitorEnergyToOhmsLawKnowledgeMap';
 
-export type LearningSystemId = 'ap' | 'alevel' | 'ib' | 'competition';
+export type LearningSystemId = 'ap' | 'igcse' | 'alevel' | 'ib' | 'competition';
 
 export interface LearningSystem {
   id: LearningSystemId;
@@ -2415,6 +2415,51 @@ const unit = (
   ...enrichment,
 });
 
+const cambridgeIgcse0625: CurriculumCourse = {
+  id: 'cambridge-igcse-0625',
+  name: text('Cambridge IGCSE Physics 0625', '剑桥 IGCSE 物理 0625'),
+  level: text('IGCSE', 'IGCSE'),
+  sourceUrl: 'https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physics-0625/',
+  sourceLabel: text('Cambridge IGCSE Physics 0625', '剑桥 IGCSE 物理 0625'),
+  units: [
+    unit(1, 'Motion, Forces and Energy', '运动、力与能量', 'Chapter 1 question bank', [
+      topic('1.1', 'Physical quantities and measurement techniques', '物理量与测量技术'),
+      topic('1.2', 'Motion', '运动'),
+      topic('1.3', 'Mass and weight', '质量与重量'),
+      topic('1.4', 'Density', '密度'),
+      topic('1.5', 'Forces', '力'),
+      topic('1.6', 'Momentum', '动量'),
+      topic('1.7', 'Energy, work and power', '能量、功与功率'),
+      topic('1.8', 'Pressure', '压强'),
+    ], {
+      summary: text(
+        'Build the mechanics foundation from measurement and motion through forces, momentum, energy, and pressure.',
+        '从测量和运动出发,逐步建立力、动量、能量与压强的力学基础。',
+      ),
+      focus: focus(
+        ['Measure physical quantities accurately and use consistent SI units.', '准确测量物理量并统一使用 SI 单位。'],
+        ['Connect motion descriptions with forces, momentum, and energy transfers.', '把运动描述与力、动量和能量转化联系起来。'],
+        ['Apply density and pressure models to solids, liquids, and everyday systems.', '把密度与压强模型用于固体、液体和日常系统。'],
+      ),
+      formulas: [
+        ...formulas.kinematics,
+        formula('Weight', '重量', 'W=mg'),
+        formula('Density', '密度', '\\rho=\\frac{m}{V}'),
+        formula('Resultant force', '合力', 'F=ma'),
+        formula('Momentum', '动量', 'p=mv'),
+        ...formulas.energy,
+        formula('Pressure', '压强', 'p=\\frac{F}{A}'),
+      ],
+      diagrams: [
+        ...diagrams.kinematics,
+        ...diagrams.dynamics,
+        ...diagrams.momentum,
+        ...diagrams.energy,
+      ],
+    }),
+  ],
+};
+
 const cambridge9702: CurriculumCourse = {
   id: 'cambridge-9702',
   name: text('Cambridge International AS & A Level Physics 9702', '剑桥国际 AS & A Level 物理 9702'),
@@ -2638,6 +2683,20 @@ export const learningSystems: LearningSystem[] = [
       'AP 单元结构、知识点名称和考试占比参考 College Board 官方课程与考试说明。重点整理、公式、中文翻译和示意图由口袋宇宙制作。',
     ),
     courses: enrichApCourses(),
+  },
+  {
+    id: 'igcse',
+    label: text('CIE IGCSE Physics System', 'CIE IGCSE 物理体系'),
+    description: text(
+      'Cambridge IGCSE Physics 0625 with syllabus-aligned knowledge maps and chapter question banks.',
+      '面向 Cambridge IGCSE Physics 0625 的知识地图与分章节题库。',
+    ),
+    status: text('Chapter 1 available', 'Chapter 1 已开放'),
+    sourceNote: text(
+      'The course structure follows Cambridge IGCSE Physics 0625. The current practice collection covers Chapter 1 MCQ questions only; structured questions are not included.',
+      '课程结构参考 Cambridge IGCSE Physics 0625。当前题库仅开放 Chapter 1 选择题,不包含结构化问答题。',
+    ),
+    courses: [cambridgeIgcse0625],
   },
   {
     id: 'alevel',
