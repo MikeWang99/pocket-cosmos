@@ -267,6 +267,7 @@ export const PracticeSection: React.FC = () => {
   const [results, setResults] = useState<Record<string, EvaluationResult>>({});
   const [isListening, setIsListening] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
+  const [difficultyFilter, setDifficultyFilter] = useState<'all' | 'easy' | 'medium' | 'hard'>('all');
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const { resetSavedAttempts, savedAttempts, saveAttempt, syncError, syncState } = usePracticeProgress(activeSetId);
 
@@ -281,11 +282,34 @@ export const PracticeSection: React.FC = () => {
     if (setId === 'physics-bowl-em-question-bank') return t.practice.sets.physicsBowlEmQuestionBank;
     if (setId === 'igcse-cie-ch1-classroom') return t.practice.sets.igcseCieChapter1Classroom;
     if (setId === 'igcse-cie-ch1-homework') return t.practice.sets.igcseCieChapter1Homework;
+    if (setId === 'igcse-cie-ch1-topic-1-1') return t.practice.sets.igcseTopic11;
+    if (setId === 'igcse-cie-ch1-topic-1-2') return t.practice.sets.igcseTopic12;
+    if (setId === 'igcse-cie-ch1-topic-1-3') return t.practice.sets.igcseTopic13;
+    if (setId === 'igcse-cie-ch1-topic-1-4') return t.practice.sets.igcseTopic14;
+    if (setId === 'igcse-cie-ch1-topic-1-5') return t.practice.sets.igcseTopic15;
+    if (setId === 'igcse-cie-ch1-topic-1-6') return t.practice.sets.igcseTopic16;
+    if (setId === 'igcse-cie-ch1-topic-1-7') return t.practice.sets.igcseTopic17;
+    if (setId === 'igcse-cie-ch1-topic-1-8') return t.practice.sets.igcseTopic18;
     return t.practice.sets.kinematicsMultipleChoice;
   };
   const setCopy = getSetCopy(activeSet.id);
-  const practiceSteps = activeSet.steps;
-  const activeStep = practiceSteps[activeIndex];
+  const isIgcseSet = activeSet.category === 'igcse';
+
+  // Filter steps by difficulty for IGCSE sets
+  const practiceSteps = useMemo(() => {
+    if (!isIgcseSet || difficultyFilter === 'all') return activeSet.steps;
+    return activeSet.steps.filter((step) => {
+      const diffTag = step.tags?.find((tag) => tag.startsWith('Difficulty '));
+      if (!diffTag) return true;
+      const level = parseInt(diffTag.replace('Difficulty ', ''), 10);
+      if (difficultyFilter === 'easy') return level <= 2;
+      if (difficultyFilter === 'medium') return level === 3;
+      if (difficultyFilter === 'hard') return level >= 4;
+      return true;
+    });
+  }, [activeSet.steps, isIgcseSet, difficultyFilter]);
+
+  const activeStep = practiceSteps[activeIndex] ?? practiceSteps[0];
   const isActiveMultipleChoice = isMultipleChoiceStep(activeStep);
   const currentAnswer = answers[activeStep.id] ?? '';
   const currentResult = results[activeStep.id];
@@ -454,6 +478,7 @@ export const PracticeSection: React.FC = () => {
     recognitionRef.current?.stop();
     setIsListening(false);
     setShareCopied(false);
+    setDifficultyFilter('all');
     const nextSet = practiceSets.find((set) => set.id === setId) ?? practiceSets[0];
     setActiveSetId(setId);
     setAnswers({});
@@ -469,8 +494,14 @@ export const PracticeSection: React.FC = () => {
     setResults({});
     setActiveIndex(0);
     setShareCopied(false);
+    setDifficultyFilter('all');
     updatePracticeUrl(activeSet.id, practiceSteps[0].id, 'replace');
     resetSavedAttempts();
+  };
+
+  const changeDifficultyFilter = (filter: 'all' | 'easy' | 'medium' | 'hard') => {
+    setDifficultyFilter(filter);
+    setActiveIndex(0);
   };
 
   const copyCurrentQuestionLink = async () => {
@@ -560,7 +591,7 @@ export const PracticeSection: React.FC = () => {
                 <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
                   {group.label}
                 </div>
-                <div className="flex gap-2 overflow-x-auto pb-1 sm:flex-wrap">
+                <div className="flex flex-wrap gap-2">
                   {group.sets.map((set) => {
                     const isActive = set.id === activeSetId;
                     return (
@@ -580,6 +611,28 @@ export const PracticeSection: React.FC = () => {
                 </div>
               </div>
             ))}
+            {isIgcseSet && (
+              <div>
+                <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
+                  {t.practice.difficultyFilter.label}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {(['all', 'easy', 'medium', 'hard'] as const).map((level) => (
+                    <button
+                      key={level}
+                      onClick={() => changeDifficultyFilter(level)}
+                      className={`min-h-9 shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+                        difficultyFilter === level
+                          ? 'border-quantum/70 bg-quantum/15 text-white'
+                          : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/30 hover:text-white'
+                      }`}
+                    >
+                      {t.practice.difficultyFilter[level]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -641,6 +694,16 @@ export const PracticeSection: React.FC = () => {
         </aside>
 
         <section className="space-y-6">
+          {practiceSteps.length === 0 ? (
+            <div className="glass-panel rounded-lg p-8 text-center">
+              <p className="text-sm text-slate-400">
+                {language === 'zh'
+                  ? '当前难度下没有题目，请尝试其他难度筛选。'
+                  : 'No questions at this difficulty level. Try a different filter.'}
+              </p>
+            </div>
+          ) : (
+          <>
           <AnimatePresence mode="wait">
             <motion.div
               key={activeStep.id}
@@ -828,19 +891,18 @@ export const PracticeSection: React.FC = () => {
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
-
-                    <button
-                      onClick={submitAnswer}
-                      disabled={
+                  <button
+                    onClick={submitAnswer}
+                    disabled={
                       isActiveMultipleChoice ? !currentAnswer || Boolean(currentResult) : currentAnswer.trim().length < 8
                     }
-                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold uppercase tracking-widest text-black transition-colors hover:bg-nebula hover:text-white disabled:opacity-30"
-                    >
-                      <Sparkles className="w-4 h-4" />
+                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold uppercase tracking-widest text-black transition-colors hover:bg-nebula hover:text-white disabled:opacity-30"
+                  >
+                    <Sparkles className="w-4 h-4" />
                     {isActiveMultipleChoice ? t.practice.checkAnswer : t.practice.scoreResponse}
-                    </button>
-                  </div>
+                  </button>
                 </div>
+              </div>
               </motion.div>
           </AnimatePresence>
 
@@ -955,6 +1017,8 @@ export const PracticeSection: React.FC = () => {
               </div>
             )}
           </div>
+          </>
+          )}
         </section>
       </div>
     </motion.div>
