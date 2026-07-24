@@ -49,13 +49,28 @@ const toPracticeStep = (record: IgcseChapter1Record): PracticeStep => ({
   },
 });
 
-export const igcseCieChapter1ClassroomSteps = records
-  .filter((record) => record.difficulty <= 2)
-  .map(toPracticeStep);
+export interface IgcseTopicInfo {
+  topicId: string;
+  topicTitle: string;
+  shortLabel: string;
+  count: number;
+}
 
-export const igcseCieChapter1HomeworkSteps = records
-  .filter((record) => record.difficulty >= 3)
-  .map(toPracticeStep);
+export const igcseTopics: IgcseTopicInfo[] = [
+  { topicId: '1.1', topicTitle: 'Physical Quantities and Measurement Techniques', shortLabel: '1.1 Measurement', count: 0 },
+  { topicId: '1.2', topicTitle: 'Motion', shortLabel: '1.2 Motion', count: 0 },
+  { topicId: '1.3', topicTitle: 'Mass and Weight', shortLabel: '1.3 Mass & Weight', count: 0 },
+  { topicId: '1.4', topicTitle: 'Density', shortLabel: '1.4 Density', count: 0 },
+  { topicId: '1.5', topicTitle: 'Forces', shortLabel: '1.5 Forces', count: 0 },
+  { topicId: '1.6', topicTitle: 'Momentum', shortLabel: '1.6 Momentum', count: 0 },
+  { topicId: '1.7', topicTitle: 'Energy, Work and Power', shortLabel: '1.7 Energy & Power', count: 0 },
+  { topicId: '1.8', topicTitle: 'Pressure', shortLabel: '1.8 Pressure', count: 0 },
+];
+
+// Populate counts
+igcseTopics.forEach((topic) => {
+  topic.count = records.filter((r) => r.topicId === topic.topicId).length;
+});
 
 const sources = [
   {
@@ -67,6 +82,36 @@ const sources = [
     url: 'https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physics-0625/',
   },
 ];
+
+/** Generate per-topic practice steps (all difficulties) */
+export const igcseTopicSteps: Record<string, PracticeStep[]> = {};
+igcseTopics.forEach((topic) => {
+  igcseTopicSteps[topic.topicId] = records
+    .filter((r) => r.topicId === topic.topicId)
+    .sort((a, b) => a.difficulty - b.difficulty || a.questionNumber - b.questionNumber)
+    .map(toPracticeStep);
+});
+
+/** Generate per-topic meta info */
+export const igcseTopicMeta: Record<string, { title: string; subtitle: string; eyebrow: string; description: string; sources: typeof sources }> = {};
+igcseTopics.forEach((topic) => {
+  igcseTopicMeta[topic.topicId] = {
+    title: `CIE IGCSE Physics: ${topic.topicTitle}`,
+    subtitle: `${topic.count} multiple-choice questions`,
+    eyebrow: `CIE IGCSE Physics 0625 · ${topic.topicId}`,
+    description: `Practice all ${topic.count} questions on ${topic.topicTitle}. Filter by difficulty level using the buttons below.`,
+    sources,
+  };
+});
+
+// Legacy exports for backward compatibility
+export const igcseCieChapter1ClassroomSteps = records
+  .filter((record) => record.difficulty <= 2)
+  .map(toPracticeStep);
+
+export const igcseCieChapter1HomeworkSteps = records
+  .filter((record) => record.difficulty >= 3)
+  .map(toPracticeStep);
 
 export const igcseCieChapter1ClassroomMeta = {
   title: 'CIE IGCSE Physics: Chapter 1 Classroom Practice',

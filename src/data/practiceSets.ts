@@ -2,10 +2,9 @@ import { calculusForPhysicsMeta, calculusForPhysicsSteps } from './calculusForPh
 import { dynamicsMultipleChoiceMeta, dynamicsMultipleChoiceSteps } from './dynamicsMultipleChoice';
 import { practiceSetMeta as frq2025Meta, practiceSteps as frq2025Steps } from './frq2025Mechanics';
 import {
-  igcseCieChapter1ClassroomMeta,
-  igcseCieChapter1ClassroomSteps,
-  igcseCieChapter1HomeworkMeta,
-  igcseCieChapter1HomeworkSteps,
+  igcseTopics,
+  igcseTopicSteps,
+  igcseTopicMeta,
 } from './igcseCieChapter1MultipleChoice';
 import { kinematicsMultipleChoiceMeta, kinematicsMultipleChoiceSteps } from './kinematicsMultipleChoice';
 import { linearMomentumLabDesignMeta, linearMomentumLabDesignSteps } from './linearMomentumLabDesign';
@@ -26,6 +25,8 @@ export interface PracticeSet {
     label: string;
     url: string;
   }>;
+  /** For IGCSE sets, the topic ID for filtering */
+  igcseTopicId?: string;
 }
 
 export const practiceSets: PracticeSet[] = [
@@ -81,18 +82,13 @@ export const practiceSets: PracticeSet[] = [
     ...physicsBowlEmMeta,
     steps: physicsBowlEmSteps,
   },
-  {
-    id: 'igcse-cie-ch1-classroom',
-    category: 'igcse',
-    label: 'Classroom Practice',
-    ...igcseCieChapter1ClassroomMeta,
-    steps: igcseCieChapter1ClassroomSteps,
-  },
-  {
-    id: 'igcse-cie-ch1-homework',
-    category: 'igcse',
-    label: 'Homework',
-    ...igcseCieChapter1HomeworkMeta,
-    steps: igcseCieChapter1HomeworkSteps,
-  },
+  // IGCSE per-topic sets
+  ...igcseTopics.map((topic): PracticeSet => ({
+    id: `igcse-cie-ch1-topic-${topic.topicId.replace('.', '-')}`,
+    category: 'igcse' as const,
+    label: topic.shortLabel,
+    ...igcseTopicMeta[topic.topicId],
+    steps: igcseTopicSteps[topic.topicId],
+    igcseTopicId: topic.topicId,
+  })),
 ];
