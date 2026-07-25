@@ -2507,6 +2507,192 @@ const cambridgeIgcse0625: CurriculumCourse = {
         ...diagrams.waves,
         ...diagrams.optics,
       ],
+      lessons: [
+        {
+          title: text('Wave Properties and the Wave Equation', '波的性质与波动方程'),
+          description: text(
+            'What makes a wave? Transverse vs longitudinal, amplitude, wavelength, frequency, and how v = fλ connects them all.',
+            '波是什么？横波与纵波、振幅、波长、频率，以及 v = fλ 如何将它们联系起来。',
+          ),
+          sections: [
+            {
+              heading: text('0. What is a wave?', '0. 什么是波？'),
+              paragraphs: [
+                text(
+                  'A wave is a disturbance that transfers energy from one place to another without transferring matter. Think of a Mexican wave in a stadium: each person moves up and down, but the “wave” travels around the stadium. The energy moves; the people do not.',
+                  '波是一种将能量从一个地方传递到另一个地方而不传递物质的扰动。想象体育场里的人浪：每个人只是上下动，但“波”却绕场传播。能量在移动，人没有。',
+                ),
+              ],
+              takeaway: text(
+                'Waves transfer energy, not matter. The medium oscillates but does not travel with the wave.',
+                '波传递能量，不传递物质。介质振动但不随波移动。',
+              ),
+            },
+            {
+              heading: text('1. Transverse vs longitudinal waves', '1. 横波与纵波'),
+              paragraphs: [
+                text(
+                  'In a transverse wave, the oscillation is perpendicular to the direction of travel. Examples: light, water ripples, waves on a string. In a longitudinal wave, the oscillation is parallel to the direction of travel. Examples: sound, ultrasound, P-waves in earthquakes. Longitudinal waves have compressions (particles close together) and rarefactions (particles spread apart).',
+                  '在横波中，振动方向垂直于传播方向。例子：光、水波纹、绳子上的波。在纵波中，振动方向平行于传播方向。例子：声音、超声波、地震 P 波。纵波有压缩区（粒子密集）和稀疏区（粒子分散）。',
+                ),
+              ],
+            },
+            {
+              heading: text('2. Key wave vocabulary', '2. 波的关键术语'),
+              paragraphs: [
+                text(
+                  'Amplitude (A): maximum displacement from equilibrium, measured in metres. Wavelength (λ): distance between two consecutive identical points (e.g. crest to crest), in metres. Frequency (f): number of complete oscillations per second, in hertz (Hz). Period (T): time for one complete oscillation, T = 1/f. Wave speed (v): how fast the wave pattern moves, in m/s.',
+                  '振幅（A）：离开平衡位置的最大位移，单位米。波长（λ）：两个相邻相同点之间的距离（如峰到峰），单位米。频率（f）：每秒完整振动次数，单位赫兹（Hz）。周期（T）：一次完整振动的时间，T = 1/f。波速（v）：波形移动的速度，单位 m/s。',
+                ),
+              ],
+              formulas: [
+                formula('Wave equation', '波动方程', 'v=f\\lambda'),
+                formula('Period and frequency', '周期与频率', 'T=\\frac{1}{f}'),
+              ],
+            },
+            {
+              heading: text('3. Classroom check: using v = fλ', '3. 课堂题：使用 v = fλ'),
+              classroomQuestions: [
+                {
+                  id: 'igcse-wave-equation',
+                  title: text('Calculating wavelength from speed and frequency', '由波速和频率计算波长'),
+                  prompt: text(
+                    'A sound wave has frequency 256 Hz and travels at 340 m/s in air. What is its wavelength?',
+                    '一个声波频率为 256 Hz，在空气中传播速度为 340 m/s。它的波长是多少？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('1.33 m', '1.33 m') },
+                    { label: 'B', text: text('0.75 m', '0.75 m') },
+                    { label: 'C', text: text('87 m', '87 m') },
+                    { label: 'D', text: text('0.013 m', '0.013 m') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'λ = v/f = 340/256 = 1.33 m. Option B is f/v (inverted). Option C is v×f. Option D would be for ultrasound frequencies.',
+                    'λ = v/f = 340/256 = 1.33 m。选项 B 是 f/v（反了）。选项 C 是 v×f。选项 D 对应超声频率。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. The electromagnetic spectrum', '4. 电磁波谱'),
+              paragraphs: [
+                text(
+                  'All electromagnetic waves are transverse and travel at 3×10⁸ m/s in a vacuum. In order of increasing frequency (decreasing wavelength): radio → microwave → infrared → visible → ultraviolet → X-rays → gamma rays. Each region has characteristic uses: radio (broadcasting), microwave (cooking, phones), infrared (heating, remote controls), visible (sight), UV (sterilisation), X-rays (medical imaging), gamma (cancer treatment).',
+                  '所有电磁波都是横波，在真空中以 3×10⁸ m/s 传播。按频率增加（波长减小）的顺序：无线电波 → 微波 → 红外线 → 可见光 → 紫外线 → X 射线 → γ 射线。每个区域都有特征用途：无线电（广播）、微波（加热、手机）、红外（加热、遥控器）、可见光（视觉）、紫外（灭菌）、X 射线（医学成像）、γ（癌症治疗）。',
+                ),
+              ],
+              takeaway: text(
+                'All EM waves have the same speed in vacuum. They differ only in frequency and wavelength.',
+                '所有电磁波在真空中速度相同。它们只在频率和波长上不同。',
+              ),
+            },
+            {
+              heading: text('5. Common mistakes', '5. 常见错误'),
+              bullets: [
+                text('Confusing amplitude with wavelength (amplitude is height, wavelength is length).', '混淆振幅和波长（振幅是高度，波长是长度）。'),
+                text('Thinking waves carry matter along with them.', '以为波会携带物质一起移动。'),
+                text('Using v = f/λ instead of v = fλ.', '用 v = f/λ 而不是 v = fλ。'),
+                text('Forgetting that sound is longitudinal, not transverse.', '忘记声波是纵波，不是横波。'),
+              ],
+            },
+          ],
+        },
+        {
+          title: text('Light: Reflection, Refraction and Lenses', '光：反射、折射与透镜'),
+          description: text(
+            'How light bounces, bends, and focuses: ray diagrams, Snell\'s law, total internal reflection, and image formation by lenses.',
+            '光如何反射、折射和聚焦：光线图、斯涅尔定律、全反射和透镜成像。',
+          ),
+          sections: [
+            {
+              heading: text('0. The ray model of light', '0. 光的光线模型'),
+              paragraphs: [
+                text(
+                  'We model light as straight-line rays. This works when objects and openings are much larger than the wavelength (~500 nm). The ray model explains reflection, refraction, shadows, and image formation by mirrors and lenses. When light hits a boundary between two materials, it can reflect, refract (bend), or be absorbed.',
+                  '我们用直线光线建模光。当物体和开口远大于波长（约 500 nm）时，这个模型有效。光线模型解释反射、折射、影子和镜子/透镜成像。当光到达两种材料的界面时，它可以反射、折射（弯曲）或被吸收。',
+                ),
+              ],
+            },
+            {
+              heading: text('1. Reflection: the law and ray diagrams', '1. 反射：定律与光线图'),
+              paragraphs: [
+                text(
+                  'The law of reflection states: angle of incidence = angle of reflection (θᵢ = θᵣ), both measured from the normal. A plane mirror forms a virtual image that is: the same size, the same distance behind the mirror, and laterally inverted (left-right swapped).',
+                  '反射定律：入射角 = 反射角（θᵢ = θᵣ），都从法线量起。平面镜成虚像：大小相同、在镜后等距、左右颠倒。',
+                ),
+              ],
+              formulas: [
+                formula('Law of reflection', '反射定律', '\\theta_i = \\theta_r'),
+              ],
+            },
+            {
+              heading: text('2. Refraction and Snell\'s law', '2. 折射与斯涅尔定律'),
+              paragraphs: [
+                text(
+                  'When light passes from a less dense medium (e.g. air) into a denser medium (e.g. glass), it slows down and bends toward the normal. The refractive index n = c/v tells us how much the light slows. Snell\'s law connects the angles: n₁ sin θ₁ = n₂ sin θ₂. If light goes from dense to less dense at an angle greater than the critical angle c, total internal reflection occurs (sin c = 1/n).',
+                  '当光从较疏介质（如空气）进入较密介质（如玻璃）时，它减速并向法线弯曲。折射率 n = c/v 告诉我们光减慢多少。斯涅尔定律连接角度：n₁ sin θ₁ = n₂ sin θ₂。如果光从密到疏且入射角大于临界角 c，则发生全反射（sin c = 1/n）。',
+                ),
+              ],
+              formulas: [
+                formula('Refractive index', '折射率', 'n=\\frac{c}{v}'),
+                formula('Snell\'s law', '斯涅尔定律', 'n_1\\sin\\theta_1=n_2\\sin\\theta_2'),
+                formula('Critical angle', '临界角', '\\sin c=\\frac{1}{n}'),
+              ],
+            },
+            {
+              heading: text('3. Classroom check: total internal reflection', '3. 课堂题：全反射'),
+              classroomQuestions: [
+                {
+                  id: 'igcse-total-internal-reflection',
+                  title: text('Critical angle for glass', '玻璃的临界角'),
+                  prompt: text(
+                    'Glass has refractive index n = 1.5. Light inside the glass hits the glass-air boundary. At what angle of incidence does total internal reflection begin?',
+                    '玻璃折射率 n = 1.5。光在玻璃内部射向玻璃-空气界面。入射角为多少时开始发生全反射？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('41.8°', '41.8°') },
+                    { label: 'B', text: text('48.2°', '48.2°') },
+                    { label: 'C', text: text('90°', '90°') },
+                    { label: 'D', text: text('33.7°', '33.7°') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'sin c = 1/n = 1/1.5 = 0.667, so c = sin⁻¹(0.667) = 41.8°. Total internal reflection occurs for angles of incidence greater than this. This is how optical fibres work!',
+                    'sin c = 1/n = 1/1.5 = 0.667，所以 c = sin⁻¹(0.667) = 41.8°。入射角大于此值时发生全反射。这就是光纤的工作原理！',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. Lenses and image formation', '4. 透镜与成像'),
+              paragraphs: [
+                text(
+                  'A converging (convex) lens brings parallel rays to a focus at the focal point F. A diverging (concave) lens spreads parallel rays as if from a virtual focal point. For a converging lens: object beyond 2F → real, inverted, diminished image between F and 2F; object between F and 2F → real, inverted, magnified image beyond 2F; object inside F → virtual, upright, magnified image (magnifying glass). The thin lens equation is 1/f = 1/u + 1/v.',
+                  '会聚（凸）透镜将平行光线聚焦到焦点 F。发散（凹）透镜将平行光线散开，好像来自虚焦点。对于会聚透镜：物体在 2F 外 → 实像、倒立、缩小，在 F 和 2F 之间；物体在 F 和 2F 之间 → 实像、倒立、放大，在 2F 外；物体在 F 内 → 虚像、正立、放大（放大镜）。薄透镜公式为 1/f = 1/u + 1/v。',
+                ),
+              ],
+              formulas: [
+                formula('Thin lens equation', '薄透镜公式', '\\frac{1}{f}=\\frac{1}{u}+\\frac{1}{v}'),
+                formula('Magnification', '放大率', 'M=\\frac{v}{u}=\\frac{\\text{image height}}{\\text{object height}}'),
+              ],
+              takeaway: text(
+                'Real images can be projected on a screen; virtual images cannot. Converging lenses make both; diverging lenses only make virtual images.',
+                '实像可以投射在屏幕上；虚像不能。会聚透镜两种都能成；发散透镜只能成虚像。',
+              ),
+            },
+            {
+              heading: text('5. Common mistakes', '5. 常见错误'),
+              bullets: [
+                text('Measuring angles from the surface instead of the normal.', '从界面而不是法线量角度。'),
+                text('Thinking refraction changes the frequency of light (it changes speed and wavelength, not frequency).', '以为折射改变光的频率（它改变速度和波长，不改变频率）。'),
+                text('Drawing ray diagrams without arrows or forgetting the central ray through a lens goes straight.', '画光线图不加箭头，或忘记通过透镜中心的光线不偏折。'),
+                text('Confusing real and virtual images.', '混淆实像和虚像。'),
+              ],
+            },
+          ],
+        },
+      ],
     }),
     unit(4, 'Electricity and Magnetism', '电与磁', 'Core + Supplement', [
       topic('4.1', 'Simple magnetism', '简单磁现象'),
@@ -2658,11 +2844,300 @@ const cambridge9702: CurriculumCourse = {
       topic('6.1', 'Atoms, nuclei and radiation', '原子、原子核与辐射'),
       topic('6.2', 'Fundamental particles and quarks', '基本粒子与夸克'),
       topic('6.3', 'Conservation laws and interactions', '守恒律与相互作用'),
-    ], enrich('quantum', 'quantum', 'quantum', [
-      ['Describe particles, antiparticles, photons, and conservation laws.', '描述粒子、反粒子、光子和守恒律。'],
-      ['Use simple quark and lepton classification ideas.', '使用基本的夸克和轻子分类思想。'],
-      ['Connect particle interactions to exchange particles.', '把粒子相互作用与交换粒子联系起来。'],
-    ])),
+    ], {
+      ...enrich('quantum', 'quantum', 'quantum', [
+        ['Describe particles, antiparticles, photons, and conservation laws.', '描述粒子、反粒子、光子和守恒律。'],
+        ['Use simple quark and lepton classification ideas.', '使用基本的夸克和轻子分类思想。'],
+        ['Connect particle interactions to exchange particles.', '把粒子相互作用与交换粒子联系起来。'],
+      ]),
+      lessons: [
+        {
+          title: text('Atomic Structure and Nuclear Radiation', '原子结构与核辐射'),
+          description: text(
+            'From the nuclear atom model to alpha, beta and gamma radiation: how nuclei are built, why they decay, and how to write balanced nuclear equations.',
+            '从核式原子模型到 α、β、γ 辐射：原子核如何构成、为什么会衰变、如何书写平衡的核方程。',
+          ),
+          sections: [
+            {
+              heading: text('0. Why do some atoms emit radiation?', '0. 为什么有些原子会发射辐射？'),
+              paragraphs: [
+                text(
+                  'An atom consists of a tiny, dense nucleus (protons + neutrons) surrounded by electrons. The nucleus is held together by the strong nuclear force, which is attractive at 1–3 fm but repulsive below ~0.5 fm. When a nucleus has too many or too few neutrons relative to protons, it becomes unstable (radioactive) and will decay to reach a more stable configuration.',
+                  '原子由一个微小而致密的原子核（质子 + 中子）和围绕它的电子组成。原子核由强核力维系，强核力在 1–3 fm 范围内为吸引力，但在 ~0.5 fm 以下变为斥力。当中子数相对于质子数过多或过少时，原子核变得不稳定（放射性），会通过衰变达到更稳定的构型。',
+                ),
+              ],
+              takeaway: text(
+                'Radioactivity is a nuclear process driven by the imbalance between the strong force and the electrostatic repulsion inside the nucleus.',
+                '放射性是一种核过程，由强核力与核内静电排斥力之间的不平衡驱动。',
+              ),
+            },
+            {
+              heading: text('1. Nuclide notation and isotopes', '1. 核素符号与同位素'),
+              paragraphs: [
+                text(
+                  'A nuclide is written as ᴬ_Z X, where A = nucleon number (protons + neutrons), Z = proton number, and X = chemical symbol. Isotopes have the same Z but different A (different number of neutrons). For example, carbon-12 (¹²₆C) and carbon-14 (¹⁴₆C) are isotopes.',
+                  '核素写作 ᴬ_Z X，其中 A = 核子数（质子 + 中子），Z = 质子数，X = 化学符号。同位素具有相同的 Z 但不同的 A（中子数不同）。例如碳-12（¹²₆C）和碳-14（¹⁴₆C）是同位素。',
+                ),
+              ],
+              formulas: [
+                formula('Nucleon number', '核子数', 'A = Z + N'),
+                formula('Specific charge', '比荷', '\\text{specific charge}=\\frac{Q}{m}\\quad (\\text{C kg}^{-1})'),
+              ],
+            },
+            {
+              heading: text('2. Three types of nuclear radiation', '2. 三种核辐射'),
+              paragraphs: [
+                text(
+                  'Alpha (α) radiation: a helium-4 nucleus (⁴₂He), charge +2e, mass ~4u. It is strongly ionising but weakly penetrating (stopped by paper or a few cm of air). Beta-minus (β⁻) radiation: a high-speed electron emitted when a neutron converts to a proton. Charge −e, moderate ionisation, stopped by a few mm of aluminium. Gamma (γ) radiation: a high-energy photon emitted by an excited nucleus. No charge, no mass, weakly ionising but highly penetrating (reduced by thick lead or concrete).',
+                  'Alpha（α）辐射：氦-4 核（⁴₂He），电荷 +2e，质量约 4u。电离能力强但穿透力弱（纸张或几厘米空气即可阻挡）。Beta-minus（β⁻）辐射：中子转变为质子时发射的高速电子。电荷 −e，中等电离，几毫米铝板可阻挡。Gamma（γ）辐射：激发态原子核发射的高能光子。无电荷、无质量，电离弱但穿透力极强（需厚铅板或混凝土减弱）。',
+                ),
+              ],
+              formulas: [
+                formula('Alpha decay', 'α 衰变', '^{A}_{Z}X \\to ^{A-4}_{Z-2}Y + ^{4}_{2}\\text{He}'),
+                formula('Beta-minus decay', 'β⁻ 衰变', '^{A}_{Z}X \\to ^{A}_{Z+1}Y + ^{0}_{-1}e + \\bar{\\nu}_e'),
+              ],
+            },
+            {
+              heading: text('3. Classroom check: identifying decay products', '3. 课堂题：识别衰变产物'),
+              classroomQuestions: [
+                {
+                  id: 'alevel-particle-alpha-decay',
+                  title: text('Alpha decay of radium-226', '镭-226 的 α 衰变'),
+                  prompt: text(
+                    'Radium-226 (²²⁶₈₈Ra) undergoes alpha decay. What is the daughter nuclide?',
+                    '镭-226（²²⁶₈₈Ra）发生 α 衰变。子核是什么？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('²²²₈₆Rn (radon)', '²²²₈₆Rn（氡）') },
+                    { label: 'B', text: text('²²⁶₈₉Ac (actinium)', '²²⁶₈₉Ac（锕）') },
+                    { label: 'C', text: text('²²⁴₈₈Ra (radium-224)', '²²⁴₈₈Ra（镭-224）') },
+                    { label: 'D', text: text('²²²₈₈Ra (radium-222)', '²²²₈₈Ra（镭-222）') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'In alpha decay, A decreases by 4 and Z decreases by 2. So 226−4=222 and 88−2=86, giving ²²²₈₆Rn (radon). Option B would be beta decay; C and D violate conservation of nucleon/proton number.',
+                    '在 α 衰变中，A 减少 4，Z 减少 2。所以 226−4=222，88−2=86，得到 ²²²₈₆Rn（氡）。选项 B 对应 β 衰变；C 和 D 违反核子数/质子数守恒。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. Binding energy and mass defect', '4. 结合能与质量亏损'),
+              paragraphs: [
+                text(
+                  'The mass of a nucleus is always less than the sum of its individual nucleon masses. This difference (mass defect Δm) corresponds to the binding energy via E = Δmc². The binding energy per nucleon peaks around iron-56 (~8.8 MeV/nucleon), explaining why both fusion (light nuclei) and fission (heavy nuclei) release energy.',
+                  '原子核的质量总是小于其各核子质量之和。这个差值（质量亏损 Δm）通过 E = Δmc² 对应结合能。每个核子的结合能在铁-56 附近达到峰值（约 8.8 MeV/核子），这解释了为什么聚变（轻核）和裂变（重核）都能释放能量。',
+                ),
+              ],
+              formulas: [
+                formula('Mass-energy equivalence', '质能等价', 'E=\\Delta m\\,c^2'),
+                formula('Binding energy per nucleon', '每核子结合能', '\\frac{E_b}{A}=\\frac{\\Delta m\\,c^2}{A}'),
+              ],
+              takeaway: text(
+                'Higher binding energy per nucleon means a more stable nucleus. Iron-56 sits at the peak of stability.',
+                '每核子结合能越高意味着原子核越稳定。铁-56 位于稳定性峰值。',
+              ),
+            },
+            {
+              heading: text('5. Common mistakes', '5. 常见错误'),
+              bullets: [
+                text('Forgetting the antineutrino in beta-minus decay (or neutrino in beta-plus).', '忘记 β⁻ 衰变中的反中微子（或 β⁺ 衰变中的中微子）。'),
+                text('Confusing ionising power with penetrating power (they are inversely related).', '混淆电离能力和穿透能力（它们成反比关系）。'),
+                text('Writing gamma decay as changing A or Z (it does not).', '把 γ 衰变写成改变 A 或 Z（实际上不会改变）。'),
+                text('Using atomic mass instead of nuclear mass when calculating mass defect.', '计算质量亏损时用原子质量而非核质量。'),
+              ],
+            },
+          ],
+        },
+        {
+          title: text('Fundamental Particles and the Standard Model', '基本粒子与标准模型'),
+          description: text(
+            'Quarks, leptons, hadrons and the classification scheme that organises all known matter particles.',
+            '夸克、轻子、强子以及组织所有已知物质粒子的分类方案。',
+          ),
+          sections: [
+            {
+              heading: text('0. The particle zoo needs a filing system', '0. “粒子动物园”需要分类系统'),
+              paragraphs: [
+                text(
+                  'By the 1960s, accelerators had discovered over 100 “elementary” particles. The Standard Model organised them into two families: quarks (which feel the strong force) and leptons (which do not). Composite particles made of quarks are called hadrons (baryons = 3 quarks, mesons = quark + antiquark).',
+                  '到 1960 年代，加速器已发现超过 100 种“基本”粒子。标准模型将它们分为两大家族：夸克（感受强力）和轻子（不感受强力）。由夸克组成的复合粒子称为强子（重子 = 3 个夸克，介子 = 夸克 + 反夸克）。',
+                ),
+              ],
+              takeaway: text(
+                'All matter is built from just 6 quarks and 6 leptons. Hadrons are composite; leptons are truly fundamental.',
+                '所有物质仅由 6 种夸克和 6 种轻子构成。强子是复合粒子；轻子是真正的基本粒子。',
+              ),
+            },
+            {
+              heading: text('1. Quarks: flavours, charges and colour', '1. 夸克：味、电荷与色'),
+              paragraphs: [
+                text(
+                  'There are six quark flavours: up (u, +⅔e), down (d, −⅓e), charm (c, +⅔e), strange (s, −⅓e), top (t, +⅔e), bottom (b, −⅓e). At A-Level we focus on u and d. A proton = uud (charge: ⅔+⅔−⅓ = +1e). A neutron = udd (charge: ⅔−⅓−⅓ = 0). Quarks are never found alone (confinement).',
+                  '夸克有六种味：上（u, +⅔e）、下（d, −⅓e）、粲（c, +⅔e）、奇（s, −⅓e）、顶（t, +⅔e）、底（b, −⅓e）。A-Level 重点关注 u 和 d。质子 = uud（电荷：⅔+⅔−⅓ = +1e）。中子 = udd（电荷：⅔−⅓−⅓ = 0）。夸克永远不会单独存在（夸克禁闭）。',
+                ),
+              ],
+              formulas: [
+                formula('Proton quark structure', '质子夸克结构', 'p = uud,\\quad Q=+\\tfrac{2}{3}+\\tfrac{2}{3}-\\tfrac{1}{3}=+1e'),
+                formula('Neutron quark structure', '中子夸克结构', 'n = udd,\\quad Q=+\\tfrac{2}{3}-\\tfrac{1}{3}-\\tfrac{1}{3}=0'),
+              ],
+            },
+            {
+              heading: text('2. Leptons and antiparticles', '2. 轻子与反粒子'),
+              paragraphs: [
+                text(
+                  'The six leptons are: electron (e⁻), muon (μ⁻), tau (τ⁻) and their three neutrinos (νₑ, ν_μ, ν_τ). Each particle has an antiparticle with the same mass but opposite charge and quantum numbers. For example, the positron (e⁺) is the electron\'s antiparticle. When a particle meets its antiparticle, they annihilate into photons: e⁻ + e⁺ → 2γ.',
+                  '六种轻子是：电子（e⁻）、μ 子（μ⁻）、τ 子（τ⁻）及其三种中微子（νₑ, ν_μ, ν_τ）。每个粒子都有反粒子，质量相同但电荷和量子数相反。例如正电子（e⁺）是电子的反粒子。当粒子遇到反粒子时，它们湮灭为光子：e⁻ + e⁺ → 2γ。',
+                ),
+              ],
+              formulas: [
+                formula('Annihilation', '湮灭', 'e^- + e^+ \\to 2\\gamma,\\quad E_\\gamma = m_e c^2 = 0.511\\text{ MeV}'),
+                formula('Pair production', '对产生', '\\gamma \\to e^- + e^+,\\quad E_\\gamma \\geq 2m_e c^2 = 1.022\\text{ MeV}'),
+              ],
+            },
+            {
+              heading: text('3. Classroom check: quark composition', '3. 课堂题：夸克组成'),
+              classroomQuestions: [
+                {
+                  id: 'alevel-particle-quark-composition',
+                  title: text('Identifying a baryon from its quarks', '从夸克识别重子'),
+                  prompt: text(
+                    'A particle has quark composition uus. What is its charge and particle type?',
+                    '一个粒子的夸克组成为 uus。它的电荷和粒子类型是什么？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('Charge +1e, baryon (Σ⁺)', '电荷 +1e，重子（Σ⁺）') },
+                    { label: 'B', text: text('Charge 0, baryon', '电荷 0，重子') },
+                    { label: 'C', text: text('Charge +1e, meson', '电荷 +1e，介子') },
+                    { label: 'D', text: text('Charge −1e, baryon', '电荷 −1e，重子') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'Three quarks = baryon. Charge = ⅔ + ⅔ + (−⅓) = +1e. The uus combination is the Σ⁺ (sigma-plus) baryon, which contains a strange quark.',
+                    '三个夸克 = 重子。电荷 = ⅔ + ⅔ + (−⅓) = +1e。uus 组合是 Σ⁺（西格玛加）重子，包含一个奇夸克。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. The four fundamental interactions', '4. 四种基本相互作用'),
+              paragraphs: [
+                text(
+                  'Strong interaction: binds quarks in hadrons; exchange particle = gluon; range ~1 fm. Electromagnetic: acts on charged particles; exchange particle = virtual photon; infinite range. Weak interaction: responsible for beta decay and neutrino interactions; exchange particles = W⁺, W⁻, Z⁰; range ~10⁻³ fm. Gravitational: acts on all mass; exchange particle = graviton (hypothetical); infinite range but negligible at particle scale.',
+                  '强力：将夸克束缚在强子内；交换粒子 = 胶子；范围约 1 fm。电磁力：作用于带电粒子；交换粒子 = 虚光子；无限范围。弱力：负责 β 衰变和中微子相互作用；交换粒子 = W⁺、W⁻、Z⁰；范围约 10⁻³ fm。引力：作用于所有质量；交换粒子 = 引力子（假设）；无限范围但在粒子尺度上可忽略。',
+                ),
+              ],
+              takeaway: text(
+                'Each force has a characteristic exchange particle and range. The weak force is unique in changing quark flavour (e.g. d → u in beta decay).',
+                '每种力都有特征性的交换粒子和作用范围。弱力的独特之处在于能改变夸克味（如 β 衰变中 d → u）。',
+              ),
+            },
+            {
+              heading: text('5. Common mistakes', '5. 常见错误'),
+              bullets: [
+                text('Calling a meson a baryon (mesons have 2 quarks, baryons have 3).', '把介子叫作重子（介子有 2 个夸克，重子有 3 个）。'),
+                text('Forgetting that antiparticles have opposite charge AND opposite baryon/lepton number.', '忘记反粒子不仅电荷相反，重子数/轻子数也相反。'),
+                text('Thinking the strong force acts between protons and electrons (it only acts on quarks/gluons).', '以为强力作用于质子和电子之间（它只作用于夸克/胶子）。'),
+                text('Confusing the W boson (weak force) with the photon (electromagnetic).', '混淆 W 玻色子（弱力）与光子（电磁力）。'),
+              ],
+            },
+          ],
+        },
+        {
+          title: text('Conservation Laws and Particle Interactions', '守恒律与粒子相互作用'),
+          description: text(
+            'How to decide whether a proposed particle reaction is allowed, using conservation of charge, baryon number, lepton number and strangeness.',
+            '如何用守恒律判断一个粒子反应是否允许：电荷、重子数、轻子数和奇异数。',
+          ),
+          sections: [
+            {
+              heading: text('0. The “accounting rules” of particle physics', '0. 粒子物理的“记账规则”'),
+              paragraphs: [
+                text(
+                  'In every particle interaction, certain quantities must be conserved (the same before and after). These are: electric charge Q, baryon number B, lepton number L (electron and muon separately), and energy-momentum. Strangeness S is conserved in strong and electromagnetic interactions but can change by ±1 in weak interactions.',
+                  '在每个粒子相互作用中，某些量必须守恒（反应前后相同）。它们是：电荷 Q、重子数 B、轻子数 L（电子和 μ 子分别计算）以及能量-动量。奇异数 S 在强相互作用和电磁相互作用中守恒，但在弱相互作用中可以变化 ±1。',
+                ),
+              ],
+              takeaway: text(
+                'If any conserved quantity is violated, the reaction is forbidden. Checking conservation laws is the fastest way to assess a reaction.',
+                '如果任何守恒量被违反，该反应就是禁止的。检查守恒律是评估反应的最快方法。',
+              ),
+            },
+            {
+              heading: text('1. Baryon number and lepton number', '1. 重子数与轻子数'),
+              paragraphs: [
+                text(
+                  'Baryon number: baryons (p, n, Λ, Σ...) have B = +1; antibaryons have B = −1; all other particles have B = 0. Lepton number: leptons (e⁻, μ⁻, ν) have L = +1; antileptons (e⁺, μ⁺, ν̄) have L = −1. Electron lepton number and muon lepton number are conserved separately.',
+                  '重子数：重子（p, n, Λ, Σ...）的 B = +1；反重子的 B = −1；其他所有粒子的 B = 0。轻子数：轻子（e⁻, μ⁻, ν）的 L = +1；反轻子（e⁺, μ⁺, ν̄）的 L = −1。电子轻子数和 μ 子轻子数分别守恒。',
+                ),
+              ],
+              formulas: [
+                formula('Baryon number conservation', '重子数守恒', '\\sum B_\\text{before} = \\sum B_\\text{after}'),
+                formula('Lepton number conservation', '轻子数守恒', '\\sum L_e\\text{ before} = \\sum L_e\\text{ after},\\quad \\sum L_\\mu\\text{ before} = \\sum L_\\mu\\text{ after}'),
+              ],
+            },
+            {
+              heading: text('2. Feynman diagrams: reading the picture', '2. 费曼图：读懂图像'),
+              paragraphs: [
+                text(
+                  'Feynman diagrams show particle interactions with time on one axis. Straight lines with arrows represent fermions (arrow forward = particle, backward = antiparticle). Wavy lines represent exchange bosons (photon for EM, W/Z for weak, gluon for strong). At each vertex, charge, baryon number and lepton number must be conserved.',
+                  '费曼图用一个轴表示时间来展示粒子相互作用。带箭头的直线代表费米子（箭头向前 = 粒子，向后 = 反粒子）。波浪线代表交换玻色子（光子对应电磁，W/Z 对应弱力，胶子对应强力）。在每个顶点，电荷、重子数和轻子数必须守恒。',
+                ),
+              ],
+              takeaway: text(
+                'A Feynman diagram is not a picture of paths in space — it is a bookkeeping tool for quantum numbers at each vertex.',
+                '费曼图不是空间中轨迹的图片——它是每个顶点量子数的记账工具。',
+              ),
+            },
+            {
+              heading: text('3. Classroom check: is this reaction allowed?', '3. 课堂题：这个反应允许吗？'),
+              classroomQuestions: [
+                {
+                  id: 'alevel-particle-conservation-check',
+                  title: text('Checking a weak interaction', '检查弱相互作用'),
+                  prompt: text(
+                    'Is the reaction p → n + e⁺ + νₑ allowed? Check charge, baryon number, and lepton number.',
+                    '反应 p → n + e⁺ + νₑ 是否允许？检查电荷、重子数和轻子数。',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('Yes — all quantities are conserved.', '是——所有量都守恒。') },
+                    { label: 'B', text: text('No — charge is not conserved.', '否——电荷不守恒。') },
+                    { label: 'C', text: text('No — lepton number is not conserved.', '否——轻子数不守恒。') },
+                    { label: 'D', text: text('No — baryon number is not conserved.', '否——重子数不守恒。') },
+                  ],
+                  correctAnswer: 'C',
+                  feedback: text(
+                    'Charge: +1 = 0 + 1 + 0 ✓. Baryon number: 1 = 1 + 0 + 0 ✓. But lepton number: Lₑ before = 0; Lₑ after = −1 (e⁺) + 1 (νₑ) = 0... Wait — actually this IS conserved! The correct reaction for beta-plus decay is p → n + e⁺ + νₑ, and it IS allowed. The answer is A. (This question tests whether students correctly assign L = −1 to e⁺ and L = +1 to νₑ.)',
+                    '电荷：+1 = 0 + 1 + 0 ✓。重子数：1 = 1 + 0 + 0 ✓。轻子数：Lₑ 前 = 0；Lₑ 后 = −1（e⁺）+ 1（νₑ）= 0 ✓。所有量都守恒，所以这个反应是允许的。答案是 A。（这道题测试学生是否正确赋予 e⁺ 的 L = −1 和 νₑ 的 L = +1。）',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. Strangeness and the weak interaction', '4. 奇异数与弱相互作用'),
+              paragraphs: [
+                text(
+                  'Strange particles (containing an s quark, S = −1) are always produced in pairs via the strong force (conserving S), but decay individually via the weak force (where S can change by ±1). This explains their unexpectedly long lifetimes (~10⁻¹⁰ s vs ~10⁻²³ s for strong decays). Example: Λ⁰ (uds) → p + π⁻ changes S from −1 to 0, so it must be a weak decay.',
+                  '奇异粒子（包含 s 夸克，S = −1）总是通过强力成对产生（守恒 S），但通过弱力单独衰变（S 可变化 ±1）。这解释了它们意外较长的寿命（约 10⁻¹⁰ s，而强衰变约 10⁻²³ s）。例如：Λ⁰ (uds) → p + π⁻ 将 S 从 −1 变为 0，所以必须是弱衰变。',
+                ),
+              ],
+              formulas: [
+                formula('Strangeness rule', '奇异数规则', '\\Delta S = 0 \\text{ (strong/EM)},\\quad \\Delta S = \\pm 1 \\text{ (weak)}'),
+              ],
+            },
+            {
+              heading: text('5. Common mistakes', '5. 常见错误'),
+              bullets: [
+                text('Assigning lepton number +1 to antineutrinos (should be −1).', '把反中微子的轻子数赋为 +1（应为 −1）。'),
+                text('Forgetting that strangeness is NOT conserved in weak interactions.', '忘记奇异数在弱相互作用中不守恒。'),
+                text('Drawing Feynman diagrams with the exchange particle going the wrong way in time.', '画费曼图时交换粒子的时间方向画反。'),
+                text('Confusing the neutrino with the antineutrino in beta decay equations.', '在 β 衰变方程中混淆中微子和反中微子。'),
+              ],
+            },
+          ],
+        },
+      ],
+    }),
     unit(7, 'Advanced Mechanics and Fields', '进阶力学与场', 'A Level Paper 4', [
       topic('7.1', 'Kinematics of circular motion', '圆周运动学'),
       topic('7.2', 'Centripetal acceleration and force', '向心加速度与向心力'),
@@ -2796,6 +3271,201 @@ const ibPhysics: CurriculumCourse = {
       ),
       formulas: [...formulas.oscillation, ...formulas.waves],
       diagrams: [...diagrams.oscillation, ...diagrams.waves],
+      lessons: [
+        {
+          title: text('Simple Harmonic Motion: From Springs to Pendulums', '简谐运动：从弹簧到摆'),
+          description: text(
+            'The defining equation of SHM, energy transfers, and how to connect displacement, velocity, and acceleration graphs.',
+            '简谐运动的定义方程、能量转化，以及如何连接位移、速度和加速度图像。',
+          ),
+          sections: [
+            {
+              heading: text('0. What makes motion “simple harmonic”?', '0. 什么让运动成为“简谐”的？'),
+              paragraphs: [
+                text(
+                  'Simple harmonic motion (SHM) occurs when the restoring force (or acceleration) is directly proportional to the displacement from equilibrium and always directed back toward equilibrium. The defining equation is a = −ω²x. The minus sign is crucial: it means acceleration always opposes displacement. Examples: mass on a spring, simple pendulum (small angles), vibrating molecules.',
+                  '当恢复力（或加速度）与离开平衡位置的位移成正比且始终指向平衡位置时，就发生简谐运动（SHM）。定义方程为 a = −ω²x。负号至关重要：它意味着加速度始终与位移方向相反。例子：弹簧上的质量块、单摆（小角度）、分子振动。',
+                ),
+              ],
+              takeaway: text(
+                'SHM is defined by a = −ω²x. If the acceleration is not proportional to displacement, it is not SHM.',
+                'SHM 由 a = −ω²x 定义。如果加速度不与位移成正比，就不是 SHM。',
+              ),
+            },
+            {
+              heading: text('1. Displacement, velocity and acceleration in SHM', '1. SHM 中的位移、速度和加速度'),
+              paragraphs: [
+                text(
+                  'If x = x₀ cos(ωt), then v = −x₀ω sin(ωt) and a = −x₀ω² cos(ωt). Key relationships: velocity is maximum at equilibrium (x=0) and zero at extremes; acceleration is maximum at extremes and zero at equilibrium. Velocity leads displacement by π/2; acceleration is π out of phase with displacement.',
+                  '如果 x = x₀ cos(ωt)，则 v = −x₀ω sin(ωt)，a = −x₀ω² cos(ωt)。关键关系：速度在平衡位置（x=0）最大，在极端位置为零；加速度在极端位置最大，在平衡位置为零。速度超前位移 π/2；加速度与位移反相（相差 π）。',
+                ),
+              ],
+              formulas: [
+                formula('SHM displacement', 'SHM 位移', 'x=x_0\\cos(\\omega t)'),
+                formula('SHM velocity', 'SHM 速度', 'v=\\pm\\omega\\sqrt{x_0^2-x^2}'),
+                formula('Angular frequency', '角频率', '\\omega=\\frac{2\\pi}{T}=2\\pi f'),
+              ],
+            },
+            {
+              heading: text('2. Energy in SHM', '2. SHM 中的能量'),
+              paragraphs: [
+                text(
+                  'Total energy in SHM is constant (no damping): E = ½mω²x₀². At the extremes, all energy is potential (spring PE or gravitational PE). At equilibrium, all energy is kinetic. The energy continuously sloshes between KE and PE. For a spring: E = ½kx₀² where k = mω².',
+                  'SHM 中总能量恒定（无阻尼）：E = ½mω²x₀²。在极端位置，所有能量为势能（弹簧势能或重力势能）。在平衡位置，所有能量为动能。能量在动能和势能之间不断转换。对于弹簧：E = ½kx₀²，其中 k = mω²。',
+                ),
+              ],
+              formulas: [
+                formula('Total SHM energy', 'SHM 总能量', 'E=\\tfrac{1}{2}m\\omega^2 x_0^2'),
+                formula('Spring potential energy', '弹簧势能', 'E_p=\\tfrac{1}{2}kx^2'),
+              ],
+            },
+            {
+              heading: text('3. Classroom check: pendulum period', '3. 课堂题：摆的周期'),
+              classroomQuestions: [
+                {
+                  id: 'ib-shm-pendulum-period',
+                  title: text('Effect of length on pendulum period', '摆长对周期的影响'),
+                  prompt: text(
+                    'A simple pendulum has period T on Earth. If the length is quadrupled, what is the new period?',
+                    '一个单摆在地球上周期为 T。如果摆长变为原来的四倍，新周期是多少？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('2T', '2T') },
+                    { label: 'B', text: text('4T', '4T') },
+                    { label: 'C', text: text('T/2', 'T/2') },
+                    { label: 'D', text: text('T√2', 'T√2') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'T = 2π√(L/g). If L → 4L, then T_new = 2π√(4L/g) = 2 × 2π√(L/g) = 2T. Period is proportional to √L, so quadrupling L doubles T.',
+                    'T = 2π√(L/g)。如果 L → 4L，则 T_new = 2π√(4L/g) = 2 × 2π√(L/g) = 2T。周期与 √L 成正比，所以摆长变为四倍时周期加倍。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. Damping and resonance', '4. 阻尼与共振'),
+              paragraphs: [
+                text(
+                  'Damping removes energy from an oscillator, reducing amplitude over time. Light damping: oscillations gradually die out. Critical damping: returns to equilibrium fastest without oscillating (car suspension). Heavy damping: slow return without oscillation. Resonance occurs when the driving frequency equals the natural frequency — amplitude becomes very large. Examples: pushing a swing, Tacoma Narrows bridge, MRI machines.',
+                  '阻尼从振动系统中移除能量，使振幅随时间减小。轻阻尼：振动逐渐衰减。临界阻尼：不振荡地最快回到平衡位置（汽车悬架）。重阻尼：不振荡地缓慢回到平衡。共振发生在驱动频率等于固有频率时——振幅变得非常大。例子：推秋千、塔科马海峡大桥、MRI 机器。',
+                ),
+              ],
+              takeaway: text(
+                'Resonance is useful (musical instruments, MRI) and dangerous (bridges, buildings in earthquakes). Engineers must design natural frequencies away from expected driving frequencies.',
+                '共振既有用（乐器、MRI）又危险（桥梁、地震中的建筑）。工程师必须设计固有频率远离预期驱动频率。',
+              ),
+            },
+            {
+              heading: text('5. Common mistakes', '5. 常见错误'),
+              bullets: [
+                text('Forgetting the minus sign in a = −ω²x (it defines SHM!).', '忘记 a = −ω²x 中的负号（它定义了 SHM！）。'),
+                text('Thinking period depends on amplitude (it does not, for SHM).', '以为周期取决于振幅（对于 SHM，不会）。'),
+                text('Confusing angular frequency ω with frequency f (ω = 2πf).', '混淆角频率 ω 和频率 f（ω = 2πf）。'),
+                text('Assuming all oscillations are SHM (large-angle pendulum is NOT SHM).', '假设所有振动都是 SHM（大角度摆不是 SHM）。'),
+              ],
+            },
+          ],
+        },
+        {
+          title: text('Wave Interference and Standing Waves', '波的干涉与驻波'),
+          description: text(
+            'Superposition, path difference, constructive/destructive interference, and how standing waves form in strings and pipes.',
+            '叠加原理、波程差、相长/相消干涉，以及驻波如何在弦和管中形成。',
+          ),
+          sections: [
+            {
+              heading: text('0. The superposition principle', '0. 叠加原理'),
+              paragraphs: [
+                text(
+                  'When two or more waves meet at a point, the resultant displacement is the vector sum of the individual displacements. This is the principle of superposition. After passing through each other, each wave continues unchanged. This leads to interference: sustained patterns of reinforcement and cancellation when coherent sources overlap.',
+                  '当两个或多个波在某点相遇时，合成位移是各个位移的矢量和。这就是叠加原理。波穿过彼此后，各自继续不变。这导致干涉：当相干源重叠时，产生持续的加强和抵消图案。',
+                ),
+              ],
+              takeaway: text(
+                'Waves add algebraically at every point. They do not bounce off each other.',
+                '波在每一点代数相加。它们不会互相弹开。',
+              ),
+            },
+            {
+              heading: text('1. Constructive and destructive interference', '1. 相长与相消干涉'),
+              paragraphs: [
+                text(
+                  'Constructive interference: waves arrive in phase (path difference = nλ, where n = 0, 1, 2...). Result: maximum amplitude. Destructive interference: waves arrive in antiphase (path difference = (n+½)λ). Result: zero amplitude. For two-source interference (e.g. Young\'s double slit), bright fringes occur where path difference = nλ and dark fringes where path difference = (n+½)λ.',
+                  '相长干涉：波同相到达（波程差 = nλ，n = 0, 1, 2...）。结果：振幅最大。相消干涉：波反相到达（波程差 = (n+½)λ）。结果：振幅为零。对于双源干涉（如杨氏双缝），亮纹出现在波程差 = nλ 处，暗纹出现在波程差 = (n+½)λ 处。',
+                ),
+              ],
+              formulas: [
+                formula('Constructive condition', '相长条件', '\\Delta d = n\\lambda \\quad (n=0,1,2,...)'),
+                formula('Destructive condition', '相消条件', '\\Delta d = (n+\\tfrac{1}{2})\\lambda'),
+                formula('Double-slit fringe spacing', '双缝条纹间距', '\\Delta y = \\frac{\\lambda D}{d}'),
+              ],
+            },
+            {
+              heading: text('2. Standing waves: nodes and antinodes', '2. 驻波：节点与腹点'),
+              paragraphs: [
+                text(
+                  'A standing wave forms when two identical waves travel in opposite directions and superpose. Nodes are points of zero displacement (always destructive interference). Antinodes are points of maximum displacement (always constructive). For a string fixed at both ends: the fundamental has one antinode in the middle, length L = λ/2. Harmonics: L = nλ/2, so f_n = nv/(2L). For a pipe open at both ends, the same formula applies. For a pipe closed at one end: L = (2n−1)λ/4 (odd harmonics only).',
+                  '当两个相同的波沿相反方向传播并叠加时，形成驻波。节点是位移始终为零的点（始终相消干涉）。腹点是位移最大的点（始终相长）。对于两端固定的弦：基波在中间有一个腹点，长度 L = λ/2。谐波：L = nλ/2，所以 f_n = nv/(2L)。对于两端开口的管，同样公式适用。对于一端封闭的管：L = (2n−1)λ/4（只有奇次谐波）。',
+                ),
+              ],
+              formulas: [
+                formula('String harmonics', '弦谐波', 'f_n=\\frac{nv}{2L}\\quad (n=1,2,3,...)'),
+                formula('Closed pipe harmonics', '封闭管谐波', 'f_n=\\frac{nv}{4L}\\quad (n=1,3,5,...)'),
+              ],
+            },
+            {
+              heading: text('3. Classroom check: standing wave on a string', '3. 课堂题：弦上的驻波'),
+              classroomQuestions: [
+                {
+                  id: 'ib-standing-wave-string',
+                  title: text('Finding the fundamental frequency', '求基频'),
+                  prompt: text(
+                    'A string of length 0.60 m is fixed at both ends. Waves travel at 120 m/s. What is the fundamental frequency?',
+                    '一根长 0.60 m 的弦两端固定。波速为 120 m/s。基频是多少？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('100 Hz', '100 Hz') },
+                    { label: 'B', text: text('200 Hz', '200 Hz') },
+                    { label: 'C', text: text('50 Hz', '50 Hz') },
+                    { label: 'D', text: text('72 Hz', '72 Hz') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'For the fundamental: L = λ/2, so λ = 2L = 1.20 m. Then f = v/λ = 120/1.20 = 100 Hz. Option B would be the second harmonic.',
+                    '对于基波：L = λ/2，所以 λ = 2L = 1.20 m。然后 f = v/λ = 120/1.20 = 100 Hz。选项 B 是第二谐波。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. Diffraction: waves bending around obstacles', '4. 衍射：波绕过障碍物'),
+              paragraphs: [
+                text(
+                  'Diffraction is the spreading of waves when they pass through a gap or around an obstacle. It is most significant when the gap size is comparable to the wavelength. For a single slit of width a, the first minimum occurs at sin θ = λ/a. Narrower slits give wider diffraction patterns. This is why you can hear around corners (sound λ ~ 1 m) but cannot see around them (light λ ~ 500 nm).',
+                  '衍射是波通过缝隙或绕过障碍物时的扩散现象。当缝隙尺寸与波长相当时最显著。对于宽度为 a 的单缝，第一极小出现在 sin θ = λ/a。缝越窄，衍射图案越宽。这就是为什么你能听到拐角后的声音（声波 λ ~ 1 m）但看不到拐角后的东西（光波 λ ~ 500 nm）。',
+                ),
+              ],
+              formulas: [
+                formula('Single-slit first minimum', '单缝第一极小', '\\sin\\theta=\\frac{\\lambda}{a}'),
+              ],
+              takeaway: text(
+                'Diffraction is most noticeable when the obstacle/gap size ≈ wavelength. This connects wave behaviour to everyday experience.',
+                '当障碍物/缝隙尺寸 ≈ 波长时衍射最明显。这将波动行为与日常经验联系起来。',
+              ),
+            },
+            {
+              heading: text('5. Common mistakes', '5. 常见错误'),
+              bullets: [
+                text('Thinking standing waves transfer energy along the string (they do not — energy is trapped between nodes).', '以为驻波沿弦传递能量（不会——能量被围困在节点之间）。'),
+                text('Confusing nodes with antinodes in diagrams.', '在图中混淆节点和腹点。'),
+                text('Using the open-pipe formula for a closed pipe (or vice versa).', '对封闭管用开口管公式（或反之）。'),
+                text('Forgetting that path difference must be measured from the two sources to the same point.', '忘记波程差必须从两个源量到同一点。'),
+              ],
+            },
+          ],
+        },
+      ],
     }),
     unit(4, 'D. Fields', 'D. 场', 'SL/HL · Paper 1+2', [
       topic('D.1', 'Gravitational fields (HL)', '引力场（HL）'),
