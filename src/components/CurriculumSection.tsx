@@ -562,10 +562,36 @@ const ConceptDiagram: React.FC<{ diagram: CurriculumDiagram; language: 'en' | 'z
       case 'energy-levels':
         return (
           <>
-            {[132, 102, 76, 48].map((y, index) => <line key={y} x1="64" y1={y} x2="206" y2={y} stroke={index === 0 ? muted : stroke} strokeWidth="3" />)}
-            <line x1="132" y1="102" x2="132" y2="54" stroke={accent} strokeWidth="3" markerEnd="url(#arrow)" />
-            <path d="M150 84 q20 -18 42 0 q18 16 38 0" fill="none" stroke={accent} strokeWidth="3" />
-            <text x="116" y="76">hf</text>
+            {/* Y-axis: Energy */}
+            <line x1="44" y1="164" x2="44" y2="16" stroke={muted} strokeWidth="1.5" markerEnd="url(#arrow)" />
+            <text x="30" y="22" fontSize="11" fill={muted}>E</text>
+            <text x="30" y="172" fontSize="8" fill={muted}>eV</text>
+            {/* Ionization limit E=0 (dashed) */}
+            <line x1="58" y1="26" x2="210" y2="26" stroke={muted} strokeWidth="1.5" strokeDasharray="5 4" />
+            <text x="214" y="30" fontSize="9" fill={muted}>0</text>
+            {/* n=4: -0.85 eV */}
+            <line x1="58" y1="40" x2="210" y2="40" stroke={stroke} strokeWidth="2.5" />
+            <text x="214" y="44" fontSize="9" fill={stroke}>n=4</text>
+            <text x="54" y="44" fontSize="8" fill={muted} textAnchor="end">−0.85</text>
+            {/* n=3: -1.51 eV */}
+            <line x1="58" y1="58" x2="210" y2="58" stroke={stroke} strokeWidth="2.5" />
+            <text x="214" y="62" fontSize="9" fill={stroke}>n=3</text>
+            <text x="54" y="62" fontSize="8" fill={muted} textAnchor="end">−1.51</text>
+            {/* n=2: -3.4 eV */}
+            <line x1="58" y1="84" x2="210" y2="84" stroke={stroke} strokeWidth="2.5" />
+            <text x="214" y="88" fontSize="9" fill={stroke}>n=2</text>
+            <text x="54" y="88" fontSize="8" fill={muted} textAnchor="end">−3.4</text>
+            {/* n=1: -13.6 eV (ground state) */}
+            <line x1="58" y1="152" x2="210" y2="152" stroke={stroke} strokeWidth="3" />
+            <text x="214" y="156" fontSize="9" fill={stroke}>n=1</text>
+            <text x="54" y="156" fontSize="8" fill={muted} textAnchor="end">−13.6</text>
+            {/* Absorption arrow: n=1 → n=2 */}
+            <line x1="96" y1="148" x2="96" y2="90" stroke={accent} strokeWidth="2.5" markerEnd="url(#arrow)" />
+            <text x="72" y="124" fontSize="9" fill={accent}>absorb</text>
+            {/* Emission wavy photon: n=3 → n=1 */}
+            <path d="M158 62 C162 55 166 69 170 62 C174 55 178 69 182 62 C186 55 190 69 194 62" fill="none" stroke="#dc2626" strokeWidth="2" />
+            <line x1="194" y1="62" x2="194" y2="146" stroke="#dc2626" strokeWidth="2" markerEnd="url(#arrow)" />
+            <text x="160" y="112" fontSize="9" fill="#dc2626">emit γ</text>
           </>
         );
       case 'spacetime':
@@ -617,7 +643,7 @@ const ConceptDiagram: React.FC<{ diagram: CurriculumDiagram; language: 'en' | 'z
 
   return (
     <figure className="rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
-      <svg viewBox="0 0 280 180" className="h-36 w-full text-[14px] font-semibold text-slate-700 sm:h-44" role="img" aria-label={diagram.title[language]}>
+      <svg viewBox="0 0 280 180" className="h-44 w-full text-[14px] font-semibold text-slate-700 sm:h-52" role="img" aria-label={diagram.title[language]}>
         <defs>
           <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
             <path d="M0,0 L0,6 L8,3 z" fill={accent} />

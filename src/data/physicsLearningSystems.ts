@@ -2456,6 +2456,89 @@ const cambridgeIgcse0625: CurriculumCourse = {
         ...diagrams.momentum,
         ...diagrams.energy,
       ],
+      lessons: [
+        {
+          title: text('Forces, Motion and Newton\'s Second Law', '力、运动与牛顿第二定律'),
+          description: text(
+            'How forces change motion: resultant force, F = ma, mass vs weight, and momentum conservation.',
+            '力如何改变运动：合力、F = ma、质量与重量、以及动量守恒。',
+          ),
+          sections: [
+            {
+              heading: text('0. What is a force?', '0. 什么是力？'),
+              paragraphs: [
+                text(
+                  'A force is a push or pull that can change an object\'s speed, direction, or shape. Forces are vectors (they have magnitude and direction). When multiple forces act on an object, we find the resultant (net) force. If the resultant is zero, the object is in equilibrium (stationary or moving at constant velocity). If the resultant is not zero, the object accelerates.',
+                  '力是可以改变物体速度、方向或形状的推或拉。力是矢量（有大小和方向）。当多个力作用在物体上时，我们求合力（净力）。如果合力为零，物体处于平衡状态（静止或匀速运动）。如果合力不为零，物体加速。',
+                ),
+              ],
+              takeaway: text(
+                'No resultant force = no acceleration. This is Newton\'s first law.',
+                '没有合力 = 没有加速度。这就是牛顿第一定律。',
+              ),
+            },
+            {
+              heading: text('1. Newton\'s second law: F = ma', '1. 牛顿第二定律：F = ma'),
+              paragraphs: [
+                text(
+                  'The acceleration of an object is proportional to the resultant force and inversely proportional to its mass: a = F/m. The unit of force is the newton (N): 1 N gives 1 kg an acceleration of 1 m/s². Mass is the amount of matter (kg, same everywhere). Weight is the gravitational force: W = mg (N, depends on g). On Earth g ≈ 9.8 N/kg; on the Moon g ≈ 1.6 N/kg.',
+                  '物体的加速度与合力成正比，与质量成反比：a = F/m。力的单位是牛顿（N）：1 N 使 1 kg 产生 1 m/s² 的加速度。质量是物质的量（kg，处处相同）。重量是引力：W = mg（N，取决于 g）。地球上 g ≈ 9.8 N/kg；月球上 g ≈ 1.6 N/kg。',
+                ),
+              ],
+              formulas: [
+                formula('Newton\'s second law', '牛顿第二定律', 'F=ma'),
+                formula('Weight', '重量', 'W=mg'),
+              ],
+            },
+            {
+              heading: text('2. Momentum and conservation', '2. 动量与守恒'),
+              paragraphs: [
+                text(
+                  'Momentum p = mv (kg m/s). It is a vector. In any collision or interaction, total momentum is conserved (if no external force): m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂. This works for collisions, explosions, and recoil. Impulse = change in momentum = F × t.',
+                  '动量 p = mv（kg m/s）。它是矢量。在任何碰撞或相互作用中，总动量守恒（无外力时）：m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂。这适用于碰撞、爆炸和后坐。冲量 = 动量变化 = F × t。',
+                ),
+              ],
+              formulas: [
+                formula('Momentum', '动量', 'p=mv'),
+                formula('Conservation', '动量守恒', 'm_1u_1+m_2u_2=m_1v_1+m_2v_2'),
+              ],
+            },
+            {
+              heading: text('3. Classroom check: collision', '3. 课堂题：碰撞'),
+              classroomQuestions: [
+                {
+                  id: 'igcse-momentum-collision',
+                  title: text('Trolley collision', '小车碰撞'),
+                  prompt: text(
+                    'A 2 kg trolley moving at 3 m/s collides with a stationary 1 kg trolley. They stick together. What is their speed after the collision?',
+                    '一个 2 kg 小车以 3 m/s 撞击一个静止的 1 kg 小车。它们粘在一起。碰撞后速度是多少？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('2 m/s', '2 m/s') },
+                    { label: 'B', text: text('3 m/s', '3 m/s') },
+                    { label: 'C', text: text('1.5 m/s', '1.5 m/s') },
+                    { label: 'D', text: text('6 m/s', '6 m/s') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'Momentum before = 2×3 + 1×0 = 6 kg m/s. After: (2+1)v = 6, so v = 2 m/s.',
+                    '碰撞前动量 = 2×3 + 1×0 = 6 kg m/s。碰撞后：(2+1)v = 6，所以 v = 2 m/s。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. Common mistakes', '4. 常见错误'),
+              bullets: [
+                text('Confusing mass and weight (mass is constant, weight depends on g).', '混淆质量和重量（质量恒定，重量取决于 g）。'),
+                text('Forgetting that momentum is a vector (direction matters!).', '忘记动量是矢量（方向很重要！）。'),
+                text('Using F = ma with individual forces instead of the resultant force.', '用 F = ma 时用单个力而不是合力。'),
+                text('Thinking a moving object must have a force acting on it (it doesn\'t if moving at constant velocity).', '以为运动的物体一定有力作用（匀速运动时不需要）。'),
+              ],
+            },
+          ],
+        },
+      ],
     }),
     unit(2, 'Thermal Physics', '热物理', 'Core + Supplement', [
       topic('2.1', 'Simple kinetic molecular model of matter', '分子动理论模型'),
@@ -2480,6 +2563,85 @@ const cambridgeIgcse0625: CurriculumCourse = {
       diagrams: [
         ...diagrams.thermal,
         diagram('greenhouse', 'Greenhouse Effect', '温室效应', 'Thermal radiation balance explains atmospheric warming.', '热辐射平衡解释大气升温。'),
+      ],
+      lessons: [
+        {
+          title: text('The Particle Model and Thermal Energy', '粒子模型与热能'),
+          description: text(
+            'How the kinetic molecular model explains states of matter, temperature, specific heat capacity, and heat transfer methods.',
+            '分子动理论如何解释物质状态、温度、比热容和热传递方式。',
+          ),
+          sections: [
+            {
+              heading: text('0. The particle model of matter', '0. 物质的粒子模型'),
+              paragraphs: [
+                text(
+                  'All matter is made of tiny particles in constant motion. In solids: particles vibrate about fixed positions (strong forces, regular arrangement). In liquids: particles slide past each other (weaker forces, no fixed shape). In gases: particles move freely at high speed (negligible forces, fill any container). Heating increases the kinetic energy of particles, which can cause melting, evaporation, or expansion.',
+                  '所有物质由不断运动的微小粒子组成。固体中：粒子在固定位置振动（强作用力，规则排列）。液体中：粒子相互滑动（较弱力，无固定形状）。气体中：粒子高速自由运动（可忽略的力，充满任何容器）。加热增加粒子动能，可能导致熔化、蒸发或膨胀。',
+                ),
+              ],
+              takeaway: text(
+                'Temperature measures the average kinetic energy of particles. Absolute zero (0 K) means zero kinetic energy.',
+                '温度衡量粒子的平均动能。绝对零度（0 K）意味着动能为零。',
+              ),
+            },
+            {
+              heading: text('1. Specific heat capacity and latent heat', '1. 比热容与比潜热'),
+              paragraphs: [
+                text(
+                  'Specific heat capacity (c): energy needed to raise 1 kg by 1°C. Q = mcΔT. Water has a high c (4200 J/kg°C), which is why it takes long to boil and cools slowly. Specific latent heat (L): energy needed to change state of 1 kg without changing temperature. Q = mL. During melting/boiling, energy goes into breaking bonds, not raising temperature.',
+                  '比热容（c）：使 1 kg 升高 1°C 所需能量。Q = mcΔT。水的 c 很高（4200 J/kg°C），所以烧开慢、冷却也慢。比潜热（L）：使 1 kg 改变状态而不改变温度所需能量。Q = mL。在熔化/沸腾时，能量用于断裂键，而不是升温。',
+                ),
+              ],
+              formulas: [
+                formula('Specific heat capacity', '比热容', 'Q=mc\\Delta T'),
+                formula('Specific latent heat', '比潜热', 'Q=mL'),
+              ],
+            },
+            {
+              heading: text('2. Three methods of heat transfer', '2. 三种热传递方式'),
+              paragraphs: [
+                text(
+                  'Conduction: energy transferred through a solid by particle vibrations and free electrons (metals are good conductors). Convection: bulk movement of fluid due to density differences when heated (hot fluid rises, cool fluid sinks). Radiation: energy transferred by infrared electromagnetic waves (no medium needed; works in vacuum). Dark, matt surfaces are good emitters/absorbers; light, shiny surfaces are poor.',
+                  '传导：通过固体中粒子振动和自由电子传递能量（金属是良导体）。对流：流体受热后密度变化引起的整体流动（热流体上升，冷流体下沉）。辐射：通过红外电磁波传递能量（不需要介质；在真空中也能工作）。深色、亚光表面是好的发射体/吸收体；浅色、光亮表面是差的。',
+                ),
+              ],
+            },
+            {
+              heading: text('3. Classroom check: heating water', '3. 课堂题：加热水'),
+              classroomQuestions: [
+                {
+                  id: 'igcse-specific-heat',
+                  title: text('Energy to heat water', '加热水所需能量'),
+                  prompt: text(
+                    'How much energy is needed to heat 0.5 kg of water from 20°C to 100°C? (c = 4200 J/kg°C)',
+                    '将 0.5 kg 水从 20°C 加热到 100°C 需要多少能量？（c = 4200 J/kg°C）',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('168 kJ', '168 kJ') },
+                    { label: 'B', text: text('84 kJ', '84 kJ') },
+                    { label: 'C', text: text('336 kJ', '336 kJ') },
+                    { label: 'D', text: text('42 kJ', '42 kJ') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'Q = mcΔT = 0.5 × 4200 × 80 = 168,000 J = 168 kJ.',
+                    'Q = mcΔT = 0.5 × 4200 × 80 = 168,000 J = 168 kJ。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. Common mistakes', '4. 常见错误'),
+              bullets: [
+                text('Thinking temperature rises during boiling (it stays constant during state change).', '以为沸腾时温度继续升高（状态变化时温度不变）。'),
+                text('Confusing heat with temperature (heat is energy transferred; temperature is a measure of hotness).', '混淆热量和温度（热量是传递的能量；温度是冷热程度的度量）。'),
+                text('Forgetting that radiation works in a vacuum (conduction and convection do not).', '忘记辐射在真空中也能工作（传导和对流不行）。'),
+                text('Using ΔT in kelvin and Celsius interchangeably without noting they have the same size degree.', '混用开尔文和摄氏度的 ΔT 而不注意它们的度数大小相同。'),
+              ],
+            },
+          ],
+        },
       ],
     }),
     unit(3, 'Waves', '波', 'Core + Supplement', [
@@ -2722,6 +2884,80 @@ const cambridgeIgcse0625: CurriculumCourse = {
         ...diagrams.circuits,
         ...diagrams.magnetism,
       ],
+      lessons: [
+        {
+          title: text('Circuits, Power and Electromagnetic Induction', '电路、功率与电磁感应'),
+          description: text(
+            'Ohm\'s law, series and parallel circuits, electrical power, and how generators and transformers work.',
+            '欧姆定律、串联和并联电路、电功率、以及发电机和变压器的工作原理。',
+          ),
+          sections: [
+            {
+              heading: text('0. Current, voltage and resistance', '0. 电流、电压与电阻'),
+              paragraphs: [
+                text(
+                  'Current (I) is the rate of flow of charge: I = Q/t (amperes). Voltage (V) is the energy transferred per unit charge: V = E/Q (volts). Resistance (R) opposes current flow: R = V/I (ohms). Ohm\'s law: V = IR (for ohmic conductors at constant temperature). In series: same current, voltages add. In parallel: same voltage, currents add.',
+                  '电流（I）是电荷流动速率：I = Q/t（安培）。电压（V）是每单位电荷转移的能量：V = E/Q（伏特）。电阻（R）阻碍电流：R = V/I（欧姆）。欧姆定律：V = IR（恒温欧姆导体）。串联：电流相同，电压相加。并联：电压相同，电流相加。',
+                ),
+              ],
+              formulas: [
+                formula('Ohm\'s law', '欧姆定律', 'V=IR'),
+                formula('Power', '功率', 'P=IV=I^2R'),
+                formula('Energy', '电能', 'E=IVt'),
+              ],
+            },
+            {
+              heading: text('1. Electromagnetic induction', '1. 电磁感应'),
+              paragraphs: [
+                text(
+                  'When a conductor moves through a magnetic field (or the field changes), an EMF is induced. This is electromagnetic induction (Faraday\'s law). A generator converts kinetic energy to electrical energy by rotating a coil in a magnetic field. A transformer changes AC voltage: Vp/Vs = Np/Ns. Step-up transformers increase voltage (for power transmission); step-down decrease it (for safe use).',
+                  '当导体在磁场中运动（或磁场变化）时，会感应出电动势。这就是电磁感应（法拉第定律）。发电机通过在磁场中旋转线圈将动能转化为电能。变压器改变交流电压：Vp/Vs = Np/Ns。升压变压器增加电压（用于输电）；降压变压器降低电压（用于安全使用）。',
+                ),
+              ],
+              formulas: [
+                formula('Transformer equation', '变压器方程', '\\frac{V_p}{V_s}=\\frac{N_p}{N_s}'),
+              ],
+              takeaway: text(
+                'Induction requires a CHANGING magnetic flux. A stationary conductor in a steady field has no induced EMF.',
+                '感应需要变化的磁通量。静止导体在稳定磁场中没有感应电动势。',
+              ),
+            },
+            {
+              heading: text('2. Classroom check: transformer', '2. 课堂题：变压器'),
+              classroomQuestions: [
+                {
+                  id: 'igcse-transformer',
+                  title: text('Step-down transformer', '降压变压器'),
+                  prompt: text(
+                    'A transformer has 1000 turns on the primary and 50 on the secondary. If the input voltage is 230 V, what is the output voltage?',
+                    '一个变压器初级 1000 匹，次级 50 匹。输入电压 230 V，输出电压是多少？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('11.5 V', '11.5 V') },
+                    { label: 'B', text: text('4600 V', '4600 V') },
+                    { label: 'C', text: text('23 V', '23 V') },
+                    { label: 'D', text: text('4.6 V', '4.6 V') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'Vs = Vp × Ns/Np = 230 × 50/1000 = 11.5 V. This is a step-down transformer.',
+                    'Vs = Vp × Ns/Np = 230 × 50/1000 = 11.5 V。这是一个降压变压器。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('3. Common mistakes', '3. 常见错误'),
+              bullets: [
+                text('Thinking transformers work with DC (they only work with AC).', '以为变压器能用直流（只能用交流）。'),
+                text('Confusing series and parallel rules for resistance.', '混淆串联和并联电阻规则。'),
+                text('Forgetting that power is conserved in an ideal transformer (VpIp = VsIs).', '忘记理想变压器中功率守恒（VpIp = VsIs）。'),
+                text('Using P = IV without checking if V is across the component or the total voltage.', '用 P = IV 时不检查 V 是组件两端还是总电压。'),
+              ],
+            },
+          ],
+        },
+      ],
     }),
     unit(5, 'Nuclear Physics', '核物理', 'Core + Supplement', [
       topic('5.1', 'The nuclear model of the atom', '原子核模型'),
@@ -2747,6 +2983,87 @@ const cambridgeIgcse0625: CurriculumCourse = {
       diagrams: [
         ...diagrams.quantum,
       ],
+      lessons: [
+        {
+          title: text('Radioactive Decay and Half-Life', '放射性衰变与半衰期'),
+          description: text(
+            'Alpha, beta and gamma radiation, balanced nuclear equations, and using half-life to predict decay.',
+            'α、β、γ 辐射、平衡核方程、以及用半衰期预测衰变。',
+          ),
+          sections: [
+            {
+              heading: text('0. The nuclear atom', '0. 核式原子'),
+              paragraphs: [
+                text(
+                  'An atom has a tiny, dense nucleus (protons + neutrons) surrounded by electrons in shells. The proton number Z defines the element. The nucleon number A = protons + neutrons. Isotopes have the same Z but different numbers of neutrons. Some isotopes are unstable (radioactive) and decay spontaneously.',
+                  '原子有一个微小、致密的原子核（质子 + 中子），周围是壳层中的电子。质子数 Z 定义元素。核子数 A = 质子 + 中子。同位素有相同的 Z 但中子数不同。某些同位素不稳定（放射性），会自发衰变。',
+                ),
+              ],
+              formulas: [
+                formula('Nucleon number', '核子数', 'A=Z+N'),
+              ],
+            },
+            {
+              heading: text('1. Three types of radiation', '1. 三种辐射'),
+              paragraphs: [
+                text(
+                  'Alpha (α): helium nucleus (⁴₂He), +2 charge, stopped by paper, highly ionising. Beta (β): high-speed electron, −1 charge, stopped by aluminium, moderately ionising. Gamma (γ): electromagnetic wave, no charge, reduced by lead, weakly ionising. In alpha decay: A drops by 4, Z drops by 2. In beta decay: A unchanged, Z increases by 1.',
+                  'Alpha（α）：氦核（⁴₂He），+2 电荷，纸张可挡，电离强。Beta（β）：高速电子，−1 电荷，铝板可挡，中等电离。Gamma（γ）：电磁波，无电荷，铅板减弱，电离弱。α 衰变：A 减 4，Z 减 2。β 衰变：A 不变，Z 增 1。',
+                ),
+              ],
+              formulas: [
+                formula('Alpha decay', 'α 衰变', '{}^A_Z X\\to{}^{A-4}_{Z-2}Y+{}^4_2\\text{He}'),
+                formula('Beta decay', 'β 衰变', '{}^A_Z X\\to{}^{A}_{Z+1}Y+{}^{0}_{-1}e'),
+              ],
+            },
+            {
+              heading: text('2. Half-life', '2. 半衰期'),
+              paragraphs: [
+                text(
+                  'Half-life (t½) is the time for half the radioactive nuclei to decay (or for the activity to halve). After 1 half-life: 50% remains. After 2: 25%. After 3: 12.5%. The decay is random but statistically predictable. Formula: N = N₀(½)^(t/t½). Half-lives range from fractions of a second to billions of years.',
+                  '半衰期（t½）是一半放射性核衰变（或活度减半）所需时间。1 个半衰期后：剩 50%。2 个后：25%。3 个后：12.5%。衰变是随机的但统计上可预测。公式：N = N₀(½)^(t/t½)。半衰期从几分之一秒到数十亿年不等。',
+                ),
+              ],
+              formulas: [
+                formula('Half-life decay', '半衰期衰变', 'N=N_0\\left(\\frac{1}{2}\\right)^{t/t_{1/2}}'),
+              ],
+            },
+            {
+              heading: text('3. Classroom check: half-life calculation', '3. 课堂题：半衰期计算'),
+              classroomQuestions: [
+                {
+                  id: 'igcse-half-life',
+                  title: text('Remaining activity after decay', '衰变后剩余活度'),
+                  prompt: text(
+                    'A sample has initial activity 800 Bq and half-life 6 hours. What is the activity after 18 hours?',
+                    '一个样品初始活度 800 Bq，半衰期 6 小时。18 小时后活度是多少？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('100 Bq', '100 Bq') },
+                    { label: 'B', text: text('200 Bq', '200 Bq') },
+                    { label: 'C', text: text('50 Bq', '50 Bq') },
+                    { label: 'D', text: text('400 Bq', '400 Bq') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    '18 hours = 3 half-lives. Activity: 800 → 400 → 200 → 100 Bq.',
+                    '18 小时 = 3 个半衰期。活度：800 → 400 → 200 → 100 Bq。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. Common mistakes', '4. 常见错误'),
+              bullets: [
+                text('Thinking half-life means all nuclei decay in two half-lives.', '以为半衰期意味着两个半衰期后所有核都衰变。'),
+                text('Forgetting that gamma decay does not change A or Z.', '忘记 γ 衰变不改变 A 或 Z。'),
+                text('Confusing activity (Bq) with count rate (depends on detector distance).', '混淆活度（Bq）和计数率（取决于探测器距离）。'),
+                text('Writing beta decay without the antineutrino (at IGCSE this is acceptable, but good to know).', '写 β 衰变时不写反中微子（IGCSE 层面可接受，但知道更好）。'),
+              ],
+            },
+          ],
+        },
+      ],
     }),
     unit(6, 'Space Physics', '太空物理', 'Supplement', [
       topic('6.1', 'Earth and the Solar System', '地球与太阳系'),
@@ -2770,6 +3087,75 @@ const cambridgeIgcse0625: CurriculumCourse = {
       diagrams: [
         ...diagrams.astronomy,
       ],
+      lessons: [
+        {
+          title: text('Stars, Red-Shift and the Big Bang', '恒星、红移与大爆炸'),
+          description: text(
+            'Stellar life cycles, how red-shift provides evidence for an expanding Universe, and the Big Bang model.',
+            '恒星生命周期、红移如何提供宇宙膨胀的证据、以及大爆炸模型。',
+          ),
+          sections: [
+            {
+              heading: text('0. The life cycle of a star', '0. 恒星的生命周期'),
+              paragraphs: [
+                text(
+                  'Stars form from clouds of gas and dust (nebulae) that collapse under gravity. Nuclear fusion of hydrogen into helium releases energy, balancing gravitational collapse (main sequence). When hydrogen runs out: small stars become red giants → planetary nebulae → white dwarfs. Massive stars become red supergiants → supernovae → neutron stars or black holes.',
+                  '恒星由气体和尘埃云（星云）在引力下崩塞形成。氢聚变为氦释放能量，平衡引力崩塞（主序星）。氢耗尽后：小质量恒星变为红巨星 → 行星状星云 → 白矮星。大质量恒星变为红超巨星 → 超新星 → 中子星或黑洞。',
+                ),
+              ],
+              takeaway: text(
+                'A star\'s fate depends on its mass. More massive stars end more dramatically.',
+                '恒星的命运取决于质量。质量越大的恒星结局越剧烈。',
+              ),
+            },
+            {
+              heading: text('1. Red-shift and the expanding Universe', '1. 红移与膨胀的宇宙'),
+              paragraphs: [
+                text(
+                  'Light from distant galaxies is shifted toward longer wavelengths (red-shift). This is a Doppler effect: the galaxies are moving away from us. The further away a galaxy is, the greater its red-shift (Hubble\'s law: v ∝ d). This means the Universe is expanding. Running the expansion backward leads to the Big Bang: the Universe began as an extremely hot, dense point about 13.8 billion years ago.',
+                  '来自遥远星系的光向更长波长偏移（红移）。这是多普勒效应：星系正在远离我们。星系越远，红移越大（哈勃定律：v ∝ d）。这意味着宇宙在膨胀。将膨胀反向推演就得到大爆炸：宇宙始于约 138 亿年前的一个极热、极密的点。',
+                ),
+              ],
+              formulas: [
+                formula('Red-shift', '红移', 'z=\\frac{\\Delta\\lambda}{\\lambda}\\approx\\frac{v}{c}'),
+              ],
+            },
+            {
+              heading: text('2. Classroom check: red-shift', '2. 课堂题：红移'),
+              classroomQuestions: [
+                {
+                  id: 'igcse-redshift',
+                  title: text('Galaxy recession speed', '星系退行速度'),
+                  prompt: text(
+                    'A spectral line normally at 600 nm is observed at 603 nm from a distant galaxy. What is the galaxy\'s speed? (c = 3×10⁸ m/s)',
+                    '一条正常在 600 nm 的光谱线从远处星系观测到 603 nm。星系速度是多少？（c = 3×10⁸ m/s）',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('1.5×10⁶ m/s', '1.5×10⁶ m/s') },
+                    { label: 'B', text: text('1.5×10⁷ m/s', '1.5×10⁷ m/s') },
+                    { label: 'C', text: text('6×10⁶ m/s', '6×10⁶ m/s') },
+                    { label: 'D', text: text('3×10⁶ m/s', '3×10⁶ m/s') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'z = Δλ/λ = 3/600 = 0.005. v = zc = 0.005 × 3×10⁸ = 1.5×10⁶ m/s.',
+                    'z = Δλ/λ = 3/600 = 0.005。v = zc = 0.005 × 3×10⁸ = 1.5×10⁶ m/s。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('3. Common mistakes', '3. 常见错误'),
+              bullets: [
+                text('Thinking red-shift means galaxies are literally red (it means wavelengths are stretched).', '以为红移意味着星系真的是红色的（它意味着波长被拉伸）。'),
+                text('Confusing the Big Bang with an explosion in space (it was an expansion OF space).', '混淆大爆炸和空间中的爆炸（它是空间本身的膨胀）。'),
+                text('Thinking all stars become black holes (only very massive ones do).', '以为所有恒星都变成黑洞（只有非常大质量的才会）。'),
+                text('Forgetting that the Sun is a main-sequence star, not a red giant (yet!).', '忘记太阳是主序星，不是红巨星（还没到！）。'),
+              ],
+            },
+          ],
+        },
+      ],
     }),
   ],
 };
@@ -2786,21 +3172,202 @@ const cambridge9702: CurriculumCourse = {
       topic('1.2', 'SI quantities and units', 'SI 量与单位'),
       topic('1.3', 'Errors and uncertainties', '误差与不确定度'),
       topic('1.4', 'Scalars and vectors', '标量与矢量'),
-    ], enrich('measurement', 'measurement', 'measurement', [
-      ['Use SI base quantities, derived units, prefixes, and homogeneity checks.', '使用 SI 基本量、导出单位、前缀和量纲一致性检查。'],
-      ['Handle uncertainty, significant figures, calibration, and graphical data.', '处理不确定度、有效数字、校准和图像数据。'],
-      ['Extract physical meaning from gradients, intercepts, and areas.', '从斜率、截距和面积中提取物理意义。'],
-    ])),
+    ], {
+      ...enrich('measurement', 'measurement', 'measurement', [
+        ['Use SI base quantities, derived units, prefixes, and homogeneity checks.', '使用 SI 基本量、导出单位、前缀和量纲一致性检查。'],
+        ['Handle uncertainty, significant figures, calibration, and graphical data.', '处理不确定度、有效数字、校准和图像数据。'],
+        ['Extract physical meaning from gradients, intercepts, and areas.', '从斜率、截距和面积中提取物理意义。'],
+      ]),
+      lessons: [
+        {
+          title: text('SI Units, Prefixes and Dimensional Analysis', 'SI 单位、前缀与量纲分析'),
+          description: text(
+            'The seven SI base units, how derived units are built, and using dimensional homogeneity to check equations.',
+            '七个 SI 基本单位、导出单位如何构建、以及用量纲一致性检查方程。',
+          ),
+          sections: [
+            {
+              heading: text('0. Why do we need a universal measurement system?', '0. 为什么需要统一的测量系统？'),
+              paragraphs: [
+                text(
+                  'Physics is quantitative — every measurement needs a number AND a unit. The SI (Système International) provides seven base quantities from which all others are derived. Without consistent units, equations become meaningless and engineering disasters happen (e.g. the 1999 Mars Climate Orbiter lost due to mixing imperial and metric units).',
+                  '物理学是定量的——每个测量都需要一个数值和一个单位。SI（国际单位制）提供七个基本量，所有其他量都由它们导出。没有统一的单位，方程就毫无意义，工程灾难也会发生（如 1999 年火星气候探测器因混用英制和公制单位而丢失）。',
+                ),
+              ],
+              takeaway: text(
+                'Always write units. A number without a unit is not a physical quantity.',
+                '始终写单位。没有单位的数字不是物理量。',
+              ),
+            },
+            {
+              heading: text('1. The seven SI base quantities', '1. 七个 SI 基本量'),
+              paragraphs: [
+                text(
+                  'Length (metre, m), Mass (kilogram, kg), Time (second, s), Electric current (ampere, A), Temperature (kelvin, K), Amount of substance (mole, mol), Luminous intensity (candela, cd). All other units are derived from these. For example: force = kg m s⁻² (newton), energy = kg m² s⁻² (joule), charge = A s (coulomb).',
+                  '长度（米, m）、质量（千克, kg）、时间（秒, s）、电流（安培, A）、温度（开尔文, K）、物质的量（摩尔, mol）、发光强度（坎德拉, cd）。所有其他单位都由这些导出。例如：力 = kg m s⁻²（牛顿）、能量 = kg m² s⁻²（焦耳）、电荷 = A s（库仑）。',
+                ),
+              ],
+              formulas: [
+                formula('Force in base units', '力的基本单位', '1\\text{ N}=1\\text{ kg m s}^{-2}'),
+                formula('Energy in base units', '能量的基本单位', '1\\text{ J}=1\\text{ kg m}^2\\text{ s}^{-2}'),
+              ],
+            },
+            {
+              heading: text('2. SI prefixes', '2. SI 前缀'),
+              paragraphs: [
+                text(
+                  'Prefixes scale units by powers of 10: tera (T, 10¹²), giga (G, 10⁹), mega (M, 10⁶), kilo (k, 10³), milli (m, 10⁻³), micro (μ, 10⁻⁶), nano (n, 10⁻⁹), pico (p, 10⁻¹²). Common examples: 5 nm = 5×10⁻⁹ m (visible light wavelength), 2.2 kΩ = 2200 Ω (resistor), 3.0 μF = 3.0×10⁻⁶ F (capacitor).',
+                  '前缀按 10 的幂缩放单位：太（T, 10¹²）、吉（G, 10⁹）、兆（M, 10⁶）、千（k, 10³）、毫（m, 10⁻³）、微（μ, 10⁻⁶）、纳（n, 10⁻⁹）、皮（p, 10⁻¹²）。常见例子：5 nm = 5×10⁻⁹ m（可见光波长）、2.2 kΩ = 2200 Ω（电阻）、3.0 μF = 3.0×10⁻⁶ F（电容）。',
+                ),
+              ],
+            },
+            {
+              heading: text('3. Dimensional homogeneity check', '3. 量纲一致性检查'),
+              paragraphs: [
+                text(
+                  'Every valid physics equation must be dimensionally homogeneous: both sides must have the same base units. Example: check v² = u² + 2as. LHS: (m s⁻¹)² = m² s⁻². RHS: (m s⁻¹)² + (m s⁻²)(m) = m² s⁻² + m² s⁻² = m² s⁻². ✓ Both sides match. This cannot prove an equation is correct, but it can prove it is WRONG if dimensions do not match.',
+                  '每个有效的物理方程必须量纲一致：两边必须有相同的基本单位。例：检验 v² = u² + 2as。左边：(m s⁻¹)² = m² s⁻²。右边：(m s⁻¹)² + (m s⁻²)(m) = m² s⁻² + m² s⁻² = m² s⁻²。✓ 两边匹配。这不能证明方程正确，但如果量纲不匹配就能证明它是错的。',
+                ),
+              ],
+              takeaway: text(
+                'Dimensional analysis is a free error-check: if units don\'t match, the equation is definitely wrong.',
+                '量纲分析是免费的错误检查：如果单位不匹配，方程一定是错的。',
+              ),
+            },
+            {
+              heading: text('4. Classroom check: units of the gravitational constant', '4. 课堂题：引力常量的单位'),
+              classroomQuestions: [
+                {
+                  id: 'alevel-u1-gravitational-constant-units',
+                  title: text('Base units of G', 'G 的基本单位'),
+                  prompt: text(
+                    'Using F = GMm/r², what are the SI base units of the gravitational constant G?',
+                    '用 F = GMm/r²，引力常量 G 的 SI 基本单位是什么？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('m³ kg⁻¹ s⁻²', 'm³ kg⁻¹ s⁻²') },
+                    { label: 'B', text: text('m² kg⁻¹ s⁻²', 'm² kg⁻¹ s⁻²') },
+                    { label: 'C', text: text('m³ kg s⁻²', 'm³ kg s⁻²') },
+                    { label: 'D', text: text('kg m⁻¹ s⁻²', 'kg m⁻¹ s⁻²') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'G = Fr²/(Mm). Units: (kg m s⁻²)(m²)/(kg²) = m³ kg⁻¹ s⁻².',
+                    'G = Fr²/(Mm)。单位：(kg m s⁻²)(m²)/(kg²) = m³ kg⁻¹ s⁻²。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('5. Common mistakes', '5. 常见错误'),
+              bullets: [
+                text('Writing "m" for both metres and milli- (context matters!).', '把“m”同时用于米和毫（上下文很重要！）。'),
+                text('Forgetting that kg is the base unit, not g.', '忘记 kg 是基本单位，不是 g。'),
+                text('Adding quantities with different units (e.g. metres + seconds).', '把不同单位的量相加（如米 + 秒）。'),
+                text('Not converting prefixes before substituting into equations.', '代入方程前不转换前缀。'),
+              ],
+            },
+          ],
+        },
+      ],
+    }),
     unit(2, 'Mechanics', '力学', 'AS Paper 1+2', [
       topic('2.1', 'Kinematics', '运动学'),
       topic('2.2', 'Dynamics and Newton\'s laws', '动力学与牛顿定律'),
       topic('2.3', 'Forces, density and pressure', '力、密度与压强'),
       topic('2.4', 'Work, energy and power', '功、能量与功率'),
-    ], enrich('dynamics', 'dynamics', 'dynamics', [
-      ['Model motion with equations, graphs, and Newton\'s laws.', '用方程、图像和牛顿定律建模运动。'],
-      ['Apply density, pressure, and force equilibrium in real systems.', '在真实系统中应用密度、压强和受力平衡。'],
-      ['Use energy methods for work, efficiency, and power.', '用能量方法处理功、效率和功率。'],
-    ])),
+    ], {
+      ...enrich('dynamics', 'dynamics', 'dynamics', [
+        ['Model motion with equations, graphs, and Newton\'s laws.', '用方程、图像和牛顿定律建模运动。'],
+        ['Apply density, pressure, and force equilibrium in real systems.', '在真实系统中应用密度、压强和受力平衡。'],
+        ['Use energy methods for work, efficiency, and power.', '用能量方法处理功、效率和功率。'],
+      ]),
+      lessons: [
+        {
+          title: text('Kinematics: Equations of Motion and Graphs', '运动学：运动方程与图像'),
+          description: text(
+            'SUVAT equations for constant acceleration, interpreting displacement-time and velocity-time graphs, and projectile motion.',
+            '匀加速运动的 SUVAT 方程、解读位移-时间和速度-时间图像、以及抛体运动。',
+          ),
+          sections: [
+            {
+              heading: text('0. The five SUVAT variables', '0. 五个 SUVAT 变量'),
+              paragraphs: [
+                text(
+                  'For constant acceleration in a straight line, five quantities describe the motion: s (displacement), u (initial velocity), v (final velocity), a (acceleration), t (time). Any three known variables let you find the other two using the SUVAT equations. These only work when acceleration is constant.',
+                  '对于直线匀加速运动，五个量描述运动：s（位移）、u（初速度）、v（末速度）、a（加速度）、t（时间）。已知任意三个变量就能用 SUVAT 方程求出另外两个。这些方程只在加速度恒定时有效。',
+                ),
+              ],
+              formulas: [
+                formula('SUVAT 1', 'SUVAT 1', 'v=u+at'),
+                formula('SUVAT 2', 'SUVAT 2', 's=ut+\\tfrac{1}{2}at^2'),
+                formula('SUVAT 3', 'SUVAT 3', 'v^2=u^2+2as'),
+                formula('SUVAT 4', 'SUVAT 4', 's=\\tfrac{1}{2}(u+v)t'),
+              ],
+            },
+            {
+              heading: text('1. Reading motion graphs', '1. 读懂运动图像'),
+              paragraphs: [
+                text(
+                  'Displacement-time graph: gradient = velocity. A straight line means constant velocity; a curve means acceleration. Velocity-time graph: gradient = acceleration; area under graph = displacement. Acceleration-time graph: area = change in velocity. Key skill: a horizontal line on a v-t graph means constant velocity (NOT stationary — that would be v=0).',
+                  '位移-时间图：斜率 = 速度。直线表示匀速；曲线表示有加速度。速度-时间图：斜率 = 加速度；图下面积 = 位移。加速度-时间图：面积 = 速度变化。关键技能：v-t 图上的水平线表示匀速（不是静止——静止是 v=0）。',
+                ),
+              ],
+              takeaway: text(
+                'Gradient of s-t gives v; gradient of v-t gives a; area under v-t gives s.',
+                's-t 图的斜率给 v；v-t 图的斜率给 a；v-t 图下的面积给 s。',
+              ),
+            },
+            {
+              heading: text('2. Projectile motion', '2. 抛体运动'),
+              paragraphs: [
+                text(
+                  'A projectile has two independent components: horizontal (constant velocity, a=0) and vertical (constant acceleration a=g downward). Solve by splitting into x and y components. Time of flight is determined by the vertical motion; range is determined by horizontal velocity × time. At the highest point, vertical velocity = 0 but horizontal velocity is unchanged.',
+                  '抛体有两个独立的分量：水平（匀速，a=0）和竖直（匀加速 a=g 向下）。解题时分解为 x 和 y 分量。飞行时间由竖直运动决定；射程由水平速度 × 时间决定。在最高点，竖直速度 = 0 但水平速度不变。',
+                ),
+              ],
+              formulas: [
+                formula('Horizontal range', '水平射程', 'R=\\frac{u^2\\sin 2\\theta}{g}'),
+                formula('Maximum height', '最大高度', 'H=\\frac{u^2\\sin^2\\theta}{2g}'),
+              ],
+            },
+            {
+              heading: text('3. Classroom check: braking distance', '3. 课堂题：制动距离'),
+              classroomQuestions: [
+                {
+                  id: 'alevel-u2-braking-distance',
+                  title: text('Car braking to a stop', '汽车制动停车'),
+                  prompt: text(
+                    'A car travelling at 20 m/s brakes with constant deceleration 5 m/s². How far does it travel before stopping?',
+                    '一辆以 20 m/s 行驶的汽车以恒定减速度 5 m/s² 制动。停车前行驶多远？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('40 m', '40 m') },
+                    { label: 'B', text: text('80 m', '80 m') },
+                    { label: 'C', text: text('4 m', '4 m') },
+                    { label: 'D', text: text('100 m', '100 m') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'Use v² = u² + 2as → 0 = 400 + 2(−5)s → s = 400/10 = 40 m.',
+                    '用 v² = u² + 2as → 0 = 400 + 2(−5)s → s = 400/10 = 40 m。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. Common mistakes', '4. 常见错误'),
+              bullets: [
+                text('Using SUVAT when acceleration is not constant.', '在加速度不恒定时使用 SUVAT。'),
+                text('Forgetting to choose a positive direction and stick to it.', '忘记选择正方向并坚持使用。'),
+                text('Confusing displacement with distance (displacement can be negative).', '混淆位移和距离（位移可以是负的）。'),
+                text('Reading the area under an s-t graph (meaningless — area under v-t gives displacement).', '读 s-t 图下的面积（无意义——v-t 图下的面积才给位移）。'),
+              ],
+            },
+          ],
+        },
+      ],
+    }),
     unit(3, 'Matter and Materials', '物质与材料', 'AS Paper 1+2', [
       topic('3.1', 'Stress and strain', '应力与应变'),
       topic('3.2', 'Elastic and plastic behaviour', '弹性与塑性行为'),
@@ -2819,27 +3386,273 @@ const cambridge9702: CurriculumCourse = {
         formula('Young modulus', '杨氏模量', 'E=\\frac{\\sigma}{\\varepsilon}=\\frac{F/A}{\\Delta L/L}'),
       ],
       diagrams: [diagram('material-graph', 'Force-Extension Graph', '力-伸长图像', 'The gradient gives stiffness in the elastic region.', '弹性区斜率代表劲度。')],
+      lessons: [
+        {
+          title: text('Stress, Strain and Young Modulus', '应力、应变与杨氏模量'),
+          description: text(
+            'How materials respond to forces: Hooke\'s law, elastic vs plastic deformation, and measuring stiffness with Young modulus.',
+            '材料如何响应力：胡克定律、弹性与塑性形变、以及用杨氏模量衡量刚度。',
+          ),
+          sections: [
+            {
+              heading: text('0. Hooke\'s law and elastic limit', '0. 胡克定律与弹性极限'),
+              paragraphs: [
+                text(
+                  'Hooke\'s law states F = kx: extension is proportional to force, as long as the elastic limit is not exceeded. The constant k is the stiffness (spring constant). Beyond the elastic limit, the material deforms plastically and will not return to its original shape. On a force-extension graph, the elastic region is a straight line through the origin; the gradient equals k.',
+                  '胡克定律 F = kx：伸长与力成正比，前提是不超过弹性极限。常数 k 是劲度（弹簧常数）。超过弹性极限后，材料发生塑性形变，不会恢复原状。在力-伸长图上，弹性区是通过原点的直线；斜率等于 k。',
+                ),
+              ],
+              formulas: [
+                formula('Hooke\'s law', '胡克定律', 'F=kx'),
+                formula('Elastic potential energy', '弹性势能', 'E=\\tfrac{1}{2}kx^2=\\tfrac{1}{2}Fx'),
+              ],
+            },
+            {
+              heading: text('1. Stress, strain and Young modulus', '1. 应力、应变与杨氏模量'),
+              paragraphs: [
+                text(
+                  'Stress (σ = F/A) removes the effect of cross-sectional area. Strain (ε = ΔL/L) removes the effect of original length. Young modulus E = σ/ε is a material property that measures stiffness independent of sample dimensions. Steel has E ≈ 200 GPa; rubber has E ≈ 0.01 GPa. The unit of E is the pascal (Pa = N m⁻²).',
+                  '应力（σ = F/A）消除了截面积的影响。应变（ε = ΔL/L）消除了原始长度的影响。杨氏模量 E = σ/ε 是材料属性，衡量与样品尺寸无关的刚度。钢的 E ≈ 200 GPa；橡胶的 E ≈ 0.01 GPa。E 的单位是帕斯卡（Pa = N m⁻²）。',
+                ),
+              ],
+              formulas: [
+                formula('Stress', '应力', '\\sigma=\\frac{F}{A}'),
+                formula('Strain', '应变', '\\varepsilon=\\frac{\\Delta L}{L}'),
+                formula('Young modulus', '杨氏模量', 'E=\\frac{\\sigma}{\\varepsilon}=\\frac{FL}{A\\Delta L}'),
+              ],
+            },
+            {
+              heading: text('2. Classroom check: wire extension', '2. 课堂题：金属丝伸长'),
+              classroomQuestions: [
+                {
+                  id: 'alevel-u3-wire-extension',
+                  title: text('Calculating extension of a steel wire', '计算钢丝伸长'),
+                  prompt: text(
+                    'A steel wire (L=2.0 m, A=1.0×10⁻⁶ m², E=200 GPa) supports a 10 kg mass. What is the extension?',
+                    '一根钢丝（L=2.0 m，A=1.0×10⁻⁶ m²，E=200 GPa）支撑 10 kg 质量。伸长量是多少？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('0.98 mm', '0.98 mm') },
+                    { label: 'B', text: text('9.8 mm', '9.8 mm') },
+                    { label: 'C', text: text('0.098 mm', '0.098 mm') },
+                    { label: 'D', text: text('98 mm', '98 mm') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'F = mg = 98 N. ΔL = FL/(AE) = 98×2.0/(1.0×10⁻⁶×200×10⁹) = 196/200000 = 9.8×10⁻⁴ m = 0.98 mm.',
+                    'F = mg = 98 N。ΔL = FL/(AE) = 98×2.0/(1.0×10⁻⁶×200×10⁹) = 196/200000 = 9.8×10⁻⁴ m = 0.98 mm。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('3. Common mistakes', '3. 常见错误'),
+              bullets: [
+                text('Confusing stiffness k (depends on dimensions) with Young modulus E (material property).', '混淆劲度 k（取决于尺寸）和杨氏模量 E（材料属性）。'),
+                text('Using diameter instead of radius when calculating cross-sectional area.', '计算截面积时用直径而不是半径。'),
+                text('Forgetting that strain has no units (it is a ratio).', '忘记应变没有单位（它是一个比值）。'),
+                text('Assuming Hooke\'s law applies beyond the elastic limit.', '假设胡克定律在弹性极限之后仍然适用。'),
+              ],
+            },
+          ],
+        },
+      ],
     }),
     unit(4, 'Waves', '波动', 'AS Paper 1+2', [
       topic('4.1', 'Progressive waves', '行波'),
       topic('4.2', 'Transverse and longitudinal waves', '横波与纵波'),
       topic('4.3', 'Superposition and interference', '叠加与干涉'),
       topic('4.4', 'Stationary waves and diffraction', '驻波与衍射'),
-    ], enrich('waves', 'waves', 'waves', [
-      ['Describe transverse and longitudinal wave behavior.', '描述横波和纵波行为。'],
-      ['Use phase, path difference, interference, diffraction, and stationary waves.', '使用相位、波程差、干涉、衍射和驻波。'],
-      ['Connect wave models to sound, light, and experimental patterns.', '把波动模型连接到声音、光和实验条纹。'],
-    ])),
+    ], {
+      ...enrich('waves', 'waves', 'waves', [
+        ['Describe transverse and longitudinal wave behavior.', '描述横波和纵波行为。'],
+        ['Use phase, path difference, interference, diffraction, and stationary waves.', '使用相位、波程差、干涉、衍射和驻波。'],
+        ['Connect wave models to sound, light, and experimental patterns.', '把波动模型连接到声音、光和实验条纹。'],
+      ]),
+      lessons: [
+        {
+          title: text('Superposition, Interference and Stationary Waves', '叠加、干涉与驻波'),
+          description: text(
+            'How waves combine: the superposition principle, constructive/destructive interference, and standing wave patterns on strings and in pipes.',
+            '波如何合成：叠加原理、相长/相消干涉、以及弦和管中的驻波图案。',
+          ),
+          sections: [
+            {
+              heading: text('0. The superposition principle', '0. 叠加原理'),
+              paragraphs: [
+                text(
+                  'When two or more waves meet at a point, the resultant displacement is the algebraic sum of individual displacements. After crossing, each wave continues unchanged. This leads to interference patterns when coherent sources (same frequency, constant phase difference) overlap.',
+                  '当两个或多个波在某点相遇时，合成位移是各个位移的代数和。交叉后，每个波继续不变。当相干源（相同频率、恒定相位差）重叠时，产生干涉图案。',
+                ),
+              ],
+              takeaway: text(
+                'Waves pass through each other without being altered. Interference is a momentary addition of displacements.',
+                '波穿过彼此而不被改变。干涉是位移的瞬间叠加。',
+              ),
+            },
+            {
+              heading: text('1. Constructive and destructive interference', '1. 相长与相消干涉'),
+              paragraphs: [
+                text(
+                  'Constructive: waves arrive in phase (path difference = nλ). Maximum amplitude results. Destructive: waves arrive in antiphase (path difference = (n+½)λ). Zero amplitude results. For Young\'s double-slit experiment: bright fringes at path difference = nλ, dark fringes at (n+½)λ. Fringe spacing Δy = λD/d where D is slit-to-screen distance and d is slit separation.',
+                  '相长：波同相到达（波程差 = nλ）。振幅最大。相消：波反相到达（波程差 = (n+½)λ）。振幅为零。对于杨氏双缝实验：亮纹在波程差 = nλ 处，暗纹在 (n+½)λ 处。条纹间距 Δy = λD/d，其中 D 是缝到屏的距离，d 是缝间距。',
+                ),
+              ],
+              formulas: [
+                formula('Constructive', '相长', '\\Delta d=n\\lambda'),
+                formula('Destructive', '相消', '\\Delta d=(n+\\tfrac{1}{2})\\lambda'),
+                formula('Fringe spacing', '条纹间距', '\\Delta y=\\frac{\\lambda D}{d}'),
+              ],
+            },
+            {
+              heading: text('2. Stationary (standing) waves', '2. 驻波'),
+              paragraphs: [
+                text(
+                  'A stationary wave forms when two identical progressive waves travel in opposite directions. Nodes (zero displacement) and antinodes (maximum displacement) are fixed in position. No net energy transfer occurs. For a string fixed at both ends: fundamental has L = λ/2; harmonics have L = nλ/2, giving f_n = nv/(2L). For a pipe closed at one end: only odd harmonics exist, f_n = nv/(4L) for n = 1, 3, 5...',
+                  '当两个相同的行波沿相反方向传播时形成驻波。节点（零位移）和腹点（最大位移）位置固定。没有净能量传递。对于两端固定的弦：基波 L = λ/2；谐波 L = nλ/2，得 f_n = nv/(2L)。对于一端封闭的管：只有奇次谐波，f_n = nv/(4L)，n = 1, 3, 5...',
+                ),
+              ],
+              formulas: [
+                formula('String harmonics', '弦谐波', 'f_n=\\frac{nv}{2L}\\quad(n=1,2,3,...)'),
+                formula('Closed pipe', '封闭管', 'f_n=\\frac{nv}{4L}\\quad(n=1,3,5,...)'),
+              ],
+            },
+            {
+              heading: text('3. Classroom check: double-slit fringes', '3. 课堂题：双缝条纹'),
+              classroomQuestions: [
+                {
+                  id: 'alevel-u4-double-slit',
+                  title: text('Fringe spacing calculation', '条纹间距计算'),
+                  prompt: text(
+                    'Light of wavelength 600 nm passes through double slits 0.30 mm apart. The screen is 1.5 m away. What is the fringe spacing?',
+                    '波长 600 nm 的光通过间距 0.30 mm 的双缝。屏距离 1.5 m。条纹间距是多少？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('3.0 mm', '3.0 mm') },
+                    { label: 'B', text: text('0.30 mm', '0.30 mm') },
+                    { label: 'C', text: text('30 mm', '30 mm') },
+                    { label: 'D', text: text('0.003 mm', '0.003 mm') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'Δy = λD/d = (600×10⁻⁹)(1.5)/(0.30×10⁻³) = 9×10⁻⁷/3×10⁻⁴ = 3.0×10⁻³ m = 3.0 mm.',
+                    'Δy = λD/d = (600×10⁻⁹)(1.5)/(0.30×10⁻³) = 9×10⁻⁷/3×10⁻⁴ = 3.0×10⁻³ m = 3.0 mm。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. Common mistakes', '4. 常见错误'),
+              bullets: [
+                text('Thinking stationary waves transfer energy along the medium.', '以为驻波沿介质传递能量。'),
+                text('Confusing nodes with antinodes in diagrams.', '在图中混淆节点和腹点。'),
+                text('Using the open-pipe formula for a closed pipe.', '对封闭管用开口管公式。'),
+                text('Forgetting that interference requires coherent sources.', '忘记干涉需要相干源。'),
+              ],
+            },
+          ],
+        },
+      ],
+    }),
     unit(5, 'Electricity', '电学', 'AS Paper 1+2', [
       topic('5.1', 'Electric current and charge', '电流与电荷'),
       topic('5.2', 'Potential difference, resistance and power', '电势差、电阻与功率'),
       topic('5.3', 'DC circuits and Kirchhoff\'s laws', '直流电路与基尔霍夫定律'),
       topic('5.4', 'Potential dividers and sensors', '分压器与传感器'),
-    ], enrich('circuits', 'circuits', 'circuits', [
-      ['Relate current, charge, potential difference, resistance, and power.', '连接电流、电荷、电势差、电阻和功率。'],
-      ['Use circuit laws for series, parallel, and sensor circuits.', '用电路规律分析串联、并联和传感器电路。'],
-      ['Interpret I-V characteristics and internal resistance.', '解释 I-V 特性和内阻。'],
-    ])),
+    ], {
+      ...enrich('circuits', 'circuits', 'circuits', [
+        ['Relate current, charge, potential difference, resistance, and power.', '连接电流、电荷、电势差、电阻和功率。'],
+        ['Use circuit laws for series, parallel, and sensor circuits.', '用电路规律分析串联、并联和传感器电路。'],
+        ['Interpret I-V characteristics and internal resistance.', '解释 I-V 特性和内阻。'],
+      ]),
+      lessons: [
+        {
+          title: text('Circuits, Kirchhoff\'s Laws and Internal Resistance', '电路、基尔霍夫定律与内阻'),
+          description: text(
+            'From Ohm\'s law to Kirchhoff\'s rules: how to analyze complex DC circuits, internal resistance, and potential dividers.',
+            '从欧姆定律到基尔霍夫规则：如何分析复杂直流电路、内阻和分压器。',
+          ),
+          sections: [
+            {
+              heading: text('0. Current, charge and Ohm\'s law', '0. 电流、电荷与欧姆定律'),
+              paragraphs: [
+                text(
+                  'Current is the rate of flow of charge: I = Q/t (amperes). Ohm\'s law states V = IR for ohmic conductors at constant temperature. Resistance depends on material and geometry: R = ρL/A where ρ is resistivity. Power dissipated: P = IV = I²R = V²/R. Energy transferred: E = Pt = VIt.',
+                  '电流是电荷流动速率：I = Q/t（安培）。欧姆定律：在恒温下欧姆导体的 V = IR。电阻取决于材料和几何：R = ρL/A，其中 ρ 是电阻率。耗散功率：P = IV = I²R = V²/R。转移能量：E = Pt = VIt。',
+                ),
+              ],
+              formulas: [
+                formula('Ohm\'s law', '欧姆定律', 'V=IR'),
+                formula('Power', '功率', 'P=IV=I^2R=\\frac{V^2}{R}'),
+                formula('Resistivity', '电阻率', 'R=\\frac{\\rho L}{A}'),
+              ],
+            },
+            {
+              heading: text('1. Kirchhoff\'s laws', '1. 基尔霍夫定律'),
+              paragraphs: [
+                text(
+                  'Kirchhoff\'s first law (junction rule): the total current entering a junction equals the total current leaving it (conservation of charge). Kirchhoff\'s second law (loop rule): the sum of EMFs around any closed loop equals the sum of potential drops (conservation of energy). These two laws can solve any DC circuit, no matter how complex.',
+                  '基尔霍夫第一定律（节点规则）：流入节点的总电流等于流出的总电流（电荷守恒）。基尔霍夫第二定律（回路规则）：任何闭合回路中的电动势之和等于电势降之和（能量守恒）。这两个定律可以解决任何直流电路，无论多复杂。',
+                ),
+              ],
+              formulas: [
+                formula('Junction rule', '节点规则', '\\sum I_\\text{in}=\\sum I_\\text{out}'),
+                formula('Loop rule', '回路规则', '\\sum \\varepsilon=\\sum IR'),
+              ],
+            },
+            {
+              heading: text('2. Internal resistance and EMF', '2. 内阻与电动势'),
+              paragraphs: [
+                text(
+                  'A real cell has internal resistance r. The EMF (ε) is the total energy per unit charge the cell provides. The terminal voltage is V = ε − Ir. When current increases, terminal voltage drops. To find ε and r experimentally: plot V against I; the y-intercept gives ε and the gradient gives −r.',
+                  '真实电池有内阻 r。电动势（ε）是电池提供的每单位电荷总能量。端电压为 V = ε − Ir。当电流增大时，端电压下降。实验求 ε 和 r：画 V 对 I 的图；y 截距给 ε，斜率给 −r。',
+                ),
+              ],
+              formulas: [
+                formula('Terminal voltage', '端电压', 'V=\\varepsilon-Ir'),
+              ],
+              takeaway: text(
+                'EMF is measured with zero current (open circuit). Terminal voltage is always less than EMF when current flows.',
+                'EMF 在零电流（开路）时测量。有电流时端电压总是小于 EMF。',
+              ),
+            },
+            {
+              heading: text('3. Classroom check: internal resistance', '3. 课堂题：内阻'),
+              classroomQuestions: [
+                {
+                  id: 'alevel-u5-internal-resistance',
+                  title: text('Finding EMF and internal resistance', '求 EMF 和内阻'),
+                  prompt: text(
+                    'A cell gives 1.44 V when delivering 0.2 A, and 1.20 V when delivering 0.6 A. What is the internal resistance?',
+                    '一个电池在输出 0.2 A 时端电压 1.44 V，输出 0.6 A 时端电压 1.20 V。内阻是多少？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('0.60 Ω', '0.60 Ω') },
+                    { label: 'B', text: text('1.2 Ω', '1.2 Ω') },
+                    { label: 'C', text: text('0.40 Ω', '0.40 Ω') },
+                    { label: 'D', text: text('2.4 Ω', '2.4 Ω') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'V = ε − Ir. Subtracting: 1.44−1.20 = (0.6−0.2)r → 0.24 = 0.4r → r = 0.60 Ω. Then ε = 1.44 + 0.2×0.6 = 1.56 V.',
+                    'V = ε − Ir。相减：1.44−1.20 = (0.6−0.2)r → 0.24 = 0.4r → r = 0.60 Ω。然后 ε = 1.44 + 0.2×0.6 = 1.56 V。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. Common mistakes', '4. 常见错误'),
+              bullets: [
+                text('Confusing EMF with terminal voltage (EMF is only measured at zero current).', '混淆 EMF 和端电压（EMF 只在零电流时测量）。'),
+                text('Applying Ohm\'s law to non-ohmic devices (diodes, filament lamps).', '对非欧姆器件（二极管、白炽灯）应用欧姆定律。'),
+                text('Forgetting that internal resistance reduces the useful voltage available to the external circuit.', '忘记内阻会减少外电路可用的电压。'),
+                text('Mixing up series and parallel resistance formulas.', '混淆串联和并联电阻公式。'),
+              ],
+            },
+          ],
+        },
+      ],
+    }),
     unit(6, 'Particle Physics', '粒子物理', 'AS Paper 1+2', [
       topic('6.1', 'Atoms, nuclei and radiation', '原子、原子核与辐射'),
       topic('6.2', 'Fundamental particles and quarks', '基本粒子与夸克'),
@@ -3155,6 +3968,89 @@ const cambridge9702: CurriculumCourse = {
         formula('Gravitational field', '引力场', 'g=\\frac{GM}{r^2},\\quad V_g=-\\frac{GM}{r}'),
         formula('Orbital speed', '轨道速度', 'v=\\sqrt{\\frac{GM}{r}}'),
       ],
+      lessons: [
+        {
+          title: text('Circular Motion and Gravitational Fields', '圆周运动与引力场'),
+          description: text(
+            'Centripetal acceleration, gravitational field strength and potential, and how satellites stay in orbit.',
+            '向心加速度、引力场强与引力势、以及卫星如何保持轨道。',
+          ),
+          sections: [
+            {
+              heading: text('0. Circular motion: why acceleration without speeding up?', '0. 圆周运动：为什么不加速却有加速度？'),
+              paragraphs: [
+                text(
+                  'An object moving in a circle at constant speed is still accelerating because its direction changes continuously. The acceleration points toward the centre (centripetal): a = v²/r = ω²r. The centripetal force is not a new force — it is the resultant of real forces (tension, gravity, friction) directed toward the centre.',
+                  '匀速圆周运动的物体仍然有加速度，因为方向不断变化。加速度指向圆心（向心）：a = v²/r = ω²r。向心力不是一种新的力——它是真实力（张力、引力、摩擦力）指向圆心的合力。',
+                ),
+              ],
+              formulas: [
+                formula('Centripetal acceleration', '向心加速度', 'a_c=\\frac{v^2}{r}=\\omega^2 r'),
+                formula('Centripetal force', '向心力', 'F_c=\\frac{mv^2}{r}=m\\omega^2 r'),
+              ],
+            },
+            {
+              heading: text('1. Gravitational field and potential', '1. 引力场与引力势'),
+              paragraphs: [
+                text(
+                  'Gravitational field strength g = GM/r² gives the force per unit mass. Gravitational potential V = −GM/r gives the work done per unit mass to bring an object from infinity. The negative sign means gravity is always attractive. Field lines point radially inward; equipotential surfaces are concentric spheres.',
+                  '引力场强 g = GM/r² 给出每单位质量的力。引力势 V = −GM/r 给出从无穷远处移动单位质量所做的功。负号意味着引力始终为吸引力。场线径向向内；等势面是同心球面。',
+                ),
+              ],
+              formulas: [
+                formula('Field strength', '场强', 'g=\\frac{GM}{r^2}'),
+                formula('Potential', '引力势', 'V=-\\frac{GM}{r}'),
+              ],
+            },
+            {
+              heading: text('2. Orbital motion', '2. 轨道运动'),
+              paragraphs: [
+                text(
+                  'For a circular orbit, gravity provides the centripetal force: GMm/r² = mv²/r, giving v = √(GM/r). Higher orbits have lower speed but longer period. Kepler\'s third law: T² ∝ r³. Geostationary satellites orbit at ~36,000 km with T = 24 h, staying above the same point on Earth.',
+                  '对于圆轨道，引力提供向心力：GMm/r² = mv²/r，得 v = √(GM/r)。越高轨道速度越低但周期越长。开普勒第三定律：T² ∝ r³。地球同步卫星在约 36,000 km 高度轨道，T = 24 h，始终在地球同一点上方。',
+                ),
+              ],
+              formulas: [
+                formula('Orbital speed', '轨道速度', 'v=\\sqrt{\\frac{GM}{r}}'),
+                formula('Kepler\'s third law', '开普勒第三定律', 'T^2=\\frac{4\\pi^2 r^3}{GM}'),
+              ],
+            },
+            {
+              heading: text('3. Classroom check: satellite speed', '3. 课堂题：卫星速度'),
+              classroomQuestions: [
+                {
+                  id: 'alevel-u7-satellite-speed',
+                  title: text('Low Earth orbit speed', '近地轨道速度'),
+                  prompt: text(
+                    'A satellite orbits at 7000 km from Earth\'s centre. Given GM = 4.0×10¹⁴ m³s⁻², what is its orbital speed?',
+                    '一颗卫星在距地心 7000 km 处轨道。已知 GM = 4.0×10¹⁴ m³s⁻²，轨道速度是多少？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('7.6 km/s', '7.6 km/s') },
+                    { label: 'B', text: text('5.7 km/s', '5.7 km/s') },
+                    { label: 'C', text: text('11.2 km/s', '11.2 km/s') },
+                    { label: 'D', text: text('3.1 km/s', '3.1 km/s') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'v = √(GM/r) = √(4.0×10¹⁴/7.0×10⁶) = √(5.71×10⁷) ≈ 7560 m/s ≈ 7.6 km/s.',
+                    'v = √(GM/r) = √(4.0×10¹⁴/7.0×10⁶) = √(5.71×10⁷) ≈ 7560 m/s ≈ 7.6 km/s。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. Common mistakes', '4. 常见错误'),
+              bullets: [
+                text('Thinking centripetal force is a separate force (it is the resultant of real forces).', '以为向心力是一种独立的力（它是真实力的合力）。'),
+                text('Using r as height above surface instead of distance from centre.', '用 r 作为地表以上高度而不是到地心的距离。'),
+                text('Forgetting the negative sign in gravitational potential.', '忘记引力势的负号。'),
+                text('Confusing orbital speed with escape velocity.', '混淆轨道速度和逃逸速度。'),
+              ],
+            },
+          ],
+        },
+      ],
     }),
     unit(8, 'Thermal Physics', '热物理', 'A Level Paper 4', [
       topic('8.1', 'Temperature and internal energy', '温度与内能'),
@@ -3171,6 +4067,80 @@ const cambridge9702: CurriculumCourse = {
         ...formulas.thermal,
         formula('Molecular kinetic energy', '分子平均动能', '\\frac12 m\\langle c^2\\rangle=\\frac32 k_BT'),
         formula('First law (complete)', '热力学第一定律', '\\Delta U=Q-W=Q-p\\Delta V'),
+      ],
+      lessons: [
+        {
+          title: text('Kinetic Theory and the Ideal Gas Law', '分子动理论与理想气体定律'),
+          description: text(
+            'From molecular motion to macroscopic pressure: the kinetic theory assumptions, pV = nRT, and the first law of thermodynamics.',
+            '从分子运动到宏观压强：分子动理论假设、pV = nRT 和热力学第一定律。',
+          ),
+          sections: [
+            {
+              heading: text('0. The kinetic theory model', '0. 分子动理论模型'),
+              paragraphs: [
+                text(
+                  'An ideal gas consists of many tiny particles in random motion. Key assumptions: particles are point masses (negligible volume), collisions are perfectly elastic, no intermolecular forces except during collisions, and the average kinetic energy is proportional to absolute temperature. This model explains pressure (momentum transfer at walls), temperature (average KE), and gas laws.',
+                  '理想气体由大量随机运动的微小粒子组成。关键假设：粒子是质点（体积可忽略）、碰撞完全弹性、除碰撞外无分子间力、平均动能与绝对温度成正比。这个模型解释了压强（壁面动量传递）、温度（平均动能）和气体定律。',
+                ),
+              ],
+              formulas: [
+                formula('Average KE', '平均动能', '\\tfrac{1}{2}m\\langle c^2\\rangle=\\tfrac{3}{2}k_BT'),
+                formula('Ideal gas law', '理想气体定律', 'pV=nRT=Nk_BT'),
+              ],
+            },
+            {
+              heading: text('1. The first law of thermodynamics', '1. 热力学第一定律'),
+              paragraphs: [
+                text(
+                  'ΔU = Q − W: the change in internal energy equals heat supplied minus work done BY the gas. For an isothermal process (constant T): ΔU = 0, so Q = W. For an adiabatic process (no heat exchange): Q = 0, so ΔU = −W. For constant volume: W = 0, so ΔU = Q.',
+                  'ΔU = Q − W：内能变化等于供给的热量减去气体对外做的功。对于等温过程（恒温）：ΔU = 0，所以 Q = W。对于绝热过程（无热交换）：Q = 0，所以 ΔU = −W。对于等容过程：W = 0，所以 ΔU = Q。',
+                ),
+              ],
+              formulas: [
+                formula('First law', '热力学第一定律', '\\Delta U=Q-W'),
+                formula('Work done by gas', '气体做功', 'W=p\\Delta V\\quad(\\text{constant }p)'),
+              ],
+              takeaway: text(
+                'The first law is conservation of energy applied to thermal systems. Sign convention matters: W is work done BY the gas.',
+                '热力学第一定律是能量守恒在热系统中的应用。符号约定很重要：W 是气体对外做的功。',
+              ),
+            },
+            {
+              heading: text('2. Classroom check: rms speed', '2. 课堂题：方均根速度'),
+              classroomQuestions: [
+                {
+                  id: 'alevel-u8-rms-speed',
+                  title: text('RMS speed of helium atoms', '氦原子的方均根速度'),
+                  prompt: text(
+                    'Helium atoms (mass 6.6×10⁻²⁷ kg) are at 300 K. What is their rms speed? (k_B = 1.38×10⁻²³ J/K)',
+                    '氦原子（质量 6.6×10⁻²⁷ kg）在 300 K。方均根速度是多少？（k_B = 1.38×10⁻²³ J/K）',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('1370 m/s', '1370 m/s') },
+                    { label: 'B', text: text('430 m/s', '430 m/s') },
+                    { label: 'C', text: text('2740 m/s', '2740 m/s') },
+                    { label: 'D', text: text('690 m/s', '690 m/s') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    '½m⟨c²⟩ = 3/2 k_BT → c_rms = √(3k_BT/m) = √(3×1.38×10⁻²³×300/6.6×10⁻²⁷) = √(1.88×10⁶) ≈ 1370 m/s.',
+                    '½m⟨c²⟩ = 3/2 k_BT → c_rms = √(3k_BT/m) = √(3×1.38×10⁻²³×300/6.6×10⁻²⁷) = √(1.88×10⁶) ≈ 1370 m/s。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('3. Common mistakes', '3. 常见错误'),
+              bullets: [
+                text('Using Celsius instead of kelvin in gas law calculations.', '在气体定律计算中用摄氏度而不是开尔文。'),
+                text('Confusing rms speed with mean speed or most probable speed.', '混淆方均根速度和平均速度或最概然速度。'),
+                text('Getting the sign of W wrong in the first law.', '在热力学第一定律中弄错 W 的符号。'),
+                text('Forgetting that internal energy depends only on temperature for an ideal gas.', '忘记理想气体的内能只取决于温度。'),
+              ],
+            },
+          ],
+        },
       ],
     }),
     unit(9, 'Oscillations and Electromagnetic Fields', '振动与电磁场', 'A Level Paper 4', [
@@ -3194,6 +4164,95 @@ const cambridge9702: CurriculumCourse = {
         formula('AC rms values', '交流有效值', 'V_{rms}=\\frac{V_0}{\\sqrt{2}},\\quad I_{rms}=\\frac{I_0}{\\sqrt{2}}'),
       ],
       diagrams: [...diagrams.oscillation, ...diagrams.electric, ...diagrams.magnetism],
+      lessons: [
+        {
+          title: text('Capacitors, Magnetic Fields and AC', '电容器、磁场与交流电'),
+          description: text(
+            'How capacitors store energy, how magnetic fields exert forces on moving charges, and why rms values matter in AC circuits.',
+            '电容器如何储存能量、磁场如何对运动电荷施加力、以及为什么交流电路中有效值很重要。',
+          ),
+          sections: [
+            {
+              heading: text('0. Capacitance and energy storage', '0. 电容与储能'),
+              paragraphs: [
+                text(
+                  'A capacitor stores charge and energy in an electric field between two plates. Capacitance C = Q/V (unit: farad). Energy stored: E = ½CV² = ½QV = Q²/(2C). For parallel plates: C = ε₀A/d. Capacitors in parallel add (C = C₁+C₂); in series: 1/C = 1/C₁+1/C₂. Charging/discharging follows an exponential curve with time constant τ = RC.',
+                  '电容器在两块板之间的电场中储存电荷和能量。电容 C = Q/V（单位：法拉）。储存能量：E = ½CV² = ½QV = Q²/(2C)。对于平行板：C = ε₀A/d。并联电容相加（C = C₁+C₂）；串联：1/C = 1/C₁+1/C₂。充放电遵循指数曲线，时间常数 τ = RC。',
+                ),
+              ],
+              formulas: [
+                formula('Capacitance', '电容', 'C=\\frac{Q}{V}'),
+                formula('Energy stored', '储存能量', 'E=\\tfrac{1}{2}CV^2=\\tfrac{1}{2}QV'),
+                formula('Time constant', '时间常数', '\\tau=RC'),
+              ],
+            },
+            {
+              heading: text('1. Magnetic force on moving charges', '1. 磁场对运动电荷的力'),
+              paragraphs: [
+                text(
+                  'A charge moving in a magnetic field experiences F = BQv sinθ (Fleming\'s left-hand rule). The force is always perpendicular to velocity, so it does no work — it changes direction but not speed. This causes circular motion: r = mv/(BQ). For a current-carrying wire: F = BIL sinθ. This is the motor effect.',
+                  '在磁场中运动的电荷受力 F = BQv sinθ（弗莱明左手定则）。力始终垂直于速度，所以不做功——只改变方向不改变速度。这导致圆周运动：r = mv/(BQ)。对于载流导线：F = BIL sinθ。这就是电动机效应。',
+                ),
+              ],
+              formulas: [
+                formula('Force on charge', '电荷受力', 'F=BQv\\sin\\theta'),
+                formula('Force on wire', '导线受力', 'F=BIL\\sin\\theta'),
+                formula('Radius of circular path', '圆周半径', 'r=\\frac{mv}{BQ}'),
+              ],
+            },
+            {
+              heading: text('2. Alternating current and rms values', '2. 交流电与有效值'),
+              paragraphs: [
+                text(
+                  'AC voltage varies sinusoidally: V = V₀ sin(ωt). The rms (root mean square) value gives the equivalent DC value for power: V_rms = V₀/√2, I_rms = I₀/√2. Power in AC: P = I_rms × V_rms (for resistive loads). The National Grid uses high voltage, low current transmission to minimise I²R heating losses.',
+                  '交流电压正弦变化：V = V₀ sin(ωt)。有效值（rms）给出功率等效的直流值：V_rms = V₀/√2，I_rms = I₀/√2。交流功率：P = I_rms × V_rms（纯阻性负载）。国家电网用高压低电流输电以最小化 I²R 热损耗。',
+                ),
+              ],
+              formulas: [
+                formula('RMS voltage', '有效电压', 'V_{rms}=\\frac{V_0}{\\sqrt{2}}'),
+                formula('AC power', '交流功率', 'P=I_{rms}V_{rms}'),
+              ],
+              takeaway: text(
+                'RMS values let us use DC power formulas for AC circuits. The peak value is √2 times the rms value.',
+                '有效值让我们能在交流电路中用直流功率公式。峰值是有效值的 √2 倍。',
+              ),
+            },
+            {
+              heading: text('3. Classroom check: capacitor energy', '3. 课堂题：电容器能量'),
+              classroomQuestions: [
+                {
+                  id: 'alevel-u9-capacitor-energy',
+                  title: text('Energy in a charged capacitor', '充电电容器的能量'),
+                  prompt: text(
+                    'A 470 μF capacitor is charged to 12 V. How much energy is stored?',
+                    '一个 470 μF 电容器充电到 12 V。储存了多少能量？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('0.034 J', '0.034 J') },
+                    { label: 'B', text: text('0.068 J', '0.068 J') },
+                    { label: 'C', text: text('5.64 J', '5.64 J') },
+                    { label: 'D', text: text('0.003 J', '0.003 J') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'E = ½CV² = ½ × 470×10⁻⁶ × 12² = ½ × 470×10⁻⁶ × 144 = 0.0338 J ≈ 0.034 J.',
+                    'E = ½CV² = ½ × 470×10⁻⁶ × 12² = ½ × 470×10⁻⁶ × 144 = 0.0338 J ≈ 0.034 J。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. Common mistakes', '4. 常见错误'),
+              bullets: [
+                text('Using peak voltage instead of rms in power calculations.', '在功率计算中用峰值电压而不是有效值。'),
+                text('Forgetting that magnetic force does no work (always perpendicular to v).', '忘记磁力不做功（始终垂直于 v）。'),
+                text('Mixing up series and parallel capacitor formulas (opposite to resistors!).', '混淆串联和并联电容公式（与电阻相反！）。'),
+                text('Using F = BQv without checking the angle (sinθ = 1 only when v ⊥ B).', '用 F = BQv 时不检查角度（sinθ = 1 只在 v ⊥ B 时）。'),
+              ],
+            },
+          ],
+        },
+      ],
     }),
     unit(10, 'Quantum, Nuclear, Medical, and Cosmology', '量子、核、医学与宇宙学', 'A Level Paper 4+5', [
       topic('10.1', 'Photoelectric effect and photons', '光电效应与光子'),
@@ -3213,6 +4272,92 @@ const cambridge9702: CurriculumCourse = {
         formula('de Broglie wavelength', '德布罗意波长', '\\lambda=\\frac{h}{p}=\\frac{h}{mv}'),
       ],
       diagrams: [...diagrams.quantum, ...diagrams.astronomy],
+      lessons: [
+        {
+          title: text('Photoelectric Effect and Wave-Particle Duality', '光电效应与波粒二象性'),
+          description: text(
+            'Einstein\'s photon model, the photoelectric equation, de Broglie wavelength, and atomic energy levels.',
+            '爱因斯坦光子模型、光电方程、德布罗意波长和原子能级。',
+          ),
+          sections: [
+            {
+              heading: text('0. The photon model of light', '0. 光的光子模型'),
+              paragraphs: [
+                text(
+                  'Light comes in discrete packets called photons, each with energy E = hf. This explains the photoelectric effect: electrons are emitted from a metal surface only if the photon energy exceeds the work function φ. Einstein\'s equation: K_max = hf − φ. Below the threshold frequency f₀ = φ/h, no electrons are emitted regardless of intensity. This cannot be explained by the wave model.',
+                  '光以离散的光子包形式存在，每个光子能量 E = hf。这解释了光电效应：只有当光子能量超过逸出功 φ 时，电子才从金属表面发射。爱因斯坦方程：K_max = hf − φ。低于截止频率 f₀ = φ/h，无论光强多大都不会发射电子。这无法用波动模型解释。',
+                ),
+              ],
+              formulas: [
+                formula('Photon energy', '光子能量', 'E=hf=\\frac{hc}{\\lambda}'),
+                formula('Photoelectric equation', '光电方程', 'K_{max}=hf-\\phi'),
+                formula('Threshold frequency', '截止频率', 'f_0=\\frac{\\phi}{h}'),
+              ],
+            },
+            {
+              heading: text('1. Wave-particle duality', '1. 波粒二象性'),
+              paragraphs: [
+                text(
+                  'Matter also has wave properties. De Broglie proposed λ = h/p = h/(mv). This is confirmed by electron diffraction experiments. The smaller the momentum, the longer the wavelength. This is why electron microscopes have better resolution than optical microscopes (electron λ ~ 0.01 nm vs light λ ~ 500 nm).',
+                  '物质也有波动性。德布罗意提出 λ = h/p = h/(mv)。这由电子衍射实验证实。动量越小，波长越长。这就是为什么电子显微镜比光学显微镜分辨率更高（电子 λ ~ 0.01 nm vs 光 λ ~ 500 nm）。',
+                ),
+              ],
+              formulas: [
+                formula('de Broglie wavelength', '德布罗意波长', '\\lambda=\\frac{h}{p}=\\frac{h}{mv}'),
+              ],
+              takeaway: text(
+                'All matter has both wave and particle properties. The dominant behaviour depends on the scale: quantum for atoms, classical for everyday objects.',
+                '所有物质都有波和粒子两种性质。主导行为取决于尺度：原子尺度是量子的，日常物体是经典的。',
+              ),
+            },
+            {
+              heading: text('2. Atomic energy levels and line spectra', '2. 原子能级与线光谱'),
+              paragraphs: [
+                text(
+                  'Electrons in atoms occupy discrete energy levels. Absorption: an electron jumps to a higher level by absorbing a photon of exactly the right energy (ΔE = hf). Emission: an electron drops to a lower level, emitting a photon. This produces line spectra (discrete frequencies), not continuous spectra. The hydrogen spectrum has series: Lyman (UV, to n=1), Balmer (visible, to n=2), Paschen (IR, to n=3).',
+                  '原子中的电子占据离散能级。吸收：电子吸收恰好合适能量的光子跳到更高能级（ΔE = hf）。发射：电子落到更低能级，发射光子。这产生线光谱（离散频率），而不是连续光谱。氢光谱有系列：莱曼系（紫外，到 n=1）、巴尔末系（可见光，到 n=2）、帕邢系（红外，到 n=3）。',
+                ),
+              ],
+              formulas: [
+                formula('Energy level transition', '能级跃迁', '\\Delta E=hf=\\frac{hc}{\\lambda}'),
+              ],
+            },
+            {
+              heading: text('3. Classroom check: photoelectric effect', '3. 课堂题：光电效应'),
+              classroomQuestions: [
+                {
+                  id: 'alevel-u10-photoelectric',
+                  title: text('Maximum kinetic energy of photoelectrons', '光电子最大动能'),
+                  prompt: text(
+                    'Light of frequency 8.0×10¹⁴ Hz falls on a metal with work function 2.3 eV. What is the maximum KE of emitted electrons? (h = 6.63×10⁻³⁴ J s)',
+                    '频率 8.0×10¹⁴ Hz 的光照射逸出功 2.3 eV 的金属。发射电子的最大动能是多少？（h = 6.63×10⁻³⁴ J s）',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('1.0 eV', '1.0 eV') },
+                    { label: 'B', text: text('3.3 eV', '3.3 eV') },
+                    { label: 'C', text: text('5.6 eV', '5.6 eV') },
+                    { label: 'D', text: text('0.5 eV', '0.5 eV') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'E = hf = 6.63×10⁻³⁴ × 8.0×10¹⁴ = 5.30×10⁻¹⁹ J = 3.31 eV. K_max = 3.31 − 2.3 = 1.01 eV ≈ 1.0 eV.',
+                    'E = hf = 6.63×10⁻³⁴ × 8.0×10¹⁴ = 5.30×10⁻¹⁹ J = 3.31 eV。K_max = 3.31 − 2.3 = 1.01 eV ≈ 1.0 eV。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. Common mistakes', '4. 常见错误'),
+              bullets: [
+                text('Thinking increasing intensity increases electron KE (it only increases the number of electrons).', '以为增加光强增加电子动能（它只增加电子数量）。'),
+                text('Forgetting to convert eV to joules (or vice versa) in calculations.', '忘记在计算中转换 eV 和焦耳。'),
+                text('Confusing work function with ionisation energy.', '混淆逸出功和电离能。'),
+                text('Thinking de Broglie wavelength applies only to electrons (it applies to all matter).', '以为德布罗意波长只适用于电子（它适用于所有物质）。'),
+              ],
+            },
+          ],
+        },
+      ],
     }),
   ],
 };
@@ -3239,6 +4384,79 @@ const ibPhysics: CurriculumCourse = {
       ),
       formulas: [...formulas.kinematics, ...formulas.dynamics, ...formulas.energy, ...formulas.momentum, ...formulas.rotation],
       diagrams: [...diagrams.kinematics, ...diagrams.momentum, ...diagrams.relativity],
+      lessons: [
+        {
+          title: text('Momentum, Impulse and Collisions', '动量、冲量与碰撞'),
+          description: text(
+            'How momentum is conserved in interactions, the impulse-momentum theorem, and elastic vs inelastic collisions.',
+            '动量如何在相互作用中守恒、冲量-动量定理、以及弹性与非弹性碰撞。',
+          ),
+          sections: [
+            {
+              heading: text('0. Momentum and Newton\'s second law', '0. 动量与牛顿第二定律'),
+              paragraphs: [
+                text(
+                  'Momentum p = mv is a vector quantity. Newton\'s second law in its most general form is F = Δp/Δt (force equals rate of change of momentum). This works even when mass changes (e.g. rockets). Impulse = FΔt = Δp = change in momentum. On a force-time graph, the area gives the impulse.',
+                  '动量 p = mv 是矢量。牛顿第二定律最一般的形式是 F = Δp/Δt（力等于动量变化率）。这在质量变化时也有效（如火箭）。冲量 = FΔt = Δp = 动量变化。在力-时间图上，面积给出冲量。',
+                ),
+              ],
+              formulas: [
+                formula('Momentum', '动量', 'p=mv'),
+                formula('Impulse', '冲量', 'J=F\\Delta t=\\Delta p'),
+              ],
+            },
+            {
+              heading: text('1. Conservation of momentum', '1. 动量守恒'),
+              paragraphs: [
+                text(
+                  'In any isolated system (no external forces), total momentum is conserved. This applies to collisions, explosions, and recoil. Elastic collision: both momentum AND kinetic energy are conserved. Inelastic collision: momentum is conserved but kinetic energy is not (some converts to heat, sound, deformation). Perfectly inelastic: objects stick together after collision.',
+                  '在任何孤立系统（无外力）中，总动量守恒。这适用于碰撞、爆炸和后坐。弹性碰撞：动量和动能都守恒。非弹性碰撞：动量守恒但动能不守恒（部分转化为热、声、形变）。完全非弹性：碰撞后物体粘在一起。',
+                ),
+              ],
+              formulas: [
+                formula('Conservation', '动量守恒', '\\sum p_\\text{before}=\\sum p_\\text{after}'),
+              ],
+              takeaway: text(
+                'Momentum is ALWAYS conserved in isolated systems. Kinetic energy is only conserved in elastic collisions.',
+                '动量在孤立系统中始终守恒。动能只在弹性碰撞中守恒。',
+              ),
+            },
+            {
+              heading: text('2. Classroom check: recoil', '2. 课堂题：后坐'),
+              classroomQuestions: [
+                {
+                  id: 'ib-momentum-recoil',
+                  title: text('Gun recoil velocity', '枪的后坐速度'),
+                  prompt: text(
+                    'A 4 kg gun fires a 0.02 kg bullet at 400 m/s. What is the recoil velocity of the gun?',
+                    '一把 4 kg 的枪以 400 m/s 发射 0.02 kg 子弹。枪的后坐速度是多少？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('2 m/s backward', '2 m/s 向后') },
+                    { label: 'B', text: text('0.5 m/s backward', '0.5 m/s 向后') },
+                    { label: 'C', text: text('8 m/s backward', '8 m/s 向后') },
+                    { label: 'D', text: text('200 m/s backward', '200 m/s 向后') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'Initial momentum = 0. After: 0.02×400 + 4×v = 0 → v = −8/4 = −2 m/s (backward).',
+                    '初始动量 = 0。发射后：0.02×400 + 4×v = 0 → v = −8/4 = −2 m/s（向后）。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('3. Common mistakes', '3. 常见错误'),
+              bullets: [
+                text('Forgetting that momentum is a vector (signs matter in 1D problems).', '忘记动量是矢量（一维问题中符号很重要）。'),
+                text('Assuming kinetic energy is always conserved (only in elastic collisions).', '假设动能始终守恒（只在弹性碰撞中）。'),
+                text('Using F = ma when mass is changing (use F = Δp/Δt instead).', '在质量变化时用 F = ma（应用 F = Δp/Δt）。'),
+                text('Confusing impulse with momentum (impulse is the CHANGE in momentum).', '混淆冲量和动量（冲量是动量的变化）。'),
+              ],
+            },
+          ],
+        },
+      ],
     }),
     unit(2, 'B. The Particulate Nature of Matter', 'B. 物质的粒子性', 'SL/HL · Paper 1+2', [
       topic('B.1', 'Thermal energy transfers', '热能传递'),
@@ -3255,6 +4473,93 @@ const ibPhysics: CurriculumCourse = {
       ),
       formulas: [...formulas.thermal, ...formulas.circuits],
       diagrams: [...diagrams.thermal, diagram('greenhouse', 'Greenhouse Model', '温室效应模型', 'Radiation balance links microscopic absorption with climate-scale energy flow.', '辐射平衡把微观吸收和气候尺度能量流联系起来。'), ...diagrams.circuits],
+      lessons: [
+        {
+          title: text('Thermal Energy, Gas Laws and the Greenhouse Effect', '热能、气体定律与温室效应'),
+          description: text(
+            'How microscopic particle behaviour explains macroscopic thermal properties, gas laws, and Earth\'s energy balance.',
+            '微观粒子行为如何解释宏观热性质、气体定律和地球能量平衡。',
+          ),
+          sections: [
+            {
+              heading: text('0. Internal energy and temperature', '0. 内能与温度'),
+              paragraphs: [
+                text(
+                  'Internal energy is the total random kinetic energy plus potential energy of all particles in a system. Temperature is proportional to the average kinetic energy of particles. When energy is added to a system, it either raises the temperature (increasing KE) or changes state (increasing PE). The specific heat capacity c tells us how much energy raises 1 kg by 1 K: Q = mcΔT. The specific latent heat L tells us how much energy changes the state of 1 kg: Q = mL.',
+                  '内能是系统中所有粒子的随机动能与势能之和。温度与粒子的平均动能成正比。当能量加入系统时，要么升高温度（增加动能），要么改变状态（增加势能）。比热容 c 告诉我们使 1 kg 升高 1 K 需要多少能量：Q = mcΔT。比潜热 L 告诉我们使 1 kg 改变状态需要多少能量：Q = mL。',
+                ),
+              ],
+              formulas: [
+                formula('Specific heat capacity', '比热容', 'Q=mc\\Delta T'),
+                formula('Specific latent heat', '比潜热', 'Q=mL'),
+              ],
+              takeaway: text(
+                'During a change of state, temperature stays constant because energy goes into breaking intermolecular bonds, not increasing KE.',
+                '在状态变化期间，温度保持不变，因为能量用于断裂分子间键，而不是增加动能。',
+              ),
+            },
+            {
+              heading: text('1. The ideal gas law and kinetic theory', '1. 理想气体定律与分子动理论'),
+              paragraphs: [
+                text(
+                  'The ideal gas equation pV = nRT (or pV = NkT) connects pressure, volume, and temperature. From kinetic theory, gas pressure arises from molecular collisions with the container walls. The average kinetic energy of a molecule is 3/2 kT. At constant temperature, pV = constant (Boyle\'s law). At constant volume, p/T = constant (Gay-Lussac\'s law). At constant pressure, V/T = constant (Charles\'s law).',
+                  '理想气体方程 pV = nRT（或 pV = NkT）连接压强、体积和温度。从分子动理论看，气体压强来自分子与容器壁的碰撞。分子的平均动能为 3/2 kT。恒温时 pV = 常数（玻意耳定律）。恒容时 p/T = 常数（盖-吕萨克定律）。恒压时 V/T = 常数（查理定律）。',
+                ),
+              ],
+              formulas: [
+                formula('Ideal gas equation', '理想气体方程', 'pV=nRT=NkT'),
+                formula('Average molecular KE', '分子平均动能', '\\overline{E_k}=\\tfrac{3}{2}kT'),
+              ],
+            },
+            {
+              heading: text('2. The greenhouse effect', '2. 温室效应'),
+              paragraphs: [
+                text(
+                  'The Sun emits mainly visible and UV radiation, which passes through the atmosphere and warms the surface. The Earth re-radiates energy as infrared (longer wavelength). Greenhouse gases (CO₂, H₂O, CH₄) absorb and re-emit infrared radiation, trapping energy and raising the average surface temperature. Without this effect, Earth would be about −18°C. The enhanced greenhouse effect from human CO₂ emissions raises global temperatures further.',
+                  '太阳主要发射可见光和紫外辐射，穿过大气层使地表升温。地球以红外线（较长波长）重新辐射能量。温室气体（CO₂、H₂O、CH₄）吸收并重新发射红外辐射，困住能量，提高平均地表温度。没有温室效应，地球约为 −18°C。人类 CO₂ 排放增强的温室效应使全球温度进一步升高。',
+                ),
+              ],
+              takeaway: text(
+                'The greenhouse effect depends on wavelength-selective absorption: transparent to incoming visible, opaque to outgoing infrared.',
+                '温室效应取决于波长选择性吸收：对入射可见光透明，对出射红外不透明。',
+              ),
+            },
+            {
+              heading: text('3. Classroom check: gas law calculation', '3. 课堂题：气体定律计算'),
+              classroomQuestions: [
+                {
+                  id: 'ib-thermal-gas-law',
+                  title: text('Heating a sealed gas', '加热密封气体'),
+                  prompt: text(
+                    'A sealed container of gas at 300 K has pressure 1.0 × 10⁵ Pa. The gas is heated to 600 K at constant volume. What is the new pressure?',
+                    '一个密封容器中的气体在 300 K 时压强为 1.0 × 10⁵ Pa。恒容加热到 600 K。新压强是多少？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('2.0 × 10⁵ Pa', '2.0 × 10⁵ Pa') },
+                    { label: 'B', text: text('1.0 × 10⁵ Pa', '1.0 × 10⁵ Pa') },
+                    { label: 'C', text: text('4.0 × 10⁵ Pa', '4.0 × 10⁵ Pa') },
+                    { label: 'D', text: text('0.5 × 10⁵ Pa', '0.5 × 10⁵ Pa') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'At constant volume, p/T = constant. So p₂ = p₁ × T₂/T₁ = 1.0 × 10⁵ × 600/300 = 2.0 × 10⁵ Pa. Doubling the absolute temperature doubles the pressure.',
+                    '恒容时 p/T = 常数。所以 p₂ = p₁ × T₂/T₁ = 1.0 × 10⁵ × 600/300 = 2.0 × 10⁵ Pa。绝对温度加倍则压强加倍。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('4. Common mistakes', '4. 常见错误'),
+              bullets: [
+                text('Using Celsius instead of kelvin in gas law calculations.', '在气体定律计算中用摄氏度而不是开尔文。'),
+                text('Thinking temperature rises during boiling or melting.', '以为沸腾或熔化时温度升高。'),
+                text('Confusing internal energy with temperature (internal energy includes PE; temperature only reflects average KE).', '混淆内能和温度（内能包含势能；温度只反映平均动能）。'),
+                text('Forgetting that the greenhouse effect is natural and essential — the problem is the enhanced effect.', '忘记温室效应是自然且必要的——问题在于增强效应。'),
+              ],
+            },
+          ],
+        },
+      ],
     }),
     unit(3, 'C. Wave Behaviour', 'C. 波的行为', 'SL/HL · Paper 1+2', [
       topic('C.1', 'Simple harmonic motion', '简谐运动'),
@@ -3481,6 +4786,112 @@ const ibPhysics: CurriculumCourse = {
       ),
       formulas: [...formulas.fields, ...formulas.electric, ...formulas.magnetism],
       diagrams: [...diagrams.fields, ...diagrams.electric, ...diagrams.magnetism],
+      lessons: [
+        {
+          title: text('Gravitational, Electric and Magnetic Fields', '引力场、电场与磁场'),
+          description: text(
+            'How fields describe forces at a distance: field strength, potential, energy, and charged-particle motion.',
+            '场如何描述超距力：场强、势、能量和带电粒子运动。',
+          ),
+          sections: [
+            {
+              heading: text('0. What is a field?', '0. 什么是场？'),
+              paragraphs: [
+                text(
+                  'A field is a region of space where an object experiences a force without physical contact. Gravitational fields act on masses (always attractive). Electric fields act on charges (attractive or repulsive). Magnetic fields act on moving charges and currents. Field strength is force per unit property: g = F/m (N/kg), E = F/q (V/m or N/C), B = F/(IL) (tesla).',
+                  '场是物体无需物理接触就能受力的空间区域。引力场作用于质量（始终吸引）。电场作用于电荷（吸引或排斥）。磁场作用于运动电荷和电流。场强是每单位性质的力：g = F/m（N/kg），E = F/q（V/m 或 N/C），B = F/(IL)（特斯拉）。',
+                ),
+              ],
+              formulas: [
+                formula('Gravitational field strength', '引力场强', 'g=\\frac{F}{m}=\\frac{GM}{r^2}'),
+                formula('Electric field strength', '电场强度', 'E=\\frac{F}{q}=\\frac{kQ}{r^2}'),
+              ],
+              takeaway: text(
+                'Fields allow us to calculate forces without knowing the source object\'s details — only the field at the point matters.',
+                '场让我们无需知道源物体的细节就能计算力——只需要该点的场。',
+              ),
+            },
+            {
+              heading: text('1. Potential and potential energy', '1. 势与势能'),
+              paragraphs: [
+                text(
+                  'Gravitational potential V_g = −GM/r (work done per unit mass to bring it from infinity). Electric potential V_e = kQ/r (work done per unit positive charge). Potential energy: E_p = mV_g or E_p = qV_e. The potential gradient gives the field strength: g = −dV_g/dr, E = −dV_e/dr. Equipotential surfaces are perpendicular to field lines.',
+                  '引力势 V_g = −GM/r（将单位质量从无穷远移来所做的功）。电势 V_e = kQ/r（将单位正电荷移来所做的功）。势能：E_p = mV_g 或 E_p = qV_e。势梯度给出场强：g = −dV_g/dr，E = −dV_e/dr。等势面与场线垂直。',
+                ),
+              ],
+              formulas: [
+                formula('Gravitational potential', '引力势', 'V_g=-\\frac{GM}{r}'),
+                formula('Electric potential', '电势', 'V_e=\\frac{kQ}{r}'),
+                formula('Field from potential', '由势求场', 'E=-\\frac{dV}{dr}'),
+              ],
+            },
+            {
+              heading: text('2. Charged particles in fields', '2. 带电粒子在场中的运动'),
+              paragraphs: [
+                text(
+                  'In a uniform electric field, a charged particle accelerates: F = qE, giving parabolic motion (like a projectile). In a uniform magnetic field, the force is F = qvB (perpendicular to velocity), causing circular motion with radius r = mv/(qB). The magnetic force does no work (always perpendicular to displacement), so speed stays constant. This principle is used in mass spectrometers and cyclotrons.',
+                  '在均匀电场中，带电粒子加速：F = qE，产生抛物线运动（类似抛体）。在均匀磁场中，力为 F = qvB（垂直于速度），导致圆周运动，半径 r = mv/(qB)。磁力不做功（始终垂直于位移），所以速率不变。这一原理用于质谱仪和回旋加速器。',
+                ),
+              ],
+              formulas: [
+                formula('Electric force', '电场力', 'F=qE'),
+                formula('Magnetic force', '磁场力', 'F=qvB\\sin\\theta'),
+                formula('Radius of circular path', '圆周运动半径', 'r=\\frac{mv}{qB}'),
+              ],
+            },
+            {
+              heading: text('3. Electromagnetic induction (HL)', '3. 电磁感应（HL）'),
+              paragraphs: [
+                text(
+                  'Magnetic flux Φ = BA cos θ (weber). Faraday\'s law: induced EMF = −dΦ/dt (rate of change of flux linkage). Lenz\'s law: the induced current opposes the change that caused it (conservation of energy). Applications: generators (rotating coil in B field), transformers (changing flux in primary induces EMF in secondary), and eddy currents (braking in trains).',
+                  '磁通量 Φ = BA cos θ（韦伯）。法拉第定律：感应 EMF = −dΦ/dt（磁通量链接变化率）。楞次定律：感应电流反对引起它的变化（能量守恒）。应用：发电机（在 B 场中旋转线圈）、变压器（初级变化磁通在次级感应 EMF）、涡流（列车制动）。',
+                ),
+              ],
+              formulas: [
+                formula('Magnetic flux', '磁通量', '\\Phi=BA\\cos\\theta'),
+                formula('Faraday\'s law', '法拉第定律', '\\varepsilon=-\\frac{d\\Phi}{dt}'),
+              ],
+              takeaway: text(
+                'Induction requires CHANGING flux. A stationary coil in a steady field has zero induced EMF.',
+                '感应需要变化的磁通量。静止线圈在稳定场中感应 EMF 为零。',
+              ),
+            },
+            {
+              heading: text('4. Classroom check: circular motion in B field', '4. 课堂题：磁场中的圆周运动'),
+              classroomQuestions: [
+                {
+                  id: 'ib-fields-circular-motion',
+                  title: text('Electron in a magnetic field', '磁场中的电子'),
+                  prompt: text(
+                    'An electron (m = 9.1 × 10⁻³¹ kg, q = 1.6 × 10⁻¹⁹ C) enters a 0.05 T magnetic field at 2.0 × 10⁶ m/s perpendicular to the field. What is the radius of its circular path?',
+                    '一个电子（m = 9.1 × 10⁻³¹ kg，q = 1.6 × 10⁻¹⁹ C）以 2.0 × 10⁶ m/s 垂直进入 0.05 T 磁场。其圆周运动半径是多少？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('2.3 × 10⁻⁴ m', '2.3 × 10⁻⁴ m') },
+                    { label: 'B', text: text('2.3 × 10⁻² m', '2.3 × 10⁻² m') },
+                    { label: 'C', text: text('4.6 × 10⁻⁴ m', '4.6 × 10⁻⁴ m') },
+                    { label: 'D', text: text('1.1 × 10⁻³ m', '1.1 × 10⁻³ m') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    'r = mv/(qB) = (9.1 × 10⁻³¹ × 2.0 × 10⁶)/(1.6 × 10⁻¹⁹ × 0.05) = 1.82 × 10⁻²⁴/8.0 × 10⁻²¹ = 2.3 × 10⁻⁴ m.',
+                    'r = mv/(qB) = (9.1 × 10⁻³¹ × 2.0 × 10⁶)/(1.6 × 10⁻¹⁹ × 0.05) = 2.3 × 10⁻⁴ m。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('5. Common mistakes', '5. 常见错误'),
+              bullets: [
+                text('Thinking gravitational potential is positive (it is always negative for an attractive field).', '以为引力势是正的（对于吸引场它始终为负）。'),
+                text('Forgetting that magnetic force is perpendicular to velocity, so it changes direction but not speed.', '忘记磁力垂直于速度，所以只改变方向不改变速率。'),
+                text('Using F = qvB without checking that v is perpendicular to B (general: F = qvB sin θ).', '用 F = qvB 时不检查 v 是否垂直于 B（一般式：F = qvB sin θ）。'),
+                text('Confusing flux with flux linkage (linkage = NΦ for a coil of N turns).', '混淆磁通量和磁通量链接（链接 = NΦ，N 匝线圈）。'),
+              ],
+            },
+          ],
+        },
+      ],
     }),
     unit(5, 'E. Nuclear and Quantum Physics', 'E. 核物理与量子物理', 'SL/HL · Paper 1+2', [
       topic('E.1', 'Structure of the atom', '原子结构'),
@@ -3497,6 +4908,108 @@ const ibPhysics: CurriculumCourse = {
       ),
       formulas: [...formulas.quantum, formula('Mass-energy', '质能关系', 'E=mc^2')],
       diagrams: [...diagrams.quantum, ...diagrams.astronomy],
+      lessons: [
+        {
+          title: text('Atomic Structure, Radioactive Decay and Quantum Physics', '原子结构、放射性衰变与量子物理'),
+          description: text(
+            'From the nuclear atom to half-life, binding energy, and the photoelectric effect.',
+            '从核式原子到半衰期、结合能和光电效应。',
+          ),
+          sections: [
+            {
+              heading: text('0. The nuclear atom', '0. 核式原子'),
+              paragraphs: [
+                text(
+                  'Rutherford\'s alpha-scattering experiment showed that atoms have a tiny, dense, positively charged nucleus surrounded by electrons. The nucleus contains protons (charge +e, mass ~1 u) and neutrons (charge 0, mass ~1 u). Nuclides are written as ᴬ_Z X, where A = nucleon number and Z = proton number. Isotopes have the same Z but different A (different number of neutrons).',
+                  '卢瑟福的 α 散射实验表明原子有一个微小、致密、带正电的原子核，周围是电子。原子核包含质子（电荷 +e，质量 ~1 u）和中子（电荷 0，质量 ~1 u）。核素写作 ᴬ_Z X，其中 A = 核子数，Z = 质子数。同位素具有相同的 Z 但不同的 A（中子数不同）。',
+                ),
+              ],
+              takeaway: text(
+                'The nucleus is ~10⁻¹⁵ m while the atom is ~10⁻¹⁰ m — the atom is mostly empty space.',
+                '原子核约 10⁻¹⁵ m，而原子约 10⁻¹⁰ m——原子大部分是空的。',
+              ),
+            },
+            {
+              heading: text('1. Radioactive decay and half-life', '1. 放射性衰变与半衰期'),
+              paragraphs: [
+                text(
+                  'Radioactive decay is random and spontaneous. Three main types: alpha (⁴₂He nucleus, stopped by paper), beta (electron or positron, stopped by aluminium), gamma (high-energy photon, reduced by lead). The decay law: N = N₀e^(−λt), where λ is the decay constant. Half-life: t½ = ln 2/λ. Activity A = λN (becquerels). After n half-lives, N = N₀/2ⁿ.',
+                  '放射性衰变是随机且自发的。三种主要类型：α（⁴₂He 核，纸可挡住）、β（电子或正电子，铝可挡住）、γ（高能光子，铅可减弱）。衰变定律：N = N₀e^(−λt)，其中 λ 是衰变常数。半衰期：t½ = ln 2/λ。活度 A = λN（贝克勒尔）。经过 n 个半衰期后，N = N₀/2ⁿ。',
+                ),
+              ],
+              formulas: [
+                formula('Decay law', '衰变定律', 'N=N_0 e^{-\\lambda t}'),
+                formula('Half-life', '半衰期', 't_{1/2}=\\frac{\\ln 2}{\\lambda}'),
+                formula('Activity', '活度', 'A=\\lambda N'),
+              ],
+            },
+            {
+              heading: text('2. Binding energy and mass defect', '2. 结合能与质量亏损'),
+              paragraphs: [
+                text(
+                  'The mass of a nucleus is less than the sum of its individual nucleons. The missing mass (mass defect Δm) has been converted to binding energy: E = Δmc². Binding energy per nucleon indicates stability — iron-56 has the highest (~8.8 MeV/nucleon). Fusion (light nuclei joining) and fission (heavy nuclei splitting) both release energy because products have higher binding energy per nucleon.',
+                  '原子核的质量小于其各个核子的总和。缺失的质量（质量亏损 Δm）已转化为结合能：E = Δmc²。每核子结合能表示稳定性——铁-56 最高（约 8.8 MeV/核子）。聚变（轻核结合）和裂变（重核分裂）都释放能量，因为产物的每核子结合能更高。',
+                ),
+              ],
+              formulas: [
+                formula('Mass-energy equivalence', '质能等价', 'E=\\Delta m c^2'),
+                formula('Binding energy per nucleon', '每核子结合能', '\\frac{E_b}{A}=\\frac{\\Delta m c^2}{A}'),
+              ],
+              takeaway: text(
+                'Energy is released when products have greater binding energy per nucleon than reactants — this drives both fusion in stars and fission in reactors.',
+                '当产物的每核子结合能大于反应物时释放能量——这驱动恒星中的聚变和反应堆中的裂变。',
+              ),
+            },
+            {
+              heading: text('3. The photoelectric effect and wave-particle duality', '3. 光电效应与波粒二象性'),
+              paragraphs: [
+                text(
+                  'The photoelectric effect: light hitting a metal surface ejects electrons only if f > f₀ (threshold frequency). Increasing intensity increases the number of electrons, not their KE. Einstein\'s explanation: light comes in photons with E = hf. Each photon gives all its energy to one electron: hf = φ + KE_max, where φ is the work function. This proves light has particle properties. De Broglie showed matter also has wave properties: λ = h/p.',
+                  '光电效应：光照射金属表面时，只有 f > f₀（截止频率）才能打出电子。增加光强增加电子数量，不增加其动能。爱因斯坦的解释：光以光子形式存在，E = hf。每个光子把全部能量给一个电子：hf = φ + KE_max，其中 φ 是逸出功。这证明光具有粒子性。德布罗意表明物质也具有波动性：λ = h/p。',
+                ),
+              ],
+              formulas: [
+                formula('Photon energy', '光子能量', 'E=hf'),
+                formula('Photoelectric equation', '光电方程', 'hf=\\phi+E_{k,\\max}'),
+                formula('De Broglie wavelength', '德布罗意波长', '\\lambda=\\frac{h}{p}'),
+              ],
+            },
+            {
+              heading: text('4. Classroom check: half-life', '4. 课堂题：半衰期'),
+              classroomQuestions: [
+                {
+                  id: 'ib-nuclear-half-life',
+                  title: text('Counting half-lives', '计算半衰期'),
+                  prompt: text(
+                    'A radioactive sample has initial activity 800 Bq. After 6 hours its activity is 100 Bq. What is the half-life?',
+                    '一个放射性样品初始活度为 800 Bq。6 小时后活度为 100 Bq。半衰期是多少？',
+                  ),
+                  choices: [
+                    { label: 'A', text: text('2 hours', '2 小时') },
+                    { label: 'B', text: text('3 hours', '3 小时') },
+                    { label: 'C', text: text('1.5 hours', '1.5 小时') },
+                    { label: 'D', text: text('6 hours', '6 小时') },
+                  ],
+                  correctAnswer: 'A',
+                  feedback: text(
+                    '800 → 400 → 200 → 100: that is 3 half-lives. 3 half-lives = 6 hours, so t½ = 2 hours.',
+                    '800 → 400 → 200 → 100：这是 3 个半衰期。3 个半衰期 = 6 小时，所以 t½ = 2 小时。',
+                  ),
+                },
+              ],
+            },
+            {
+              heading: text('5. Common mistakes', '5. 常见错误'),
+              bullets: [
+                text('Thinking half-life means all atoms decay after two half-lives (it is exponential, never reaches zero).', '以为半衰期意味着两个半衰期后所有原子都衰变（它是指数衰减，永远不会到零）。'),
+                text('Confusing activity (decays per second) with count rate (detected per second, depends on distance and shielding).', '混淆活度（每秒衰变数）和计数率（每秒探测数，取决于距离和屏蔽）。'),
+                text('Thinking increasing light intensity increases electron KE in the photoelectric effect (it only increases the number).', '以为增加光强增加光电效应中电子的动能（只增加数量）。'),
+                text('Forgetting that binding energy is the energy needed to separate nucleons, not the energy they have.', '忘记结合能是分离核子所需的能量，不是核子具有的能量。'),
+              ],
+            },
+          ],
+        },
+      ],
     }),
   ],
 };
