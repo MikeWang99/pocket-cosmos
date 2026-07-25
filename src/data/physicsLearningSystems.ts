@@ -2457,36 +2457,168 @@ const cambridgeIgcse0625: CurriculumCourse = {
         ...diagrams.energy,
       ],
     }),
+    unit(2, 'Thermal Physics', '热物理', 'Core + Supplement', [
+      topic('2.1', 'Simple kinetic molecular model of matter', '分子动理论模型'),
+      topic('2.2', 'Thermal properties and temperature', '热性质与温度'),
+      topic('2.3', 'Thermal processes', '热过程'),
+    ], {
+      summary: text(
+        'Use the particle model to explain states of matter, thermal expansion, temperature, specific heat capacity, latent heat, and energy transfer by conduction, convection, and radiation.',
+        '用粒子模型解释物质状态、热膨胀、温度、比热容、潜热以及传导、对流和辐射三种热传递方式。',
+      ),
+      focus: focus(
+        ['Describe solids, liquids, and gases using the kinetic molecular model.', '用分子动理论描述固体、液体和气体。'],
+        ['Use specific heat capacity and latent heat in energy calculations.', '在能量计算中使用比热容和潜热。'],
+        ['Distinguish conduction, convection, and radiation with everyday examples.', '用日常例子区分传导、对流和辐射。'],
+      ),
+      formulas: [
+        formula('Specific heat capacity', '比热容', 'Q=mc\\Delta T'),
+        formula('Specific latent heat', '比潜热', 'Q=mL'),
+        formula('Gas pressure and volume', '气体压强与体积', 'p_1V_1=p_2V_2\\quad (\\text{constant } T)'),
+        formula('Pressure and temperature', '压强与温度', '\\frac{p_1}{T_1}=\\frac{p_2}{T_2}\\quad (\\text{constant } V)'),
+      ],
+      diagrams: [
+        ...diagrams.thermal,
+        diagram('greenhouse', 'Greenhouse Effect', '温室效应', 'Thermal radiation balance explains atmospheric warming.', '热辐射平衡解释大气升温。'),
+      ],
+    }),
+    unit(3, 'Waves', '波', 'Core + Supplement', [
+      topic('3.1', 'General wave properties', '波的一般性质'),
+      topic('3.2', 'Light', '光'),
+      topic('3.3', 'Sound', '声波'),
+    ], {
+      summary: text(
+        'Describe wave motion, reflection, refraction, diffraction, and the electromagnetic spectrum, then apply ray models to lenses and sound properties.',
+        '描述波动、反射、折射、衍射和电磁波谱,然后用光线模型分析透镜和声波性质。',
+      ),
+      focus: focus(
+        ['Distinguish transverse and longitudinal waves with examples.', '用例子区分横波和纵波。'],
+        ['Use the wave equation and ray diagrams for reflection, refraction, and lenses.', '用波动方程和光线图分析反射、折射和透镜。'],
+        ['Describe the electromagnetic spectrum and its applications.', '描述电磁波谱及其应用。'],
+      ),
+      formulas: [
+        formula('Wave speed', '波速', 'v=f\\lambda'),
+        formula('Reflection', '反射', '\\theta_i=\\theta_r'),
+        formula('Refraction (Snell\'s law)', '折射定律', 'n_1\\sin\\theta_1=n_2\\sin\\theta_2'),
+        formula('Critical angle', '临界角', '\\sin c=\\frac{1}{n}'),
+        formula('Thin lens equation', '薄透镜公式', '\\frac{1}{f}=\\frac{1}{u}+\\frac{1}{v}'),
+      ],
+      diagrams: [
+        ...diagrams.waves,
+        ...diagrams.optics,
+      ],
+    }),
+    unit(4, 'Electricity and Magnetism', '电与磁', 'Core + Supplement', [
+      topic('4.1', 'Simple magnetism', '简单磁现象'),
+      topic('4.2', 'Electrical quantities', '电学量'),
+      topic('4.3', 'Electric circuits', '电路'),
+      topic('4.4', 'Electrical safety', '安全用电'),
+      topic('4.5', 'Electromagnetic effects', '电磁效应'),
+    ], {
+      summary: text(
+        'Connect charge, current, voltage, resistance, and power in circuits, then extend to magnetic fields, motors, generators, and transformers.',
+        '在电路中连接电荷、电流、电压、电阻和功率,然后扩展到磁场、电动机、发电机和变压器。',
+      ),
+      focus: focus(
+        ['Use Ohm\'s law, series/parallel rules, and power equations in circuit analysis.', '用欧姆定律、串并联规则和功率方程分析电路。'],
+        ['Describe magnetic field patterns and the motor effect.', '描述磁场分布和电动机效应。'],
+        ['Explain electromagnetic induction, generators, and transformers.', '解释电磁感应、发电机和变压器。'],
+      ),
+      formulas: [
+        formula('Charge and current', '电荷与电流', 'Q=It'),
+        formula('Ohm\'s law', '欧姆定律', 'V=IR'),
+        formula('Electrical power', '电功率', 'P=IV=I^2R=\\frac{V^2}{R}'),
+        formula('Energy transferred', '电能', 'E=QV=IVt'),
+        formula('Transformer equation', '变压器方程', '\\frac{V_p}{V_s}=\\frac{N_p}{N_s}'),
+        formula('Force on conductor', '导体受力', 'F=BIL'),
+      ],
+      diagrams: [
+        ...diagrams.circuits,
+        ...diagrams.magnetism,
+      ],
+    }),
+    unit(5, 'Nuclear Physics', '核物理', 'Core + Supplement', [
+      topic('5.1', 'The nuclear model of the atom', '原子核模型'),
+      topic('5.2', 'Radioactivity', '放射性'),
+      topic('5.3', 'Half-life', '半衰期'),
+      topic('5.4', 'Safety precautions', '辐射安全'),
+    ], {
+      summary: text(
+        'Describe atomic structure, the three types of nuclear radiation, decay equations, half-life, and safety measures.',
+        '描述原子结构、三种核辐射、衰变方程、半衰期和安全措施。',
+      ),
+      focus: focus(
+        ['Describe the nuclear model and distinguish protons, neutrons, and electrons.', '描述核模型并区分质子、中子和电子。'],
+        ['Write balanced nuclear decay equations for alpha, beta, and gamma radiation.', '写出 α、β、γ 衰变的平衡核方程。'],
+        ['Use half-life to calculate remaining activity or count rate.', '用半衰期计算剩余活度或计数率。'],
+      ),
+      formulas: [
+        formula('Nucleon and proton number', '核子数与质子数', 'A=Z+N'),
+        formula('Alpha decay', 'α 衰变', '{}^A_Z X\\to{}^{A-4}_{Z-2}Y+{}^4_2\\text{He}'),
+        formula('Beta decay', 'β 衰变', '{}^A_Z X\\to{}^{A}_{Z+1}Y+{}^{0}_{-1}e'),
+        formula('Half-life', '半衰期', 'N=N_0\\left(\\frac{1}{2}\\right)^{t/t_{1/2}}'),
+      ],
+      diagrams: [
+        ...diagrams.quantum,
+      ],
+    }),
+    unit(6, 'Space Physics', '太空物理', 'Supplement', [
+      topic('6.1', 'Earth and the Solar System', '地球与太阳系'),
+      topic('6.2', 'Stars', '恒星'),
+      topic('6.3', 'The Universe', '宇宙'),
+    ], {
+      summary: text(
+        'Explore the Solar System, stellar life cycles, and the scale and evolution of the Universe.',
+        '探索太阳系、恒星生命周期以及宇宙的尺度与演化。',
+      ),
+      focus: focus(
+        ['Describe the structure of the Solar System and orbital motion.', '描述太阳系结构和轨道运动。'],
+        ['Explain stellar life cycles from nebula to white dwarf, neutron star, or black hole.', '解释从星云到白矮星、中子星或黑洞的恒星生命周期。'],
+        ['Use red-shift evidence to support the Big Bang model.', '用红移证据支持大爆炸模型。'],
+      ),
+      formulas: [
+        formula('Orbital speed', '轨道速度', 'v=\\frac{2\\pi r}{T}'),
+        formula('Gravitational force', '万有引力', 'F=\\frac{GMm}{r^2}'),
+        formula('Red-shift', '红移', 'z=\\frac{\\Delta\\lambda}{\\lambda}\\approx\\frac{v}{c}'),
+      ],
+      diagrams: [
+        ...diagrams.astronomy,
+      ],
+    }),
   ],
 };
 
 const cambridge9702: CurriculumCourse = {
   id: 'cambridge-9702',
   name: text('Cambridge International AS & A Level Physics 9702', '剑桥国际 AS & A Level 物理 9702'),
-  level: text('AS & A Level', 'AS 与 A Level'),
+  level: text('AS & A Level (2025-2027)', 'AS 与 A Level（2025-2027）'),
   sourceUrl: 'https://www.cambridgeinternational.org/Images/664565-2025-2027-syllabus.pdf',
   sourceLabel: text('Cambridge 9702 syllabus 2025-2027', 'Cambridge 9702 2025-2027 官方大纲'),
   units: [
-    unit(1, 'Physical Quantities and Measurement', '物理量与测量', 'Foundation', [
-      topic('1', 'Physical quantities and units', '物理量与单位'),
-      topic('2', 'Measurement techniques', '测量技术'),
+    unit(1, 'Physical Quantities and Measurement', '物理量与测量', 'AS Paper 1+2', [
+      topic('1.1', 'Physical quantities', '物理量'),
+      topic('1.2', 'SI quantities and units', 'SI 量与单位'),
+      topic('1.3', 'Errors and uncertainties', '误差与不确定度'),
+      topic('1.4', 'Scalars and vectors', '标量与矢量'),
     ], enrich('measurement', 'measurement', 'measurement', [
       ['Use SI base quantities, derived units, prefixes, and homogeneity checks.', '使用 SI 基本量、导出单位、前缀和量纲一致性检查。'],
       ['Handle uncertainty, significant figures, calibration, and graphical data.', '处理不确定度、有效数字、校准和图像数据。'],
       ['Extract physical meaning from gradients, intercepts, and areas.', '从斜率、截距和面积中提取物理意义。'],
     ])),
-    unit(2, 'Mechanics', '力学', 'Core AS', [
-      topic('3', 'Kinematics', '运动学'),
-      topic('4', 'Dynamics', '动力学'),
-      topic('5', 'Forces, density and pressure', '力、密度与压强'),
-      topic('6', 'Work, energy and power', '功、能量与功率'),
+    unit(2, 'Mechanics', '力学', 'AS Paper 1+2', [
+      topic('2.1', 'Kinematics', '运动学'),
+      topic('2.2', 'Dynamics and Newton\'s laws', '动力学与牛顿定律'),
+      topic('2.3', 'Forces, density and pressure', '力、密度与压强'),
+      topic('2.4', 'Work, energy and power', '功、能量与功率'),
     ], enrich('dynamics', 'dynamics', 'dynamics', [
       ['Model motion with equations, graphs, and Newton\'s laws.', '用方程、图像和牛顿定律建模运动。'],
       ['Apply density, pressure, and force equilibrium in real systems.', '在真实系统中应用密度、压强和受力平衡。'],
       ['Use energy methods for work, efficiency, and power.', '用能量方法处理功、效率和功率。'],
     ])),
-    unit(3, 'Matter and Materials', '物质与材料', 'Core AS', [
-      topic('7', 'Deformation of solids', '固体形变'),
+    unit(3, 'Matter and Materials', '物质与材料', 'AS Paper 1+2', [
+      topic('3.1', 'Stress and strain', '应力与应变'),
+      topic('3.2', 'Elastic and plastic behaviour', '弹性与塑性行为'),
+      topic('3.3', 'Young modulus and energy storage', '杨氏模量与储能'),
     ], {
       summary: text('Connect force-extension graphs with elastic behavior, energy storage, and material limits.', '把力-伸长图像与弹性行为、储能和材料极限联系起来。'),
       focus: focus(
@@ -2497,36 +2629,45 @@ const cambridge9702: CurriculumCourse = {
       formulas: [
         formula('Hooke\'s law', '胡克定律', 'F=kx'),
         formula('Elastic energy', '弹性势能', 'E=\\frac12Fx=\\frac12kx^2'),
-        formula('Young modulus', '杨氏模量', 'E=\\frac{\\text{stress}}{\\text{strain}}=\\frac{F/A}{\\Delta L/L}'),
+        formula('Stress and strain', '应力与应变', '\\sigma=\\frac{F}{A},\\quad \\varepsilon=\\frac{\\Delta L}{L}'),
+        formula('Young modulus', '杨氏模量', 'E=\\frac{\\sigma}{\\varepsilon}=\\frac{F/A}{\\Delta L/L}'),
       ],
       diagrams: [diagram('material-graph', 'Force-Extension Graph', '力-伸长图像', 'The gradient gives stiffness in the elastic region.', '弹性区斜率代表劲度。')],
     }),
-    unit(4, 'Waves', '波动', 'Core AS', [
-      topic('8', 'Waves', '波'),
-      topic('9', 'Superposition', '叠加'),
+    unit(4, 'Waves', '波动', 'AS Paper 1+2', [
+      topic('4.1', 'Progressive waves', '行波'),
+      topic('4.2', 'Transverse and longitudinal waves', '横波与纵波'),
+      topic('4.3', 'Superposition and interference', '叠加与干涉'),
+      topic('4.4', 'Stationary waves and diffraction', '驻波与衍射'),
     ], enrich('waves', 'waves', 'waves', [
       ['Describe transverse and longitudinal wave behavior.', '描述横波和纵波行为。'],
       ['Use phase, path difference, interference, diffraction, and stationary waves.', '使用相位、波程差、干涉、衍射和驻波。'],
       ['Connect wave models to sound, light, and experimental patterns.', '把波动模型连接到声音、光和实验条纹。'],
     ])),
-    unit(5, 'Electricity', '电学', 'Core AS', [
-      topic('10', 'Electricity', '电学'),
-      topic('11', 'DC circuits', '直流电路'),
+    unit(5, 'Electricity', '电学', 'AS Paper 1+2', [
+      topic('5.1', 'Electric current and charge', '电流与电荷'),
+      topic('5.2', 'Potential difference, resistance and power', '电势差、电阻与功率'),
+      topic('5.3', 'DC circuits and Kirchhoff\'s laws', '直流电路与基尔霍夫定律'),
+      topic('5.4', 'Potential dividers and sensors', '分压器与传感器'),
     ], enrich('circuits', 'circuits', 'circuits', [
       ['Relate current, charge, potential difference, resistance, and power.', '连接电流、电荷、电势差、电阻和功率。'],
       ['Use circuit laws for series, parallel, and sensor circuits.', '用电路规律分析串联、并联和传感器电路。'],
       ['Interpret I-V characteristics and internal resistance.', '解释 I-V 特性和内阻。'],
     ])),
-    unit(6, 'Modern Physics', '近代物理', 'Core AS', [
-      topic('12', 'Particle physics', '粒子物理'),
+    unit(6, 'Particle Physics', '粒子物理', 'AS Paper 1+2', [
+      topic('6.1', 'Atoms, nuclei and radiation', '原子、原子核与辐射'),
+      topic('6.2', 'Fundamental particles and quarks', '基本粒子与夸克'),
+      topic('6.3', 'Conservation laws and interactions', '守恒律与相互作用'),
     ], enrich('quantum', 'quantum', 'quantum', [
       ['Describe particles, antiparticles, photons, and conservation laws.', '描述粒子、反粒子、光子和守恒律。'],
       ['Use simple quark and lepton classification ideas.', '使用基本的夸克和轻子分类思想。'],
       ['Connect particle interactions to exchange particles.', '把粒子相互作用与交换粒子联系起来。'],
     ])),
-    unit(7, 'Advanced Mechanics and Fields', '进阶力学与场', 'A Level', [
-      topic('13', 'Motion in a circle', '圆周运动'),
-      topic('14', 'Gravitational fields', '引力场'),
+    unit(7, 'Advanced Mechanics and Fields', '进阶力学与场', 'A Level Paper 4', [
+      topic('7.1', 'Kinematics of circular motion', '圆周运动学'),
+      topic('7.2', 'Centripetal acceleration and force', '向心加速度与向心力'),
+      topic('7.3', 'Gravitational field and potential', '引力场与引力势'),
+      topic('7.4', 'Orbital motion and satellites', '轨道运动与卫星'),
     ], {
       ...enrich('fields', 'dynamics', 'astronomy', [
         ['Apply centripetal acceleration and force to circular motion.', '把向心加速度和向心力用于圆周运动。'],
@@ -2535,25 +2676,34 @@ const cambridge9702: CurriculumCourse = {
       ]),
       formulas: [
         ...formulas.dynamics,
+        formula('Centripetal acceleration', '向心加速度', 'a_c=\\frac{v^2}{r}=\\omega^2 r'),
         formula('Gravitational field', '引力场', 'g=\\frac{GM}{r^2},\\quad V_g=-\\frac{GM}{r}'),
         formula('Orbital speed', '轨道速度', 'v=\\sqrt{\\frac{GM}{r}}'),
       ],
     }),
-    unit(8, 'Thermal Physics', '热物理', 'A Level', [
-      topic('15', 'Temperature', '温度'),
-      topic('16', 'Ideal gases', '理想气体'),
-      topic('17', 'Thermodynamics', '热力学'),
-    ], enrich('thermal', 'thermal', 'thermal', [
-      ['Connect temperature scales, internal energy, and molecular kinetic energy.', '连接温标、内能和分子动能。'],
-      ['Use ideal gas equations and kinetic theory assumptions.', '使用理想气体方程和分子动理论假设。'],
-      ['Apply the first law to thermal processes.', '把热力学第一定律用于热过程。'],
-    ])),
-    unit(9, 'Oscillations and Electromagnetic Fields', '振动与电磁场', 'A Level', [
-      topic('18', 'Oscillations', '振动'),
-      topic('19', 'Electric fields', '电场'),
-      topic('20', 'Capacitance', '电容'),
-      topic('21', 'Magnetic fields', '磁场'),
-      topic('22', 'Alternating currents', '交流电'),
+    unit(8, 'Thermal Physics', '热物理', 'A Level Paper 4', [
+      topic('8.1', 'Temperature and internal energy', '温度与内能'),
+      topic('8.2', 'Ideal gas equation of state', '理想气体状态方程'),
+      topic('8.3', 'Kinetic theory of gases', '气体分子动理论'),
+      topic('8.4', 'First law of thermodynamics', '热力学第一定律'),
+    ], {
+      ...enrich('thermal', 'thermal', 'thermal', [
+        ['Connect temperature scales, internal energy, and molecular kinetic energy.', '连接温标、内能和分子动能。'],
+        ['Use ideal gas equations and kinetic theory assumptions.', '使用理想气体方程和分子动理论假设。'],
+        ['Apply the first law to thermal processes.', '把热力学第一定律用于热过程。'],
+      ]),
+      formulas: [
+        ...formulas.thermal,
+        formula('Molecular kinetic energy', '分子平均动能', '\\frac12 m\\langle c^2\\rangle=\\frac32 k_BT'),
+        formula('First law (complete)', '热力学第一定律', '\\Delta U=Q-W=Q-p\\Delta V'),
+      ],
+    }),
+    unit(9, 'Oscillations and Electromagnetic Fields', '振动与电磁场', 'A Level Paper 4', [
+      topic('9.1', 'Simple harmonic motion', '简谐运动'),
+      topic('9.2', 'Electric fields and Coulomb\'s law', '电场与库仑定律'),
+      topic('9.3', 'Capacitance and energy storage', '电容与储能'),
+      topic('9.4', 'Magnetic fields and forces', '磁场与磁力'),
+      topic('9.5', 'Alternating currents and rms values', '交流电与有效值'),
     ], {
       summary: text('Combine SHM, electric fields, capacitors, magnetic fields, and alternating-current models.', '综合简谐运动、电场、电容器、磁场和交流电模型。'),
       focus: focus(
@@ -2561,20 +2711,32 @@ const cambridge9702: CurriculumCourse = {
         ['Analyze electric and magnetic fields with force, energy, and flux ideas.', '用力、能量和通量思想分析电场与磁场。'],
         ['Connect sinusoidal AC quantities with rms values.', '把正弦交流量与有效值联系起来。'],
       ),
-      formulas: [...formulas.oscillation, ...formulas.electric, ...formulas.magnetism],
+      formulas: [
+        ...formulas.oscillation,
+        ...formulas.electric,
+        ...formulas.magnetism,
+        formula('Capacitor energy', '电容器储能', 'E=\\frac12CV^2=\\frac12QV'),
+        formula('AC rms values', '交流有效值', 'V_{rms}=\\frac{V_0}{\\sqrt{2}},\\quad I_{rms}=\\frac{I_0}{\\sqrt{2}}'),
+      ],
       diagrams: [...diagrams.oscillation, ...diagrams.electric, ...diagrams.magnetism],
     }),
-    unit(10, 'Quantum, Nuclear, Medical, and Cosmology', '量子、核、医学与宇宙学', 'A Level', [
-      topic('23', 'Quantum physics', '量子物理'),
-      topic('24', 'Nuclear physics', '核物理'),
-      topic('25', 'Medical physics', '医学物理'),
-      topic('26', 'Astronomy and cosmology', '天文学与宇宙学'),
+    unit(10, 'Quantum, Nuclear, Medical, and Cosmology', '量子、核、医学与宇宙学', 'A Level Paper 4+5', [
+      topic('10.1', 'Photoelectric effect and photons', '光电效应与光子'),
+      topic('10.2', 'Wave-particle duality and energy levels', '波粒二象性与能级'),
+      topic('10.3', 'Nuclear decay and binding energy', '核衰变与结合能'),
+      topic('10.4', 'Medical imaging and radiation', '医学成像与辐射'),
+      topic('10.5', 'Stellar evolution and cosmology', '恒星演化与宇宙学'),
     ], {
       ...enrich('quantum', 'quantum', 'quantum', [
         ['Use photon, wave-particle, and energy-level models.', '使用光子、波粒二象性和能级模型。'],
         ['Apply nuclear decay, binding energy, and radiation ideas.', '应用核衰变、结合能和辐射概念。'],
         ['Connect physics models to imaging, radiation safety, stars, and cosmology.', '把物理模型连接到成像、辐射安全、恒星和宇宙学。'],
       ]),
+      formulas: [
+        ...formulas.quantum,
+        formula('Binding energy', '结合能', 'E_b=\\Delta m c^2'),
+        formula('de Broglie wavelength', '德布罗意波长', '\\lambda=\\frac{h}{p}=\\frac{h}{mv}'),
+      ],
       diagrams: [...diagrams.quantum, ...diagrams.astronomy],
     }),
   ],
@@ -2583,16 +2745,16 @@ const cambridge9702: CurriculumCourse = {
 const ibPhysics: CurriculumCourse = {
   id: 'ib-dp-physics-2025',
   name: text('IB Diploma Programme Physics', 'IB 大学预科项目物理'),
-  level: text('First assessment 2025: SL/HL', '2025 首考:SL / HL'),
+  level: text('First assessment 2025: SL (110h) / HL (180h)', '2025 首考：SL（110h）/ HL（180h）'),
   sourceUrl: 'https://www.ibo.org/programmes/diploma-programme/curriculum/sciences/physics/',
   sourceLabel: text('IB DP Physics subject brief and guide overview', 'IB DP Physics 官方 subject brief 与课程概览'),
   units: [
-    unit(1, 'A. Space, Time and Motion', 'A. 空间、时间与运动', 'SL/HL theme', [
+    unit(1, 'A. Space, Time and Motion', 'A. 空间、时间与运动', 'SL/HL · Paper 1+2', [
       topic('A.1', 'Kinematics', '运动学'),
       topic('A.2', 'Forces and momentum', '力与动量'),
       topic('A.3', 'Work, energy and power', '功、能量与功率'),
-      topic('A.4', 'Rigid body mechanics', '刚体力学'),
-      topic('A.5', 'Galilean and special relativity', '伽利略相对性与狭义相对论'),
+      topic('A.4', 'Rigid body mechanics (HL)', '刚体力学（HL）'),
+      topic('A.5', 'Galilean and special relativity (HL)', '伽利略相对性与狭义相对论（HL）'),
     ], {
       summary: text('The motion theme builds from everyday motion to momentum, energy, rotation, and relativity.', '运动主题从日常运动出发,逐步进入动量、能量、转动和相对论。'),
       focus: focus(
@@ -2603,11 +2765,11 @@ const ibPhysics: CurriculumCourse = {
       formulas: [...formulas.kinematics, ...formulas.dynamics, ...formulas.energy, ...formulas.momentum, ...formulas.rotation],
       diagrams: [...diagrams.kinematics, ...diagrams.momentum, ...diagrams.relativity],
     }),
-    unit(2, 'B. The Particulate Nature of Matter', 'B. 物质的粒子性', 'SL/HL theme', [
+    unit(2, 'B. The Particulate Nature of Matter', 'B. 物质的粒子性', 'SL/HL · Paper 1+2', [
       topic('B.1', 'Thermal energy transfers', '热能传递'),
       topic('B.2', 'Greenhouse effect', '温室效应'),
       topic('B.3', 'Gas laws', '气体定律'),
-      topic('B.4', 'Thermodynamics', '热力学'),
+      topic('B.4', 'Thermodynamics (HL)', '热力学（HL）'),
       topic('B.5', 'Current and circuits', '电流与电路'),
     ], {
       summary: text('This theme connects particles, energy transfer, gases, climate models, and electric circuits.', '本主题连接粒子、能量传递、气体、气候模型和电路。'),
@@ -2619,12 +2781,12 @@ const ibPhysics: CurriculumCourse = {
       formulas: [...formulas.thermal, ...formulas.circuits],
       diagrams: [...diagrams.thermal, diagram('greenhouse', 'Greenhouse Model', '温室效应模型', 'Radiation balance links microscopic absorption with climate-scale energy flow.', '辐射平衡把微观吸收和气候尺度能量流联系起来。'), ...diagrams.circuits],
     }),
-    unit(3, 'C. Wave Behaviour', 'C. 波的行为', 'SL/HL theme', [
+    unit(3, 'C. Wave Behaviour', 'C. 波的行为', 'SL/HL · Paper 1+2', [
       topic('C.1', 'Simple harmonic motion', '简谐运动'),
       topic('C.2', 'Wave model', '波模型'),
-      topic('C.3', 'Wave phenomena', '波现象'),
+      topic('C.3', 'Wave phenomena (HL)', '波现象（HL）'),
       topic('C.4', 'Standing waves and resonance', '驻波与共振'),
-      topic('C.5', 'Doppler effect', '多普勒效应'),
+      topic('C.5', 'Doppler effect (HL)', '多普勒效应（HL）'),
     ], {
       summary: text('Wave behaviour links oscillations, propagation, interference, resonance, and relative motion.', '波的行为连接振动、传播、干涉、共振和相对运动。'),
       focus: focus(
@@ -2635,11 +2797,11 @@ const ibPhysics: CurriculumCourse = {
       formulas: [...formulas.oscillation, ...formulas.waves],
       diagrams: [...diagrams.oscillation, ...diagrams.waves],
     }),
-    unit(4, 'D. Fields', 'D. 场', 'SL/HL theme', [
-      topic('D.1', 'Gravitational fields', '引力场'),
+    unit(4, 'D. Fields', 'D. 场', 'SL/HL · Paper 1+2', [
+      topic('D.1', 'Gravitational fields (HL)', '引力场（HL）'),
       topic('D.2', 'Electric and magnetic fields', '电场与磁场'),
-      topic('D.3', 'Motion in electromagnetic fields', '电磁场中的运动'),
-      topic('D.4', 'Induction', '电磁感应'),
+      topic('D.3', 'Motion in electromagnetic fields (HL)', '电磁场中的运动（HL）'),
+      topic('D.4', 'Induction (HL)', '电磁感应（HL）'),
     ], {
       summary: text('The fields theme uses force, potential, flux, and symmetry to describe interactions without contact.', '场主题用力、势、通量和对称性描述非接触相互作用。'),
       focus: focus(
@@ -2650,12 +2812,12 @@ const ibPhysics: CurriculumCourse = {
       formulas: [...formulas.fields, ...formulas.electric, ...formulas.magnetism],
       diagrams: [...diagrams.fields, ...diagrams.electric, ...diagrams.magnetism],
     }),
-    unit(5, 'E. Nuclear and Quantum Physics', 'E. 核物理与量子物理', 'SL/HL theme', [
+    unit(5, 'E. Nuclear and Quantum Physics', 'E. 核物理与量子物理', 'SL/HL · Paper 1+2', [
       topic('E.1', 'Structure of the atom', '原子结构'),
       topic('E.2', 'Quantum physics', '量子物理'),
       topic('E.3', 'Radioactive decay', '放射性衰变'),
-      topic('E.4', 'Fission', '裂变'),
-      topic('E.5', 'Fusion and stars', '聚变与恒星'),
+      topic('E.4', 'Fission (HL)', '裂变（HL）'),
+      topic('E.5', 'Fusion and stars (HL)', '聚变与恒星（HL）'),
     ], {
       summary: text('This theme explains atomic, nuclear, and stellar processes with quantum and conservation models.', '本主题用量子模型和守恒模型解释原子、原子核和恒星过程。'),
       focus: focus(
@@ -2691,10 +2853,10 @@ export const learningSystems: LearningSystem[] = [
       'Cambridge IGCSE Physics 0625 with syllabus-aligned knowledge maps and chapter question banks.',
       '面向 Cambridge IGCSE Physics 0625 的知识地图与分章节题库。',
     ),
-    status: text('Chapter 1 available', 'Chapter 1 已开放'),
+    status: text('Full syllabus map', '完整大纲地图'),
     sourceNote: text(
-      'The course structure follows Cambridge IGCSE Physics 0625. The current practice collection covers Chapter 1 MCQ questions only; structured questions are not included.',
-      '课程结构参考 Cambridge IGCSE Physics 0625。当前题库仅开放 Chapter 1 选择题,不包含结构化问答题。',
+      'The course structure follows Cambridge IGCSE Physics 0625 (2023-2025 / 2026-2028 syllabus). Knowledge maps cover all six topics; Chapter 1 includes an MCQ question bank.',
+      '课程结构参考 Cambridge IGCSE Physics 0625（2023-2025 / 2026-2028 大纲）。知识地图覆盖全部六个主题；Chapter 1 包含选择题题库。',
     ),
     courses: [cambridgeIgcse0625],
   },
@@ -2707,8 +2869,8 @@ export const learningSystems: LearningSystem[] = [
     ),
     status: text('Available', '已开放'),
     sourceNote: text(
-      'The A-Level map follows the Cambridge International AS & A Level Physics 9702 syllabus for 2025-2027. Chinese translations, formulas, focus notes, and diagrams are Pocket Cosmos learning materials.',
-      'A-Level 地图参考 Cambridge International AS & A Level Physics 9702 2025-2027 官方大纲。中文翻译、公式、重点整理和示意图由口袋宇宙制作。',
+      'The A-Level map follows the Cambridge International AS & A Level Physics 9702 syllabus for 2025-2027. Assessment: Paper 1 (MC, 31% AS), Paper 2 (Structured, 46% AS), Paper 3 (Practical, 23% AS), Paper 4 (A2 Structured, 38% AL), Paper 5 (Planning, 11% AL). Chinese translations, formulas, and diagrams are Pocket Cosmos learning materials.',
+      'A-Level 地图参考 Cambridge International AS & A Level Physics 9702 2025-2027 官方大纲。考试结构：Paper 1（选择，31% AS）、Paper 2（结构题，46% AS）、Paper 3（实验，23% AS）、Paper 4（A2 结构题，38% AL）、Paper 5（规划，11% AL）。中文翻译、公式和示意图由口袋宇宙制作。',
     ),
     courses: [cambridge9702],
   },
@@ -2721,8 +2883,8 @@ export const learningSystems: LearningSystem[] = [
     ),
     status: text('Available', '已开放'),
     sourceNote: text(
-      'The IB map follows the International Baccalaureate Diploma Programme Physics subject structure for first assessment 2025. Focus notes, formulas, translations, and diagrams are Pocket Cosmos learning materials.',
-      'IB 地图参考 International Baccalaureate Diploma Programme Physics 2025 首考课程结构。重点整理、公式、翻译和示意图由口袋宇宙制作。',
+      'The IB map follows the International Baccalaureate Diploma Programme Physics subject structure for first assessment 2025. Assessment: Paper 1A (MC) + Paper 1B (Data-based) + Paper 2 (Structured). SL total 55+50 marks; HL total 75+90 marks. IA (scientific investigation) 20%. Topics marked (HL) are higher level only. Focus notes, formulas, translations, and diagrams are Pocket Cosmos learning materials.',
+      'IB 地图参考 International Baccalaureate Diploma Programme Physics 2025 首考课程结构。考试：Paper 1A（选择）+ Paper 1B（数据题）+ Paper 2（结构题）。SL 总计 55+50 分；HL 总计 75+90 分。IA（科学探究）占 20%。标注（HL）的主题仅为高级课程内容。重点整理、公式、翻译和示意图由口袋宇宙制作。',
     ),
     courses: [ibPhysics],
   },
