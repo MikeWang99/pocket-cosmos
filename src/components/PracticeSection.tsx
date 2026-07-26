@@ -290,6 +290,11 @@ export const PracticeSection: React.FC = () => {
     if (setId === 'igcse-cie-ch1-topic-1-6') return t.practice.sets.igcseTopic16;
     if (setId === 'igcse-cie-ch1-topic-1-7') return t.practice.sets.igcseTopic17;
     if (setId === 'igcse-cie-ch1-topic-1-8') return t.practice.sets.igcseTopic18;
+    // New IGCSE all-topic sets: use the set's own label/title
+    const matchedSet = practiceSets.find((s) => s.id === setId);
+    if (matchedSet) {
+      return { label: matchedSet.label, title: matchedSet.title, eyebrow: matchedSet.eyebrow, subtitle: matchedSet.subtitle, description: matchedSet.description };
+    }
     return t.practice.sets.kinematicsMultipleChoice;
   };
   const setCopy = getSetCopy(activeSet.id);
