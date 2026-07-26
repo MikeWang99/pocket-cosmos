@@ -213,6 +213,11 @@ export const i18n = {
         electromagnetism: 'Electricity & Magnetism',
         igcse: 'CIE IGCSE Physics',
       },
+      tree: {
+        apCMech: 'AP Physics C: Mechanics',
+        apCEm: 'AP Physics C: E&M',
+        igcse: 'CIE IGCSE Physics 0625',
+      },
       difficultyFilter: {
         label: 'Difficulty',
         all: 'All',
@@ -570,6 +575,11 @@ export const i18n = {
         mechanics: '力学',
         electromagnetism: '电磁学',
         igcse: 'CIE IGCSE 物理',
+      },
+      tree: {
+        apCMech: 'AP Physics C：力学',
+        apCEm: 'AP Physics C：电磁学',
+        igcse: 'CIE IGCSE 物理 0625',
       },
       difficultyFilter: {
         label: '难度',
