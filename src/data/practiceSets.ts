@@ -27,6 +27,11 @@ export interface PracticeSet {
   }>;
   /** For IGCSE sets, the topic ID for filtering */
   igcseTopicId?: string;
+  /** Hierarchy: curriculum system */
+  system: 'ap-c-mech' | 'ap-c-em' | 'igcse';
+  /** Hierarchy: chapter grouping (optional, for IGCSE) */
+  chapter?: number;
+  chapterTitle?: string;
 }
 
 export const practiceSets: PracticeSet[] = [
@@ -34,6 +39,7 @@ export const practiceSets: PracticeSet[] = [
     id: 'calculus-for-physics',
     category: 'mechanics',
     label: 'Calculus for Physics',
+    system: 'ap-c-mech',
     ...calculusForPhysicsMeta,
     steps: calculusForPhysicsSteps,
   },
@@ -41,6 +47,7 @@ export const practiceSets: PracticeSet[] = [
     id: 'frq-2025-mechanics',
     category: 'mechanics',
     label: '2025 FRQ Lab',
+    system: 'ap-c-mech',
     eyebrow: 'AP Physics C Mechanics',
     description:
       'Work through the 2025 released mechanics FRQs one short step at a time. The rubric assistant checks your reasoning against official scoring points and keeps a running report.',
@@ -51,6 +58,7 @@ export const practiceSets: PracticeSet[] = [
     id: 'kinematics-multiple-choice',
     category: 'mechanics',
     label: 'Kinematics MC',
+    system: 'ap-c-mech',
     ...kinematicsMultipleChoiceMeta,
     steps: kinematicsMultipleChoiceSteps,
   },
@@ -58,6 +66,7 @@ export const practiceSets: PracticeSet[] = [
     id: 'dynamics-multiple-choice',
     category: 'mechanics',
     label: 'Dynamics',
+    system: 'ap-c-mech',
     ...dynamicsMultipleChoiceMeta,
     steps: dynamicsMultipleChoiceSteps,
   },
@@ -65,6 +74,7 @@ export const practiceSets: PracticeSet[] = [
     id: 'work-energy-multiple-choice',
     category: 'mechanics',
     label: 'Work & Energy',
+    system: 'ap-c-mech',
     ...workEnergyMultipleChoiceMeta,
     steps: workEnergyMultipleChoiceSteps,
   },
@@ -72,6 +82,7 @@ export const practiceSets: PracticeSet[] = [
     id: 'linear-momentum-lab-design',
     category: 'mechanics',
     label: 'Momentum Lab Design',
+    system: 'ap-c-mech',
     ...linearMomentumLabDesignMeta,
     steps: linearMomentumLabDesignSteps,
   },
@@ -79,6 +90,7 @@ export const practiceSets: PracticeSet[] = [
     id: 'physics-bowl-em-question-bank',
     category: 'electromagnetism',
     label: 'Physics Bowl 物理碗精选题库',
+    system: 'ap-c-em',
     ...physicsBowlEmMeta,
     steps: physicsBowlEmSteps,
   },
@@ -87,6 +99,9 @@ export const practiceSets: PracticeSet[] = [
     id: `igcse-cie-topic-${topic.topicId.replace('.', '-')}`,
     category: 'igcse' as const,
     label: topic.shortLabel,
+    system: 'igcse' as const,
+    chapter: topic.chapter,
+    chapterTitle: topic.chapterTitle,
     ...igcseAllTopicMeta[topic.topicId],
     steps: igcseAllTopicSteps[topic.topicId],
     igcseTopicId: topic.topicId,

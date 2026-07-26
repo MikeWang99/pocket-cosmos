@@ -337,23 +337,80 @@ export const PracticeSection: React.FC = () => {
   }, [resultList]);
 
   const speechSupported = typeof window !== 'undefined' && Boolean(window.SpeechRecognition || window.webkitSpeechRecognition);
-  const practiceSetGroups = [
-    {
-      id: 'mechanics',
-      label: t.practice.setGroups.mechanics,
-      sets: practiceSets.filter((set) => set.category === 'mechanics'),
-    },
-    {
-      id: 'electromagnetism',
-      label: t.practice.setGroups.electromagnetism,
-      sets: practiceSets.filter((set) => set.category === 'electromagnetism'),
-    },
-    {
-      id: 'igcse',
-      label: t.practice.setGroups.igcse,
-      sets: practiceSets.filter((set) => set.category === 'igcse'),
-    },
-  ].filter((group) => group.sets.length > 0);
+
+  // Hierarchical tree: system → course → chapter → sets
+  const practiceTree = useMemo(() => {
+    const systems: Array<{
+      id: string;
+      label: string;
+      courses: Array<{
+        id: string;
+        label: string;
+        chapters: Array<{ id: string; label: string; sets: typeof practiceSets }>;
+      }>;
+    }> = [];
+
+    // AP Physics C: Mechanics
+    const apMechSets = practiceSets.filter((s) => s.system === 'ap-c-mech');
+    if (apMechSets.length) {
+      systems.push({
+        id: 'ap-c-mech',
+        label: t.practice.tree.apCMech,
+        courses: [{ id: 'ap-c-mech-all', label: '', chapters: [{ id: 'ap-c-mech-all', label: '', sets: apMechSets }] }],
+      });
+    }
+
+    // AP Physics C: E&M
+    const apEmSets = practiceSets.filter((s) => s.system === 'ap-c-em');
+    if (apEmSets.length) {
+      systems.push({
+        id: 'ap-c-em',
+        label: t.practice.tree.apCEm,
+        courses: [{ id: 'ap-c-em-all', label: '', chapters: [{ id: 'ap-c-em-all', label: '', sets: apEmSets }] }],
+      });
+    }
+
+    // CIE IGCSE Physics
+    const igcseSets = practiceSets.filter((s) => s.system === 'igcse');
+    if (igcseSets.length) {
+      const chapterMap = new Map<number, { title: string; sets: typeof practiceSets }>();
+      igcseSets.forEach((s) => {
+        const ch = s.chapter ?? 0;
+        if (!chapterMap.has(ch)) chapterMap.set(ch, { title: s.chapterTitle ?? `Chapter ${ch}`, sets: [] });
+        chapterMap.get(ch)!.sets.push(s);
+      });
+      const chapters = Array.from(chapterMap.entries())
+        .sort(([a], [b]) => a - b)
+        .map(([num, { title, sets }]) => ({ id: `igcse-ch${num}`, label: `Ch${num} ${title}`, sets }));
+      systems.push({
+        id: 'igcse',
+        label: t.practice.tree.igcse,
+        courses: [{ id: 'igcse-all', label: '', chapters }],
+      });
+    }
+
+    return systems;
+  }, [t]);
+
+  // Expand/collapse state for tree nodes
+  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(() => {
+    // Auto-expand the system containing the active set
+    const activeSet = practiceSets.find((s) => s.id === initialSelection.setId);
+    const init = new Set<string>();
+    if (activeSet) {
+      init.add(activeSet.system);
+      if (activeSet.chapter) init.add(`igcse-ch${activeSet.chapter}`);
+    }
+    return init;
+  });
+  const toggleNode = (nodeId: string) => {
+    setExpandedNodes((prev) => {
+      const next = new Set(prev);
+      if (next.has(nodeId)) next.delete(nodeId);
+      else next.add(nodeId);
+      return next;
+    });
+  };
 
   useEffect(() => {
     return () => recognitionRef.current?.stop();
@@ -491,7 +548,14 @@ export const PracticeSection: React.FC = () => {
     setAnswers({});
     setResults({});
     setActiveIndex(0);
-    updatePracticeUrl(nextSet.id, nextSet.steps[0].id);
+    updatePracticeUrl(nextSet.id, nextSet.steps[0]?.id ?? '');
+    // Auto-expand tree to show selected set
+    setExpandedNodes((prev) => {
+      const next = new Set(prev);
+      next.add(nextSet.system);
+      if (nextSet.chapter) next.add(`igcse-ch${nextSet.chapter}`);
+      return next;
+    });
   };
 
   const resetPractice = () => {
@@ -592,34 +656,66 @@ export const PracticeSection: React.FC = () => {
               </span>
             </div>
           )}
-          <div className="mt-5 space-y-3">
-            {practiceSetGroups.map((group) => (
-              <div key={group.id}>
-                <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
-                  {group.label}
+          <div className="mt-5 space-y-1">
+            {practiceTree.map((system) => {
+              const sysExpanded = expandedNodes.has(system.id);
+              return (
+                <div key={system.id}>
+                  {/* System header */}
+                  <button
+                    onClick={() => toggleNode(system.id)}
+                    className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-xs font-bold uppercase tracking-wider text-slate-300 transition-colors hover:bg-white/[0.04]"
+                  >
+                    <span className={`inline-block h-3 w-3 text-[10px] leading-3 transition-transform ${sysExpanded ? 'rotate-90' : ''}`}>▶</span>
+                    {system.label}
+                  </button>
+                  {/* Chapters / sets */}
+                  {sysExpanded && (
+                    <div className="ml-3 border-l border-white/10 pl-3 space-y-1">
+                      {system.courses[0].chapters.map((chapter) => {
+                        const hasChapterLabel = chapter.label !== '';
+                        const chExpanded = !hasChapterLabel || expandedNodes.has(chapter.id);
+                        return (
+                          <div key={chapter.id}>
+                            {hasChapterLabel && (
+                              <button
+                                onClick={() => toggleNode(chapter.id)}
+                                className="flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-left text-[11px] font-semibold text-slate-400 transition-colors hover:bg-white/[0.04] hover:text-slate-200"
+                              >
+                                <span className={`inline-block h-2.5 w-2.5 text-[8px] leading-[10px] transition-transform ${chExpanded ? 'rotate-90' : ''}`}>▶</span>
+                                {chapter.label}
+                              </button>
+                            )}
+                            {chExpanded && (
+                              <div className={`flex flex-wrap gap-1.5 ${hasChapterLabel ? 'ml-4' : ''} ${hasChapterLabel ? 'pb-1' : 'py-1'}`}>
+                                {chapter.sets.map((set) => {
+                                  const isActive = set.id === activeSetId;
+                                  return (
+                                    <button
+                                      key={set.id}
+                                      onClick={() => selectPracticeSet(set.id)}
+                                      className={`min-h-8 shrink-0 rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors ${
+                                        isActive
+                                          ? 'border-nebula/70 bg-nebula/15 text-white'
+                                          : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/30 hover:text-white'
+                                      }`}
+                                    >
+                                      {getSetCopy(set.id).label}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {group.sets.map((set) => {
-                    const isActive = set.id === activeSetId;
-                    return (
-                      <button
-                        key={set.id}
-                        onClick={() => selectPracticeSet(set.id)}
-                        className={`min-h-10 shrink-0 rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
-                          isActive
-                            ? 'border-nebula/70 bg-nebula/15 text-white'
-                            : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/30 hover:text-white'
-                        }`}
-                      >
-                        {getSetCopy(set.id).label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
+              );
+            })}
             {isIgcseSet && (
-              <div>
+              <div className="mt-3">
                 <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
                   {t.practice.difficultyFilter.label}
                 </div>
