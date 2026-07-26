@@ -691,6 +691,12 @@ const PermissionManager: React.FC = () => {
     }
   };
 
+  const updateDisplayName = async (userId: string, name: string) => {
+    if (!supabase) return;
+    await supabase.from('profiles').update({ display_name: name }).eq('user_id', userId);
+    setProfiles((prev) => prev.map((p) => (p.user_id === userId ? { ...p, display_name: name } : p)));
+  };
+
   if (!isAdmin) return null;
 
   return (
@@ -722,8 +728,14 @@ const PermissionManager: React.FC = () => {
               {profiles.map((profile) => (
                 <tr key={profile.user_id} className="border-b border-white/5 hover:bg-white/[0.02]">
                   <td className="px-4 py-3">
-                    <div className="font-medium text-slate-200">{profile.display_name || profile.email || profile.user_id.slice(0, 8)}</div>
-                    <div className="text-xs text-slate-500">{profile.email}</div>
+                    <input
+                      defaultValue={profile.display_name || ''}
+                      placeholder={profile.email || profile.user_id.slice(0, 8)}
+                      onBlur={(e) => { if (e.target.value !== (profile.display_name || '')) updateDisplayName(profile.user_id, e.target.value); }}
+                      onKeyDown={(e) => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur(); }}
+                      className="w-full max-w-[180px] rounded border border-white/10 bg-white/5 px-2 py-1 text-sm text-slate-200 placeholder:text-slate-600 focus:border-nebula focus:outline-none"
+                    />
+                    <div className="text-xs text-slate-500 mt-1">{profile.email}</div>
                   </td>
                   {ALL_SYSTEMS.map((sys) => {
                     const granted = permSet.has(`${profile.user_id}:${sys}`);
