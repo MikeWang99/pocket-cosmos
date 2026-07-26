@@ -18,7 +18,7 @@ const records = questionRecords as IgcseRecord[];
 
 const choices = ['A', 'B', 'C', 'D'].map((label) => ({
   label,
-  text: `Option ${label}`,
+  text: '',
 }));
 
 const toPracticeStep = (record: IgcseRecord): PracticeStep => ({
