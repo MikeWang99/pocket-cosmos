@@ -9,6 +9,7 @@ import {
   CloudOff,
   FileText,
   Link2,
+  Lock,
   Mic,
   RotateCcw,
   Sparkles,
@@ -21,6 +22,7 @@ import { evaluateLocally } from '../utils/rubricScoring';
 import { useLanguage } from '../LanguageContext';
 import { useAuth } from '../auth/AuthContext';
 import { usePracticeProgress, type SavedPracticeAttempt } from '../hooks/usePracticeProgress';
+import { usePracticePermissions } from '../hooks/usePracticePermissions';
 
 type SpeechRecognitionConstructor = new () => SpeechRecognition;
 
@@ -257,6 +259,7 @@ const QuestionMedia: React.FC<{ step: PracticeStep; label: string; questionLabel
 export const PracticeSection: React.FC = () => {
   const { language, t } = useLanguage();
   const { authEnabled, configured, user } = useAuth();
+  const { hasAccess } = usePracticePermissions();
   const initialSelection = useMemo(() => getSafePracticeSelection(
     readPracticeSelectionFromUrl().setId,
     readPracticeSelectionFromUrl().questionId,
@@ -682,8 +685,8 @@ export const PracticeSection: React.FC = () => {
               </span>
             </div>
           )}
-          {/* #4: Sticky tree navigation */}
-          <div className="mt-5 space-y-1 sticky top-2 z-10 max-h-[40vh] overflow-y-auto rounded-lg border border-white/5 bg-[#0d0f1a]/95 backdrop-blur p-2">
+          {/* #4: Tree navigation */}
+          <div className="mt-5 space-y-1">
             {practiceTree.map((system) => {
               const sysExpanded = expandedNodes.has(system.id);
               return (
@@ -695,6 +698,7 @@ export const PracticeSection: React.FC = () => {
                   >
                     <span className={`inline-block h-3 w-3 text-[10px] leading-3 transition-transform ${sysExpanded ? 'rotate-90' : ''}`}>▶</span>
                     {system.label}
+                    {!hasAccess(system.id) && <Lock className="ml-auto h-3 w-3 text-slate-500" />}
                   </button>
                   {/* Chapters / sets */}
                   {sysExpanded && (
@@ -786,6 +790,13 @@ export const PracticeSection: React.FC = () => {
         </div>
       </div>
 
+      {/* Permission gate: show locked card if system not accessible */}
+      {!hasAccess(activeSet.system) ? (
+        <div className="glass-panel flex flex-col items-center justify-center gap-4 rounded-lg p-12 text-center">
+          <Lock className="h-10 w-10 text-slate-500" />
+          <p className="text-sm text-slate-400 max-w-md">{t.practice.lockedMessage}</p>
+        </div>
+      ) : (
       <div className="grid gap-5 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-6 xl:grid-cols-[260px_minmax(0,1fr)]">
         <aside className="glass-panel h-fit rounded-lg p-3 lg:sticky lg:top-6">
           <div className="px-3 py-2 text-[10px] uppercase tracking-widest text-slate-500">{t.practice.questionPath}</div>
@@ -1197,6 +1208,7 @@ export const PracticeSection: React.FC = () => {
           )}
         </section>
       </div>
+      )}
     </motion.div>
   );
 };

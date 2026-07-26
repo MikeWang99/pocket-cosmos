@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion } from 'motion/react';
 import katex from 'katex';
 import {
@@ -7,7 +7,9 @@ import {
   CircleX,
   ClipboardList,
   FileText,
+  Lock,
   ShieldCheck,
+  Unlock,
   UserRound,
   UsersRound,
 } from 'lucide-react';
@@ -15,6 +17,7 @@ import { practiceSets } from '../data/practiceSets';
 import { useAuth } from '../auth/AuthContext';
 import { useLanguage } from '../LanguageContext';
 import { getSupabaseClient } from '../lib/supabaseClient';
+import { ALL_SYSTEMS } from '../hooks/usePracticePermissions';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
 
 interface PracticeAttemptRow {
@@ -619,6 +622,133 @@ export const AdminSection: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* Permission Management */}
+      <PermissionManager />
     </motion.section>
+  );
+};
+
+// --- Permission Manager ---
+
+interface ProfileRow {
+  user_id: string;
+  email: string | null;
+  display_name: string | null;
+  created_at: string;
+}
+
+interface PermissionRow {
+  user_id: string;
+  system: string;
+}
+
+const SYSTEM_LABELS_KEY: Record<string, 'systemApCMech' | 'systemApCEm' | 'systemIgcse'> = {
+  'ap-c-mech': 'systemApCMech',
+  'ap-c-em': 'systemApCEm',
+  igcse: 'systemIgcse',
+};
+
+const PermissionManager: React.FC = () => {
+  const { language, t } = useLanguage();
+  const { isAdmin, user } = useAuth();
+  const supabase = getSupabaseClient();
+  const [profiles, setProfiles] = useState<ProfileRow[]>([]);
+  const [permissions, setPermissions] = useState<PermissionRow[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = useCallback(async () => {
+    if (!supabase || !isAdmin) return;
+    setLoading(true);
+    const [profilesRes, permsRes] = await Promise.all([
+      supabase.from('profiles').select('user_id, email, display_name, created_at').order('created_at', { ascending: true }),
+      supabase.from('practice_permissions').select('user_id, system'),
+    ]);
+    setProfiles((profilesRes.data ?? []) as ProfileRow[]);
+    setPermissions((permsRes.data ?? []) as PermissionRow[]);
+    setLoading(false);
+  }, [supabase, isAdmin]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const permSet = useMemo(() => {
+    const set = new Set<string>();
+    permissions.forEach((p) => set.add(`${p.user_id}:${p.system}`));
+    return set;
+  }, [permissions]);
+
+  const togglePermission = async (userId: string, system: string) => {
+    if (!supabase) return;
+    const key = `${userId}:${system}`;
+    if (permSet.has(key)) {
+      await supabase.from('practice_permissions').delete().eq('user_id', userId).eq('system', system);
+      setPermissions((prev) => prev.filter((p) => !(p.user_id === userId && p.system === system)));
+    } else {
+      await supabase.from('practice_permissions').insert({ user_id: userId, system, granted_by: user?.id ?? null });
+      setPermissions((prev) => [...prev, { user_id: userId, system }]);
+    }
+  };
+
+  if (!isAdmin) return null;
+
+  return (
+    <div className="mt-10">
+      <div className="mb-6">
+        <div className="flex items-center gap-2 mb-2">
+          <ShieldCheck className="h-4 w-4 text-nebula" />
+          <h2 className="text-lg font-serif text-white">{t.admin.permissions}</h2>
+        </div>
+        <p className="text-sm text-slate-400">{t.admin.permissionsDesc}</p>
+      </div>
+
+      {loading ? (
+        <div className="glass-panel rounded-lg p-6 text-sm text-slate-500">{t.admin.loadingRecords}</div>
+      ) : profiles.length === 0 ? (
+        <div className="glass-panel rounded-lg p-6 text-sm text-slate-500">{t.admin.noUsers}</div>
+      ) : (
+        <div className="glass-panel overflow-x-auto rounded-lg">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="border-b border-white/10 text-[10px] uppercase tracking-widest text-slate-500">
+                <th className="px-4 py-3">{t.admin.registeredUsers}</th>
+                {ALL_SYSTEMS.map((sys) => (
+                  <th key={sys} className="px-4 py-3 text-center">{t.admin[SYSTEM_LABELS_KEY[sys]]}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {profiles.map((profile) => (
+                <tr key={profile.user_id} className="border-b border-white/5 hover:bg-white/[0.02]">
+                  <td className="px-4 py-3">
+                    <div className="font-medium text-slate-200">{profile.display_name || profile.email || profile.user_id.slice(0, 8)}</div>
+                    <div className="text-xs text-slate-500">{profile.email}</div>
+                  </td>
+                  {ALL_SYSTEMS.map((sys) => {
+                    const granted = permSet.has(`${profile.user_id}:${sys}`);
+                    return (
+                      <td key={sys} className="px-4 py-3 text-center">
+                        <button
+                          onClick={() => togglePermission(profile.user_id, sys)}
+                          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
+                            granted
+                              ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25'
+                              : 'bg-white/5 text-slate-500 border border-white/10 hover:border-white/30 hover:text-slate-300'
+                          }`}
+                        >
+                          {granted ? <Unlock className="h-3 w-3" /> : <Lock className="h-3 w-3" />}
+                          {granted ? t.admin.revokeAccess : t.admin.grantAccess}
+                        </button>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
   );
 };
