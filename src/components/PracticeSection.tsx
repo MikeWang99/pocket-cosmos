@@ -770,22 +770,19 @@ export const PracticeSection: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid w-full grid-cols-3 gap-2 sm:gap-3 lg:w-auto lg:min-w-[280px]">
-          <div className="glass-panel rounded-lg p-3 sm:p-4">
-            <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.practice.progress}</div>
-            <div className="mt-1 text-xl font-semibold sm:text-2xl">{completedCount}/{practiceSteps.length}</div>
-          </div>
-          <div className="glass-panel rounded-lg p-3 sm:p-4">
-            <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.practice.score}</div>
-            <div className="mt-1 text-xl font-semibold sm:text-2xl">{totalScore}/{totalPossible || 0}</div>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs text-slate-400">
+            <span>{t.practice.progress} <strong className="text-slate-200">{completedCount}/{practiceSteps.length}</strong></span>
+            {completedCount > 0 && (
+              <span className="border-l border-white/10 pl-2">{t.practice.score} <strong className="text-slate-200">{totalScore}/{totalPossible}</strong></span>
+            )}
           </div>
           <button
             onClick={resetPractice}
-            className="glass-panel rounded-lg p-3 text-left transition-colors hover:border-nebula/60 sm:p-4"
+            className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-slate-500 transition-colors hover:border-nebula/60 hover:text-nebula"
             title={t.practice.resetTitle}
           >
-            <RotateCcw className="mb-1 h-5 w-5 text-slate-300 sm:mb-2" />
-            <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.practice.reset}</div>
+            <RotateCcw className="h-3.5 w-3.5" />
           </button>
         </div>
       </div>
