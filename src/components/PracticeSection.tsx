@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import katex from 'katex';
 import {
@@ -392,17 +392,8 @@ export const PracticeSection: React.FC = () => {
     return systems;
   }, [t]);
 
-  // Expand/collapse state for tree nodes
-  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(() => {
-    // Auto-expand the system containing the active set
-    const activeSet = practiceSets.find((s) => s.id === initialSelection.setId);
-    const init = new Set<string>();
-    if (activeSet) {
-      init.add(activeSet.system);
-      if (activeSet.chapter) init.add(`igcse-ch${activeSet.chapter}`);
-    }
-    return init;
-  });
+  // #3: Tree starts collapsed by default
+  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
   const toggleNode = (nodeId: string) => {
     setExpandedNodes((prev) => {
       const next = new Set(prev);
@@ -433,6 +424,41 @@ export const PracticeSection: React.FC = () => {
     if (!activeStep) return;
     updatePracticeUrl(activeSet.id, activeStep.id, 'replace');
   }, [activeSet.id, activeStep?.id]);
+
+  // #10: Keyboard navigation support
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore when typing in input/textarea
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
+      if (e.key === 'ArrowLeft' && activeIndex > 0) {
+        e.preventDefault();
+        goToStep(activeIndex - 1);
+      } else if (e.key === 'ArrowRight' && activeIndex < practiceSteps.length - 1) {
+        e.preventDefault();
+        goToStep(activeIndex + 1);
+      } else if (e.key === 'Enter' && isActiveMultipleChoice && currentAnswer && !currentResult) {
+        e.preventDefault();
+        submitAnswer();
+      } else if (isActiveMultipleChoice && !currentResult && /^[a-eA-E]$/.test(e.key)) {
+        // Toggle option A-E
+        const label = e.key.toUpperCase();
+        const choices = activeStep.choices ?? [];
+        if (!choices.some((c) => c.label === label)) return;
+        e.preventDefault();
+        setAnswers((prev) => {
+          const current = (prev[activeStep.id] ?? '').split(',').filter(Boolean);
+          const next = current.includes(label)
+            ? current.filter((l) => l !== label)
+            : [...current, label];
+          return { ...prev, [activeStep.id]: next.join(',') };
+        });
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeIndex, practiceSteps.length, isActiveMultipleChoice, currentAnswer, currentResult, activeStep]);
 
   useEffect(() => {
     const attempts = Object.values(savedAttempts) as SavedPracticeAttempt[];
@@ -656,7 +682,8 @@ export const PracticeSection: React.FC = () => {
               </span>
             </div>
           )}
-          <div className="mt-5 space-y-1">
+          {/* #4: Sticky tree navigation */}
+          <div className="mt-5 space-y-1 sticky top-2 z-10 max-h-[40vh] overflow-y-auto rounded-lg border border-white/5 bg-[#0d0f1a]/95 backdrop-blur p-2">
             {practiceTree.map((system) => {
               const sysExpanded = expandedNodes.has(system.id);
               return (
@@ -768,29 +795,34 @@ export const PracticeSection: React.FC = () => {
               const isActive = index === activeIndex;
               const isCorrect = result && result.score >= result.maxScore;
               return (
-                <button
-                  key={step.id}
-                  onClick={() => goToStep(index)}
-                  className={`relative grid h-11 w-11 shrink-0 place-items-center rounded-lg border text-sm font-semibold transition-colors ${
-                    isActive
-                      ? 'border-nebula/70 bg-nebula/12 text-nebula'
-                      : result
-                        ? isCorrect
-                          ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700 hover:border-emerald-500/55'
-                          : 'border-rose-500/35 bg-rose-500/10 text-rose-700 hover:border-rose-500/55'
-                        : 'border-white/10 bg-white/[0.03] text-slate-500 hover:border-white/30 hover:text-nebula'
-                  }`}
-                  title={`${t.practice.questionPath} ${index + 1}`}
-                >
-                  {index + 1}
-                  {result && (
-                    <span
-                      className={`absolute right-1 top-1 h-1.5 w-1.5 rounded-full ${
-                        isCorrect ? 'bg-emerald-500' : 'bg-rose-500'
-                      }`}
-                    />
+                <Fragment key={step.id}>
+                  {/* #9: Group separator every 10 questions */}
+                  {index > 0 && index % 10 === 0 && (
+                    <div className="col-span-full h-px bg-white/10 my-1" />
                   )}
-                </button>
+                  <button
+                    onClick={() => goToStep(index)}
+                    className={`relative grid h-11 w-11 shrink-0 place-items-center rounded-lg border text-sm font-semibold transition-colors ${
+                      isActive
+                        ? 'border-nebula/70 bg-nebula/12 text-nebula'
+                        : result
+                          ? isCorrect
+                            ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700 hover:border-emerald-500/55'
+                            : 'border-rose-500/35 bg-rose-500/10 text-rose-700 hover:border-rose-500/55'
+                          : 'border-white/10 bg-white/[0.03] text-slate-500 hover:border-white/30 hover:text-nebula'
+                    }`}
+                    title={`${t.practice.questionPath} ${index + 1}`}
+                  >
+                    {index + 1}
+                    {result && (
+                      <span
+                        className={`absolute right-1 top-1 h-1.5 w-1.5 rounded-full ${
+                          isCorrect ? 'bg-emerald-500' : 'bg-rose-500'
+                        }`}
+                      />
+                    )}
+                  </button>
+                </Fragment>
               );
             })}
           </div>
@@ -849,17 +881,20 @@ export const PracticeSection: React.FC = () => {
                   </div>
                 </div>
 
+                {/* #7: Hide generic IGCSE prompt */}
+                {!activeStep.prompt.startsWith('Select the correct option') && (
                 <div className="mt-6">
                   <div className="rounded-lg border border-white/10 bg-white/[0.04] p-4 sm:p-5 md:p-6">
                     <div className="space-y-3 whitespace-pre-line text-base leading-relaxed text-white md:text-lg">
                       {splitPromptParts(activeStep.prompt).map((part) => (
                         <p key={part}>
-                          {isActiveMultipleChoice ? <MathText>{part}</MathText> : <MathText>{part}</MathText>}
+                          <MathText>{part}</MathText>
                         </p>
                       ))}
                     </div>
                   </div>
                 </div>
+                )}
 
                 <div className="mt-4 grid gap-4">
                   <QuestionMedia
@@ -873,7 +908,7 @@ export const PracticeSection: React.FC = () => {
               <div className="p-4 sm:p-6 md:p-8">
                 {isActiveMultipleChoice ? (
                   <div>
-                    <div className="text-xs uppercase tracking-widest text-slate-500 mb-3">{t.practice.chooseAnswer} <span className="normal-case tracking-normal text-slate-600">(multi-select)</span></div>
+                    <div className="text-xs uppercase tracking-widest text-slate-500 mb-3">{t.practice.chooseAnswer} <span className="normal-case tracking-normal text-slate-400">{language === 'zh' ? '· 可多选，点击取消' : '· multi-select, tap to toggle'}</span></div>
                     <div className="grid gap-3" role="group" aria-label={t.practice.chooseAnswer}>
                       {activeStep.choices?.map((choice) => {
                         const selectedLabels = currentAnswer.split(',').filter(Boolean);
@@ -920,10 +955,35 @@ export const PracticeSection: React.FC = () => {
                     </div>
                     {currentResult && (
                       <div className="mt-5 rounded-lg border border-white/10 bg-black/20 p-4">
-                        <div className="text-xs uppercase tracking-widest text-slate-500 mb-2">
-                          {currentResult.score === 1 ? t.practice.correct : t.practice.notQuite}
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="text-xs uppercase tracking-widest text-slate-500">
+                            {currentResult.score === 1 ? t.practice.correct : t.practice.notQuite}
+                          </div>
+                          <div className="flex gap-2">
+                            {/* #11: Retry button */}
+                            {currentResult.score < 1 && (
+                              <button
+                                onClick={() => {
+                                  setResults((prev) => { const n = {...prev}; delete n[activeStep.id]; return n; });
+                                  setAnswers((prev) => { const n = {...prev}; delete n[activeStep.id]; return n; });
+                                }}
+                                className="rounded-full border border-white/20 px-3 py-1.5 text-[11px] font-semibold text-slate-300 transition-colors hover:border-nebula hover:text-nebula"
+                              >
+                                {language === 'zh' ? '重试' : 'Retry'}
+                              </button>
+                            )}
+                            {/* #2: Next button after answering */}
+                            {activeIndex < practiceSteps.length - 1 && (
+                              <button
+                                onClick={() => goToStep(activeIndex + 1)}
+                                className="rounded-full bg-nebula px-4 py-1.5 text-[11px] font-bold text-white transition-colors hover:bg-nebula/80"
+                              >
+                                {language === 'zh' ? '下一题 →' : 'Next →'}
+                              </button>
+                            )}
+                          </div>
                         </div>
-                        <p className="text-sm text-slate-300 leading-relaxed">
+                        <p className="mt-3 text-sm text-slate-300 leading-relaxed">
                           <MathText>{activeStep.solution ?? ''}</MathText>
                         </p>
                       </div>
@@ -983,7 +1043,8 @@ export const PracticeSection: React.FC = () => {
                   </>
                 )}
 
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                {/* #12: Mobile bottom margin to avoid bottom nav overlap */}
+                <div className="mt-6 mb-16 md:mb-0 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex gap-3">
                     <button
                       onClick={() => goToStep(activeIndex - 1)}
@@ -1017,7 +1078,8 @@ export const PracticeSection: React.FC = () => {
               </motion.div>
           </AnimatePresence>
 
-          {currentResult && (
+          {/* #5: Hide rubric panel for MCQ (feedback is inline) */}
+          {currentResult && !isActiveMultipleChoice && (
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
@@ -1089,6 +1151,8 @@ export const PracticeSection: React.FC = () => {
             </motion.div>
           )}
 
+          {/* #8: Hide report when no questions answered */}
+          {completedCount > 0 && (
           <div className="glass-panel rounded-lg p-5 sm:p-6">
             <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
               <div>
@@ -1128,6 +1192,7 @@ export const PracticeSection: React.FC = () => {
               </div>
             )}
           </div>
+          )}
           </>
           )}
         </section>
