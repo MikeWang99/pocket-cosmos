@@ -2,10 +2,10 @@ import { calculusForPhysicsMeta, calculusForPhysicsSteps } from './calculusForPh
 import { dynamicsMultipleChoiceMeta, dynamicsMultipleChoiceSteps } from './dynamicsMultipleChoice';
 import { practiceSetMeta as frq2025Meta, practiceSteps as frq2025Steps } from './frq2025Mechanics';
 import {
-  igcseTopics,
-  igcseTopicSteps,
-  igcseTopicMeta,
-} from './igcseCieChapter1MultipleChoice';
+  igcseAllTopics,
+  igcseAllTopicSteps,
+  igcseAllTopicMeta,
+} from './igcseCieAllMultipleChoice';
 import { kinematicsMultipleChoiceMeta, kinematicsMultipleChoiceSteps } from './kinematicsMultipleChoice';
 import { linearMomentumLabDesignMeta, linearMomentumLabDesignSteps } from './linearMomentumLabDesign';
 import { physicsBowlEmMeta, physicsBowlEmSteps } from './physicsBowlEmQuestionBank';
@@ -82,13 +82,13 @@ export const practiceSets: PracticeSet[] = [
     ...physicsBowlEmMeta,
     steps: physicsBowlEmSteps,
   },
-  // IGCSE per-topic sets
-  ...igcseTopics.map((topic): PracticeSet => ({
-    id: `igcse-cie-ch1-topic-${topic.topicId.replace('.', '-')}`,
+  // IGCSE per-topic sets (all chapters)
+  ...igcseAllTopics.map((topic): PracticeSet => ({
+    id: `igcse-cie-topic-${topic.topicId.replace('.', '-')}`,
     category: 'igcse' as const,
     label: topic.shortLabel,
-    ...igcseTopicMeta[topic.topicId],
-    steps: igcseTopicSteps[topic.topicId],
+    ...igcseAllTopicMeta[topic.topicId],
+    steps: igcseAllTopicSteps[topic.topicId],
     igcseTopicId: topic.topicId,
   })),
 ];

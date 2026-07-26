@@ -430,19 +430,21 @@ export const PracticeSection: React.FC = () => {
     if (isMultipleChoiceStep(activeStep)) {
       if (!currentAnswer) return;
 
-      const isCorrect = currentAnswer === activeStep.correctAnswer;
-      const selectedChoice = activeStep.choices?.find((choice) => choice.label === currentAnswer);
-      const correctChoice = activeStep.choices?.find((choice) => choice.label === activeStep.correctAnswer);
+      // Multi-select: compare sorted sets
+      const selectedSet = currentAnswer.split(',').filter(Boolean).sort();
+      const correctSet = (activeStep.correctAnswer ?? '').split(',').filter(Boolean).sort();
+      const isCorrect = selectedSet.join(',') === correctSet.join(',');
+
       const hit = {
         id: `${activeStep.id}-correct`,
-        label: `${t.practice.correctAnswer}: ${activeStep.correctAnswer}`,
-        point: 'Selected the correct option.',
+        label: `${t.practice.correctAnswer}: ${correctSet.join(', ')}`,
+        point: 'Selected the correct option(s).',
         keywords: [],
         feedback: activeStep.solution ?? '',
       };
       const miss = {
         id: `${activeStep.id}-miss`,
-        label: `${t.practice.yourAnswer}: ${selectedChoice?.label ?? currentAnswer}. ${t.practice.correctAnswer}: ${correctChoice?.label ?? activeStep.correctAnswer}`,
+        label: `${t.practice.yourAnswer}: ${selectedSet.join(', ')}. ${t.practice.correctAnswer}: ${correctSet.join(', ')}`,
         point: 'Review the solution and try the next item.',
         keywords: [],
         feedback: activeStep.solution ?? '',
@@ -770,13 +772,14 @@ export const PracticeSection: React.FC = () => {
               <div className="p-4 sm:p-6 md:p-8">
                 {isActiveMultipleChoice ? (
                   <div>
-                    <div className="text-xs uppercase tracking-widest text-slate-500 mb-3">{t.practice.chooseAnswer}</div>
-                    <div className="grid gap-3" role="radiogroup" aria-label={t.practice.chooseAnswer}>
+                    <div className="text-xs uppercase tracking-widest text-slate-500 mb-3">{t.practice.chooseAnswer} <span className="normal-case tracking-normal text-slate-600">(multi-select)</span></div>
+                    <div className="grid gap-3" role="group" aria-label={t.practice.chooseAnswer}>
                       {activeStep.choices?.map((choice) => {
-                        const isSelected = currentAnswer === choice.label;
-                        const isChecked = Boolean(currentResult);
-                        const isCorrectChoice = currentResult && choice.label === activeStep.correctAnswer;
-                        const isWrongChoice = currentResult && isSelected && choice.label !== activeStep.correctAnswer;
+                        const selectedLabels = currentAnswer.split(',').filter(Boolean);
+                        const correctLabels = (activeStep.correctAnswer ?? '').split(',').filter(Boolean);
+                        const isSelected = selectedLabels.includes(choice.label);
+                        const isCorrectChoice = Boolean(currentResult) && correctLabels.includes(choice.label);
+                        const isWrongChoice = Boolean(currentResult) && isSelected && !correctLabels.includes(choice.label);
 
                         return (
                           <button
@@ -784,7 +787,12 @@ export const PracticeSection: React.FC = () => {
                             type="button"
                             data-choice={choice.label}
                             onClick={() => {
-                              if (!currentResult) updateAnswer(choice.label);
+                              if (currentResult) return;
+                              // Toggle: add or remove from selection
+                              const next = isSelected
+                                ? selectedLabels.filter((l) => l !== choice.label)
+                                : [...selectedLabels, choice.label];
+                              updateAnswer(next.sort().join(','));
                             }}
                             aria-pressed={isSelected}
                             className={`grid grid-cols-[34px_minmax(0,1fr)] gap-3 rounded-lg border p-3 text-left transition-colors sm:grid-cols-[40px_minmax(0,1fr)] sm:p-4 ${
@@ -797,8 +805,10 @@ export const PracticeSection: React.FC = () => {
                                     : 'border-white/10 bg-white/[0.03] hover:border-nebula/50'
                             }`}
                           >
-                            <span className="grid h-8 w-8 place-items-center rounded-full bg-white text-xs font-bold text-black">
-                              {choice.label}
+                            <span className={`grid h-8 w-8 place-items-center rounded-md text-xs font-bold transition-colors ${
+                              isSelected ? 'bg-nebula text-white' : 'bg-white text-black'
+                            }`}>
+                              {isSelected ? '✓' : choice.label}
                             </span>
                             <span className="self-center text-sm md:text-base text-slate-200 leading-relaxed">
                               <MathText>{choice.text}</MathText>
