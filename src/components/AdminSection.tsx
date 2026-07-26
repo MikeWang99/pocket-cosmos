@@ -412,12 +412,17 @@ export const AdminSection: React.FC = () => {
               </div>
 
               <div className="grid gap-5 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-6 xl:grid-cols-[260px_minmax(0,1fr)]">
-                <aside className="glass-panel h-fit rounded-lg p-3">
+                <aside className="glass-panel h-fit rounded-lg p-3 lg:sticky lg:top-6">
                   <div className="flex items-center gap-2 px-3 py-2 text-[10px] uppercase tracking-widest text-slate-500">
                     <ClipboardList className="h-4 w-4" />
                     {t.admin.questionRecords}
                   </div>
-                  <div className="flex gap-2 overflow-x-auto pb-1 lg:flex-col">
+                  {/* Summary */}
+                  <div className="px-3 pb-2 text-xs text-slate-400">
+                    {selectedSet.steps.filter((s) => selectedSetAttempts.has(s.id)).length}/{selectedSet.steps.length} {language === 'zh' ? '已答' : 'answered'}
+                  </div>
+                  {/* Compact grid */}
+                  <div className="grid grid-cols-5 gap-1.5 max-h-[50vh] overflow-y-auto px-1 pb-2 sm:grid-cols-6 lg:grid-cols-5">
                     {selectedSet.steps.map((step, index) => {
                       const attempt = selectedSetAttempts.get(step.id);
                       const isSelected = selectedStep.id === step.id;
@@ -427,27 +432,18 @@ export const AdminSection: React.FC = () => {
                           type="button"
                           disabled={!attempt}
                           onClick={() => setSelectedQuestionId(step.id)}
-                          className={`min-w-[150px] rounded-md border px-3 py-3 text-left transition-colors sm:min-w-[170px] lg:min-w-0 ${
+                          title={`${step.title || `${t.admin.question} ${index + 1}`}${attempt ? ` ${Number(attempt.score)}/${Number(attempt.max_score)}` : ` ${t.admin.notAttempted}`}`}
+                          className={`relative grid h-9 w-9 place-items-center rounded-md border text-xs font-semibold transition-colors ${
                             isSelected
-                              ? 'border-nebula/70 bg-white/8 text-white'
+                              ? 'border-nebula/70 bg-nebula/12 text-nebula'
                               : attempt
-                                ? 'border-white/5 bg-white/[0.02] text-slate-400 hover:border-white/20 hover:text-white'
-                                : 'border-white/5 bg-white/[0.01] text-slate-500 opacity-45'
+                                ? attempt.is_correct
+                                  ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-400 hover:border-emerald-500/55'
+                                  : 'border-rose-500/35 bg-rose-500/10 text-rose-400 hover:border-rose-500/55'
+                                : 'border-white/5 bg-white/[0.02] text-slate-600 opacity-50'
                           }`}
                         >
-                          <div className="flex items-center justify-between gap-3">
-                            <span className="text-xs font-semibold">{step.title || `${t.admin.question} ${index + 1}`}</span>
-                            {attempt && (
-                              attempt.is_correct ? (
-                                <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-500" />
-                              ) : (
-                                <CircleX className="h-4 w-4 shrink-0 text-rose-500" />
-                              )
-                            )}
-                          </div>
-                          <div className="mt-1 text-[10px] opacity-60">
-                            {attempt ? `${Number(attempt.score)}/${Number(attempt.max_score)}` : t.admin.notAttempted}
-                          </div>
+                          {index + 1}
                         </button>
                       );
                     })}
