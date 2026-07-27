@@ -4,7 +4,7 @@ import { KeyRound, Lock, LogIn, Mail, UserPlus, X } from 'lucide-react';
 import { useAuth } from '../auth/AuthContext';
 import { useLanguage } from '../LanguageContext';
 
-type AuthMode = 'login' | 'signup' | 'reset-request' | 'reset-password';
+type AuthMode = 'login' | 'signup' | 'confirm-email' | 'reset-request' | 'reset-password';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -21,6 +21,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     passwordRecovery,
     user,
     clearPasswordRecovery,
+    resendConfirmationEmail,
     sendPasswordReset,
     signInWithEmailPassword,
     signInWithGoogle,
@@ -90,8 +91,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  const submitSignup = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const submitSignup = async () => {
     if (!isPasswordValid) {
       setFeedback('AUTH_PASSWORD_TOO_SHORT');
       setFeedbackType('error');
@@ -116,10 +116,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
     setFeedback('AUTH_SIGNUP_SUCCESS');
     setFeedbackType('success');
-    // 注册成功后自动切换到登录模式
-    setTimeout(() => {
-      switchMode('login');
-    }, 2000);
+    // 注册成功后切换到确认邮件提示模式
+    setMode('confirm-email');
+  };
+
+  const submitResendConfirmation = async () => {
+    setBusy(true);
+    setFeedback(null);
+    const result = await resendConfirmationEmail(normalizeEmail(email));
+    setBusy(false);
+    setFeedback(result.message ?? (result.ok ? 'AUTH_CONFIRMATION_RESENT' : 'AUTH_SIGNUP_FAILED'));
+    setFeedbackType(result.ok ? 'success' : 'error');
   };
 
   const submitResetRequest = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -291,12 +298,24 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         </button>
                       </div>
 
+                      {feedback === 'AUTH_EMAIL_NOT_CONFIRMED' && (
+                        <button
+                          type="button"
+                          onClick={() => void submitResendConfirmation()}
+                          disabled={busy}
+                          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-nebula/30 bg-[#ffffff] px-4 text-xs font-semibold text-nebula transition-colors hover:bg-nebula/5 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          <Mail className="h-3.5 w-3.5" />
+                          {busy ? t.auth.working : (t.auth.messages as Record<string, string>)['AUTH_RESEND_CONFIRMATION']}
+                        </button>
+                      )}
+
                     </form>
                   )}
 
                   {/* Signup Mode */}
                   {mode === 'signup' && (
-                    <form onSubmit={submitSignup} className="space-y-4">
+                    <div className="space-y-4">
                       {renderGoogleButton()}
                       {renderAuthDivider()}
                       <div>
@@ -309,8 +328,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           onChange={(event) => setEmail(event.target.value)}
                           placeholder={t.auth.emailPlaceholder}
                           className="w-full rounded-lg border border-[#d1d5db] bg-[#ffffff] px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
-                          autoComplete="email"
-                          required
+                          autoComplete="off"
                         />
                       </div>
                       <div>
@@ -323,8 +341,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           onChange={(event) => setPasswordInput(event.target.value)}
                           placeholder={t.auth.newPasswordPlaceholder}
                           className="w-full rounded-lg border border-[#d1d5db] bg-[#ffffff] px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
-                          autoComplete="new-password"
-                          required
+                          autoComplete="off"
                         />
                         {password && !isPasswordValid && (
                           <p className="mt-1 text-xs text-red-600">密码至少需要 8 个字符</p>
@@ -340,18 +357,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           onChange={(event) => setConfirmPassword(event.target.value)}
                           placeholder={t.auth.confirmPasswordPlaceholder}
                           className="w-full rounded-lg border border-[#d1d5db] bg-[#ffffff] px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
-                          autoComplete="new-password"
-                          required
+                          autoComplete="off"
                         />
                         {confirmPassword && !passwordsMatch && (
                           <p className="mt-1 text-xs text-red-600">两次输入的密码不一致</p>
                         )}
                       </div>
-                      {renderPrimaryButton(
-                        t.auth.signupTab,
-                        <UserPlus className="h-4 w-4" />,
-                        !email.trim() || !isPasswordValid || !passwordsMatch
-                      )}
+                      <button
+                        type="button"
+                        onClick={() => void submitSignup()}
+                        disabled={busy || !email.trim() || !isPasswordValid || !passwordsMatch}
+                        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-nebula px-5 text-sm font-semibold text-[#ffffff] transition-colors hover:bg-nebula/90 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        <UserPlus className="h-4 w-4" />
+                        {busy ? t.auth.working : t.auth.signupTab}
+                      </button>
 
                       <div className="text-center text-sm">
                         <button
@@ -363,7 +383,35 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         </button>
                       </div>
 
-                    </form>
+                    </div>
+                  )}
+
+                  {/* Confirm Email Mode */}
+                  {mode === 'confirm-email' && (
+                    <div className="space-y-4">
+                      <div className="rounded-lg bg-blue-50 border border-blue-200 p-4 text-sm text-blue-800">
+                        <Mail className="mb-2 h-5 w-5" />
+                        {readableFeedback ?? (t.auth.messages as Record<string, string>)['AUTH_SIGNUP_SUCCESS']}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => void submitResendConfirmation()}
+                        disabled={busy}
+                        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-nebula/30 bg-[#ffffff] px-5 text-sm font-semibold text-nebula transition-colors hover:bg-nebula/5 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        <Mail className="h-4 w-4" />
+                        {busy ? t.auth.working : (t.auth.messages as Record<string, string>)['AUTH_RESEND_CONFIRMATION']}
+                      </button>
+                      <div className="text-center text-sm">
+                        <button
+                          type="button"
+                          onClick={() => switchMode('login')}
+                          className="text-nebula hover:text-nebula/80 font-medium"
+                        >
+                          {t.auth.backToLogin}
+                        </button>
+                      </div>
+                    </div>
                   )}
 
                   {/* Reset Request Mode */}
