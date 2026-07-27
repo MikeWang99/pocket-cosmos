@@ -308,8 +308,11 @@ export const PracticeSection: React.FC = () => {
     if (!isIgcseSet || difficultyFilter === 'all') return activeSet.steps;
     return activeSet.steps.filter((step) => {
       const diffTag = step.tags?.find((tag) => tag.startsWith('Difficulty '));
-      if (!diffTag) return true;
-      const level = parseInt(diffTag.replace('Difficulty ', ''), 10);
+      const taggedLevel = diffTag
+        ? parseInt(diffTag.replace('Difficulty ', ''), 10)
+        : Number.NaN;
+      const level = step.difficulty ?? taggedLevel;
+      if (!Number.isFinite(level)) return true;
       if (difficultyFilter === 'easy') return level <= 2;
       if (difficultyFilter === 'medium') return level === 3;
       if (difficultyFilter === 'hard') return level >= 4;

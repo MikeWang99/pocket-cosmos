@@ -24,6 +24,7 @@ const choices = ['A', 'B', 'C', 'D'].map((label) => ({
 const toPracticeStep = (record: IgcseChapter1Record): PracticeStep => ({
   id: record.id,
   mode: 'multiple_choice',
+  difficulty: record.difficulty,
   title: `${record.topicId} · Question ${record.questionNumber}`,
   prompt: 'Select the correct option using the stem, diagram, and choices shown in the question image.',
   context: `CIE IGCSE Physics · Chapter 1 · ${record.topicTitle}`,
