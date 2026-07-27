@@ -37,6 +37,8 @@ export interface PracticeSet {
   }>;
   /** For IGCSE sets, the topic ID for filtering */
   igcseTopicId?: string;
+  /** Practice type grouping used by the exercise navigation */
+  practiceKind?: 'mcq' | 'structured' | 'paper5';
   /** Hierarchy: curriculum system */
   system: 'ap-c-mech' | 'ap-c-em' | 'igcse';
   /** Hierarchy: chapter grouping (optional, for IGCSE) */
@@ -110,6 +112,7 @@ export const practiceSets: PracticeSet[] = [
     category: 'igcse' as const,
     label: topic.shortLabel,
     system: 'igcse' as const,
+    practiceKind: 'mcq',
     chapter: topic.chapter,
     chapterTitle: topic.chapterTitle,
     ...igcseAllTopicMeta[topic.topicId],
@@ -122,6 +125,7 @@ export const practiceSets: PracticeSet[] = [
     category: 'igcse' as const,
     label: topic.shortLabel,
     system: 'igcse' as const,
+    practiceKind: 'structured',
     chapter: topic.chapter,
     chapterTitle: topic.chapterTitle,
     ...frqTopicMeta[topic.topicId],
@@ -134,6 +138,7 @@ export const practiceSets: PracticeSet[] = [
     category: 'igcse' as const,
     label: `${year} P5`,
     system: 'igcse' as const,
+    practiceKind: 'paper5',
     chapter: 0,
     chapterTitle: 'Paper 5 Practical Test',
     ...paper5YearMeta[year],

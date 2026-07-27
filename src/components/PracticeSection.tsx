@@ -16,7 +16,7 @@ import {
   Square,
   Target,
 } from 'lucide-react';
-import { practiceSets } from '../data/practiceSets';
+import { practiceSets, type PracticeSet } from '../data/practiceSets';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
 import { evaluateLocally } from '../utils/rubricScoring';
 import { useLanguage } from '../LanguageContext';
@@ -164,6 +164,47 @@ const MathText: React.FC<{ children: string; className?: string }> = ({ children
 
 const isMultipleChoiceStep = (step: PracticeStep) =>
   step.mode === 'multiple_choice' && Boolean(step.choices?.length && step.correctAnswer);
+
+type PracticeKind = NonNullable<PracticeSet['practiceKind']>;
+
+type PracticeTreeChapter = {
+  id: string;
+  label: string;
+  sets: PracticeSet[];
+};
+
+type PracticeTreeCourse = {
+  id: string;
+  label: string;
+  description?: string;
+  chapters: PracticeTreeChapter[];
+};
+
+const inferPracticeKind = (set: PracticeSet): PracticeKind =>
+  set.practiceKind ??
+  (set.id.includes('-frq-') ? 'structured' : set.id.includes('paper5') ? 'paper5' : 'mcq');
+
+const getIgcseCourseNodeId = (kind: PracticeKind) => `igcse-course-${kind}`;
+
+const getIgcseChapterNodeId = (set: PracticeSet) => {
+  const kind = inferPracticeKind(set);
+  if (kind === 'paper5') return 'igcse-paper5-years';
+  return `igcse-${kind}-ch${set.chapter ?? 0}`;
+};
+
+const getInitialExpandedNodes = (setId: string) => {
+  const set = practiceSets.find((item) => item.id === setId);
+  const nodes = new Set<string>();
+  if (!set) return nodes;
+
+  nodes.add(set.system);
+  if (set.system === 'igcse') {
+    nodes.add(getIgcseCourseNodeId(inferPracticeKind(set)));
+    nodes.add(getIgcseChapterNodeId(set));
+  }
+
+  return nodes;
+};
 
 const readPracticeSelectionFromUrl = () => {
   if (typeof window === 'undefined') {
@@ -360,16 +401,12 @@ export const PracticeSection: React.FC = () => {
 
   const speechSupported = typeof window !== 'undefined' && Boolean(window.SpeechRecognition || window.webkitSpeechRecognition);
 
-  // Hierarchical tree: system → course → chapter → sets
+  // Hierarchical tree: system -> question type -> chapter/year -> sets
   const practiceTree = useMemo(() => {
     const systems: Array<{
       id: string;
       label: string;
-      courses: Array<{
-        id: string;
-        label: string;
-        chapters: Array<{ id: string; label: string; sets: typeof practiceSets }>;
-      }>;
+      courses: PracticeTreeCourse[];
     }> = [];
 
     // AP Physics C: Mechanics
@@ -395,27 +432,70 @@ export const PracticeSection: React.FC = () => {
     // CIE IGCSE Physics
     const igcseSets = practiceSets.filter((s) => s.system === 'igcse');
     if (igcseSets.length) {
-      const chapterMap = new Map<number, { title: string; sets: typeof practiceSets }>();
-      igcseSets.forEach((s) => {
-        const ch = s.chapter ?? 0;
-        if (!chapterMap.has(ch)) chapterMap.set(ch, { title: s.chapterTitle ?? `Chapter ${ch}`, sets: [] });
-        chapterMap.get(ch)!.sets.push(s);
-      });
-      const chapters = Array.from(chapterMap.entries())
-        .sort(([a], [b]) => a - b)
-        .map(([num, { title, sets }]) => ({ id: `igcse-ch${num}`, label: `Ch${num} ${title}`, sets }));
+      const questionTypeCopy: Record<PracticeKind, { label: string; description: string }> = {
+        mcq: {
+          label: language === 'zh' ? '选择题 MCQ' : 'Multiple Choice',
+          description: language === 'zh' ? '按章节练习选择题。' : 'Topic-based multiple-choice practice.',
+        },
+        structured: {
+          label: language === 'zh' ? '问答题 Structured Questions' : 'Structured Questions',
+          description: language === 'zh' ? '按章节练习大题、计算题和解释题。' : 'Long-answer, calculation, and explanation questions by topic.',
+        },
+        paper5: {
+          label: language === 'zh' ? '实验题 Paper 5' : 'Paper 5 Practical',
+          description: language === 'zh' ? '按年份练习实验操作、图像分析和实验设计。' : 'Practical skills, graph analysis, and experimental design by year.',
+        },
+      };
+
+      const buildTopicChapters = (sets: PracticeSet[], kind: PracticeKind): PracticeTreeChapter[] => {
+        const chapterMap = new Map<number, { title: string; sets: PracticeSet[] }>();
+        sets.forEach((set) => {
+          const ch = set.chapter ?? 0;
+          if (!chapterMap.has(ch)) chapterMap.set(ch, { title: set.chapterTitle ?? `Chapter ${ch}`, sets: [] });
+          chapterMap.get(ch)!.sets.push(set);
+        });
+
+        return Array.from(chapterMap.entries())
+          .sort(([a], [b]) => a - b)
+          .map(([num, { title, sets: chapterSets }]) => ({
+            id: `igcse-${kind}-ch${num}`,
+            label: language === 'zh' ? `第 ${num} 章 · ${title}` : `Chapter ${num} · ${title}`,
+            sets: chapterSets,
+          }));
+      };
+
+      const buildPaper5Chapter = (sets: PracticeSet[]): PracticeTreeChapter[] => [
+        {
+          id: 'igcse-paper5-years',
+          label: language === 'zh' ? '按年份选择 Paper 5 实验题' : 'Past Papers by Year',
+          sets,
+        },
+      ];
+
+      const courses = (['mcq', 'structured', 'paper5'] as const)
+        .map((kind): PracticeTreeCourse => {
+          const kindSets = igcseSets.filter((set) => inferPracticeKind(set) === kind);
+          return {
+            id: getIgcseCourseNodeId(kind),
+            label: questionTypeCopy[kind].label,
+            description: questionTypeCopy[kind].description,
+            chapters: kind === 'paper5' ? buildPaper5Chapter(kindSets) : buildTopicChapters(kindSets, kind),
+          };
+        })
+        .filter((course) => course.chapters.some((chapter) => chapter.sets.length > 0));
+
       systems.push({
         id: 'igcse',
         label: t.practice.tree.igcse,
-        courses: [{ id: 'igcse-all', label: '', chapters }],
+        courses,
       });
     }
 
     return systems;
-  }, [t]);
+  }, [language, t]);
 
-  // #3: Tree starts collapsed by default
-  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
+  // The tree starts open around the active shared link, but otherwise stays compact.
+  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(() => getInitialExpandedNodes(initialSelection.setId));
   const toggleNode = (nodeId: string) => {
     setExpandedNodes((prev) => {
       const next = new Set(prev);
@@ -601,7 +681,10 @@ export const PracticeSection: React.FC = () => {
     setExpandedNodes((prev) => {
       const next = new Set(prev);
       next.add(nextSet.system);
-      if (nextSet.chapter) next.add(`igcse-ch${nextSet.chapter}`);
+      if (nextSet.system === 'igcse') {
+        next.add(getIgcseCourseNodeId(inferPracticeKind(nextSet)));
+        next.add(getIgcseChapterNodeId(nextSet));
+      }
       return next;
     });
   };
@@ -719,39 +802,61 @@ export const PracticeSection: React.FC = () => {
                     {system.label}
                     {!hasAccess(system.id) && <Lock className="ml-auto h-3 w-3 text-slate-500" />}
                   </button>
-                  {/* Chapters / sets */}
+                  {/* Question types / chapters / sets */}
                   {sysExpanded && (
                     <div className="ml-3 border-l border-white/10 pl-3 space-y-1">
-                      {system.courses[0].chapters.map((chapter) => {
-                        const hasChapterLabel = chapter.label !== '';
-                        const chExpanded = !hasChapterLabel || expandedNodes.has(chapter.id);
+                      {system.courses.map((course) => {
+                        const hasCourseLabel = course.label !== '';
+                        const courseExpanded = !hasCourseLabel || expandedNodes.has(course.id);
                         return (
-                          <div key={chapter.id}>
-                            {hasChapterLabel && (
+                          <div key={course.id}>
+                            {hasCourseLabel && (
                               <button
-                                onClick={() => toggleNode(chapter.id)}
-                                className="flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-left text-[11px] font-semibold text-slate-400 transition-colors hover:bg-white/[0.04] hover:text-slate-200"
+                                onClick={() => toggleNode(course.id)}
+                                className="flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-left text-[11px] font-bold text-slate-300 transition-colors hover:bg-white/[0.04] hover:text-white"
+                                title={course.description}
                               >
-                                <span className={`inline-block h-2.5 w-2.5 text-[8px] leading-[10px] transition-transform ${chExpanded ? 'rotate-90' : ''}`}>▶</span>
-                                {chapter.label}
+                                <span className={`inline-block h-2.5 w-2.5 text-[8px] leading-[10px] transition-transform ${courseExpanded ? 'rotate-90' : ''}`}>▶</span>
+                                {course.label}
                               </button>
                             )}
-                            {chExpanded && (
-                              <div className={`flex flex-wrap gap-1.5 ${hasChapterLabel ? 'ml-4' : ''} ${hasChapterLabel ? 'pb-1' : 'py-1'}`}>
-                                {chapter.sets.map((set) => {
-                                  const isActive = set.id === activeSetId;
+                            {courseExpanded && (
+                              <div className={hasCourseLabel ? 'ml-3 border-l border-white/10 pl-3' : ''}>
+                                {course.chapters.map((chapter) => {
+                                  const hasChapterLabel = chapter.label !== '';
+                                  const chExpanded = !hasChapterLabel || expandedNodes.has(chapter.id);
                                   return (
-                                    <button
-                                      key={set.id}
-                                      onClick={() => selectPracticeSet(set.id)}
-                                      className={`min-h-8 shrink-0 rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors ${
-                                        isActive
-                                          ? 'border-nebula/70 bg-nebula/15 text-white'
-                                          : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/30 hover:text-white'
-                                      }`}
-                                    >
-                                      {getSetCopy(set.id).label}
-                                    </button>
+                                    <div key={chapter.id} className="space-y-1">
+                                      {hasChapterLabel && (
+                                        <button
+                                          onClick={() => toggleNode(chapter.id)}
+                                          className="flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-left text-[11px] font-semibold text-slate-400 transition-colors hover:bg-white/[0.04] hover:text-slate-200"
+                                        >
+                                          <span className={`inline-block h-2.5 w-2.5 text-[8px] leading-[10px] transition-transform ${chExpanded ? 'rotate-90' : ''}`}>▶</span>
+                                          {chapter.label}
+                                        </button>
+                                      )}
+                                      {chExpanded && (
+                                        <div className={`flex flex-wrap gap-1.5 ${hasChapterLabel ? 'ml-4' : ''} ${hasChapterLabel ? 'pb-2' : 'py-1'}`}>
+                                          {chapter.sets.map((set) => {
+                                            const isActive = set.id === activeSetId;
+                                            return (
+                                              <button
+                                                key={set.id}
+                                                onClick={() => selectPracticeSet(set.id)}
+                                                className={`min-h-8 shrink-0 rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors ${
+                                                  isActive
+                                                    ? 'border-nebula/70 bg-nebula/15 text-white'
+                                                    : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/30 hover:text-white'
+                                                }`}
+                                              >
+                                                {getSetCopy(set.id).label}
+                                              </button>
+                                            );
+                                          })}
+                                        </div>
+                                      )}
+                                    </div>
                                   );
                                 })}
                               </div>
