@@ -121,11 +121,6 @@ igcseAllTopics.forEach((topic) => {
     .map(toPracticeStep);
 });
 
-/** Direct lookup for curated assignments that preserve a deliberate question order. */
-export const igcseAllStepById: Record<string, PracticeStep> = Object.fromEntries(
-  records.map((record) => [record.id, toPracticeStep(record)]),
-);
-
 /** Per-topic meta */
 export const igcseAllTopicMeta: Record<string, { title: string; subtitle: string; eyebrow: string; description: string; sources: typeof sources }> = {};
 igcseAllTopics.forEach((topic) => {
