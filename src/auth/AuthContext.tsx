@@ -15,12 +15,15 @@ interface AuthContextValue {
   isAdmin: boolean;
   loading: boolean;
   message: string | null;
+  emailJustConfirmed: boolean;
   passwordRecovery: boolean;
   passwordSetupRequired: boolean;
   session: Session | null;
   user: User | null;
   clearMessage: () => void;
+  clearEmailJustConfirmed: () => void;
   clearPasswordRecovery: () => void;
+  resendConfirmationEmail: (email: string) => Promise<AuthActionResult>;
   sendEmailSignUpCode: (email: string) => Promise<AuthActionResult>;
   sendPasswordReset: (email: string) => Promise<AuthActionResult>;
   setPassword: (password: string) => Promise<AuthActionResult>;
@@ -67,6 +70,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(Boolean(supabase));
   const [message, setMessage] = useState<string | null>(null);
+  const [emailJustConfirmed, setEmailJustConfirmed] = useState(false);
   const [passwordRecovery, setPasswordRecovery] = useState(false);
   const [passwordSetupRequired, setPasswordSetupRequired] = useState(false);
 
@@ -95,6 +99,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setSession(nextSession);
       setLoading(false);
       setMessage(null);
+
+      // Detect email confirmation redirect: URL hash contains type=signup
+      if (event === 'SIGNED_IN' && typeof window !== 'undefined') {
+        const hash = window.location.hash;
+        if (hash.includes('type=signup')) {
+          setEmailJustConfirmed(true);
+          setMessage('AUTH_EMAIL_CONFIRMED');
+          // Clean up URL hash
+          window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+      }
+
       if (event === 'PASSWORD_RECOVERY') {
         setPasswordRecovery(true);
       }
@@ -104,6 +120,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (event === 'SIGNED_OUT') {
         setPasswordRecovery(false);
         setPasswordSetupRequired(false);
+        setEmailJustConfirmed(false);
         clearPasswordSetupPending();
       }
     });
@@ -116,6 +133,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const clearMessage = useCallback(() => {
     setMessage(null);
+  }, []);
+
+  const clearEmailJustConfirmed = useCallback(() => {
+    setEmailJustConfirmed(false);
   }, []);
 
   const clearPasswordRecovery = useCallback(() => {
@@ -136,6 +157,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (error) {
+        const msg = error.message?.toLowerCase() ?? '';
+        if (msg.includes('email not confirmed')) {
+          setMessage('AUTH_EMAIL_NOT_CONFIRMED');
+          return { ok: false, message: 'AUTH_EMAIL_NOT_CONFIRMED' };
+        }
         setMessage(error.message);
         return authError(error);
       }
@@ -192,6 +218,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       return authSuccess('AUTH_SIGNUP_SUCCESS');
+    },
+    [supabase],
+  );
+
+  const resendConfirmationEmail = useCallback(
+    async (email: string) => {
+      if (!supabase) {
+        setMessage('AUTH_NOT_CONFIGURED');
+        return authError({ message: 'AUTH_NOT_CONFIGURED' });
+      }
+
+      setMessage(null);
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+        },
+      });
+
+      if (error) {
+        setMessage(error.message);
+        return authError(error);
+      }
+
+      return authSuccess('AUTH_CONFIRMATION_RESENT');
     },
     [supabase],
   );
@@ -319,12 +371,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       isAdmin: ADMIN_EMAILS.has((session?.user.email ?? '').toLowerCase()),
       loading,
       message,
+      emailJustConfirmed,
       passwordRecovery,
       passwordSetupRequired,
       session,
       user: session?.user ?? null,
       clearMessage,
+      clearEmailJustConfirmed,
       clearPasswordRecovery,
+      resendConfirmationEmail,
       sendEmailSignUpCode,
       sendPasswordReset,
       setPassword,
@@ -336,11 +391,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }),
     [
       clearMessage,
+      clearEmailJustConfirmed,
       clearPasswordRecovery,
+      emailJustConfirmed,
       loading,
       message,
       passwordRecovery,
       passwordSetupRequired,
+      resendConfirmationEmail,
       sendEmailSignUpCode,
       sendPasswordReset,
       session,

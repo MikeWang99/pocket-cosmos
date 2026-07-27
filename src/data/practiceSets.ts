@@ -6,6 +6,16 @@ import {
   igcseAllTopicSteps,
   igcseAllTopicMeta,
 } from './igcseCieAllMultipleChoice';
+import {
+  frqTopics,
+  frqTopicSteps,
+  frqTopicMeta,
+} from './igcseCieAllFrq';
+import {
+  paper5Years,
+  paper5YearSteps,
+  paper5YearMeta,
+} from './igcseCiePaper5';
 import { kinematicsMultipleChoiceMeta, kinematicsMultipleChoiceSteps } from './kinematicsMultipleChoice';
 import { linearMomentumLabDesignMeta, linearMomentumLabDesignSteps } from './linearMomentumLabDesign';
 import { physicsBowlEmMeta, physicsBowlEmSteps } from './physicsBowlEmQuestionBank';
@@ -94,7 +104,7 @@ export const practiceSets: PracticeSet[] = [
     ...physicsBowlEmMeta,
     steps: physicsBowlEmSteps,
   },
-  // IGCSE per-topic sets (all chapters)
+  // IGCSE per-topic MCQ sets (all chapters)
   ...igcseAllTopics.map((topic): PracticeSet => ({
     id: `igcse-cie-topic-${topic.topicId.replace('.', '-')}`,
     category: 'igcse' as const,
@@ -105,5 +115,28 @@ export const practiceSets: PracticeSet[] = [
     ...igcseAllTopicMeta[topic.topicId],
     steps: igcseAllTopicSteps[topic.topicId],
     igcseTopicId: topic.topicId,
+  })),
+  // IGCSE per-topic FRQ (structured question) sets
+  ...frqTopics.map((topic): PracticeSet => ({
+    id: `igcse-cie-frq-${topic.topicId.replace('.', '-')}`,
+    category: 'igcse' as const,
+    label: topic.shortLabel,
+    system: 'igcse' as const,
+    chapter: topic.chapter,
+    chapterTitle: topic.chapterTitle,
+    ...frqTopicMeta[topic.topicId],
+    steps: frqTopicSteps[topic.topicId],
+    igcseTopicId: topic.topicId,
+  })),
+  // IGCSE Paper 5 Practical sets (by year)
+  ...paper5Years.map(({ year }): PracticeSet => ({
+    id: `igcse-cie-paper5-${year}`,
+    category: 'igcse' as const,
+    label: `${year} P5`,
+    system: 'igcse' as const,
+    chapter: 0,
+    chapterTitle: 'Paper 5 Practical Test',
+    ...paper5YearMeta[year],
+    steps: paper5YearSteps[year],
   })),
 ];
