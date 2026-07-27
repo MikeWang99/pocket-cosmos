@@ -10,6 +10,7 @@ export interface RubricCriterion {
 export interface PracticeStep {
   id: string;
   mode?: 'free_response' | 'multiple_choice';
+  difficulty?: number;
   title: string;
   prompt: string;
   context: string;
