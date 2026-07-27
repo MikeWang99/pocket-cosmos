@@ -317,10 +317,26 @@ export const PracticeSection: React.FC = () => {
     });
   }, [activeSet.steps, isIgcseSet, difficultyFilter]);
 
+  // Map "Difficulty N" tag to display label
+  const formatTag = (tag: string): string => {
+    if (tag.startsWith('Difficulty ')) {
+      const level = parseInt(tag.replace('Difficulty ', ''), 10);
+      if (language === 'zh') {
+        if (level <= 2) return '基础';
+        if (level === 3) return '中等';
+        return '进阶';
+      }
+      if (level <= 2) return 'Easy';
+      if (level === 3) return 'Medium';
+      return 'Hard';
+    }
+    return tag;
+  };
+
   const activeStep = practiceSteps[activeIndex] ?? practiceSteps[0];
-  const isActiveMultipleChoice = isMultipleChoiceStep(activeStep);
-  const currentAnswer = answers[activeStep.id] ?? '';
-  const currentResult = results[activeStep.id];
+  const isActiveMultipleChoice = activeStep ? isMultipleChoiceStep(activeStep) : false;
+  const currentAnswer = activeStep ? (answers[activeStep.id] ?? '') : '';
+  const currentResult = activeStep ? results[activeStep.id] : undefined;
   const completedCount = Object.keys(results).length;
   const resultList: EvaluationResult[] = Object.keys(results).map((key) => results[key]);
 
@@ -868,7 +884,7 @@ export const PracticeSection: React.FC = () => {
                             key={tag}
                             className="rounded-full border border-nebula/20 bg-nebula/5 px-2.5 py-1 text-[10px] font-semibold text-nebula"
                           >
-                            {tag}
+                            {formatTag(tag)}
                           </span>
                         ))}
                       </div>
