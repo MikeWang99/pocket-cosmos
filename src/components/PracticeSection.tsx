@@ -283,7 +283,6 @@ export const PracticeSection: React.FC = () => {
     if (setId === 'work-energy-multiple-choice') return t.practice.sets.workEnergyMultipleChoice;
     if (setId === 'linear-momentum-lab-design') return t.practice.sets.linearMomentumLabDesign;
     if (setId === 'physics-bowl-em-question-bank') return t.practice.sets.physicsBowlEmQuestionBank;
-    if (setId === 'igcse-ch1-motion-mass-forces-homework') return t.practice.sets.igcseChapter1AssignedHomework;
     if (setId === 'igcse-cie-ch1-classroom') return t.practice.sets.igcseCieChapter1Classroom;
     if (setId === 'igcse-cie-ch1-homework') return t.practice.sets.igcseCieChapter1Homework;
     if (setId === 'igcse-cie-ch1-topic-1-1') return t.practice.sets.igcseTopic11;
