@@ -7,6 +7,10 @@ import {
   igcseAllTopicMeta,
 } from './igcseCieAllMultipleChoice';
 import {
+  igcseChapter1MotionForcesHomeworkMeta,
+  igcseChapter1MotionForcesHomeworkSteps,
+} from './igcseChapter1MotionForcesHomework';
+import {
   frqTopics,
   frqTopicSteps,
   frqTopicMeta,
@@ -103,6 +107,16 @@ export const practiceSets: PracticeSet[] = [
     system: 'ap-c-em',
     ...physicsBowlEmMeta,
     steps: physicsBowlEmSteps,
+  },
+  {
+    id: 'igcse-ch1-motion-mass-forces-homework',
+    category: 'igcse',
+    label: 'Assigned Homework',
+    system: 'igcse',
+    chapter: 1,
+    chapterTitle: 'Motion, Forces and Energy',
+    ...igcseChapter1MotionForcesHomeworkMeta,
+    steps: igcseChapter1MotionForcesHomeworkSteps,
   },
   // IGCSE per-topic MCQ sets (all chapters)
   ...igcseAllTopics.map((topic): PracticeSet => ({

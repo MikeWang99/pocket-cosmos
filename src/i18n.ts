@@ -276,6 +276,12 @@ export const i18n = {
           eyebrow: 'AP Physics C Electricity and Magnetism',
           description: 'Practice selected Physics Bowl questions on Coulomb’s law, electric fields, electric potential, electric potential energy, and electrostatic conductors.',
         },
+        igcseChapter1AssignedHomework: {
+          label: 'Assigned Homework',
+          title: 'Chapter 1 Homework: Motion, Mass and Weight, and Forces',
+          eyebrow: 'CIE IGCSE Physics 0625 · Assigned Practice',
+          description: 'Complete these 20 questions in order. The first 10 are medium difficulty and the final 10 are advanced, covering the material from the current lessons only.',
+        },
         igcseCieChapter1Classroom: {
           label: 'Classroom Practice',
           title: 'CIE IGCSE Physics: Chapter 1 Classroom Practice',
@@ -655,6 +661,12 @@ export const i18n = {
           title: 'Physics Bowl 物理碗精选题库',
           eyebrow: 'AP Physics C：电磁学',
           description: '精选物理碗电磁学习题，覆盖库仑定律、电场、电势、电势能、电能守恒与静电平衡导体等知识点。',
+        },
+        igcseChapter1AssignedHomework: {
+          label: '本次作业',
+          title: 'Chapter 1 作业：运动、质量与重量、力',
+          eyebrow: 'CIE IGCSE 物理 0625 · 指定练习',
+          description: '请按顺序完成这 20 道题。前 10 题为中等难度，后 10 题为进阶难度，范围仅覆盖当前课程已经学习的内容。',
         },
         igcseCieChapter1Classroom: {
           label: '课堂练习',
