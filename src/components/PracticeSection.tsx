@@ -1057,7 +1057,6 @@ export const PracticeSection: React.FC = () => {
               <div className="p-4 sm:p-6 md:p-8">
                 {isActiveMultipleChoice ? (
                   <div>
-                    <div className="text-xs uppercase tracking-widest text-slate-500 mb-3">{t.practice.chooseAnswer} <span className="normal-case tracking-normal text-slate-400">{language === 'zh' ? '· 可多选，点击取消' : '· multi-select, tap to toggle'}</span></div>
                     <div className="grid gap-3" role="group" aria-label={t.practice.chooseAnswer}>
                       {activeStep.choices?.map((choice) => {
                         const selectedLabels = currentAnswer.split(',').filter(Boolean);
