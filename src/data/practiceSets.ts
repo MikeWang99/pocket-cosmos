@@ -11,6 +11,7 @@ import {
   frqTopicSteps,
   frqTopicMeta,
 } from './igcseCieAllFrq';
+import { igcseQuickDiagnosticMeta, igcseQuickDiagnosticSteps } from './igcseQuickDiagnostic';
 import {
   paper5Years,
   paper5YearSteps,
@@ -38,7 +39,7 @@ export interface PracticeSet {
   /** For IGCSE sets, the topic ID for filtering */
   igcseTopicId?: string;
   /** Practice type grouping used by the exercise navigation */
-  practiceKind?: 'mcq' | 'structured' | 'paper5';
+  practiceKind?: 'mcq' | 'structured' | 'paper5' | 'evaluation';
   /** Hierarchy: curriculum system */
   system: 'ap-c-mech' | 'ap-c-em' | 'igcse';
   /** Hierarchy: chapter grouping (optional, for IGCSE) */
@@ -144,4 +145,16 @@ export const practiceSets: PracticeSet[] = [
     ...paper5YearMeta[year],
     steps: paper5YearSteps[year],
   })),
+  // IGCSE Evaluation (diagnostic papers)
+  {
+    id: 'igcse-eval-quick-diagnostic',
+    category: 'igcse' as const,
+    label: 'Quick Diagnostic',
+    system: 'igcse' as const,
+    practiceKind: 'evaluation',
+    chapter: 0,
+    chapterTitle: 'Diagnostic Papers',
+    ...igcseQuickDiagnosticMeta,
+    steps: igcseQuickDiagnosticSteps,
+  },
 ];
