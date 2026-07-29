@@ -886,7 +886,7 @@ export const PracticeSection: React.FC = () => {
                 </div>
               );
             })}
-            {isIgcseSet && (
+            {isIgcseSet && inferPracticeKind(activeSet) !== 'evaluation' && (
               <div className="mt-3">
                 <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
                   {t.practice.difficultyFilter.label}
