@@ -189,6 +189,7 @@ const getIgcseCourseNodeId = (kind: PracticeKind) => `igcse-course-${kind}`;
 const getIgcseChapterNodeId = (set: PracticeSet) => {
   const kind = inferPracticeKind(set);
   if (kind === 'paper5') return 'igcse-paper5-years';
+  if (kind === 'evaluation') return 'igcse-evaluation-papers';
   return `igcse-${kind}-ch${set.chapter ?? 0}`;
 };
 
@@ -445,6 +446,10 @@ export const PracticeSection: React.FC = () => {
           label: language === 'zh' ? '实验题 Paper 5' : 'Paper 5 Practical',
           description: language === 'zh' ? '按年份练习实验操作、图像分析和实验设计。' : 'Practical skills, graph analysis, and experimental design by year.',
         },
+        evaluation: {
+          label: language === 'zh' ? '综合评估 Evaluation' : 'Evaluation',
+          description: language === 'zh' ? '完整诊断卷：选择题 + 大题综合检测，附详细评分标准。' : 'Full diagnostic papers: MCQ + structured questions with detailed mark schemes.',
+        },
       };
 
       const buildTopicChapters = (sets: PracticeSet[], kind: PracticeKind): PracticeTreeChapter[] => {
@@ -472,14 +477,26 @@ export const PracticeSection: React.FC = () => {
         },
       ];
 
-      const courses = (['mcq', 'structured', 'paper5'] as const)
+      const buildEvaluationChapter = (sets: PracticeSet[]): PracticeTreeChapter[] => [
+        {
+          id: 'igcse-evaluation-papers',
+          label: language === 'zh' ? '诊断评估卷' : 'Diagnostic Papers',
+          sets,
+        },
+      ];
+
+      const courses = (['mcq', 'structured', 'paper5', 'evaluation'] as const)
         .map((kind): PracticeTreeCourse => {
           const kindSets = igcseSets.filter((set) => inferPracticeKind(set) === kind);
           return {
             id: getIgcseCourseNodeId(kind),
             label: questionTypeCopy[kind].label,
             description: questionTypeCopy[kind].description,
-            chapters: kind === 'paper5' ? buildPaper5Chapter(kindSets) : buildTopicChapters(kindSets, kind),
+            chapters: kind === 'paper5'
+              ? buildPaper5Chapter(kindSets)
+              : kind === 'evaluation'
+                ? buildEvaluationChapter(kindSets)
+                : buildTopicChapters(kindSets, kind),
           };
         })
         .filter((course) => course.chapters.some((chapter) => chapter.sets.length > 0));
