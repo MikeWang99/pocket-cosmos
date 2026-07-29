@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import { KeyRound, Lock, LogIn, Mail, UserPlus, X } from 'lucide-react';
 import { useAuth } from '../auth/AuthContext';
@@ -179,11 +180,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     </button>
   );
 
-  return (
+  const modal = (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[120] grid place-items-end bg-[rgba(15,23,42,0.42)] p-3 backdrop-blur-sm sm:place-items-center sm:p-4"
+          className="fixed inset-0 z-[120] grid place-items-end bg-[rgba(15,23,42,0.42)] p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-sm sm:place-items-center sm:p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -469,4 +470,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       )}
     </AnimatePresence>
   );
+
+  // Render into document.body so the modal escapes <main>'s stacking
+  // context (relative z-10) and always paints above the fixed bottom nav.
+  if (typeof document === 'undefined') return modal;
+  return createPortal(modal, document.body);
 };
