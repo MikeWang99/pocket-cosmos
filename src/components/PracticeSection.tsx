@@ -1300,48 +1300,6 @@ export const PracticeSection: React.FC = () => {
             </motion.div>
           )}
 
-          {/* #8: Hide report when no questions answered */}
-          {completedCount > 0 && (
-          <div className="glass-panel rounded-lg p-5 sm:p-6">
-            <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
-              <div>
-                <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-2">{t.practice.sessionReport}</div>
-                <h3 className="text-2xl font-serif text-white">{t.practice.score} {totalScore}/{totalPossible || 0}</h3>
-                <p className="text-sm text-slate-400 mt-2 max-w-2xl">
-                  {t.practice.reportText}
-                </p>
-              </div>
-              {practiceSetMeta.sources.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {practiceSetMeta.sources.map((source) => (
-                    <a
-                      key={source.url}
-                      href={source.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="rounded-full border border-white/10 px-4 py-2 text-xs text-slate-300 hover:border-nebula hover:text-nebula transition-colors"
-                    >
-                      {source.label}
-                    </a>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {weakSpots.length > 0 && (
-              <div className="mt-6 border-t border-white/10 pt-5">
-                <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-3">{t.practice.patterns}</div>
-                <div className="flex flex-wrap gap-2">
-                  {weakSpots.map((spot) => (
-                    <span key={spot} className="rounded-full bg-white/5 border border-white/10 px-3 py-2 text-xs text-slate-300">
-                      {spot}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-          )}
           </>
           )}
         </section>
