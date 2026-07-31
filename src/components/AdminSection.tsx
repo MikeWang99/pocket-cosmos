@@ -19,6 +19,7 @@ import { useLanguage } from '../LanguageContext';
 import { getSupabaseClient } from '../lib/supabaseClient';
 import { ALL_SYSTEMS } from '../hooks/usePracticePermissions';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
+import { HomeworkAdminPanel } from './HomeworkAdminPanel';
 
 interface PracticeAttemptRow {
   id: string;
@@ -618,6 +619,8 @@ export const AdminSection: React.FC = () => {
           )}
         </div>
       </div>
+
+      <HomeworkAdminPanel compact />
 
       {/* Permission Management */}
       <PermissionManager />

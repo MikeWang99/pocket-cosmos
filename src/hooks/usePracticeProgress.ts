@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { EvaluationResult } from '../types/practice';
 import { useAuth } from '../auth/AuthContext';
+import {
+  PRACTICE_PROGRESS_EVENT,
+  SHARED_PRACTICE_ATTEMPTS_KEY,
+  readStored,
+  writeStored,
+} from '../homework/storage';
+import type { HomeworkAttempt } from '../homework/types';
 import { getSupabaseClient } from '../lib/supabaseClient';
 
 export type PracticeSyncState = 'off' | 'idle' | 'loading' | 'syncing' | 'error';
@@ -66,10 +73,38 @@ export const usePracticeProgress = (practiceSetId: string) => {
   const [syncState, setSyncState] = useState<PracticeSyncState>('off');
   const [syncError, setSyncError] = useState<string | null>(null);
   const [resetVersion, setResetVersion] = useState(0);
+  const demoMode = process.env.NEXT_PUBLIC_HOMEWORK_DEMO === 'true';
 
   const canSync = Boolean(authEnabled && configured && supabase && user);
 
   useEffect(() => {
+    if (demoMode) {
+      const loadLocalAttempts = () => {
+        const stored = readStored<Record<string, HomeworkAttempt>>(SHARED_PRACTICE_ATTEMPTS_KEY, {});
+        const attempts = Object.values(stored)
+          .filter((attempt) => attempt.practiceSetId === practiceSetId)
+          .reduce<Record<string, SavedPracticeAttempt>>((map, attempt) => {
+            map[attempt.questionId] = {
+              questionId: attempt.questionId,
+              answer: attempt.answer,
+              result: attempt.result,
+              isCorrect: attempt.isCorrect,
+              updatedAt: attempt.updatedAt,
+            };
+            return map;
+          }, {});
+        setSavedAttempts(attempts);
+        setSyncState('idle');
+      };
+      loadLocalAttempts();
+      window.addEventListener(PRACTICE_PROGRESS_EVENT, loadLocalAttempts);
+      window.addEventListener('storage', loadLocalAttempts);
+      return () => {
+        window.removeEventListener(PRACTICE_PROGRESS_EVENT, loadLocalAttempts);
+        window.removeEventListener('storage', loadLocalAttempts);
+      };
+    }
+
     if (!authEnabled) {
       setSyncState('off');
       setSavedAttempts({});
@@ -123,19 +158,25 @@ export const usePracticeProgress = (practiceSetId: string) => {
     return () => {
       mounted = false;
     };
-  }, [authEnabled, configured, practiceSetId, resetVersion, supabase, user]);
+  }, [authEnabled, configured, demoMode, practiceSetId, resetVersion, supabase, user]);
 
   const resetSavedAttempts = useCallback(() => {
     setSavedAttempts({});
+    if (demoMode) {
+      const stored = readStored<Record<string, HomeworkAttempt>>(SHARED_PRACTICE_ATTEMPTS_KEY, {});
+      Object.keys(stored).forEach((key) => {
+        if (stored[key].practiceSetId === practiceSetId) delete stored[key];
+      });
+      writeStored(SHARED_PRACTICE_ATTEMPTS_KEY, stored);
+      return;
+    }
     if (!user || typeof window === 'undefined') return;
     window.localStorage.setItem(resetStorageKey(user.id, practiceSetId), String(Date.now()));
     setResetVersion((version) => version + 1);
-  }, [practiceSetId, user]);
+  }, [demoMode, practiceSetId, user]);
 
   const saveAttempt = useCallback(
     async (attempt: SavePracticeAttemptInput) => {
-      if (!supabase || !user) return;
-
       const nextSavedAttempt: SavedPracticeAttempt = {
         questionId: attempt.questionId,
         answer: attempt.answer,
@@ -145,6 +186,26 @@ export const usePracticeProgress = (practiceSetId: string) => {
       };
 
       setSavedAttempts((previous) => ({ ...previous, [attempt.questionId]: nextSavedAttempt }));
+      if (demoMode) {
+        const stored = readStored<Record<string, HomeworkAttempt>>(SHARED_PRACTICE_ATTEMPTS_KEY, {});
+        stored[`${attempt.practiceSetId}:${attempt.questionId}`] = {
+          studentId: 'demo-student-eden',
+          studentEmail: 'eden@example.com',
+          practiceSetId: attempt.practiceSetId,
+          questionId: attempt.questionId,
+          answer: attempt.answer,
+          score: attempt.score,
+          maxScore: attempt.maxScore,
+          isCorrect: attempt.isCorrect,
+          result: attempt.result,
+          updatedAt: nextSavedAttempt.updatedAt,
+        };
+        writeStored(SHARED_PRACTICE_ATTEMPTS_KEY, stored);
+        setSyncState('idle');
+        return;
+      }
+
+      if (!supabase || !user) return;
       setSyncState('syncing');
       setSyncError(null);
 
@@ -175,7 +236,7 @@ export const usePracticeProgress = (practiceSetId: string) => {
 
       setSyncState('idle');
     },
-    [supabase, user],
+    [demoMode, supabase, user],
   );
 
   return useMemo(

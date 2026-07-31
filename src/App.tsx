@@ -8,6 +8,7 @@
 import { useEffect, useState } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { PracticeSection } from './components/PracticeSection';
+import { HomeworkSection } from './components/HomeworkSection';
 import { CurriculumSection } from './components/CurriculumSection';
 import { AdminSection } from './components/AdminSection';
 import { AuthStatusButton } from './components/AuthStatusButton';
@@ -15,7 +16,7 @@ import { AnimatePresence } from 'motion/react';
 import { useLanguage } from './LanguageContext';
 import { useAuth } from './auth/AuthContext';
 
-const validTabs = new Set(['curriculum', 'practice', 'admin']);
+const validTabs = new Set(['curriculum', 'practice', 'homework', 'admin']);
 
 const readTabFromUrl = () => {
   if (typeof window === 'undefined') return 'curriculum';
@@ -34,11 +35,15 @@ const normalizeUrlForTab = (tab: string, mode: 'push' | 'replace' = 'push') => {
     url.searchParams.delete('tab');
     url.searchParams.delete('set');
     url.searchParams.delete('q');
+    url.searchParams.delete('assignment');
   } else {
     url.searchParams.set('tab', tab);
     if (tab !== 'practice') {
       url.searchParams.delete('set');
       url.searchParams.delete('q');
+    }
+    if (tab !== 'homework') {
+      url.searchParams.delete('assignment');
     }
   }
 
@@ -113,6 +118,7 @@ export default function App() {
               <div className="hidden gap-6 pb-1 text-xs font-semibold uppercase tracking-widest md:flex">
                 <button onClick={() => selectTab('curriculum')} className={`transition-colors ${activeTab === 'curriculum' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.curriculum}</button>
                 <button onClick={() => selectTab('practice')} className={`transition-colors ${activeTab === 'practice' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.practice}</button>
+                <button onClick={() => selectTab('homework')} className={`transition-colors ${activeTab === 'homework' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.homework}</button>
                 {isAdmin && (
                   <button onClick={() => selectTab('admin')} className={`transition-colors ${activeTab === 'admin' ? 'text-nebula border-b border-nebula pb-1' : 'hover:text-nebula'}`}>{t.nav.admin}</button>
                 )}
@@ -125,6 +131,7 @@ export default function App() {
             <AnimatePresence mode="wait">
               {activeTab === 'curriculum' && <CurriculumSection key="curriculum" />}
               {activeTab === 'practice' && <PracticeSection key="practice" />}
+              {activeTab === 'homework' && <HomeworkSection key="homework" />}
               {activeTab === 'admin' && isAdmin && <AdminSection key="admin" />}
             </AnimatePresence>
           </div>
