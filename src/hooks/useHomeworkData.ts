@@ -18,7 +18,7 @@ import type {
   HomeworkAttempt,
   HomeworkProfile,
 } from '../homework/types';
-import { findPracticeSet } from '../homework/catalog';
+import { findPracticeSet, isSupabaseUuid } from '../homework/catalog';
 import { getSupabaseClient } from '../lib/supabaseClient';
 import type { EvaluationResult } from '../types/practice';
 
@@ -275,6 +275,15 @@ export const useHomeworkData = () => {
       }
 
       if (!supabase || !user || !isAdmin) return { assignment: null, error: 'Administrator access is required.' };
+      const validStudentIds = input.assignedToAll
+        ? []
+        : Array.from(new Set(input.studentIds.filter(isSupabaseUuid)));
+      if (!input.assignedToAll && validStudentIds.length === 0) {
+        return {
+          assignment: null,
+          error: 'Select at least one valid student before publishing.',
+        };
+      }
       const { data, error: assignmentError } = await supabase
         .from('assignments')
         .insert({
@@ -310,9 +319,9 @@ export const useHomeworkData = () => {
         await supabase.from('assignments').delete().eq('id', assignmentId);
         return { assignment: null, error: itemError.message };
       }
-      if (!input.assignedToAll && input.studentIds.length) {
+      if (!input.assignedToAll && validStudentIds.length) {
         const { error: studentError } = await supabase.from('assignment_students').insert(
-          input.studentIds.map((studentId) => ({ assignment_id: assignmentId, student_id: studentId })),
+          validStudentIds.map((studentId) => ({ assignment_id: assignmentId, student_id: studentId })),
         );
         if (studentError) {
           await supabase.from('assignments').delete().eq('id', assignmentId);
