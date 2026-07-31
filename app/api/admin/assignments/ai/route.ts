@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import {
   authorizeHomeworkApi,
   createHomeworkAssignment,
-  getHomeworkServiceClient,
+  getHomeworkApiClient,
   validateHomeworkPayload,
 } from '@/src/server/homeworkAssignments';
 
@@ -14,7 +14,7 @@ export async function GET() {
     purpose: 'Create and optionally publish a homework assignment after an AI agent resolves source question IDs.',
     authentication: [
       'Authorization: Bearer <Supabase admin access token>',
-      'x-homework-api-key: <HOMEWORK_AUTOMATION_SECRET>',
+      'x-homework-api-key: <HOMEWORK_AUTOMATION_SECRET> (requires a server-side service-role key)',
     ],
     required: {
       title: 'string',
@@ -37,15 +37,19 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const client = getHomeworkServiceClient();
-  if (!client) {
+  const api = getHomeworkApiClient(request);
+  if (!api) {
     return NextResponse.json(
-      { error: 'homework_api_not_configured', message: 'Supabase service credentials are missing.' },
+      { error: 'homework_api_not_configured', message: 'Supabase credentials are missing.' },
       { status: 503 },
     );
   }
 
-  const authorization = await authorizeHomeworkApi(request, client);
+  const authorization = await authorizeHomeworkApi(
+    request,
+    api.client,
+    api.serviceRoleConfigured,
+  );
   if (!authorization.actor) {
     return NextResponse.json(
       { error: 'unauthorized', message: authorization.error },
@@ -79,7 +83,11 @@ export async function POST(request: Request) {
   }
 
   try {
-    const assignment = await createHomeworkAssignment(client, validation.input, authorization.actor);
+    const assignment = await createHomeworkAssignment(
+      api.client,
+      validation.input,
+      authorization.actor,
+    );
     return NextResponse.json({ assignment }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
@@ -91,4 +99,3 @@ export async function POST(request: Request) {
     );
   }
 }
-
