@@ -16,7 +16,7 @@ import {
   UsersRound,
 } from 'lucide-react';
 import { practiceSets } from '../data/practiceSets';
-import { questionsFromNumbers } from '../homework/catalog';
+import { isSupabaseUuid, questionsFromNumbers } from '../homework/catalog';
 import type { CreateHomeworkInput, HomeworkAssignment } from '../homework/types';
 import { useHomeworkData } from '../hooks/useHomeworkData';
 import { useLanguage } from '../LanguageContext';
@@ -102,11 +102,13 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
   const [questionNumbers, setQuestionNumbers] = useState('');
   const [draftItems, setDraftItems] = useState<Array<{ practiceSetId: string; questionId: string }>>([]);
   const [assignedToAll, setAssignedToAll] = useState(false);
-  const [studentIds, setStudentIds] = useState<string[]>(['demo-student-eden']);
+  const [studentIds, setStudentIds] = useState<string[]>(
+    demoMode ? ['demo-student-eden'] : [],
+  );
   const [aiInstruction, setAiInstruction] = useState('');
   const [sourceType, setSourceType] = useState<'manual' | 'ai'>('manual');
   const [formMessage, setFormMessage] = useState<string | null>(null);
-  const [saving, setSaving] = useState(false);
+  const [savingStatus, setSavingStatus] = useState<'draft' | 'published' | null>(null);
 
   const selectedAssignment =
     assignments.find((assignment) => assignment.id === selectedAssignmentId) ??
@@ -168,38 +170,57 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
       setFormMessage(language === 'zh' ? '请填写作业名称并至少添加一道题。' : 'Add a title and at least one question.');
       return;
     }
-    if (!assignedToAll && !studentIds.length) {
-      setFormMessage(language === 'zh' ? '请选择学生，或选择“全部学生”。' : 'Select students or assign to everyone.');
+    const profileIds = new Set(profiles.map((profile) => profile.userId));
+    const audienceStudentIds = demoMode
+      ? studentIds
+      : studentIds.filter((studentId) => isSupabaseUuid(studentId) && profileIds.has(studentId));
+    if (!assignedToAll && !audienceStudentIds.length) {
+      setFormMessage(
+        language === 'zh'
+          ? '请选择至少一名有效学生，或选择“发布给全部学生”。'
+          : 'Select at least one valid student or assign to everyone.',
+      );
       return;
     }
-    setSaving(true);
-    const input: CreateHomeworkInput = {
-      title: title.trim(),
-      description: description.trim(),
-      dueAt: dueAt ? new Date(dueAt).toISOString() : null,
-      status,
-      sourceType,
-      assignedToAll,
-      studentIds,
-      aiInstruction: sourceType === 'ai' ? aiInstruction : undefined,
-      items: draftItems,
-    };
-    const result = await createAssignment(input);
-    setSaving(false);
-    if (result.error) {
-      setFormMessage(result.error);
-      return;
+    setFormMessage(null);
+    setSavingStatus(status);
+    try {
+      const input: CreateHomeworkInput = {
+        title: title.trim(),
+        description: description.trim(),
+        dueAt: dueAt ? new Date(dueAt).toISOString() : null,
+        status,
+        sourceType,
+        assignedToAll,
+        studentIds: audienceStudentIds,
+        aiInstruction: sourceType === 'ai' ? aiInstruction : undefined,
+        items: draftItems,
+      };
+      const result = await createAssignment(input);
+      if (result.error) {
+        setFormMessage(result.error);
+        return;
+      }
+      setFormMessage(language === 'zh' ? (status === 'published' ? '作业已发布。' : '草稿已保存。') : status === 'published' ? 'Homework published.' : 'Draft saved.');
+      setTitle('');
+      setDescription('');
+      setDueAt('');
+      setDraftItems([]);
+      setQuestionNumbers('');
+      setAiInstruction('');
+      setSourceType('manual');
+      setStudentIds(demoMode ? ['demo-student-eden'] : []);
+      setView('overview');
+      if (result.assignment) setSelectedAssignmentId(result.assignment.id);
+    } catch {
+      setFormMessage(
+        language === 'zh'
+          ? '发布失败，请稍后重试。'
+          : 'Publishing failed. Please try again.',
+      );
+    } finally {
+      setSavingStatus(null);
     }
-    setFormMessage(language === 'zh' ? (status === 'published' ? '作业已发布。' : '草稿已保存。') : status === 'published' ? 'Homework published.' : 'Draft saved.');
-    setTitle('');
-    setDescription('');
-    setDueAt('');
-    setDraftItems([]);
-    setQuestionNumbers('');
-    setAiInstruction('');
-    setSourceType('manual');
-    setView('overview');
-    if (result.assignment) setSelectedAssignmentId(result.assignment.id);
   };
 
   const assignmentProgress = useMemo(() => {
@@ -573,13 +594,17 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
               )}
               {formMessage && <div className="mt-4 rounded-lg border border-white/10 bg-white/[0.03] p-3 text-xs leading-5 text-slate-300">{formMessage}</div>}
               <div className="mt-5 grid grid-cols-2 gap-3">
-                <button type="button" disabled={saving} onClick={() => void submit('draft')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-white/15 text-xs font-bold text-slate-300 disabled:opacity-40">
+                <button type="button" disabled={savingStatus !== null} onClick={() => void submit('draft')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-white/15 text-xs font-bold text-slate-300 disabled:opacity-40">
                   <FileEdit className="h-4 w-4" />
-                  {language === 'zh' ? '保存草稿' : 'Save draft'}
+                  {savingStatus === 'draft'
+                    ? language === 'zh' ? '正在保存…' : 'Saving…'
+                    : language === 'zh' ? '保存草稿' : 'Save draft'}
                 </button>
-                <button type="button" disabled={saving} onClick={() => void submit('published')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-nebula text-xs font-bold text-white disabled:opacity-40">
+                <button type="button" disabled={savingStatus !== null} onClick={() => void submit('published')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-nebula text-xs font-bold text-white disabled:opacity-40">
                   <Rocket className="h-4 w-4" />
-                  {language === 'zh' ? '立即发布' : 'Publish'}
+                  {savingStatus === 'published'
+                    ? language === 'zh' ? '正在发布…' : 'Publishing…'
+                    : language === 'zh' ? '立即发布' : 'Publish'}
                 </button>
               </div>
               <div className="mt-4 flex items-center gap-2 text-[11px] text-slate-500">
@@ -593,4 +618,3 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
     </section>
   );
 };
-

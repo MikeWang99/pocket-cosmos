@@ -1,6 +1,11 @@
 import { practiceSets } from '../data/practiceSets';
 import type { HomeworkItem, ResolvedHomeworkItem } from './types';
 
+const UUID_PATTERN =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+export const isSupabaseUuid = (value: string) => UUID_PATTERN.test(value);
+
 export const resolveHomeworkItem = (item: HomeworkItem): ResolvedHomeworkItem | null => {
   const set = practiceSets.find((candidate) => candidate.id === item.practiceSetId);
   const step = set?.steps.find((candidate) => candidate.id === item.questionId);
@@ -53,4 +58,3 @@ export const questionsFromNumbers = (practiceSetId: string, value: string) => {
 
 export const findPracticeSet = (practiceSetId: string) =>
   practiceSets.find((set) => set.id === practiceSetId);
-

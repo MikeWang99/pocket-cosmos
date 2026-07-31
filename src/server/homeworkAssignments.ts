@@ -2,6 +2,7 @@ import 'server-only';
 
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { practiceSets } from '../data/practiceSets';
+import { isSupabaseUuid } from '../homework/catalog';
 import type { CreateHomeworkInput } from '../homework/types';
 
 const ADMIN_EMAILS = new Set(['mike.wang.de@gmail.com']);
@@ -110,6 +111,22 @@ export const validateHomeworkPayload = (
   if (dueAt && Number.isNaN(Date.parse(dueAt))) {
     return { input: null, error: 'dueAt must be a valid ISO date-time.' };
   }
+  const assignedToAll = raw.assignedToAll !== false;
+  const studentIds = Array.isArray(raw.studentIds)
+    ? Array.from(
+        new Set(
+          raw.studentIds
+            .map((id) => cleanText(id))
+            .filter((id) => id && isSupabaseUuid(id)),
+        ),
+      )
+    : [];
+  if (!assignedToAll && studentIds.length === 0) {
+    return {
+      input: null,
+      error: 'At least one valid student UUID is required when assignedToAll is false.',
+    };
+  }
 
   return {
     input: {
@@ -118,10 +135,8 @@ export const validateHomeworkPayload = (
       dueAt,
       status,
       sourceType,
-      assignedToAll: raw.assignedToAll !== false,
-      studentIds: Array.isArray(raw.studentIds)
-        ? Array.from(new Set(raw.studentIds.map((id) => cleanText(id)).filter(Boolean)))
-        : [],
+      assignedToAll,
+      studentIds,
       aiInstruction: cleanText(raw.aiInstruction) || undefined,
       items: uniqueItems,
     },
