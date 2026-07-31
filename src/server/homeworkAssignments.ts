@@ -15,13 +15,21 @@ export interface HomeworkApiActor {
   mode: 'admin-session' | 'automation-key';
 }
 
-const getServiceClient = () => {
+const getApiClient = (request: Request) => {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !serviceRoleKey) return null;
-  return createClient(url, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const key = serviceRoleKey || anonKey;
+  if (!url || !key) return null;
+
+  const authorization = request.headers.get('authorization');
+  return {
+    client: createClient(url, key, {
+      auth: { persistSession: false, autoRefreshToken: false },
+      global: authorization ? { headers: { Authorization: authorization } } : undefined,
+    }),
+    serviceRoleConfigured: Boolean(serviceRoleKey),
+  };
 };
 
 const secureEqual = (left: string, right: string) => {
@@ -36,10 +44,12 @@ const secureEqual = (left: string, right: string) => {
 export const authorizeHomeworkApi = async (
   request: Request,
   client: SupabaseClient,
+  serviceRoleConfigured: boolean,
 ): Promise<{ actor: HomeworkApiActor | null; error?: string }> => {
   const expectedAutomationKey = process.env.HOMEWORK_AUTOMATION_SECRET;
   const providedAutomationKey = request.headers.get('x-homework-api-key') ?? '';
   if (
+    serviceRoleConfigured &&
     expectedAutomationKey &&
     providedAutomationKey &&
     secureEqual(providedAutomationKey, expectedAutomationKey)
@@ -181,5 +191,4 @@ export const createHomeworkAssignment = async (
   };
 };
 
-export const getHomeworkServiceClient = getServiceClient;
-
+export const getHomeworkApiClient = getApiClient;

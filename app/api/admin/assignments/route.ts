@@ -2,22 +2,26 @@ import { NextResponse } from 'next/server';
 import {
   authorizeHomeworkApi,
   createHomeworkAssignment,
-  getHomeworkServiceClient,
+  getHomeworkApiClient,
   validateHomeworkPayload,
 } from '@/src/server/homeworkAssignments';
 
 export const runtime = 'nodejs';
 
 export async function POST(request: Request) {
-  const client = getHomeworkServiceClient();
-  if (!client) {
+  const api = getHomeworkApiClient(request);
+  if (!api) {
     return NextResponse.json(
-      { error: 'homework_api_not_configured', message: 'Supabase service credentials are missing.' },
+      { error: 'homework_api_not_configured', message: 'Supabase credentials are missing.' },
       { status: 503 },
     );
   }
 
-  const authorization = await authorizeHomeworkApi(request, client);
+  const authorization = await authorizeHomeworkApi(
+    request,
+    api.client,
+    api.serviceRoleConfigured,
+  );
   if (!authorization.actor) {
     return NextResponse.json(
       { error: 'unauthorized', message: authorization.error },
@@ -35,7 +39,11 @@ export async function POST(request: Request) {
   }
 
   try {
-    const assignment = await createHomeworkAssignment(client, validation.input, authorization.actor);
+    const assignment = await createHomeworkAssignment(
+      api.client,
+      validation.input,
+      authorization.actor,
+    );
     return NextResponse.json({ assignment }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
@@ -47,4 +55,3 @@ export async function POST(request: Request) {
     );
   }
 }
-

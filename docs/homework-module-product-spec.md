@@ -180,7 +180,7 @@ Unchanged. It remains the canonical record for answers, scores, correctness, fee
 }
 ```
 
-The endpoint supports either an authenticated Supabase admin bearer token or an `x-homework-api-key` matching the server-only `HOMEWORK_AUTOMATION_SECRET`.
+The endpoint always supports an authenticated Supabase admin bearer token. It can also support an `x-homework-api-key` matching the server-only `HOMEWORK_AUTOMATION_SECRET` when a Supabase service-role key is configured on the server.
 
 ## 8. Permission and integrity rules
 
@@ -220,4 +220,3 @@ The endpoint supports either an authenticated Supabase admin bearer token or an 
 3. Add reminders for upcoming and overdue assignments.
 4. Add assignment-specific redo rules only if reused-question semantics become a real teaching problem.
 5. Add AI selection quality checks such as topic coverage, estimated duration, and duplicate-concept warnings.
-
