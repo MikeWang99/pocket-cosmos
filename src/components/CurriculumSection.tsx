@@ -283,7 +283,7 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
             value={writtenAnswer}
             onChange={(event) => setWrittenAnswer(event.target.value)}
             className="mt-4 min-h-32 w-full rounded-lg border border-slate-200 bg-[#ffffff] p-3 text-sm leading-6 text-slate-800 outline-none transition-colors placeholder:text-slate-400 focus:border-nebula/60"
-            placeholder={language === 'zh' ? '在这里写下你的实验设计思路。' : 'Write your experimental design here.'}
+            placeholder={language === 'zh' ? '在这里写下你的答案。' : 'Write your answer here.'}
           />
 
           <div className="mt-4 flex flex-wrap gap-2">
@@ -880,7 +880,8 @@ export const CurriculumSection: React.FC = () => {
                       </span>
                     </span>
                     <span className="hidden text-xs text-slate-500 md:block">
-                      {unit.weighting} {t.curriculum.examWeight}
+                      {unit.weighting}
+                      {course.id === 'cambridge-igcse-0625' ? '' : ` ${t.curriculum.examWeight}`}
                     </span>
                     <ChevronDown className={`h-5 w-5 shrink-0 text-slate-500 transition-transform ${open ? 'rotate-180' : ''}`} />
                   </button>
