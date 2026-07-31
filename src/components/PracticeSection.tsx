@@ -385,6 +385,7 @@ export const PracticeSection: React.FC = () => {
     activeStep?.image?.role === 'question' &&
     activeSet.system === 'igcse' &&
     (activePracticeKind === 'structured' || activePracticeKind === 'paper5');
+  const shouldHideAnswerWorkspace = shouldHideImageDuplicatePrompt;
   const shouldShowPrompt =
     activeStep &&
     !shouldHideImageDuplicatePrompt &&
@@ -1146,7 +1147,7 @@ export const PracticeSection: React.FC = () => {
                       </div>
                     )}
                   </div>
-                ) : (
+                ) : shouldHideAnswerWorkspace ? null : (
                   <>
                     <div className="flex items-center justify-between gap-4 mb-3">
                       <label htmlFor="practice-answer" className="text-xs uppercase tracking-widest text-slate-500">
@@ -1220,16 +1221,18 @@ export const PracticeSection: React.FC = () => {
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
-                  <button
-                    onClick={submitAnswer}
-                    disabled={
-                      isActiveMultipleChoice ? !currentAnswer || Boolean(currentResult) : currentAnswer.trim().length < 8
-                    }
-                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold uppercase tracking-widest text-black transition-colors hover:bg-nebula hover:text-white disabled:opacity-30"
-                  >
-                    <Sparkles className="w-4 h-4" />
-                    {isActiveMultipleChoice ? t.practice.checkAnswer : t.practice.scoreResponse}
-                  </button>
+                  {!shouldHideAnswerWorkspace && (
+                    <button
+                      onClick={submitAnswer}
+                      disabled={
+                        isActiveMultipleChoice ? !currentAnswer || Boolean(currentResult) : currentAnswer.trim().length < 8
+                      }
+                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold uppercase tracking-widest text-black transition-colors hover:bg-nebula hover:text-white disabled:opacity-30"
+                    >
+                      <Sparkles className="w-4 h-4" />
+                      {isActiveMultipleChoice ? t.practice.checkAnswer : t.practice.scoreResponse}
+                    </button>
+                  )}
                 </div>
               </div>
               </motion.div>
