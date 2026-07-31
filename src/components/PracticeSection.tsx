@@ -344,6 +344,7 @@ export const PracticeSection: React.FC = () => {
   };
   const setCopy = getSetCopy(activeSet.id);
   const isIgcseSet = activeSet.category === 'igcse';
+  const activePracticeKind = inferPracticeKind(activeSet);
 
   // Filter steps by difficulty for IGCSE sets
   const practiceSteps = useMemo(() => {
@@ -380,6 +381,14 @@ export const PracticeSection: React.FC = () => {
 
   const activeStep = practiceSteps[activeIndex] ?? practiceSteps[0];
   const isActiveMultipleChoice = activeStep ? isMultipleChoiceStep(activeStep) : false;
+  const shouldHideImageDuplicatePrompt =
+    activeStep?.image?.role === 'question' &&
+    activeSet.system === 'igcse' &&
+    (activePracticeKind === 'structured' || activePracticeKind === 'paper5');
+  const shouldShowPrompt =
+    activeStep &&
+    !shouldHideImageDuplicatePrompt &&
+    !activeStep.prompt.startsWith('Select the correct option');
   const currentAnswer = activeStep ? (answers[activeStep.id] ?? '') : '';
   const currentResult = activeStep ? results[activeStep.id] : undefined;
   const completedCount = Object.keys(results).length;
@@ -886,7 +895,7 @@ export const PracticeSection: React.FC = () => {
                 </div>
               );
             })}
-            {isIgcseSet && inferPracticeKind(activeSet) !== 'evaluation' && (
+            {isIgcseSet && activePracticeKind !== 'evaluation' && (
               <div className="mt-3">
                 <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
                   {t.practice.difficultyFilter.label}
@@ -1030,8 +1039,8 @@ export const PracticeSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* #7: Hide generic IGCSE prompt */}
-                {!activeStep.prompt.startsWith('Select the correct option') && (
+                {/* Hide duplicated OCR prompt when the question image already contains the stem. */}
+                {shouldShowPrompt && (
                 <div className="mt-6">
                   <div className="rounded-lg border border-white/10 bg-white/[0.04] p-4 sm:p-5 md:p-6">
                     <div className="space-y-3 whitespace-pre-line text-base leading-relaxed text-white md:text-lg">
