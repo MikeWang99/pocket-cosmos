@@ -15,6 +15,7 @@ import {
   capacitorEnergyAndDielectricLessons,
   electricCurrentToOhmsLawLessons,
 } from './emCapacitorEnergyToOhmsLawKnowledgeMap';
+import { igcseUnit1Lessons } from './igcseUnit1KnowledgeMap';
 
 export type LearningSystemId = 'ap' | 'igcse' | 'alevel' | 'ib' | 'competition';
 
@@ -2422,7 +2423,7 @@ const cambridgeIgcse0625: CurriculumCourse = {
   sourceUrl: 'https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-igcse-physics-0625/',
   sourceLabel: text('Cambridge IGCSE Physics 0625', '剑桥 IGCSE 物理 0625'),
   units: [
-    unit(1, 'Motion, Forces and Energy', '运动、力与能量', 'Chapter 1 question bank', [
+    unit(1, 'Motion, Forces and Energy', '运动、力与能量', 'Core + Supplement', [
       topic('1.1', 'Physical quantities and measurement techniques', '物理量与测量技术'),
       topic('1.2', 'Motion', '运动'),
       topic('1.3', 'Mass and weight', '质量与重量'),
@@ -2456,89 +2457,7 @@ const cambridgeIgcse0625: CurriculumCourse = {
         ...diagrams.momentum,
         ...diagrams.energy,
       ],
-      lessons: [
-        {
-          title: text('Forces, Motion and Newton\'s Second Law', '力、运动与牛顿第二定律'),
-          description: text(
-            'How forces change motion: resultant force, F = ma, mass vs weight, and momentum conservation.',
-            '力如何改变运动：合力、F = ma、质量与重量、以及动量守恒。',
-          ),
-          sections: [
-            {
-              heading: text('0. What is a force?', '0. 什么是力？'),
-              paragraphs: [
-                text(
-                  'A force is a push or pull that can change an object\'s speed, direction, or shape. Forces are vectors (they have magnitude and direction). When multiple forces act on an object, we find the resultant (net) force. If the resultant is zero, the object is in equilibrium (stationary or moving at constant velocity). If the resultant is not zero, the object accelerates.',
-                  '力是可以改变物体速度、方向或形状的推或拉。力是矢量（有大小和方向）。当多个力作用在物体上时，我们求合力（净力）。如果合力为零，物体处于平衡状态（静止或匀速运动）。如果合力不为零，物体加速。',
-                ),
-              ],
-              takeaway: text(
-                'No resultant force = no acceleration. This is Newton\'s first law.',
-                '没有合力 = 没有加速度。这就是牛顿第一定律。',
-              ),
-            },
-            {
-              heading: text('1. Newton\'s second law: F = ma', '1. 牛顿第二定律：F = ma'),
-              paragraphs: [
-                text(
-                  'The acceleration of an object is proportional to the resultant force and inversely proportional to its mass: a = F/m. The unit of force is the newton (N): 1 N gives 1 kg an acceleration of 1 m/s². Mass is the amount of matter (kg, same everywhere). Weight is the gravitational force: W = mg (N, depends on g). On Earth g ≈ 9.8 N/kg; on the Moon g ≈ 1.6 N/kg.',
-                  '物体的加速度与合力成正比，与质量成反比：a = F/m。力的单位是牛顿（N）：1 N 使 1 kg 产生 1 m/s² 的加速度。质量是物质的量（kg，处处相同）。重量是引力：W = mg（N，取决于 g）。地球上 g ≈ 9.8 N/kg；月球上 g ≈ 1.6 N/kg。',
-                ),
-              ],
-              formulas: [
-                formula('Newton\'s second law', '牛顿第二定律', 'F=ma'),
-                formula('Weight', '重量', 'W=mg'),
-              ],
-            },
-            {
-              heading: text('2. Momentum and conservation', '2. 动量与守恒'),
-              paragraphs: [
-                text(
-                  'Momentum p = mv (kg m/s). It is a vector. In any collision or interaction, total momentum is conserved (if no external force): m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂. This works for collisions, explosions, and recoil. Impulse = change in momentum = F × t.',
-                  '动量 p = mv（kg m/s）。它是矢量。在任何碰撞或相互作用中，总动量守恒（无外力时）：m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂。这适用于碰撞、爆炸和后坐。冲量 = 动量变化 = F × t。',
-                ),
-              ],
-              formulas: [
-                formula('Momentum', '动量', 'p=mv'),
-                formula('Conservation', '动量守恒', 'm_1u_1+m_2u_2=m_1v_1+m_2v_2'),
-              ],
-            },
-            {
-              heading: text('3. Classroom check: collision', '3. 课堂题：碰撞'),
-              classroomQuestions: [
-                {
-                  id: 'igcse-momentum-collision',
-                  title: text('Trolley collision', '小车碰撞'),
-                  prompt: text(
-                    'A 2 kg trolley moving at 3 m/s collides with a stationary 1 kg trolley. They stick together. What is their speed after the collision?',
-                    '一个 2 kg 小车以 3 m/s 撞击一个静止的 1 kg 小车。它们粘在一起。碰撞后速度是多少？',
-                  ),
-                  choices: [
-                    { label: 'A', text: text('2 m/s', '2 m/s') },
-                    { label: 'B', text: text('3 m/s', '3 m/s') },
-                    { label: 'C', text: text('1.5 m/s', '1.5 m/s') },
-                    { label: 'D', text: text('6 m/s', '6 m/s') },
-                  ],
-                  correctAnswer: 'A',
-                  feedback: text(
-                    'Momentum before = 2×3 + 1×0 = 6 kg m/s. After: (2+1)v = 6, so v = 2 m/s.',
-                    '碰撞前动量 = 2×3 + 1×0 = 6 kg m/s。碰撞后：(2+1)v = 6，所以 v = 2 m/s。',
-                  ),
-                },
-              ],
-            },
-            {
-              heading: text('4. Common mistakes', '4. 常见错误'),
-              bullets: [
-                text('Confusing mass and weight (mass is constant, weight depends on g).', '混淆质量和重量（质量恒定，重量取决于 g）。'),
-                text('Forgetting that momentum is a vector (direction matters!).', '忘记动量是矢量（方向很重要！）。'),
-                text('Using F = ma with individual forces instead of the resultant force.', '用 F = ma 时用单个力而不是合力。'),
-                text('Thinking a moving object must have a force acting on it (it doesn\'t if moving at constant velocity).', '以为运动的物体一定有力作用（匀速运动时不需要）。'),
-              ],
-            },
-          ],
-        },
-      ],
+      lessons: igcseUnit1Lessons,
     }),
     unit(2, 'Thermal Physics', '热物理', 'Core + Supplement', [
       topic('2.1', 'Simple kinetic molecular model of matter', '分子动理论模型'),
