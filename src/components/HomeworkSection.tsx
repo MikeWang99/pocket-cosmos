@@ -294,12 +294,18 @@ export const HomeworkSection: React.FC = () => {
     currentStudentId,
     saveAttempt,
   } = useHomeworkData();
-  const [view, setView] = useState<HomeworkView>('student');
+  const [view, setView] = useState<HomeworkView>(() =>
+    isAdmin || demoMode ? 'teacher' : 'student',
+  );
   const [activeAssignmentId, setActiveAssignmentId] = useState<string | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [results, setResults] = useState<Record<string, EvaluationResult>>({});
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (isAdmin || demoMode) setView('teacher');
+  }, [demoMode, isAdmin]);
 
   const publishedAssignments = useMemo(
     () =>
@@ -448,13 +454,13 @@ export const HomeworkSection: React.FC = () => {
         </div>
         {(isAdmin || demoMode) && (
           <div className="flex rounded-full border border-white/10 bg-white/[0.03] p-1">
-            <button type="button" onClick={() => setView('student')} className={`rounded-full px-4 py-2 text-xs font-semibold ${view === 'student' ? 'bg-white text-black' : 'text-slate-400'}`}>
-              <GraduationCap className="mr-1.5 inline h-4 w-4" />
-              {language === 'zh' ? '学生视图' : 'Student'}
-            </button>
             <button type="button" onClick={() => setView('teacher')} className={`rounded-full px-4 py-2 text-xs font-semibold ${view === 'teacher' ? 'bg-white text-black' : 'text-slate-400'}`}>
               <ShieldCheck className="mr-1.5 inline h-4 w-4" />
               {language === 'zh' ? '老师视图' : 'Teacher'}
+            </button>
+            <button type="button" onClick={() => setView('student')} className={`rounded-full px-4 py-2 text-xs font-semibold ${view === 'student' ? 'bg-white text-black' : 'text-slate-400'}`}>
+              <GraduationCap className="mr-1.5 inline h-4 w-4" />
+              {language === 'zh' ? '学生视图' : 'Student'}
             </button>
           </div>
         )}

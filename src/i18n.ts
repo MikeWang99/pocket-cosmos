@@ -7,7 +7,7 @@ export const i18n = {
       curriculum: 'Knowledge Map',
       practice: 'Practice',
       homework: 'Homework',
-      admin: 'Admin',
+      admin: 'Practice & Access',
       language: 'English',
     },
     site: {
@@ -388,7 +388,7 @@ export const i18n = {
       curriculum: '知识地图',
       practice: '练习',
       homework: '作业',
-      admin: '后台',
+      admin: '练习与权限',
       language: '中文',
     },
     site: {
