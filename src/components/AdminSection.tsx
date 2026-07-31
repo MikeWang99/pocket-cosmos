@@ -2,12 +2,14 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion } from 'motion/react';
 import katex from 'katex';
 import {
+  ArrowRight,
   BarChart3,
   CheckCircle2,
   CircleX,
   ClipboardList,
   FileText,
   Lock,
+  ListChecks,
   ShieldCheck,
   Unlock,
   UserRound,
@@ -19,7 +21,6 @@ import { useLanguage } from '../LanguageContext';
 import { getSupabaseClient } from '../lib/supabaseClient';
 import { ALL_SYSTEMS } from '../hooks/usePracticePermissions';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
-import { HomeworkAdminPanel } from './HomeworkAdminPanel';
 
 interface PracticeAttemptRow {
   id: string;
@@ -321,6 +322,29 @@ export const AdminSection: React.FC = () => {
 
       {error && <div className="mb-6 rounded-lg border border-rose-500/25 bg-rose-500/10 p-4 text-sm text-rose-700">{error}</div>}
 
+      <a
+        href="/?tab=homework"
+        className="mb-6 flex flex-col gap-4 rounded-xl border border-nebula/25 bg-nebula/[0.08] p-5 transition-colors hover:border-nebula/50 sm:flex-row sm:items-center"
+      >
+        <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-nebula/15 text-nebula">
+          <ListChecks className="h-5 w-5" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="text-sm font-semibold text-white">
+            {language === 'zh' ? '查看某次作业的完成情况与逐题答案' : 'Review an assignment and every student answer'}
+          </div>
+          <div className="mt-1 text-xs leading-5 text-slate-400">
+            {language === 'zh'
+              ? '作业数据统一放在「作业 → 老师视图」。本页只保留日常练习记录和账号权限。'
+              : 'Assignment data now lives in Homework → Teacher. This page is for general practice records and account access.'}
+          </div>
+        </div>
+        <span className="inline-flex items-center gap-2 text-xs font-semibold text-nebula">
+          {language === 'zh' ? '前往老师视图' : 'Open Teacher view'}
+          <ArrowRight className="h-4 w-4" />
+        </span>
+      </a>
+
       <div className="grid gap-5 xl:grid-cols-[320px_minmax(0,1fr)] xl:gap-6 2xl:grid-cols-[340px_minmax(0,1fr)]">
         <aside className="glass-panel h-fit rounded-lg p-3 xl:sticky xl:top-6">
           <div className="flex items-center gap-2 px-3 py-3 text-[10px] uppercase tracking-widest text-slate-500">
@@ -619,8 +643,6 @@ export const AdminSection: React.FC = () => {
           )}
         </div>
       </div>
-
-      <HomeworkAdminPanel compact />
 
       {/* Permission Management */}
       <PermissionManager />

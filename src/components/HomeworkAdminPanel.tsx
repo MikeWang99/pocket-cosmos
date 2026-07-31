@@ -89,12 +89,14 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
     loading,
     error,
     demoMode,
+    currentStudentId,
     createAssignment,
     updateAssignmentStatus,
     resetDemo,
   } = useHomeworkData();
   const [view, setView] = useState<AdminView>('overview');
   const [selectedAssignmentId, setSelectedAssignmentId] = useState<string | null>(null);
+  const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueAt, setDueAt] = useState('');
@@ -228,13 +230,30 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
     const itemKeys = new Set(
       selectedAssignment.items.map((item) => `${item.practiceSetId}:${item.questionId}`),
     );
-    const audience = selectedAssignment.assignedToAll
-      ? profiles
-      : profiles.filter((profile) => selectedAssignment.studentIds.includes(profile.userId));
-    return audience.map((profile) => {
+    const matchingAttempts = attempts.filter((attempt) =>
+      itemKeys.has(`${attempt.practiceSetId}:${attempt.questionId}`),
+    );
+    const profileMap = new Map(profiles.map((profile) => [profile.userId, profile]));
+    const audienceIds = new Set(
+      selectedAssignment.assignedToAll
+        ? [
+            ...profiles.map((profile) => profile.userId),
+            ...matchingAttempts.map((attempt) => attempt.studentId),
+          ]
+        : selectedAssignment.studentIds,
+    );
+    if (!demoMode) audienceIds.delete(currentStudentId);
+
+    return Array.from(audienceIds).map((studentId) => {
+      const fallbackAttempt = matchingAttempts.find((attempt) => attempt.studentId === studentId);
+      const profile = profileMap.get(studentId) ?? {
+        userId: studentId,
+        email: fallbackAttempt?.studentEmail ?? studentId.slice(0, 8),
+        displayName: fallbackAttempt?.studentEmail?.split('@')[0] ?? studentId.slice(0, 8),
+      };
       const studentAttempts = attempts.filter(
         (attempt) =>
-          attempt.studentId === profile.userId &&
+          attempt.studentId === studentId &&
           itemKeys.has(`${attempt.practiceSetId}:${attempt.questionId}`),
       );
       const completed = new Set(
@@ -253,8 +272,34 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
         accuracy: studentAttempts.length ? Math.round((correct / studentAttempts.length) * 100) : 0,
         latest,
       };
+    }).sort((left, right) => {
+      if (!left.latest && !right.latest) return left.profile.displayName.localeCompare(right.profile.displayName);
+      if (!left.latest) return 1;
+      if (!right.latest) return -1;
+      return right.latest.localeCompare(left.latest);
     });
-  }, [attempts, profiles, selectedAssignment]);
+  }, [attempts, currentStudentId, demoMode, profiles, selectedAssignment]);
+
+  const selectedStudentProgress =
+    assignmentProgress.find((row) => row.profile.userId === selectedStudentId) ??
+    assignmentProgress[0] ??
+    null;
+  const selectedStudentAttemptMap = useMemo(() => {
+    if (!selectedAssignment || !selectedStudentProgress) return new Map();
+    const itemKeys = new Set(
+      selectedAssignment.items.map((item) => `${item.practiceSetId}:${item.questionId}`),
+    );
+    return attempts
+      .filter(
+        (attempt) =>
+          attempt.studentId === selectedStudentProgress.profile.userId &&
+          itemKeys.has(`${attempt.practiceSetId}:${attempt.questionId}`),
+      )
+      .reduce<Map<string, (typeof attempts)[number]>>((map, attempt) => {
+        map.set(`${attempt.practiceSetId}:${attempt.questionId}`, attempt);
+        return map;
+      }, new Map());
+  }, [attempts, selectedAssignment, selectedStudentProgress]);
 
   if (loading) {
     return <div className="glass-panel rounded-xl p-8 text-sm text-slate-400">{language === 'zh' ? '正在加载作业后台…' : 'Loading homework admin…'}</div>;
@@ -411,13 +456,20 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                           <th className="px-5 py-3">{language === 'zh' ? '正确率' : 'Accuracy'}</th>
                           <th className="px-5 py-3">{language === 'zh' ? '状态' : 'Status'}</th>
                           <th className="px-5 py-3">{language === 'zh' ? '最近作答' : 'Last activity'}</th>
+                          <th className="px-5 py-3 text-right">{language === 'zh' ? '答题记录' : 'Answers'}</th>
                         </tr>
                       </thead>
                       <tbody>
                         {assignmentProgress.map((row) => {
                           const percent = row.total ? Math.round((row.completed / row.total) * 100) : 0;
+                          const isSelected = row.profile.userId === selectedStudentProgress?.profile.userId;
                           return (
-                            <tr key={row.profile.userId} className="border-t border-white/5">
+                            <tr
+                              key={row.profile.userId}
+                              className={`border-t border-white/5 transition-colors ${
+                                isSelected ? 'bg-nebula/10' : 'hover:bg-white/[0.02]'
+                              }`}
+                            >
                               <td className="px-5 py-4">
                                 <div className="font-semibold text-white">{row.profile.displayName}</div>
                                 <div className="text-xs text-slate-500">{row.profile.email}</div>
@@ -441,13 +493,142 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                                 </span>
                               </td>
                               <td className="px-5 py-4 text-slate-500">{row.latest ? formatDue(row.latest, language) : '—'}</td>
+                              <td className="px-5 py-4 text-right">
+                                <button
+                                  type="button"
+                                  onClick={() => setSelectedStudentId(row.profile.userId)}
+                                  className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${
+                                    isSelected
+                                      ? 'border-nebula/50 bg-nebula/15 text-white'
+                                      : 'border-white/10 text-slate-400 hover:border-white/30 hover:text-white'
+                                  }`}
+                                >
+                                  <Eye className="mr-1.5 inline h-3.5 w-3.5" />
+                                  {language === 'zh' ? '查看' : 'View'}
+                                </button>
+                              </td>
                             </tr>
                           );
                         })}
+                        {!assignmentProgress.length && (
+                          <tr>
+                            <td colSpan={6} className="px-5 py-8 text-center text-sm text-slate-500">
+                              {language === 'zh'
+                                ? '这份作业暂时没有可显示的学生记录。'
+                                : 'No student records are available for this assignment yet.'}
+                            </td>
+                          </tr>
+                        )}
                       </tbody>
                     </table>
                   </div>
                 </div>
+
+                {selectedStudentProgress && (
+                  <div className="glass-panel rounded-xl p-5 sm:p-6">
+                    <div className="flex flex-col gap-3 border-b border-white/10 pb-5 sm:flex-row sm:items-end sm:justify-between">
+                      <div>
+                        <div className="text-[10px] font-semibold uppercase tracking-widest text-nebula">
+                          {language === 'zh' ? '逐题答题记录' : 'Question-by-question answers'}
+                        </div>
+                        <h3 className="mt-2 font-serif text-2xl text-white">
+                          {selectedStudentProgress.profile.displayName}
+                        </h3>
+                        <p className="mt-1 text-xs text-slate-500">{selectedStudentProgress.profile.email}</p>
+                      </div>
+                      <div className="text-sm text-slate-400">
+                        {selectedStudentProgress.completed}/{selectedStudentProgress.total}{' '}
+                        {language === 'zh' ? '题已作答' : 'answered'}
+                        <span className="mx-2 text-slate-700">·</span>
+                        {language === 'zh' ? '正确率' : 'Accuracy'} {selectedStudentProgress.accuracy}%
+                      </div>
+                    </div>
+
+                    <div className="mt-4 space-y-3">
+                      {selectedAssignment.items.map((item, index) => {
+                        const attempt = selectedStudentAttemptMap.get(
+                          `${item.practiceSetId}:${item.questionId}`,
+                        );
+                        return (
+                          <div
+                            key={`${item.practiceSetId}:${item.questionId}`}
+                            className="rounded-lg border border-white/10 bg-white/[0.025] p-4"
+                          >
+                            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                              <div>
+                                <div className="text-[10px] uppercase tracking-widest text-slate-500">
+                                  {language === 'zh' ? `第 ${index + 1} 题` : `Question ${index + 1}`}
+                                </div>
+                                <div className="mt-1 text-sm font-semibold text-white">
+                                  {item.questionTitle ?? item.questionId}
+                                </div>
+                              </div>
+                              {attempt ? (
+                                <div className="flex items-center gap-2">
+                                  <span
+                                    className={`rounded-full px-2.5 py-1 text-xs ${
+                                      attempt.isCorrect
+                                        ? 'bg-emerald-500/10 text-emerald-300'
+                                        : 'bg-rose-500/10 text-rose-300'
+                                    }`}
+                                  >
+                                    {attempt.isCorrect
+                                      ? language === 'zh' ? '正确' : 'Correct'
+                                      : language === 'zh' ? '错误' : 'Incorrect'}
+                                  </span>
+                                  <span className="text-xs font-semibold text-slate-300">
+                                    {attempt.score}/{attempt.maxScore}
+                                  </span>
+                                </div>
+                              ) : (
+                                <span className="w-fit rounded-full bg-white/5 px-2.5 py-1 text-xs text-slate-500">
+                                  {language === 'zh' ? '未作答' : 'Not answered'}
+                                </span>
+                              )}
+                            </div>
+
+                            {attempt && (
+                              <div className="mt-4 grid gap-3 lg:grid-cols-[minmax(0,1fr)_220px]">
+                                <div className="rounded-lg border border-white/5 bg-black/20 p-3">
+                                  <div className="text-[10px] uppercase tracking-widest text-slate-500">
+                                    {language === 'zh' ? '学生答案' : 'Student answer'}
+                                  </div>
+                                  <div className="mt-2 whitespace-pre-wrap break-words text-sm leading-6 text-slate-200">
+                                    {attempt.answer || (language === 'zh' ? '未保存文字答案' : 'No written answer saved')}
+                                  </div>
+                                  {!!attempt.result.misses.length && (
+                                    <div className="mt-3 border-t border-white/5 pt-3">
+                                      <div className="text-[10px] uppercase tracking-widest text-amber-300/70">
+                                        {language === 'zh' ? '评分反馈' : 'Marking feedback'}
+                                      </div>
+                                      <div className="mt-2 space-y-1 text-xs leading-5 text-slate-400">
+                                        {attempt.result.misses.map((miss) => (
+                                          <div key={miss.id}>{miss.label}</div>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="rounded-lg border border-white/5 bg-black/20 p-3 text-xs text-slate-400">
+                                  <div className="text-[10px] uppercase tracking-widest text-slate-500">
+                                    {language === 'zh' ? '提交时间' : 'Submitted'}
+                                  </div>
+                                  <div className="mt-2 text-slate-300">
+                                    {formatDue(attempt.updatedAt, language)}
+                                  </div>
+                                  <div className="mt-4 text-[10px] uppercase tracking-widest text-slate-500">
+                                    {language === 'zh' ? '题库来源' : 'Question bank'}
+                                  </div>
+                                  <div className="mt-2 break-words">{item.practiceSetTitle ?? item.practiceSetId}</div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </>
             ) : (
               <div className="glass-panel rounded-xl p-10 text-center text-sm text-slate-500">
