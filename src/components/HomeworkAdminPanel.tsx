@@ -5,7 +5,7 @@ import {
   ArrowUp,
   Bot,
   CalendarClock,
-  CheckCircle2,
+  ClipboardList,
   ClipboardPlus,
   Eye,
   FileEdit,
@@ -16,10 +16,11 @@ import {
   UsersRound,
 } from 'lucide-react';
 import { practiceSets } from '../data/practiceSets';
-import { isSupabaseUuid, questionsFromNumbers } from '../homework/catalog';
+import { isSupabaseUuid, questionsFromNumbers, resolveHomeworkItem } from '../homework/catalog';
 import type { CreateHomeworkInput, HomeworkAssignment } from '../homework/types';
 import { useHomeworkData } from '../hooks/useHomeworkData';
 import { useLanguage } from '../LanguageContext';
+import { HomeworkQuestionReview } from './HomeworkQuestionReview';
 
 type AdminView = 'overview' | 'create';
 
@@ -97,6 +98,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
   const [view, setView] = useState<AdminView>('overview');
   const [selectedAssignmentId, setSelectedAssignmentId] = useState<string | null>(null);
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
+  const [selectedReviewQuestionKey, setSelectedReviewQuestionKey] = useState<string | null>(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueAt, setDueAt] = useState('');
@@ -301,6 +303,44 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
       }, new Map());
   }, [attempts, selectedAssignment, selectedStudentProgress]);
 
+  const reviewItems = useMemo(() => {
+    if (!selectedAssignment) return [];
+    return selectedAssignment.items.map((item, index) => {
+      const key = `${item.practiceSetId}:${item.questionId}`;
+      return {
+        key,
+        index,
+        item,
+        resolved: resolveHomeworkItem(item),
+        attempt: selectedStudentAttemptMap.get(key),
+      };
+    });
+  }, [selectedAssignment, selectedStudentAttemptMap]);
+  const selectedReviewItem =
+    reviewItems.find((entry) => entry.key === selectedReviewQuestionKey) ??
+    reviewItems.find((entry) => entry.attempt && !entry.attempt.isCorrect) ??
+    reviewItems.find((entry) => entry.attempt) ??
+    reviewItems[0] ??
+    null;
+  const correctReviewCount = reviewItems.filter((entry) => entry.attempt?.isCorrect).length;
+  const incorrectReviewCount = reviewItems.filter(
+    (entry) => entry.attempt && !entry.attempt.isCorrect,
+  ).length;
+  const unansweredReviewCount = reviewItems.filter((entry) => !entry.attempt).length;
+
+  const openStudentReview = (studentId: string) => {
+    setSelectedStudentId(studentId);
+    setSelectedReviewQuestionKey(null);
+    if (typeof window !== 'undefined') {
+      window.requestAnimationFrame(() => {
+        document.getElementById('assignment-answer-review')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      });
+    }
+  };
+
   if (loading) {
     return <div className="glass-panel rounded-xl p-8 text-sm text-slate-400">{language === 'zh' ? '正在加载作业后台…' : 'Loading homework admin…'}</div>;
   }
@@ -366,7 +406,11 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                 <button
                   key={assignment.id}
                   type="button"
-                  onClick={() => setSelectedAssignmentId(assignment.id)}
+                  onClick={() => {
+                    setSelectedAssignmentId(assignment.id);
+                    setSelectedStudentId(null);
+                    setSelectedReviewQuestionKey(null);
+                  }}
                   className={`w-full rounded-lg border p-4 text-left transition-colors ${
                     selectedAssignment?.id === assignment.id
                       ? 'border-nebula/60 bg-nebula/10'
@@ -496,7 +540,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                               <td className="px-5 py-4 text-right">
                                 <button
                                   type="button"
-                                  onClick={() => setSelectedStudentId(row.profile.userId)}
+                                  onClick={() => openStudentReview(row.profile.userId)}
                                   className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${
                                     isSelected
                                       ? 'border-nebula/50 bg-nebula/15 text-white'
@@ -525,107 +569,90 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                 </div>
 
                 {selectedStudentProgress && (
-                  <div className="glass-panel rounded-xl p-5 sm:p-6">
-                    <div className="flex flex-col gap-3 border-b border-white/10 pb-5 sm:flex-row sm:items-end sm:justify-between">
-                      <div>
-                        <div className="text-[10px] font-semibold uppercase tracking-widest text-nebula">
-                          {language === 'zh' ? '逐题答题记录' : 'Question-by-question answers'}
+                  <div id="assignment-answer-review" className="scroll-mt-6 space-y-4">
+                    <div className="glass-panel rounded-xl p-4 sm:p-5">
+                      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                        <div className="min-w-0">
+                          <div className="text-[10px] font-semibold uppercase tracking-widest text-nebula">
+                            {language === 'zh' ? '整份作业复盘' : 'Full assignment review'}
+                          </div>
+                          <div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                            <h3 className="font-serif text-xl text-white sm:text-2xl">
+                              {selectedStudentProgress.profile.displayName}
+                            </h3>
+                            <span className="text-xs text-slate-500">{selectedStudentProgress.profile.email}</span>
+                          </div>
                         </div>
-                        <h3 className="mt-2 font-serif text-2xl text-white">
-                          {selectedStudentProgress.profile.displayName}
-                        </h3>
-                        <p className="mt-1 text-xs text-slate-500">{selectedStudentProgress.profile.email}</p>
-                      </div>
-                      <div className="text-sm text-slate-400">
-                        {selectedStudentProgress.completed}/{selectedStudentProgress.total}{' '}
-                        {language === 'zh' ? '题已作答' : 'answered'}
-                        <span className="mx-2 text-slate-700">·</span>
-                        {language === 'zh' ? '正确率' : 'Accuracy'} {selectedStudentProgress.accuracy}%
+                        <div className="grid grid-cols-3 gap-2 text-center">
+                          <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/[0.06] px-3 py-2">
+                            <div className="text-[9px] uppercase tracking-widest text-emerald-300/70">{language === 'zh' ? '正确' : 'Correct'}</div>
+                            <div className="mt-0.5 text-lg font-semibold text-emerald-300">{correctReviewCount}</div>
+                          </div>
+                          <div className="rounded-lg border border-rose-500/20 bg-rose-500/[0.06] px-3 py-2">
+                            <div className="text-[9px] uppercase tracking-widest text-rose-300/70">{language === 'zh' ? '错误' : 'Wrong'}</div>
+                            <div className="mt-0.5 text-lg font-semibold text-rose-300">{incorrectReviewCount}</div>
+                          </div>
+                          <div className="rounded-lg border border-white/10 bg-white/[0.025] px-3 py-2">
+                            <div className="text-[9px] uppercase tracking-widest text-slate-500">{language === 'zh' ? '未答' : 'Open'}</div>
+                            <div className="mt-0.5 text-lg font-semibold text-slate-400">{unansweredReviewCount}</div>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="mt-4 space-y-3">
-                      {selectedAssignment.items.map((item, index) => {
-                        const attempt = selectedStudentAttemptMap.get(
-                          `${item.practiceSetId}:${item.questionId}`,
-                        );
-                        return (
-                          <div
-                            key={`${item.practiceSetId}:${item.questionId}`}
-                            className="rounded-lg border border-white/10 bg-white/[0.025] p-4"
-                          >
-                            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                              <div>
-                                <div className="text-[10px] uppercase tracking-widest text-slate-500">
-                                  {language === 'zh' ? `第 ${index + 1} 题` : `Question ${index + 1}`}
-                                </div>
-                                <div className="mt-1 text-sm font-semibold text-white">
-                                  {item.questionTitle ?? item.questionId}
-                                </div>
-                              </div>
-                              {attempt ? (
-                                <div className="flex items-center gap-2">
-                                  <span
-                                    className={`rounded-full px-2.5 py-1 text-xs ${
-                                      attempt.isCorrect
-                                        ? 'bg-emerald-500/10 text-emerald-300'
-                                        : 'bg-rose-500/10 text-rose-300'
-                                    }`}
-                                  >
-                                    {attempt.isCorrect
-                                      ? language === 'zh' ? '正确' : 'Correct'
-                                      : language === 'zh' ? '错误' : 'Incorrect'}
-                                  </span>
-                                  <span className="text-xs font-semibold text-slate-300">
-                                    {attempt.score}/{attempt.maxScore}
-                                  </span>
-                                </div>
-                              ) : (
-                                <span className="w-fit rounded-full bg-white/5 px-2.5 py-1 text-xs text-slate-500">
-                                  {language === 'zh' ? '未作答' : 'Not answered'}
-                                </span>
-                              )}
-                            </div>
+                    <div className="grid gap-4 lg:grid-cols-[200px_minmax(0,1fr)]">
+                      <aside className="glass-panel h-fit rounded-xl p-3 lg:sticky lg:top-6">
+                        <div className="flex items-center gap-2 px-2 py-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
+                          <ClipboardList className="h-3.5 w-3.5" />
+                          {language === 'zh' ? '题目导航' : 'Question navigator'}
+                        </div>
+                        <div className="grid grid-cols-6 gap-1.5 px-1 pb-2 sm:grid-cols-10 lg:grid-cols-4">
+                          {reviewItems.map((entry) => {
+                            const selected = entry.key === selectedReviewItem?.key;
+                            return (
+                              <button
+                                key={entry.key}
+                                type="button"
+                                onClick={() => setSelectedReviewQuestionKey(entry.key)}
+                                title={entry.resolved?.step.title ?? entry.item.questionTitle ?? entry.item.questionId}
+                                className={`grid h-9 w-9 place-items-center rounded-md border text-xs font-semibold transition-colors ${
+                                  selected
+                                    ? 'border-nebula/80 bg-nebula/20 text-white ring-1 ring-nebula/30'
+                                    : entry.attempt?.isCorrect
+                                      ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-300 hover:border-emerald-400'
+                                      : entry.attempt
+                                        ? 'border-rose-500/35 bg-rose-500/10 text-rose-300 hover:border-rose-400'
+                                        : 'border-white/8 bg-white/[0.02] text-slate-600 hover:border-white/20'
+                                }`}
+                              >
+                                {entry.index + 1}
+                              </button>
+                            );
+                          })}
+                        </div>
+                        <div className="mt-1 space-y-1 border-t border-white/5 px-2 pt-3 text-[10px] text-slate-500">
+                          <div><span className="mr-2 inline-block h-2 w-2 rounded-full bg-rose-400" />{language === 'zh' ? '错误，建议优先讲解' : 'Incorrect — review first'}</div>
+                          <div><span className="mr-2 inline-block h-2 w-2 rounded-full bg-emerald-400" />{language === 'zh' ? '回答正确' : 'Correct'}</div>
+                          <div><span className="mr-2 inline-block h-2 w-2 rounded-full bg-slate-700" />{language === 'zh' ? '尚未作答' : 'Not answered'}</div>
+                        </div>
+                      </aside>
 
-                            {attempt && (
-                              <div className="mt-4 grid gap-3 lg:grid-cols-[minmax(0,1fr)_220px]">
-                                <div className="rounded-lg border border-white/5 bg-black/20 p-3">
-                                  <div className="text-[10px] uppercase tracking-widest text-slate-500">
-                                    {language === 'zh' ? '学生答案' : 'Student answer'}
-                                  </div>
-                                  <div className="mt-2 whitespace-pre-wrap break-words text-sm leading-6 text-slate-200">
-                                    {attempt.answer || (language === 'zh' ? '未保存文字答案' : 'No written answer saved')}
-                                  </div>
-                                  {!!attempt.result.misses.length && (
-                                    <div className="mt-3 border-t border-white/5 pt-3">
-                                      <div className="text-[10px] uppercase tracking-widest text-amber-300/70">
-                                        {language === 'zh' ? '评分反馈' : 'Marking feedback'}
-                                      </div>
-                                      <div className="mt-2 space-y-1 text-xs leading-5 text-slate-400">
-                                        {attempt.result.misses.map((miss) => (
-                                          <div key={miss.id}>{miss.label}</div>
-                                        ))}
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                                <div className="rounded-lg border border-white/5 bg-black/20 p-3 text-xs text-slate-400">
-                                  <div className="text-[10px] uppercase tracking-widest text-slate-500">
-                                    {language === 'zh' ? '提交时间' : 'Submitted'}
-                                  </div>
-                                  <div className="mt-2 text-slate-300">
-                                    {formatDue(attempt.updatedAt, language)}
-                                  </div>
-                                  <div className="mt-4 text-[10px] uppercase tracking-widest text-slate-500">
-                                    {language === 'zh' ? '题库来源' : 'Question bank'}
-                                  </div>
-                                  <div className="mt-2 break-words">{item.practiceSetTitle ?? item.practiceSetId}</div>
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
+                      {selectedReviewItem?.resolved ? (
+                        <HomeworkQuestionReview
+                          step={selectedReviewItem.resolved.step}
+                          attempt={selectedReviewItem.attempt}
+                          questionNumber={selectedReviewItem.index + 1}
+                          total={reviewItems.length}
+                          setLabel={selectedReviewItem.resolved.setLabel}
+                          language={language}
+                        />
+                      ) : (
+                        <div className="glass-panel rounded-xl p-8 text-sm text-slate-500">
+                          {language === 'zh'
+                            ? '无法从题库中读取这道题的完整内容。'
+                            : 'The full source question could not be resolved.'}
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
