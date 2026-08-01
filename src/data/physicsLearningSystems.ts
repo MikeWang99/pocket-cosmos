@@ -16,6 +16,7 @@ import {
   electricCurrentToOhmsLawLessons,
 } from './emCapacitorEnergyToOhmsLawKnowledgeMap';
 import { igcseUnit1Lessons } from './igcseUnit1KnowledgeMap';
+import { igcseUnit2Lessons } from './igcseUnit2KnowledgeMap';
 
 export type LearningSystemId = 'ap' | 'igcse' | 'alevel' | 'ib' | 'competition';
 
@@ -2460,9 +2461,9 @@ const cambridgeIgcse0625: CurriculumCourse = {
       lessons: igcseUnit1Lessons,
     }),
     unit(2, 'Thermal Physics', '热物理', 'Core + Supplement', [
-      topic('2.1', 'Simple kinetic molecular model of matter', '分子动理论模型'),
+      topic('2.1', 'Kinetic particle model of matter', '物质的粒子模型'),
       topic('2.2', 'Thermal properties and temperature', '热性质与温度'),
-      topic('2.3', 'Thermal processes', '热过程'),
+      topic('2.3', 'Transfer of thermal energy', '热能传递'),
     ], {
       summary: text(
         'Use the particle model to explain states of matter, thermal expansion, temperature, specific heat capacity, latent heat, and energy transfer by conduction, convection, and radiation.',
@@ -2474,10 +2475,9 @@ const cambridgeIgcse0625: CurriculumCourse = {
         ['Distinguish conduction, convection, and radiation with everyday examples.', '用日常例子区分传导、对流和辐射。'],
       ),
       formulas: [
-        formula('Specific heat capacity', '比热容', 'Q=mc\\Delta T'),
-        formula('Specific latent heat', '比潜热', 'Q=mL'),
+        formula('Celsius to kelvin', '摄氏温度转开尔文', 'T\\,(\\mathrm{K})=\\theta\\,(^{\\circ}\\mathrm{C})+273'),
+        formula('Specific heat capacity', '比热容', 'c=\\frac{\\Delta E}{m\\Delta\\theta}'),
         formula('Gas pressure and volume', '气体压强与体积', 'p_1V_1=p_2V_2\\quad (\\text{constant } T)'),
-        formula('Pressure and temperature', '压强与温度', '\\frac{p_1}{T_1}=\\frac{p_2}{T_2}\\quad (\\text{constant } V)'),
       ],
       diagrams: [
         ...diagrams.thermal,
@@ -3078,6 +3078,8 @@ const cambridgeIgcse0625: CurriculumCourse = {
     }),
   ],
 };
+
+cambridgeIgcse0625.units[1].lessons = igcseUnit2Lessons;
 
 const cambridge9702: CurriculumCourse = {
   id: 'cambridge-9702',

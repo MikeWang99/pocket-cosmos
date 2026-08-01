@@ -16,9 +16,9 @@ The website content follows the 2023–2025 Core and Supplement statements. A co
 | 1 | 1.6 Momentum | Complete | Unit 1 |
 | 1 | 1.7 Energy, work and power | Complete | Unit 1 |
 | 1 | 1.8 Pressure | Complete | Unit 1 |
-| 2 | 2.1 Kinetic particle model of matter | Pending | Unit 2 |
-| 2 | 2.2 Thermal properties and temperature | Pending | Unit 2 |
-| 2 | 2.3 Transfer of thermal energy | Pending | Unit 2 |
+| 2 | 2.1 Kinetic particle model of matter | Complete | Unit 2 |
+| 2 | 2.2 Thermal properties and temperature | Complete | Unit 2 |
+| 2 | 2.3 Transfer of thermal energy | Complete | Unit 2 |
 | 3 | 3.1 General properties of waves | Pending | Unit 3 |
 | 3 | 3.2 Light | Pending | Unit 3 |
 | 3 | 3.3 Electromagnetic spectrum | Pending | Unit 3 |
