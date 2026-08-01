@@ -20,6 +20,7 @@ import { igcseUnit2Lessons } from './igcseUnit2KnowledgeMap';
 import { igcseUnit3Lessons } from './igcseUnit3KnowledgeMap';
 import { igcseUnit4Lessons } from './igcseUnit4KnowledgeMap';
 import { igcseUnit5Lessons } from './igcseUnit5KnowledgeMap';
+import { igcseUnit6Lessons } from './igcseUnit6KnowledgeMap';
 
 export type LearningSystemId = 'ap' | 'igcse' | 'alevel' | 'ib' | 'competition';
 
@@ -2988,10 +2989,9 @@ const cambridgeIgcse0625: CurriculumCourse = {
         },
       ],
     }),
-    unit(6, 'Space Physics', '太空物理', 'Supplement', [
+    unit(6, 'Space Physics', '太空物理', 'Core + Supplement', [
       topic('6.1', 'Earth and the Solar System', '地球与太阳系'),
-      topic('6.2', 'Stars', '恒星'),
-      topic('6.3', 'The Universe', '宇宙'),
+      topic('6.2', 'Stars and the Universe', '恒星与宇宙'),
     ], {
       summary: text(
         'Explore the Solar System, stellar life cycles, and the scale and evolution of the Universe.',
@@ -3004,8 +3004,10 @@ const cambridgeIgcse0625: CurriculumCourse = {
       ),
       formulas: [
         formula('Orbital speed', '轨道速度', 'v=\\frac{2\\pi r}{T}'),
-        formula('Gravitational force', '万有引力', 'F=\\frac{GMm}{r^2}'),
-        formula('Red-shift', '红移', 'z=\\frac{\\Delta\\lambda}{\\lambda}\\approx\\frac{v}{c}'),
+        formula('Light travel time', '光行时', 't=\\frac{d}{c}'),
+        formula('Redshift speed', '红移速度', '\\frac{v}{c}=\\frac{\\Delta\\lambda}{\\lambda_0}'),
+        formula('Hubble constant', '哈勃常数', 'H_0=\\frac{v}{d}'),
+        formula('Estimated age of the Universe', '宇宙年龄估算', 't\\approx\\frac{1}{H_0}'),
       ],
       diagrams: [
         ...diagrams.astronomy,
@@ -3087,6 +3089,7 @@ cambridgeIgcse0625.units[1].lessons = igcseUnit2Lessons;
 cambridgeIgcse0625.units[2].lessons = igcseUnit3Lessons;
 cambridgeIgcse0625.units[3].lessons = igcseUnit4Lessons;
 cambridgeIgcse0625.units[4].lessons = igcseUnit5Lessons;
+cambridgeIgcse0625.units[5].lessons = igcseUnit6Lessons;
 
 const cambridge9702: CurriculumCourse = {
   id: 'cambridge-9702',
