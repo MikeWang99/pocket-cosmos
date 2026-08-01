@@ -339,7 +339,223 @@ const momentumStudentLesson: CurriculumLesson = {
   ],
 };
 
+const physicalQuantitiesLesson: CurriculumLesson = {
+  title: text('1.1 Physical Quantities and Measurement Techniques', '1.1 物理量与测量技术'),
+  description: text(
+    'Length, volume and time measurements; repeated measurements; scalars, vectors and right-angle resultants.',
+    '长度、体积与时间测量；多次测量；标量、矢量与直角矢量合成。',
+  ),
+  sections: [
+    {
+      heading: text('1. Measuring length and volume', '1. 测量长度与体积'),
+      paragraphs: [
+        text(
+          'A ruler is read at eye level from the correct zero mark. If the zero end is damaged, take two readings and subtract. A measuring cylinder is read at eye level at the appropriate point of the meniscus. The scale division determines the reading precision.',
+          '刻度尺应从正确的零刻度开始并平视读数；若零端损坏，可读取两个位置后相减。量筒应在液面处平视，并按合适的弯月面位置读数。最小分度决定读数精度。',
+        ),
+        text(
+          'A regular solid has its volume calculated from measured dimensions. The volume of a liquid is read directly from a measuring cylinder. The volume of a submerged irregular solid is the increase in liquid volume.',
+          '规则固体的体积由测得的尺寸计算；液体体积可由量筒直接读出；完全浸没的不规则固体体积等于液体读数的增加量。',
+        ),
+      ],
+      formulas: [
+        formula('Displacement volume', '排水体积', 'V_{\\mathrm{object}}=V_{\\mathrm{final}}-V_{\\mathrm{initial}}'),
+      ],
+    },
+    {
+      heading: text('2. Measuring time and small quantities', '2. 测量时间与微小量'),
+      paragraphs: [
+        text(
+          'Clocks and digital timers measure time intervals. For a short interval or a small distance, measure many identical intervals or objects together and divide by the number measured. This reduces the percentage effect of the reading uncertainty.',
+          '时钟和数字计时器用于测量时间间隔。测量很短的时间或很小的距离时，应把多个相同间隔或物体一起测量，再除以数量，以减小读数不确定度的百分比影响。',
+        ),
+        text(
+          'For a pendulum, time several complete oscillations from the same reference point and in the same direction, then divide by the number of oscillations to obtain the period.',
+          '测量单摆周期时，从同一参考位置、同一运动方向开始，为多个完整振动计时，再除以振动次数。',
+        ),
+      ],
+      formulas: [
+        formula('Average small quantity', '微小量平均值', '\\text{average}=\\frac{\\text{total measured value}}{\\text{number of equal items or intervals}}'),
+        formula('Pendulum period', '单摆周期', 'T=\\frac{t}{N}'),
+      ],
+    },
+    {
+      heading: text('3. Scalars and vectors (Supplement)', '3. 标量与矢量（Supplement）'),
+      paragraphs: [
+        text(
+          'A scalar has magnitude only. A vector has both magnitude and direction. Distance, speed, time, mass, energy and temperature are scalars. Force, weight, velocity, acceleration, momentum, electric field strength and gravitational field strength are vectors.',
+          '标量只有大小；矢量同时具有大小和方向。路程、速率、时间、质量、能量和温度是标量；力、重量、速度、加速度、动量、电场强度和重力场强是矢量。',
+        ),
+        text(
+          'For two perpendicular forces or velocities, the resultant can be found by a scale drawing or by resolving the vectors into a right-angled triangle. Its direction must be stated as well as its magnitude.',
+          '对于两个互相垂直的力或速度，可用比例作图或直角三角形计算合矢量。答案必须同时给出大小和方向。',
+        ),
+      ],
+      formulas: [
+        formula('Right-angle resultant', '直角合矢量', 'R=\\sqrt{A^2+B^2}'),
+        formula('Resultant direction', '合矢量方向', '\\tan\\theta=\\frac{B}{A}'),
+      ],
+      takeaway: text(
+        'A number and unit are sufficient for a scalar; a vector answer also needs a direction.',
+        '标量答案只需数值和单位；矢量答案还必须包含方向。',
+      ),
+    },
+  ],
+};
+
+const densityLesson: CurriculumLesson = {
+  title: text('1.4 Density', '1.4 密度'),
+  description: text(
+    'Density calculations, experimental determination for liquids and solids, and floating from density comparisons.',
+    '密度计算、液体与固体密度的实验测定，以及利用密度比较判断浮沉。',
+  ),
+  sections: [
+    {
+      heading: text('1. Density and unit control', '1. 密度与单位控制'),
+      paragraphs: [
+        text(
+          'Density is mass per unit volume. Mass and volume must use compatible units before substitution. Common units are $\\mathrm{kg\\,m^{-3}}$ and $\\mathrm{g\\,cm^{-3}}$.',
+          '密度是单位体积的质量。代入公式前，质量和体积必须使用相容单位。常用单位为 $\\mathrm{kg\\,m^{-3}}$ 和 $\\mathrm{g\\,cm^{-3}}$。',
+        ),
+      ],
+      formulas: [
+        formula('Density', '密度', '\\rho=\\frac{m}{V}'),
+        formula('Unit conversion', '单位换算', '1\\,\\mathrm{g\\,cm^{-3}}=1000\\,\\mathrm{kg\\,m^{-3}}'),
+      ],
+    },
+    {
+      heading: text('2. Determining density experimentally', '2. 实验测定密度'),
+      bullets: [
+        text('Liquid: find the mass of an empty container and the mass of the container plus a measured liquid volume; subtract to obtain the liquid mass.', '液体：测空容器质量和容器加已知体积液体的总质量，相减得到液体质量。'),
+        text('Regular solid: measure its mass and the dimensions needed to calculate its volume.', '规则固体：测量质量，并测量计算体积所需的各个尺寸。'),
+        text('Irregular solid that sinks: measure its mass, fully submerge it in a measuring cylinder, and obtain its volume from liquid displacement.', '会下沉的不规则固体：测量质量，将其完全浸没在量筒中，以排开液体的体积作为物体体积。'),
+        text('Repeat measurements where practical and avoid trapped air, parallax and incomplete immersion.', '条件允许时重复测量，并避免气泡、视差和未完全浸没。'),
+      ],
+    },
+    {
+      heading: text('3. Floating and layering', '3. 浮沉与液体分层'),
+      paragraphs: [
+        text(
+          'An object floats in a liquid when its average density is less than the liquid density and sinks when it is greater. For immiscible liquids, the less dense liquid forms the upper layer.',
+          '物体平均密度小于液体密度时会漂浮，大于液体密度时会下沉。对于互不相溶的液体，密度较小的液体位于上层。',
+        ),
+      ],
+    },
+  ],
+};
+
+const energyWorkPowerLesson: CurriculumLesson = {
+  title: text('1.7 Energy, Work and Power', '1.7 能量、功与功率'),
+  description: text(
+    'Energy stores and transfers, conservation, work, resources, efficiency and power.',
+    '能量储存与转移、能量守恒、功、能源、效率与功率。',
+  ),
+  sections: [
+    {
+      heading: text('1. Energy stores and transfer pathways', '1. 能量储存与转移路径'),
+      paragraphs: [
+        text(
+          'Energy may be stored as kinetic, gravitational potential, chemical, elastic, nuclear, electrostatic or internal energy. Energy is transferred mechanically by forces, electrically by currents, by heating, and by electromagnetic, sound or other waves.',
+          '能量可储存在动能、重力势能、化学能、弹性势能、核能、静电能和内能中。能量可通过力做机械功、电流做电功、加热，以及电磁波、声波或其他波来转移。',
+        ),
+        text(
+          'Energy is conserved: it moves between stores but is not created or destroyed. Simple flow diagrams and multi-stage Sankey diagrams must account for all input energy, including energy dissipated to the surroundings.',
+          '能量守恒：能量只在不同储存形式间转移，不会被创造或消灭。简单能量流图和多阶段桑基图都必须计入全部输入能量，包括耗散到环境中的能量。',
+        ),
+      ],
+      formulas: [
+        formula('Kinetic energy (Supplement)', '动能（Supplement）', 'E_k=\\frac12mv^2'),
+        formula('Change in gravitational potential energy (Supplement)', '重力势能变化（Supplement）', '\\Delta E_p=mg\\Delta h'),
+      ],
+    },
+    {
+      heading: text('2. Work done', '2. 功'),
+      paragraphs: [
+        text(
+          'Mechanical or electrical work done equals the energy transferred. For a constant force acting along the direction of movement, mechanical work is force multiplied by distance moved.',
+          '机械功或电功等于所转移的能量。恒力沿运动方向作用时，机械功等于力与沿力方向移动距离的乘积。',
+        ),
+      ],
+      formulas: [formula('Mechanical work', '机械功', 'W=Fd=\\Delta E')],
+    },
+    {
+      heading: text('3. Energy resources', '3. 能源'),
+      paragraphs: [
+        text(
+          'Useful energy or electrical power may be obtained from fossil fuels, biofuels, waves, tides, hydroelectric reservoirs, geothermal resources, nuclear fuel, solar cells, solar heating and wind. Where relevant, the chain includes a boiler, turbine and generator.',
+          '可从化石燃料、生物燃料、波浪、潮汐、水力发电、地热、核燃料、太阳能电池、太阳能加热和风能获得有用能量或电功率。适用时，转换链包含锅炉、涡轮机和发电机。',
+        ),
+        text(
+          'Each resource is compared by renewability, availability, reliability, scale and environmental impact. Radiation from the Sun is the main source of most resources except geothermal, nuclear and tidal energy. The Sun releases energy by nuclear fusion, and controlled fusion is being researched for large-scale electricity generation.',
+          '各种能源需从可再生性、可获得性、可靠性、规模和环境影响比较。除地热、核能和潮汐能外，大多数能源的主要来源是太阳辐射。太阳通过核聚变释放能量，人类正在研究利用可控核聚变大规模发电。',
+        ),
+      ],
+    },
+    {
+      heading: text('4. Efficiency', '4. 效率'),
+      paragraphs: [
+        text(
+          'Efficiency is the fraction of the input energy or power that becomes useful output. It cannot exceed $1$ or $100\\%$. The remainder is transferred to less useful stores, often as internal energy of the surroundings.',
+          '效率是输入能量或功率中转化为有用输出的比例，不可能超过 $1$ 或 $100\\%$。其余能量通常转移为环境的内能等较少利用的形式。',
+        ),
+      ],
+      formulas: [
+        formula('Energy efficiency', '能量效率', '\\eta=\\frac{E_{\\mathrm{useful}}}{E_{\\mathrm{input}}}\\times100\\%'),
+        formula('Power efficiency', '功率效率', '\\eta=\\frac{P_{\\mathrm{useful}}}{P_{\\mathrm{input}}}\\times100\\%'),
+      ],
+    },
+    {
+      heading: text('5. Power', '5. 功率'),
+      paragraphs: [
+        text(
+          'Power is the rate of doing work or the rate of transferring energy. Two devices may transfer the same energy but the device that does so in less time has greater power.',
+          '功率是做功速率或能量转移速率。两个装置可以转移相同能量，但用时更短的装置功率更大。',
+        ),
+      ],
+      formulas: [
+        formula('Power from work', '由功计算功率', 'P=\\frac{W}{t}'),
+        formula('Power from energy transfer', '由能量转移计算功率', 'P=\\frac{\\Delta E}{t}'),
+      ],
+    },
+  ],
+};
+
+const pressureLesson: CurriculumLesson = {
+  title: text('1.8 Pressure', '1.8 压强'),
+  description: text(
+    'Pressure on surfaces and the variation of liquid pressure with depth and density.',
+    '固体表面压强，以及液体压强随深度和密度的变化。',
+  ),
+  sections: [
+    {
+      heading: text('1. Pressure on a surface', '1. 表面压强'),
+      paragraphs: [
+        text(
+          'Pressure is force per unit area. For the same area, a larger perpendicular force produces greater pressure. For the same force, a smaller contact area produces greater pressure.',
+          '压强是单位面积上的力。面积相同时，垂直作用力越大，压强越大；力相同时，接触面积越小，压强越大。',
+        ),
+      ],
+      formulas: [formula('Pressure', '压强', 'p=\\frac{F}{A}')],
+    },
+    {
+      heading: text('2. Pressure beneath a liquid surface', '2. 液面下的压强'),
+      paragraphs: [
+        text(
+          'Liquid pressure increases with depth because a deeper point supports a taller column of liquid. At the same depth, a denser liquid produces a greater pressure increase.',
+          '液体压强随深度增加，因为更深处承受更高液柱的重量。同一深度处，密度更大的液体产生更大的压强增量。',
+        ),
+        text(
+          'The equation gives the change in pressure between two depths in a liquid of uniform density. It does not by itself include atmospheric pressure acting on the surface.',
+          '该公式给出均匀密度液体中两个深度之间的压强变化，本身不包含液面上的大气压强。',
+        ),
+      ],
+      formulas: [formula('Liquid pressure change (Supplement)', '液体压强变化（Supplement）', '\\Delta p=\\rho g\\Delta h')],
+    },
+  ],
+};
+
 export const igcseUnit1Lessons: CurriculumLesson[] = [
+  physicalQuantitiesLesson,
   {
     title: text('1.3 Mass and Weight', '1.3 质量与重量'),
     description: text(
@@ -360,8 +576,8 @@ export const igcseUnit1Lessons: CurriculumLesson[] = [
         heading: text('1. Definitions and relationships', '1. 定义与关系'),
         paragraphs: [
           text(
-            'Mass is a measure of the quantity of matter and of inertia. It is measured in kilograms and remains constant when location changes. Weight is the gravitational force acting on a mass. It is measured in newtons and changes with gravitational field strength.',
-            '质量是物质多少和惯性大小的量度，以千克为单位，地点改变时保持不变。重量是引力对质量产生的力，以牛顿为单位，并随重力场强改变。',
+            'For an object at rest relative to the observer, mass measures the quantity of matter. It is measured in kilograms and remains constant when location changes. Weight is the gravitational force acting on an object with mass. It is measured in newtons and changes with gravitational field strength.',
+            '对于相对观察者静止的物体，质量表示物质的多少，以千克为单位，地点改变时保持不变。重量是引力对有质量物体产生的力，以牛顿为单位，并随重力场强改变。',
           ),
           text(
             'Near Earth’s surface, $g\\approx9.8\\,\\mathrm{N\\,kg^{-1}}$, often rounded to the value specified in an examination question.',
@@ -373,13 +589,26 @@ export const igcseUnit1Lessons: CurriculumLesson[] = [
           formula('Gravitational field strength', '重力场强', 'g=\\frac{W}{m}'),
         ],
         takeaway: text(
-          'Mass determines resistance to acceleration; weight is one particular force.',
-          '质量决定物体对加速度的抵抗程度；重量只是力的一种。',
+          'Gravitational field strength is force per unit mass and is numerically equivalent to free-fall acceleration.',
+          '重力场强是单位质量所受的力，在数值上等于自由落体加速度。',
         ),
       },
+      {
+        heading: text('2. Comparing masses and weights', '2. 比较质量与重量'),
+        paragraphs: [
+          text(
+            'A balance compares two weights in the same gravitational field. Because both sides experience the same value of $g$, equal weights imply equal masses. A spring balance measures force directly and therefore measures weight.',
+            '天平在同一重力场中比较两个物体的重量。由于两侧的 $g$ 相同，重量相等意味着质量相等。弹簧测力计直接测量力，因此测得的是重量。',
+          ),
+          text(
+            'Weight can be described as the effect of a gravitational field on a mass. Changing the field changes weight without changing mass.',
+            '重量可描述为重力场作用于质量所产生的效果。重力场改变会改变重量，但不会改变质量。',
+          ),
+        ],
+      },
     ],
-    studentVersion: massAndWeightStudentLesson,
   },
+  densityLesson,
   {
     title: text('1.5 Forces', '1.5 力'),
     description: text(
@@ -564,6 +793,7 @@ export const igcseUnit1Lessons: CurriculumLesson[] = [
           formula('Momentum', '动量', '\\vec p=m\\vec v'),
           formula('Momentum conservation', '动量守恒', '\\sum\\vec p_{\\mathrm{before}}=\\sum\\vec p_{\\mathrm{after}}'),
           formula('Impulse', '冲量', '\\vec J=\\vec F\\Delta t=\\Delta\\vec p'),
+          formula('Resultant force as momentum rate', '合力是动量变化率', '\\vec F_{\\mathrm{resultant}}=\\frac{\\Delta\\vec p}{\\Delta t}'),
         ],
         classroomQuestions: [
           {
@@ -588,7 +818,19 @@ export const igcseUnit1Lessons: CurriculumLesson[] = [
         ],
       },
       {
-        heading: text('2. Common errors', '2. 常见错误'),
+        heading: text('2. Resultant force and momentum change', '2. 合力与动量变化'),
+        paragraphs: [
+          text(
+            'Resultant force is the change in momentum per unit time. For the same momentum change, a longer interaction time produces a smaller average resultant force; this is the principle used by airbags, crumple zones and padded landing surfaces.',
+            '合力等于单位时间内的动量变化量。在动量变化相同的情况下，作用时间越长，平均合力越小；安全气囊、汽车缓冲区和软质落地垫都利用了这一原理。',
+          ),
+        ],
+        formulas: [
+          formula('Resultant force', '合力', '\\vec F_{\\mathrm{resultant}}=\\frac{\\Delta\\vec p}{\\Delta t}'),
+        ],
+      },
+      {
+        heading: text('3. Common errors', '3. 常见错误'),
         bullets: [
           text('Momentum is a vector; opposite directions require opposite signs.', '动量是矢量；相反方向需要使用相反符号。'),
           text('Momentum conservation applies to the chosen system when external impulse is negligible.', '只有当所选系统受到的外冲量可忽略时，才能使用动量守恒。'),
@@ -596,6 +838,7 @@ export const igcseUnit1Lessons: CurriculumLesson[] = [
         ],
       },
     ],
-    studentVersion: momentumStudentLesson,
   },
+  energyWorkPowerLesson,
+  pressureLesson,
 ];
