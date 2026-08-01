@@ -19,6 +19,7 @@ import { igcseUnit1Lessons } from './igcseUnit1KnowledgeMap';
 import { igcseUnit2Lessons } from './igcseUnit2KnowledgeMap';
 import { igcseUnit3Lessons } from './igcseUnit3KnowledgeMap';
 import { igcseUnit4Lessons } from './igcseUnit4KnowledgeMap';
+import { igcseUnit5Lessons } from './igcseUnit5KnowledgeMap';
 
 export type LearningSystemId = 'ap' | 'igcse' | 'alevel' | 'ib' | 'competition';
 
@@ -2886,8 +2887,6 @@ const cambridgeIgcse0625: CurriculumCourse = {
     unit(5, 'Nuclear Physics', '核物理', 'Core + Supplement', [
       topic('5.1', 'The nuclear model of the atom', '原子核模型'),
       topic('5.2', 'Radioactivity', '放射性'),
-      topic('5.3', 'Half-life', '半衰期'),
-      topic('5.4', 'Safety precautions', '辐射安全'),
     ], {
       summary: text(
         'Describe atomic structure, the three types of nuclear radiation, decay equations, half-life, and safety measures.',
@@ -3087,6 +3086,7 @@ const cambridgeIgcse0625: CurriculumCourse = {
 cambridgeIgcse0625.units[1].lessons = igcseUnit2Lessons;
 cambridgeIgcse0625.units[2].lessons = igcseUnit3Lessons;
 cambridgeIgcse0625.units[3].lessons = igcseUnit4Lessons;
+cambridgeIgcse0625.units[4].lessons = igcseUnit5Lessons;
 
 const cambridge9702: CurriculumCourse = {
   id: 'cambridge-9702',
