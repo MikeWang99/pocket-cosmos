@@ -6,6 +6,8 @@ SHA-256: 8537dfacae319cfb1ef297ab08ba4217fe41f765ae958a7166f5f5163ef20cdb
 
 The website content follows the 2023–2025 Core and Supplement statements. A completed row means the numbered syllabus section has a dedicated, detailed lesson map in both language modes. Existing approved content in 1.2 and 1.5 is locked and is not rewritten by this project.
 
+Release: v1.5.0. Final audit: all 24 official numbered sections are accounted for; 23 detailed lesson maps are rendered, 1.2 remains the pre-existing locked entry, and the detailed 1.5 lesson is preserved byte-for-byte.
+
 | Unit | Syllabus section | Status | Production checkpoint |
 | --- | --- | --- | --- |
 | 1 | 1.1 Physical quantities and measurement techniques | Complete | Unit 1 |
