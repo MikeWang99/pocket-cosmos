@@ -17,6 +17,7 @@ import {
 } from './emCapacitorEnergyToOhmsLawKnowledgeMap';
 import { igcseUnit1Lessons } from './igcseUnit1KnowledgeMap';
 import { igcseUnit2Lessons } from './igcseUnit2KnowledgeMap';
+import { igcseUnit3Lessons } from './igcseUnit3KnowledgeMap';
 
 export type LearningSystemId = 'ap' | 'igcse' | 'alevel' | 'ib' | 'competition';
 
@@ -2564,9 +2565,10 @@ const cambridgeIgcse0625: CurriculumCourse = {
       ],
     }),
     unit(3, 'Waves', '波', 'Core + Supplement', [
-      topic('3.1', 'General wave properties', '波的一般性质'),
+      topic('3.1', 'General properties of waves', '波的一般性质'),
       topic('3.2', 'Light', '光'),
-      topic('3.3', 'Sound', '声波'),
+      topic('3.3', 'Electromagnetic spectrum', '电磁波谱'),
+      topic('3.4', 'Sound', '声'),
     ], {
       summary: text(
         'Describe wave motion, reflection, refraction, diffraction, and the electromagnetic spectrum, then apply ray models to lenses and sound properties.',
@@ -2580,9 +2582,9 @@ const cambridgeIgcse0625: CurriculumCourse = {
       formulas: [
         formula('Wave speed', '波速', 'v=f\\lambda'),
         formula('Reflection', '反射', '\\theta_i=\\theta_r'),
-        formula('Refraction (Snell\'s law)', '折射定律', 'n_1\\sin\\theta_1=n_2\\sin\\theta_2'),
+        formula('Refractive index', '折射率', 'n=\\frac{\\sin i}{\\sin r}'),
         formula('Critical angle', '临界角', '\\sin c=\\frac{1}{n}'),
-        formula('Thin lens equation', '薄透镜公式', '\\frac{1}{f}=\\frac{1}{u}+\\frac{1}{v}'),
+        formula('Electromagnetic wave speed in vacuum', '电磁波真空速度', 'c=3.0\\times10^8\\,\\mathrm{m\\,s^{-1}}'),
       ],
       diagrams: [
         ...diagrams.waves,
@@ -3080,6 +3082,7 @@ const cambridgeIgcse0625: CurriculumCourse = {
 };
 
 cambridgeIgcse0625.units[1].lessons = igcseUnit2Lessons;
+cambridgeIgcse0625.units[2].lessons = igcseUnit3Lessons;
 
 const cambridge9702: CurriculumCourse = {
   id: 'cambridge-9702',
