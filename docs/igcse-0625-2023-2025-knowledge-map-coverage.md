@@ -30,8 +30,8 @@ The website content follows the 2023–2025 Core and Supplement statements. A co
 | 4 | 4.5 Electromagnetic effects | Complete | Unit 4 |
 | 5 | 5.1 The nuclear model of the atom | Complete | Unit 5 |
 | 5 | 5.2 Radioactivity | Complete | Unit 5 |
-| 6 | 6.1 Earth and the Solar System | Pending | Unit 6 |
-| 6 | 6.2 Stars and the Universe | Pending | Unit 6 |
+| 6 | 6.1 Earth and the Solar System | Complete | Unit 6 |
+| 6 | 6.2 Stars and the Universe | Complete | Unit 6 |
 
 ## Coverage rules
 
