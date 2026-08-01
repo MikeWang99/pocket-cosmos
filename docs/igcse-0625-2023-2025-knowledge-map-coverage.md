@@ -19,10 +19,10 @@ The website content follows the 2023–2025 Core and Supplement statements. A co
 | 2 | 2.1 Kinetic particle model of matter | Complete | Unit 2 |
 | 2 | 2.2 Thermal properties and temperature | Complete | Unit 2 |
 | 2 | 2.3 Transfer of thermal energy | Complete | Unit 2 |
-| 3 | 3.1 General properties of waves | Pending | Unit 3 |
-| 3 | 3.2 Light | Pending | Unit 3 |
-| 3 | 3.3 Electromagnetic spectrum | Pending | Unit 3 |
-| 3 | 3.4 Sound | Pending | Unit 3 |
+| 3 | 3.1 General properties of waves | Complete | Unit 3 |
+| 3 | 3.2 Light | Complete | Unit 3 |
+| 3 | 3.3 Electromagnetic spectrum | Complete | Unit 3 |
+| 3 | 3.4 Sound | Complete | Unit 3 |
 | 4 | 4.1 Simple phenomena of magnetism | Pending | Unit 4 |
 | 4 | 4.2 Electrical quantities | Pending | Unit 4 |
 | 4 | 4.3 Electric circuits | Pending | Unit 4 |
