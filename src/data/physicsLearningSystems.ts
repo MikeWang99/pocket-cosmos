@@ -18,6 +18,7 @@ import {
 import { igcseUnit1Lessons } from './igcseUnit1KnowledgeMap';
 import { igcseUnit2Lessons } from './igcseUnit2KnowledgeMap';
 import { igcseUnit3Lessons } from './igcseUnit3KnowledgeMap';
+import { igcseUnit4Lessons } from './igcseUnit4KnowledgeMap';
 
 export type LearningSystemId = 'ap' | 'igcse' | 'alevel' | 'ib' | 'competition';
 
@@ -2778,7 +2779,7 @@ const cambridgeIgcse0625: CurriculumCourse = {
       ],
     }),
     unit(4, 'Electricity and Magnetism', '电与磁', 'Core + Supplement', [
-      topic('4.1', 'Simple magnetism', '简单磁现象'),
+      topic('4.1', 'Simple phenomena of magnetism', '磁现象基础'),
       topic('4.2', 'Electrical quantities', '电学量'),
       topic('4.3', 'Electric circuits', '电路'),
       topic('4.4', 'Electrical safety', '安全用电'),
@@ -2794,12 +2795,14 @@ const cambridgeIgcse0625: CurriculumCourse = {
         ['Explain electromagnetic induction, generators, and transformers.', '解释电磁感应、发电机和变压器。'],
       ),
       formulas: [
-        formula('Charge and current', '电荷与电流', 'Q=It'),
-        formula('Ohm\'s law', '欧姆定律', 'V=IR'),
-        formula('Electrical power', '电功率', 'P=IV=I^2R=\\frac{V^2}{R}'),
-        formula('Energy transferred', '电能', 'E=QV=IVt'),
+        formula('Current', '电流', 'I=\\frac{Q}{t}'),
+        formula('E.m.f. and p.d.', '电动势与电势差', '\\mathcal{E}=\\frac{W}{Q},\\quad V=\\frac{W}{Q}'),
+        formula('Resistance', '电阻', 'R=\\frac{V}{I}'),
+        formula('Electrical power', '电功率', 'P=IV'),
+        formula('Electrical energy', '电能', 'E=IVt'),
+        formula('Potential divider', '分压器', '\\frac{R_1}{R_2}=\\frac{V_1}{V_2}'),
         formula('Transformer equation', '变压器方程', '\\frac{V_p}{V_s}=\\frac{N_p}{N_s}'),
-        formula('Force on conductor', '导体受力', 'F=BIL'),
+        formula('Cable power loss', '电缆功率损耗', 'P=I^2R'),
       ],
       diagrams: [
         ...diagrams.circuits,
@@ -3083,6 +3086,7 @@ const cambridgeIgcse0625: CurriculumCourse = {
 
 cambridgeIgcse0625.units[1].lessons = igcseUnit2Lessons;
 cambridgeIgcse0625.units[2].lessons = igcseUnit3Lessons;
+cambridgeIgcse0625.units[3].lessons = igcseUnit4Lessons;
 
 const cambridge9702: CurriculumCourse = {
   id: 'cambridge-9702',

@@ -23,11 +23,11 @@ The website content follows the 2023–2025 Core and Supplement statements. A co
 | 3 | 3.2 Light | Complete | Unit 3 |
 | 3 | 3.3 Electromagnetic spectrum | Complete | Unit 3 |
 | 3 | 3.4 Sound | Complete | Unit 3 |
-| 4 | 4.1 Simple phenomena of magnetism | Pending | Unit 4 |
-| 4 | 4.2 Electrical quantities | Pending | Unit 4 |
-| 4 | 4.3 Electric circuits | Pending | Unit 4 |
-| 4 | 4.4 Electrical safety | Pending | Unit 4 |
-| 4 | 4.5 Electromagnetic effects | Pending | Unit 4 |
+| 4 | 4.1 Simple phenomena of magnetism | Complete | Unit 4 |
+| 4 | 4.2 Electrical quantities | Complete | Unit 4 |
+| 4 | 4.3 Electric circuits | Complete | Unit 4 |
+| 4 | 4.4 Electrical safety | Complete | Unit 4 |
+| 4 | 4.5 Electromagnetic effects | Complete | Unit 4 |
 | 5 | 5.1 The nuclear model of the atom | Pending | Unit 5 |
 | 5 | 5.2 Radioactivity | Pending | Unit 5 |
 | 6 | 6.1 Earth and the Solar System | Pending | Unit 6 |
