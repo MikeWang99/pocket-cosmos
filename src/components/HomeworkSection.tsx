@@ -180,7 +180,7 @@ const QuestionCard: React.FC<{
         {step.image && (
           <figure className="practice-media practice-media--question mt-5">
             <div className="practice-question-image-scroll">
-              <img src={step.image.src} alt={step.image.alt} className="practice-media-image practice-question-image" />
+              <img src={step.image.src} alt={step.image.alt} className={`practice-media-image practice-question-image ${step.image.responsive ? 'practice-question-image--responsive' : ''}`} />
             </div>
             {step.image.caption && <figcaption>{step.image.caption}</figcaption>}
           </figure>
@@ -218,8 +218,13 @@ const QuestionCard: React.FC<{
                   <span className={`grid h-9 w-9 place-items-center rounded-md text-xs font-bold ${isSelected ? 'bg-nebula text-white' : 'bg-white text-black'}`}>
                     {isSelected ? <Check className="h-4 w-4" /> : choice.label}
                   </span>
-                  <span className="text-sm leading-6 text-slate-200">
-                    {choice.text ? <MathText>{choice.text}</MathText> : language === 'zh' ? `选择 ${choice.label}` : `Option ${choice.label}`}
+                  <span className="min-w-0 text-sm leading-6 text-slate-200">
+                    {choice.image ? (
+                      <>
+                        <img src={choice.image.src} alt={choice.image.alt} className="practice-choice-image" />
+                        <span className="sr-only">{choice.text}</span>
+                      </>
+                    ) : choice.text ? <MathText>{choice.text}</MathText> : language === 'zh' ? `选择 ${choice.label}` : `Option ${choice.label}`}
                   </span>
                 </button>
               );

@@ -227,11 +227,31 @@ textarea::placeholder {
   max-height: none;
 }
 
+.practice-question-image--responsive {
+  min-width: 0;
+}
+
 .practice-media figcaption {
   margin-top: 10px;
   color: #64748b;
   font-size: 0.78rem;
   line-height: 1.4;
+}
+
+.practice-choice-image {
+  display: block;
+  width: 100%;
+  height: clamp(76px, 11vw, 138px);
+  object-fit: contain;
+  object-position: center;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .practice-choice-image {
+    height: clamp(68px, 22vw, 112px);
+  }
 }
 
 .curriculum-formula {
@@ -274,6 +294,10 @@ textarea::placeholder {
 
   .practice-question-image {
     min-width: 620px;
+  }
+
+  .practice-question-image--responsive {
+    min-width: 0;
   }
 
   .practice-equation {

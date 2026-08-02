@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="230" viewBox="0 0 800 230" role="img" aria-label="Five graphs show angular velocity as a function of time. In which graph does the particle have the greatest angular displacement?">
+  <rect width="100%" height="100%" rx="18" fill="#ffffff" />
+  <text fill="#111827" font-family="Georgia, 'Times New Roman', serif" font-size="30" line-height="1.4">
+      <tspan x="52" y="56">Five graphs show angular velocity as a</tspan>
+      <tspan x="52" y="98">function of time. In which graph does the</tspan>
+      <tspan x="52" y="140">particle have the greatest angular</tspan>
+      <tspan x="52" y="182">displacement?</tspan>
+  </text>
+  
+</svg>

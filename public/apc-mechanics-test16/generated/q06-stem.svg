@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="290" viewBox="0 0 800 290" role="img" aria-label="A disk rotates at constant angular speed. Point A is at the edge and point B is halfway from the center to the edge. What is the linear speed of point A?">
+  <rect width="100%" height="100%" rx="18" fill="#ffffff" />
+  <text fill="#111827" font-family="Georgia, 'Times New Roman', serif" font-size="30" line-height="1.4">
+      <tspan x="52" y="86">A disk rotates at constant angular speed.</tspan>
+      <tspan x="52" y="128">Point A is at the edge and point B is</tspan>
+      <tspan x="52" y="170">halfway from the center to the edge. What is</tspan>
+      <tspan x="52" y="212">the linear speed of point A?</tspan>
+  </text>
+  
+</svg>

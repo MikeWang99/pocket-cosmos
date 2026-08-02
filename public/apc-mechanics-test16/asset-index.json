@@ -1,0 +1,758 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-02T03:51:12.076Z",
+  "bankId": "crackap-apc-mechanics-test16",
+  "title": "Rotation I: Kinematics, Force, Work, and Energy",
+  "sourcePage": "https://www.crackap.com/ap/physics-c-mechanics/test16.html",
+  "rightsStatus": "unknown",
+  "reviewStatus": "approved_by_user_request",
+  "alignmentPolicy": "Every choice for a question uses the same 1200 px-wide SVG canvas and the same question-level height; embedded source figures are centered with object-fit: contain.",
+  "counts": {
+    "questions": 10,
+    "stems": 10,
+    "choices": 50,
+    "originalSourceAssets": 11
+  },
+  "generatedAssets": [
+    {
+      "id": "q01-stem",
+      "question": 1,
+      "kind": "stem",
+      "file": "q01-stem.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q01-stem.svg",
+      "width": 800,
+      "height": 220,
+      "sha256": "09f8c59c7528e9182a8a75af5a3a4b7c25fb7bffec2b53b2dab83cf559b6027e"
+    },
+    {
+      "id": "q01-choice-a",
+      "question": 1,
+      "kind": "choice",
+      "choice": "A",
+      "file": "q01-choice-a.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q01-choice-a.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "3303dd9d556fd9a20d1888a9ae310c194f88ca5c0fd1a13922d5ac18c5f19143"
+    },
+    {
+      "id": "q01-choice-b",
+      "question": 1,
+      "kind": "choice",
+      "choice": "B",
+      "file": "q01-choice-b.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q01-choice-b.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "af088b4d92f91c4dac6aeeb43664dfa5a580146f3d36673c660cc42a1f36fb43"
+    },
+    {
+      "id": "q01-choice-c",
+      "question": 1,
+      "kind": "choice",
+      "choice": "C",
+      "file": "q01-choice-c.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q01-choice-c.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "7fea983dec833f8a469455928418abf816e4abd0cac908407e20fbc3aca09490"
+    },
+    {
+      "id": "q01-choice-d",
+      "question": 1,
+      "kind": "choice",
+      "choice": "D",
+      "file": "q01-choice-d.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q01-choice-d.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "a92179238a33b7e7a29991abcac3e12001fe41d4608f78e522e7db1e22e24a05"
+    },
+    {
+      "id": "q01-choice-e",
+      "question": 1,
+      "kind": "choice",
+      "choice": "E",
+      "file": "q01-choice-e.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q01-choice-e.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "b74d097f7a7efe4cda4667dec438e473bc33df488444d3005902854ce6f48ef0"
+    },
+    {
+      "id": "q02-stem",
+      "question": 2,
+      "kind": "stem",
+      "file": "q02-stem.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q02-stem.svg",
+      "width": 800,
+      "height": 230,
+      "sha256": "72f1a5964bee87166c9bcbf2e53ef634673b37c97ce22f31d83fcfab29a75d72"
+    },
+    {
+      "id": "q02-choice-a",
+      "question": 2,
+      "kind": "choice",
+      "choice": "A",
+      "file": "q02-choice-a.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q02-choice-a.svg",
+      "width": 1200,
+      "height": 420,
+      "sha256": "05676f31378ea2bd347f0b3031cc2c693f8135779eaea33538fb2ba385e89844"
+    },
+    {
+      "id": "q02-choice-b",
+      "question": 2,
+      "kind": "choice",
+      "choice": "B",
+      "file": "q02-choice-b.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q02-choice-b.svg",
+      "width": 1200,
+      "height": 420,
+      "sha256": "c1783db5c6dde3f86499ae6e5783a116ab3652187d52560775c6233104328d61"
+    },
+    {
+      "id": "q02-choice-c",
+      "question": 2,
+      "kind": "choice",
+      "choice": "C",
+      "file": "q02-choice-c.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q02-choice-c.svg",
+      "width": 1200,
+      "height": 420,
+      "sha256": "ad58902410076adde17e194e4157856676cee5a31cb4fd11fcc7de78aa629685"
+    },
+    {
+      "id": "q02-choice-d",
+      "question": 2,
+      "kind": "choice",
+      "choice": "D",
+      "file": "q02-choice-d.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q02-choice-d.svg",
+      "width": 1200,
+      "height": 420,
+      "sha256": "9cbe4efebc670d2deb8638a1b627b0a334d507a9867b041217580217f75c2e7f"
+    },
+    {
+      "id": "q02-choice-e",
+      "question": 2,
+      "kind": "choice",
+      "choice": "E",
+      "file": "q02-choice-e.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q02-choice-e.svg",
+      "width": 1200,
+      "height": 420,
+      "sha256": "6b682a537b655339b0bd13cfc9e1ff376c6b2e2cc31672ebc0d68b0501a4863b"
+    },
+    {
+      "id": "q03-stem",
+      "question": 3,
+      "kind": "stem",
+      "file": "q03-stem.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q03-stem.svg",
+      "width": 800,
+      "height": 230,
+      "sha256": "dae1ce0f90bc238334f7d37a55af89c0db47aa84c30069f2d63de12a5e97160c"
+    },
+    {
+      "id": "q03-choice-a",
+      "question": 3,
+      "kind": "choice",
+      "choice": "A",
+      "file": "q03-choice-a.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q03-choice-a.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "dd0a089bd23f52d67998b7fd44b255a2b0ec44479757ff430bbcb2d58c9fadec"
+    },
+    {
+      "id": "q03-choice-b",
+      "question": 3,
+      "kind": "choice",
+      "choice": "B",
+      "file": "q03-choice-b.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q03-choice-b.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "d49aee47ebb8622f97244f9cdbe0bf09803844bb622d0999c6122086be3e1301"
+    },
+    {
+      "id": "q03-choice-c",
+      "question": 3,
+      "kind": "choice",
+      "choice": "C",
+      "file": "q03-choice-c.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q03-choice-c.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "095803b072ff3487857e4b5eb1ecda28ffcd1ba218fae0b2f6ed5d010bb3ab72"
+    },
+    {
+      "id": "q03-choice-d",
+      "question": 3,
+      "kind": "choice",
+      "choice": "D",
+      "file": "q03-choice-d.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q03-choice-d.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "15b1f6d0f8618a2ae6ff49cfbda99cfc945fd36c76e542e5a3429452d9bac252"
+    },
+    {
+      "id": "q03-choice-e",
+      "question": 3,
+      "kind": "choice",
+      "choice": "E",
+      "file": "q03-choice-e.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q03-choice-e.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "f19ef53cea0bf3f8377c5da3509274817a9739b00b6ad22dc8e7883aa00f46c8"
+    },
+    {
+      "id": "q04-stem",
+      "question": 4,
+      "kind": "stem",
+      "file": "q04-stem.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q04-stem.svg",
+      "width": 800,
+      "height": 210,
+      "sha256": "fe0b15b015f52812bbacc7615211c15e2e7a9bf7115bd3ecc5d9dec41c745c00"
+    },
+    {
+      "id": "q04-choice-a",
+      "question": 4,
+      "kind": "choice",
+      "choice": "A",
+      "file": "q04-choice-a.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q04-choice-a.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "dd0a089bd23f52d67998b7fd44b255a2b0ec44479757ff430bbcb2d58c9fadec"
+    },
+    {
+      "id": "q04-choice-b",
+      "question": 4,
+      "kind": "choice",
+      "choice": "B",
+      "file": "q04-choice-b.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q04-choice-b.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "d49aee47ebb8622f97244f9cdbe0bf09803844bb622d0999c6122086be3e1301"
+    },
+    {
+      "id": "q04-choice-c",
+      "question": 4,
+      "kind": "choice",
+      "choice": "C",
+      "file": "q04-choice-c.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q04-choice-c.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "095803b072ff3487857e4b5eb1ecda28ffcd1ba218fae0b2f6ed5d010bb3ab72"
+    },
+    {
+      "id": "q04-choice-d",
+      "question": 4,
+      "kind": "choice",
+      "choice": "D",
+      "file": "q04-choice-d.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q04-choice-d.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "af41bee759ae71a3adb58b938bdc1c44005545234e9f0d0f694e0c5ce7c4a7d5"
+    },
+    {
+      "id": "q04-choice-e",
+      "question": 4,
+      "kind": "choice",
+      "choice": "E",
+      "file": "q04-choice-e.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q04-choice-e.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "6fbb9d29b33ce382d1a2b6b2d0fd1f0a273457ed36851fc79a7f2f99d5939cea"
+    },
+    {
+      "id": "q05-stem",
+      "question": 5,
+      "kind": "stem",
+      "file": "q05-stem.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q05-stem.svg",
+      "width": 800,
+      "height": 250,
+      "sha256": "a9c2816815e37565810f98ab4a7ce5803671a864b4b5f024f277c2938312a102"
+    },
+    {
+      "id": "q05-choice-a",
+      "question": 5,
+      "kind": "choice",
+      "choice": "A",
+      "file": "q05-choice-a.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q05-choice-a.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "7750822162a4e5d24bd9b2c11a5fd4cb540a3f194e65d25ca2a43bd534e75df2"
+    },
+    {
+      "id": "q05-choice-b",
+      "question": 5,
+      "kind": "choice",
+      "choice": "B",
+      "file": "q05-choice-b.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q05-choice-b.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "71f210ae0ffeef4c4feeac49d53a15d0311c1c6f8da55eb44abc06d817cf3afe"
+    },
+    {
+      "id": "q05-choice-c",
+      "question": 5,
+      "kind": "choice",
+      "choice": "C",
+      "file": "q05-choice-c.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q05-choice-c.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "1df787b4c6125c40e31714403c9fcf2ebf2c65942d03ea1b1997d3bd4e7dc581"
+    },
+    {
+      "id": "q05-choice-d",
+      "question": 5,
+      "kind": "choice",
+      "choice": "D",
+      "file": "q05-choice-d.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q05-choice-d.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "eaae6e4525fb7b3c04b5532a9fbf03af68bd9cd6a6e8e300593329b8126b339b"
+    },
+    {
+      "id": "q05-choice-e",
+      "question": 5,
+      "kind": "choice",
+      "choice": "E",
+      "file": "q05-choice-e.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q05-choice-e.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "2ee71b664af9dcc1498621882dc65599f56049c03b03363cfb92c4d31ea567e8"
+    },
+    {
+      "id": "q06-stem",
+      "question": 6,
+      "kind": "stem",
+      "file": "q06-stem.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q06-stem.svg",
+      "width": 800,
+      "height": 290,
+      "sha256": "e2f06269cba96f07fe4e106921dad256d4c80a57786503172b36e9efb36119e6"
+    },
+    {
+      "id": "q06-choice-a",
+      "question": 6,
+      "kind": "choice",
+      "choice": "A",
+      "file": "q06-choice-a.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q06-choice-a.svg",
+      "width": 1200,
+      "height": 170,
+      "sha256": "3b169f87950232a3f160bfcbb52c51a372a299121ce4d9a914fa871bd1122216"
+    },
+    {
+      "id": "q06-choice-b",
+      "question": 6,
+      "kind": "choice",
+      "choice": "B",
+      "file": "q06-choice-b.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q06-choice-b.svg",
+      "width": 1200,
+      "height": 170,
+      "sha256": "20337c7bd373a5d52dc68816030f4ea1d6c274fe0719dcfb0cc4c5eb5b164498"
+    },
+    {
+      "id": "q06-choice-c",
+      "question": 6,
+      "kind": "choice",
+      "choice": "C",
+      "file": "q06-choice-c.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q06-choice-c.svg",
+      "width": 1200,
+      "height": 170,
+      "sha256": "3650ed4629aa58bcfea90a3f32432ade15da9288b8fcfab9e927efb816cf6499"
+    },
+    {
+      "id": "q06-choice-d",
+      "question": 6,
+      "kind": "choice",
+      "choice": "D",
+      "file": "q06-choice-d.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q06-choice-d.svg",
+      "width": 1200,
+      "height": 170,
+      "sha256": "03dd88482615bf1f04155b7cc11368b8b2f1d3b98af20f8be5c21718fcbf82a8"
+    },
+    {
+      "id": "q06-choice-e",
+      "question": 6,
+      "kind": "choice",
+      "choice": "E",
+      "file": "q06-choice-e.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q06-choice-e.svg",
+      "width": 1200,
+      "height": 170,
+      "sha256": "a3de1475876ed8542c065a073bd99c1b22a72194782e695c2b69395b9e44a9d7"
+    },
+    {
+      "id": "q07-stem",
+      "question": 7,
+      "kind": "stem",
+      "file": "q07-stem.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q07-stem.svg",
+      "width": 800,
+      "height": 220,
+      "sha256": "7b0536c886940d6cf648a5eb7ab0252ebe8b01d21a42879ca75c07a41c586b8e"
+    },
+    {
+      "id": "q07-choice-a",
+      "question": 7,
+      "kind": "choice",
+      "choice": "A",
+      "file": "q07-choice-a.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q07-choice-a.svg",
+      "width": 1200,
+      "height": 170,
+      "sha256": "820423ac9fe67385cd880764e12c9311c964aa76c0ac6b638da505aa389bbce6"
+    },
+    {
+      "id": "q07-choice-b",
+      "question": 7,
+      "kind": "choice",
+      "choice": "B",
+      "file": "q07-choice-b.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q07-choice-b.svg",
+      "width": 1200,
+      "height": 170,
+      "sha256": "70d28caacc9eb7adedf7f8bf2c3029f528dba67c855a673a92e18c4d6cc9d3de"
+    },
+    {
+      "id": "q07-choice-c",
+      "question": 7,
+      "kind": "choice",
+      "choice": "C",
+      "file": "q07-choice-c.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q07-choice-c.svg",
+      "width": 1200,
+      "height": 170,
+      "sha256": "930fee936521ed367c8f6f15861770ea7c9836452b69ef026bb0a1af5e9d7c75"
+    },
+    {
+      "id": "q07-choice-d",
+      "question": 7,
+      "kind": "choice",
+      "choice": "D",
+      "file": "q07-choice-d.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q07-choice-d.svg",
+      "width": 1200,
+      "height": 170,
+      "sha256": "d90ab05ed9708be117dceec41d1cd522a0d893bd88ad8f6bc2c9d965ea9d8726"
+    },
+    {
+      "id": "q07-choice-e",
+      "question": 7,
+      "kind": "choice",
+      "choice": "E",
+      "file": "q07-choice-e.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q07-choice-e.svg",
+      "width": 1200,
+      "height": 170,
+      "sha256": "34b71bde9ec9d9c11f64f6be1f22c6ecb958022facbad2d737f249cb26f4f2fe"
+    },
+    {
+      "id": "q08-stem",
+      "question": 8,
+      "kind": "stem",
+      "file": "q08-stem.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q08-stem.svg",
+      "width": 800,
+      "height": 310,
+      "sha256": "49640fc70559d71f96732e220387df83dbb409e562f48eead2c4308e4dba535d"
+    },
+    {
+      "id": "q08-choice-a",
+      "question": 8,
+      "kind": "choice",
+      "choice": "A",
+      "file": "q08-choice-a.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q08-choice-a.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "b42986292833ab4bfcdd9489b48428548bef9917ab4c5b668adafb8fbb9f60f6"
+    },
+    {
+      "id": "q08-choice-b",
+      "question": 8,
+      "kind": "choice",
+      "choice": "B",
+      "file": "q08-choice-b.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q08-choice-b.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "a354af7395ca62eede227d7546972fc61cf9f68eb16417959908ddc089d198ad"
+    },
+    {
+      "id": "q08-choice-c",
+      "question": 8,
+      "kind": "choice",
+      "choice": "C",
+      "file": "q08-choice-c.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q08-choice-c.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "15da9e8854ad419774cefaa3c3ceee1b0edab91feb31383fabce8f10d32aacda"
+    },
+    {
+      "id": "q08-choice-d",
+      "question": 8,
+      "kind": "choice",
+      "choice": "D",
+      "file": "q08-choice-d.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q08-choice-d.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "df257a9cc7961d0411a92060804aa3863da2518d637ca36cd278bf111af301ce"
+    },
+    {
+      "id": "q08-choice-e",
+      "question": 8,
+      "kind": "choice",
+      "choice": "E",
+      "file": "q08-choice-e.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q08-choice-e.svg",
+      "width": 1200,
+      "height": 150,
+      "sha256": "2e34fd48c67188fea93b864e86f8d41dca780d895afab859cdeabe961c17eeb6"
+    },
+    {
+      "id": "q09-stem",
+      "question": 9,
+      "kind": "stem",
+      "file": "q09-stem.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q09-stem.svg",
+      "width": 800,
+      "height": 500,
+      "sha256": "702326ea99cd0e5d50e21e7bd84d79535c47d921729dbd30aa43f43b2bcaa706"
+    },
+    {
+      "id": "q09-choice-a",
+      "question": 9,
+      "kind": "choice",
+      "choice": "A",
+      "file": "q09-choice-a.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q09-choice-a.svg",
+      "width": 1200,
+      "height": 160,
+      "sha256": "2a3564fb458c4aae23775d422ef2691b5162332e45938d67d9e213f46bc4c880"
+    },
+    {
+      "id": "q09-choice-b",
+      "question": 9,
+      "kind": "choice",
+      "choice": "B",
+      "file": "q09-choice-b.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q09-choice-b.svg",
+      "width": 1200,
+      "height": 160,
+      "sha256": "24906442313a91ae06dabba903cf8e6fd544d233f0f65eb8670063d4d0a9acb5"
+    },
+    {
+      "id": "q09-choice-c",
+      "question": 9,
+      "kind": "choice",
+      "choice": "C",
+      "file": "q09-choice-c.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q09-choice-c.svg",
+      "width": 1200,
+      "height": 160,
+      "sha256": "93c413d340bab73437a16b30ec3c54935cc6589cd8805970927f44ae49ef56a5"
+    },
+    {
+      "id": "q09-choice-d",
+      "question": 9,
+      "kind": "choice",
+      "choice": "D",
+      "file": "q09-choice-d.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q09-choice-d.svg",
+      "width": 1200,
+      "height": 160,
+      "sha256": "57ddf0ee486b3a8837a84961107b1e12bef466ef3aa013dd4afafadc5cc64e24"
+    },
+    {
+      "id": "q09-choice-e",
+      "question": 9,
+      "kind": "choice",
+      "choice": "E",
+      "file": "q09-choice-e.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q09-choice-e.svg",
+      "width": 1200,
+      "height": 160,
+      "sha256": "5bbf692fb4a9e1b67dfad70017ffd8c225247a3ea8d3ed34c2967c88d034ecdc"
+    },
+    {
+      "id": "q10-stem",
+      "question": 10,
+      "kind": "stem",
+      "file": "q10-stem.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q10-stem.svg",
+      "width": 800,
+      "height": 290,
+      "sha256": "3fed0a57314ff0961954ca794b09a912f644c4f314d62e3bb4921e021c279264"
+    },
+    {
+      "id": "q10-choice-a",
+      "question": 10,
+      "kind": "choice",
+      "choice": "A",
+      "file": "q10-choice-a.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q10-choice-a.svg",
+      "width": 1200,
+      "height": 190,
+      "sha256": "e27a6bd1dfcd30995c12ee2ae9b231666324d05781a2c674a75eaeddc133d790"
+    },
+    {
+      "id": "q10-choice-b",
+      "question": 10,
+      "kind": "choice",
+      "choice": "B",
+      "file": "q10-choice-b.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q10-choice-b.svg",
+      "width": 1200,
+      "height": 190,
+      "sha256": "a88769739dc2fa1c6325bdccc63e0cafe406a502699b69c3403a576bf4eb1017"
+    },
+    {
+      "id": "q10-choice-c",
+      "question": 10,
+      "kind": "choice",
+      "choice": "C",
+      "file": "q10-choice-c.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q10-choice-c.svg",
+      "width": 1200,
+      "height": 190,
+      "sha256": "221473969d9c740f1ff4f326b67b9b39c2b1edd4bf44a0dfe05be642f5d5349b"
+    },
+    {
+      "id": "q10-choice-d",
+      "question": 10,
+      "kind": "choice",
+      "choice": "D",
+      "file": "q10-choice-d.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q10-choice-d.svg",
+      "width": 1200,
+      "height": 190,
+      "sha256": "d2bc65fa5213b8e6739738730411ff97d7f1038c04055f22ee315627a3d4a618"
+    },
+    {
+      "id": "q10-choice-e",
+      "question": 10,
+      "kind": "choice",
+      "choice": "E",
+      "file": "q10-choice-e.svg",
+      "downloadUrl": "/apc-mechanics-test16/generated/q10-choice-e.svg",
+      "width": 1200,
+      "height": 190,
+      "sha256": "99aee2efb62523fd9aa6312ad7fea04c7d66eb06970f25c9791f6a7f003677e9"
+    }
+  ],
+  "sourceAssets": [
+    {
+      "id": "source-03a",
+      "kind": "source",
+      "file": "03a.jpg",
+      "downloadUrl": "/apc-mechanics-test16/source/03a.jpg",
+      "sourceUrl": "https://img.crackap.com/ap/physics-c/br/03a.jpg",
+      "sha256": "1041e0925fe404561bc885299a98f0c02581642b4f6d45b2836a12ca04476e59"
+    },
+    {
+      "id": "source-03b",
+      "kind": "source",
+      "file": "03b.jpg",
+      "downloadUrl": "/apc-mechanics-test16/source/03b.jpg",
+      "sourceUrl": "https://img.crackap.com/ap/physics-c/br/03b.jpg",
+      "sha256": "ac95e152ae07de77ccae1f0911cbc201cba8ee3e250a0754060ef9ad3e8e6843"
+    },
+    {
+      "id": "source-03c",
+      "kind": "source",
+      "file": "03c.jpg",
+      "downloadUrl": "/apc-mechanics-test16/source/03c.jpg",
+      "sourceUrl": "https://img.crackap.com/ap/physics-c/br/03c.jpg",
+      "sha256": "324122def21d16211a4fdc5c44bb259e56156f69930764ffff1adbf822f0f273"
+    },
+    {
+      "id": "source-03d",
+      "kind": "source",
+      "file": "03d.jpg",
+      "downloadUrl": "/apc-mechanics-test16/source/03d.jpg",
+      "sourceUrl": "https://img.crackap.com/ap/physics-c/br/03d.jpg",
+      "sha256": "b5cd5bf13ca8df6d0cb0c24b3142bb12cbdfa736ea187bb304466c6c6060e96c"
+    },
+    {
+      "id": "source-03e",
+      "kind": "source",
+      "file": "03e.jpg",
+      "downloadUrl": "/apc-mechanics-test16/source/03e.jpg",
+      "sourceUrl": "https://img.crackap.com/ap/physics-c/br/03e.jpg",
+      "sha256": "c90a793b981c93f3386256b3bcba4e29c788a9748f2abdd29b2a024b3007dfce"
+    },
+    {
+      "id": "source-image01252",
+      "kind": "source",
+      "file": "image01252.jpeg",
+      "downloadUrl": "/apc-mechanics-test16/source/image01252.jpeg",
+      "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01252.jpeg",
+      "sha256": "2ae95df02a3eb7421b1929bc9ac09a8ea2cbe868d2867d25b91a235f6c8c13af"
+    },
+    {
+      "id": "source-image01253",
+      "kind": "source",
+      "file": "image01253.jpeg",
+      "downloadUrl": "/apc-mechanics-test16/source/image01253.jpeg",
+      "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01253.jpeg",
+      "sha256": "9db39da66ee902baee11e1fedc6ac5702d3afa03af4b91f9074058beb6b7ca33"
+    },
+    {
+      "id": "source-image01254",
+      "kind": "source",
+      "file": "image01254.jpeg",
+      "downloadUrl": "/apc-mechanics-test16/source/image01254.jpeg",
+      "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01254.jpeg",
+      "sha256": "81c21a2bc4ad291cf0be5d9c54a9132521d059a69be0e4402a7052deb588503a"
+    },
+    {
+      "id": "source-image01255",
+      "kind": "source",
+      "file": "image01255.jpeg",
+      "downloadUrl": "/apc-mechanics-test16/source/image01255.jpeg",
+      "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01255.jpeg",
+      "sha256": "f3c059afa7bcc833327f5abacd07fa4a19f0e257b0932033c1619f0809dbec22"
+    },
+    {
+      "id": "source-image01256",
+      "kind": "source",
+      "file": "image01256.jpeg",
+      "downloadUrl": "/apc-mechanics-test16/source/image01256.jpeg",
+      "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01256.jpeg",
+      "sha256": "254e6ebdbccba06b7f158cc57b42a7ac245c30c5d46dd7633fb7040b4d1d3826"
+    },
+    {
+      "id": "source-image01257",
+      "kind": "source",
+      "file": "image01257.jpeg",
+      "downloadUrl": "/apc-mechanics-test16/source/image01257.jpeg",
+      "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01257.jpeg",
+      "sha256": "e1610ede923569d5ef765b186a941b2f05465f7d31fb6dbd89d5036f3dd18702"
+    }
+  ]
+}
