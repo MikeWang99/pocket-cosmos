@@ -1,4 +1,8 @@
 import { calculusForPhysicsMeta, calculusForPhysicsSteps } from './calculusForPhysics';
+import {
+  apcMechanicsRotationTest16Meta,
+  apcMechanicsRotationTest16Steps,
+} from './apcMechanicsRotationTest16';
 import { dynamicsMultipleChoiceMeta, dynamicsMultipleChoiceSteps } from './dynamicsMultipleChoice';
 import { practiceSetMeta as frq2025Meta, practiceSteps as frq2025Steps } from './frq2025Mechanics';
 import {
@@ -42,7 +46,7 @@ export interface PracticeSet {
   practiceKind?: 'mcq' | 'structured' | 'paper5' | 'evaluation';
   /** Hierarchy: curriculum system */
   system: 'ap-c-mech' | 'ap-c-em' | 'igcse';
-  /** Hierarchy: chapter grouping (optional, for IGCSE) */
+  /** Hierarchy: chapter or unit grouping */
   chapter?: number;
   chapterTitle?: string;
 }
@@ -53,6 +57,9 @@ export const practiceSets: PracticeSet[] = [
     category: 'mechanics',
     label: 'Calculus for Physics',
     system: 'ap-c-mech',
+    practiceKind: 'structured',
+    chapter: 0,
+    chapterTitle: 'Prerequisite Skills',
     ...calculusForPhysicsMeta,
     steps: calculusForPhysicsSteps,
   },
@@ -61,6 +68,9 @@ export const practiceSets: PracticeSet[] = [
     category: 'mechanics',
     label: '2025 FRQ Lab',
     system: 'ap-c-mech',
+    practiceKind: 'structured',
+    chapter: 99,
+    chapterTitle: 'Comprehensive Exam Practice',
     eyebrow: 'AP Physics C Mechanics',
     description:
       'Work through the 2025 released mechanics FRQs one short step at a time. The rubric assistant checks your reasoning against official scoring points and keeps a running report.',
@@ -72,6 +82,9 @@ export const practiceSets: PracticeSet[] = [
     category: 'mechanics',
     label: 'Kinematics MC',
     system: 'ap-c-mech',
+    practiceKind: 'mcq',
+    chapter: 1,
+    chapterTitle: 'Kinematics',
     ...kinematicsMultipleChoiceMeta,
     steps: kinematicsMultipleChoiceSteps,
   },
@@ -80,6 +93,9 @@ export const practiceSets: PracticeSet[] = [
     category: 'mechanics',
     label: 'Dynamics',
     system: 'ap-c-mech',
+    practiceKind: 'mcq',
+    chapter: 2,
+    chapterTitle: 'Force and Translational Dynamics',
     ...dynamicsMultipleChoiceMeta,
     steps: dynamicsMultipleChoiceSteps,
   },
@@ -88,6 +104,9 @@ export const practiceSets: PracticeSet[] = [
     category: 'mechanics',
     label: 'Work & Energy',
     system: 'ap-c-mech',
+    practiceKind: 'mcq',
+    chapter: 3,
+    chapterTitle: 'Work, Energy, and Power',
     ...workEnergyMultipleChoiceMeta,
     steps: workEnergyMultipleChoiceSteps,
   },
@@ -96,8 +115,22 @@ export const practiceSets: PracticeSet[] = [
     category: 'mechanics',
     label: 'Momentum Lab Design',
     system: 'ap-c-mech',
+    practiceKind: 'structured',
+    chapter: 4,
+    chapterTitle: 'Linear Momentum',
     ...linearMomentumLabDesignMeta,
     steps: linearMomentumLabDesignSteps,
+  },
+  {
+    id: 'apc-mechanics-rotation-test16',
+    category: 'mechanics',
+    label: 'Rotation I · Test 16',
+    system: 'ap-c-mech',
+    practiceKind: 'mcq',
+    chapter: 5,
+    chapterTitle: 'Torque and Rotational Dynamics',
+    ...apcMechanicsRotationTest16Meta,
+    steps: apcMechanicsRotationTest16Steps,
   },
   {
     id: 'physics-bowl-em-question-bank',

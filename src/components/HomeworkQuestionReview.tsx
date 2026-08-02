@@ -162,7 +162,7 @@ export const HomeworkQuestionReview: React.FC<HomeworkQuestionReviewProps> = ({
                 <img
                   src={step.image.src}
                   alt={step.image.alt}
-                  className="practice-media-image practice-question-image"
+                  className={`practice-media-image practice-question-image ${step.image.responsive ? 'practice-question-image--responsive' : ''}`}
                 />
               </div>
               {step.image.caption && <figcaption>{step.image.caption}</figcaption>}
@@ -212,7 +212,12 @@ export const HomeworkQuestionReview: React.FC<HomeworkQuestionReviewProps> = ({
                     </span>
                     <div className="min-w-0 self-center">
                       <div className="text-sm leading-6 text-slate-200">
-                        {choice.text ? <MathText>{choice.text}</MathText> : `${language === 'zh' ? '选项' : 'Option'} ${choice.label}`}
+                        {choice.image ? (
+                          <>
+                            <img src={choice.image.src} alt={choice.image.alt} className="practice-choice-image" />
+                            <span className="sr-only">{choice.text}</span>
+                          </>
+                        ) : choice.text ? <MathText>{choice.text}</MathText> : `${language === 'zh' ? '选项' : 'Option'} ${choice.label}`}
                       </div>
                       {(studentSelected || correctChoice) && (
                         <div className={`mt-1 text-[10px] font-semibold ${correctChoice ? 'text-emerald-300' : 'text-rose-300'}`}>

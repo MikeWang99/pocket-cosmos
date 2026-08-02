@@ -551,7 +551,14 @@ export const AdminSection: React.FC = () => {
                                     {choice.label}
                                   </span>
                                   <span className="self-center text-sm leading-relaxed text-slate-200 md:text-base">
-                                    <MathText>{choice.text}</MathText>
+                                    {choice.image ? (
+                                      <>
+                                        <img src={choice.image.src} alt={choice.image.alt} className="practice-choice-image" />
+                                        <span className="sr-only">{choice.text}</span>
+                                      </>
+                                    ) : (
+                                      <MathText>{choice.text}</MathText>
+                                    )}
                                   </span>
                                 </div>
                               );

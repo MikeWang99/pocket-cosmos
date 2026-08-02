@@ -7,6 +7,7 @@ import {
   ClipboardCheck,
   Cloud,
   CloudOff,
+  Download,
   FileText,
   Link2,
   Lock,
@@ -186,6 +187,11 @@ const inferPracticeKind = (set: PracticeSet): PracticeKind =>
 
 const getIgcseCourseNodeId = (kind: PracticeKind) => `igcse-course-${kind}`;
 
+const getCourseNodeId = (set: PracticeSet) => `${set.system}-course-${inferPracticeKind(set)}`;
+
+const getChapterNodeId = (set: PracticeSet) =>
+  `${set.system}-${inferPracticeKind(set)}-ch${set.chapter ?? 0}`;
+
 const getIgcseChapterNodeId = (set: PracticeSet) => {
   const kind = inferPracticeKind(set);
   if (kind === 'paper5') return 'igcse-paper5-years';
@@ -202,6 +208,9 @@ const getInitialExpandedNodes = (setId: string) => {
   if (set.system === 'igcse') {
     nodes.add(getIgcseCourseNodeId(inferPracticeKind(set)));
     nodes.add(getIgcseChapterNodeId(set));
+  } else if (set.system === 'ap-c-mech') {
+    nodes.add(getCourseNodeId(set));
+    nodes.add(getChapterNodeId(set));
   }
 
   return nodes;
@@ -290,11 +299,40 @@ const QuestionMedia: React.FC<{ step: PracticeStep; label: string; questionLabel
         <img
           src={step.image.src}
           alt={step.image.alt}
-          className={`practice-media-image ${isQuestionImage ? 'practice-question-image' : ''}`}
+          className={`practice-media-image ${isQuestionImage ? 'practice-question-image' : ''} ${step.image.responsive ? 'practice-question-image--responsive' : ''}`}
         />
       </div>
       {step.image.caption && <figcaption>{step.image.caption}</figcaption>}
     </figure>
+  );
+};
+
+const QuestionAssetDownloads: React.FC<{ step: PracticeStep; language: 'en' | 'zh' }> = ({
+  step,
+  language,
+}) => {
+  if (!step.assets?.length) return null;
+
+  return (
+    <details className="mt-3 rounded-lg border border-white/10 bg-white/[0.025] p-3">
+      <summary className="cursor-pointer text-xs font-semibold text-slate-400">
+        {language === 'zh' ? `题目资源索引 · ${step.assets.length} 个文件` : `Question asset index · ${step.assets.length} files`}
+      </summary>
+      <div className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+        {step.assets.map((asset) => (
+          <a
+            key={asset.id}
+            href={asset.src}
+            download={asset.downloadName}
+            className="flex min-h-10 items-center gap-2 rounded-md border border-white/10 bg-black/15 px-3 py-2 text-xs text-slate-300 transition-colors hover:border-nebula/45 hover:text-nebula"
+          >
+            <Download className="h-3.5 w-3.5 shrink-0" />
+            <span className="min-w-0 truncate">{asset.downloadName}</span>
+            <span className="ml-auto shrink-0 text-[9px] uppercase tracking-wider text-slate-600">{asset.kind}</span>
+          </a>
+        ))}
+      </div>
+    </details>
   );
 };
 
@@ -345,10 +383,13 @@ export const PracticeSection: React.FC = () => {
   const setCopy = getSetCopy(activeSet.id);
   const isIgcseSet = activeSet.category === 'igcse';
   const activePracticeKind = inferPracticeKind(activeSet);
+  const supportsDifficultyFilter =
+    activePracticeKind === 'mcq' &&
+    activeSet.steps.some((step) => Number.isFinite(step.difficulty) || step.tags?.some((tag) => tag.startsWith('Difficulty ')));
 
-  // Filter steps by difficulty for IGCSE sets
+  // Filter any indexed MCQ bank by its normalized 1–5 difficulty value.
   const practiceSteps = useMemo(() => {
-    if (!isIgcseSet || difficultyFilter === 'all') return activeSet.steps;
+    if (!supportsDifficultyFilter || difficultyFilter === 'all') return activeSet.steps;
     return activeSet.steps.filter((step) => {
       const diffTag = step.tags?.find((tag) => tag.startsWith('Difficulty '));
       const taggedLevel = diffTag
@@ -361,7 +402,7 @@ export const PracticeSection: React.FC = () => {
       if (difficultyFilter === 'hard') return level >= 4;
       return true;
     });
-  }, [activeSet.steps, isIgcseSet, difficultyFilter]);
+  }, [activeSet.steps, supportsDifficultyFilter, difficultyFilter]);
 
   // Map "Difficulty N" tag to display label
   const formatTag = (tag: string): string => {
@@ -423,10 +464,50 @@ export const PracticeSection: React.FC = () => {
     // AP Physics C: Mechanics
     const apMechSets = practiceSets.filter((s) => s.system === 'ap-c-mech');
     if (apMechSets.length) {
+      const courseCopy: Record<'mcq' | 'structured', { label: string; description: string }> = {
+        mcq: {
+          label: language === 'zh' ? '选择题 MCQ' : 'Multiple Choice',
+          description: language === 'zh' ? '按 AP Physics C 单元整理的选择题题库。' : 'Multiple-choice banks organized by AP Physics C unit.',
+        },
+        structured: {
+          label: language === 'zh' ? '问答题 FRQ' : 'Free Response',
+          description: language === 'zh' ? '基础诊断、实验设计与综合问答题。' : 'Foundation diagnostics, lab design, and comprehensive FRQs.',
+        },
+      };
+      const courses = (['mcq', 'structured'] as const).map((kind): PracticeTreeCourse => {
+        const kindSets = apMechSets.filter((set) => inferPracticeKind(set) === kind);
+        const chapterMap = new Map<number, { title: string; sets: PracticeSet[] }>();
+        kindSets.forEach((set) => {
+          const unit = set.chapter ?? 0;
+          if (!chapterMap.has(unit)) {
+            chapterMap.set(unit, { title: set.chapterTitle ?? `Unit ${unit}`, sets: [] });
+          }
+          chapterMap.get(unit)!.sets.push(set);
+        });
+        return {
+          id: `ap-c-mech-course-${kind}`,
+          label: courseCopy[kind].label,
+          description: courseCopy[kind].description,
+          chapters: [...chapterMap.entries()]
+            .sort(([a], [b]) => a - b)
+            .map(([unit, entry]) => ({
+              id: `ap-c-mech-${kind}-ch${unit}`,
+              label: unit === 0
+                ? entry.title
+                : unit === 99
+                  ? entry.title
+                  : language === 'zh'
+                    ? `Unit ${unit} · ${entry.title}`
+                    : `Unit ${unit} · ${entry.title}`,
+              sets: entry.sets,
+            })),
+        };
+      }).filter((course) => course.chapters.some((chapter) => chapter.sets.length > 0));
+
       systems.push({
         id: 'ap-c-mech',
         label: t.practice.tree.apCMech,
-        courses: [{ id: 'ap-c-mech-all', label: '', chapters: [{ id: 'ap-c-mech-all', label: '', sets: apMechSets }] }],
+        courses,
       });
     }
 
@@ -896,7 +977,7 @@ export const PracticeSection: React.FC = () => {
                 </div>
               );
             })}
-            {isIgcseSet && activePracticeKind !== 'evaluation' && (
+            {supportsDifficultyFilter && (
               <div className="mt-3">
                 <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
                   {t.practice.difficultyFilter.label}
@@ -1019,7 +1100,7 @@ export const PracticeSection: React.FC = () => {
                             key={tag}
                             className="rounded-full border border-nebula/20 bg-nebula/5 px-2.5 py-1 text-[10px] font-semibold text-nebula"
                           >
-                            {formatTag(tag)}
+                            <MathText>{formatTag(tag)}</MathText>
                           </span>
                         ))}
                       </div>
@@ -1061,6 +1142,7 @@ export const PracticeSection: React.FC = () => {
                     label={t.practice.diagram}
                     questionLabel={t.practice.questionImage}
                   />
+                  <QuestionAssetDownloads step={activeStep} language={language} />
                 </div>
               </div>
 
@@ -1104,8 +1186,19 @@ export const PracticeSection: React.FC = () => {
                             }`}>
                               {isSelected ? '✓' : choice.label}
                             </span>
-                            <span className="self-center text-sm md:text-base text-slate-200 leading-relaxed">
-                              <MathText>{choice.text}</MathText>
+                            <span className="min-w-0 self-center text-sm md:text-base text-slate-200 leading-relaxed">
+                              {choice.image ? (
+                                <>
+                                  <img
+                                    src={choice.image.src}
+                                    alt={choice.image.alt}
+                                    className="practice-choice-image"
+                                  />
+                                  <span className="sr-only">{choice.text}</span>
+                                </>
+                              ) : (
+                                <MathText>{choice.text}</MathText>
+                              )}
                             </span>
                           </button>
                         );
