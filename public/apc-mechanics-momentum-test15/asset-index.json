@@ -1,0 +1,8 @@
+{
+  "bankId": "apc-mechanics-momentum-test15",
+  "assets": [
+    { "questionId": "crackap-apc-mechanics-test15-q05", "path": "/apc-mechanics-momentum-test15/source/q05-figure.jpeg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01167.jpeg", "width": 633, "height": 107 },
+    { "questionId": "crackap-apc-mechanics-test15-q06", "path": "/apc-mechanics-momentum-test15/source/q06-figure.jpeg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01169.jpeg", "width": 442, "height": 403 },
+    { "questionId": "crackap-apc-mechanics-test15-q08", "path": "/apc-mechanics-momentum-test15/source/q08-figure.jpeg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01174.jpeg", "width": 666, "height": 521 }
+  ]
+}

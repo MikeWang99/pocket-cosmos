@@ -1,0 +1,7 @@
+{
+  "bankId": "apc-mechanics-rotation-test5",
+  "assets": [
+    { "questionId": "apstudy-apc-mechanics-test5-q06", "path": "/apc-mechanics-rotation-test5/source/q06-figure.jpg", "sourceUrl": "https://img.apstudy.net/ap/physics-c/br20/Page_251_Image_0001.jpg", "width": 326, "height": 308 },
+    { "questionId": "apstudy-apc-mechanics-test5-q07", "path": "/apc-mechanics-rotation-test5/source/q07-figure.jpg", "sourceUrl": "https://img.apstudy.net/ap/physics-c/br20/Page_252_Image_0001.jpg", "width": 316, "height": 137 }
+  ]
+}

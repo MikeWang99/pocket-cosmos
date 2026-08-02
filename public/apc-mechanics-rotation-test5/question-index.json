@@ -1,0 +1,13 @@
+{
+  "bankId": "apc-mechanics-rotation-test5",
+  "sourcePage": "https://www.apstudy.net/ap/physics-c-mechanics/test5.html",
+  "rightsStatus": "unknown",
+  "reviewStatus": "approved_by_direct_assignment_request",
+  "questions": [
+    { "questionId": "apstudy-apc-mechanics-test5-q01", "sourceQuestion": 1, "answer": "B", "difficulty": 1, "tags": ["Angular speed", "Tangential speed", "Unit conversion"] },
+    { "questionId": "apstudy-apc-mechanics-test5-q03", "sourceQuestion": 3, "answer": "D", "difficulty": 2, "tags": ["Rotational kinematics", "Angular acceleration", "Angular displacement"] },
+    { "questionId": "apstudy-apc-mechanics-test5-q05", "sourceQuestion": 5, "answer": "B", "difficulty": 2, "tags": ["Net torque", "Torque direction", "Lever arm"] },
+    { "questionId": "apstudy-apc-mechanics-test5-q06", "sourceQuestion": 6, "answer": "D", "difficulty": 3, "tags": ["Torque", "Force components", "Lever arm"] },
+    { "questionId": "apstudy-apc-mechanics-test5-q07", "sourceQuestion": 7, "answer": "B", "difficulty": 3, "tags": ["Rotational equilibrium", "Torque balance", "Pivot choice"] }
+  ]
+}

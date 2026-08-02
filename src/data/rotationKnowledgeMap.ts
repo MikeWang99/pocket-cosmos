@@ -42,6 +42,15 @@ const angularKinematicsDiagram = originalDiagram(
   '斜率把角位置连接到角速度和角加速度;有符号面积沿相反方向连接这些量。',
 );
 
+const angularVelocityGraphSet: CurriculumImage[] = ['A', 'B', 'C', 'D', 'E'].map((label, index) => ({
+  src: '/apc-mechanics-test16/source/03' + String.fromCharCode(97 + index) + '.jpg',
+  alt: text(
+    'Graph ' + label + ': angular velocity versus time.',
+    '图像 ' + label + '：角速度—时间图像。',
+  ),
+  caption: text('Graph ' + label, '图像 ' + label),
+}));
+
 const torqueDiagram = originalDiagram(
   'torque-lever-arm.svg',
   'A wrench showing position vector, applied force, force angle, and lever arm.',
@@ -124,6 +133,60 @@ const angularGraphCheck = mcq(
   'B',
   'Opposite signs make $|\\omega|$ decrease. Positive angular acceleration changes the negative angular velocity toward zero.',
   '符号相反会使 $|\\omega|$ 减小。正角加速度使负角速度逐渐接近零。',
+);
+
+const angularDisplacementGraphPractice = mcq(
+  'apc-rot-5-1-test16-q2',
+  'Classroom Practice 1: angular displacement',
+  '课堂练习 1：角位移',
+  'For graphs A–E above, which graph gives the greatest angular displacement over the interval?',
+  '对于上方图像 A–E，哪幅图在该时间段内产生的角位移最大？',
+  [
+    ['A', 'Graph A', '图像 A'],
+    ['B', 'Graph B', '图像 B'],
+    ['C', 'Graph C', '图像 C'],
+    ['D', 'Graph D', '图像 D'],
+    ['E', 'Graph E', '图像 E'],
+  ],
+  'B',
+  '$\\Delta\\theta=\\int\\omega\\,dt$, so compare signed areas under the curves. Graph B maintains $\\omega=1$ throughout the interval and has the greatest signed area.',
+  '$\\Delta\\theta=\\int\\omega\\,dt$，因此要比较曲线下方的有符号面积。图像 B 在整个时间段内保持 $\\omega=1$，有符号面积最大。',
+);
+
+const averageAngularAccelerationGraphPractice = mcq(
+  'apc-rot-5-1-test16-q3',
+  'Classroom Practice 2: average angular acceleration',
+  '课堂练习 2：平均角加速度',
+  'For graphs A–E above, which has the greatest average angular acceleration?',
+  '对于上方图像 A–E，哪一项的平均角加速度最大？',
+  [
+    ['A', 'Graph A', '图像 A'],
+    ['B', 'Graph B', '图像 B'],
+    ['C', 'Graph C', '图像 C'],
+    ['D', 'Graph E', '图像 E'],
+    ['E', 'Graphs C and E', '图像 C 和 E'],
+  ],
+  'E',
+  '$\\bar{\\alpha}=(\\omega_f-\\omega_i)/\\Delta t$. Graphs C and E both change from $\\omega=0$ to $\\omega=1$ over the same interval, so they have the same greatest average angular acceleration.',
+  '$\\bar{\\alpha}=(\\omega_f-\\omega_i)/\\Delta t$。图像 C 和 E 都在相同时间内由 $\\omega=0$ 变为 $\\omega=1$，因此具有相同且最大的平均角加速度。',
+);
+
+const averageAngularVelocityGraphPractice = mcq(
+  'apc-rot-5-1-test16-q4',
+  'Classroom Practice 3: average angular velocity',
+  '课堂练习 3：平均角速度',
+  'For graphs A–E above, which has the smallest average angular velocity?',
+  '对于上方图像 A–E，哪一项的平均角速度最小？',
+  [
+    ['A', 'Graph A', '图像 A'],
+    ['B', 'Graph B', '图像 B'],
+    ['C', 'Graph C', '图像 C'],
+    ['D', 'Graph D', '图像 D'],
+    ['E', 'Graphs A and B', '图像 A 和 B'],
+  ],
+  'A',
+  '$\\bar{\\omega}=\\frac{1}{\\Delta t}\\int\\omega\\,dt$. In graph A, the positive and negative signed areas cancel, giving $\\bar{\\omega}=0$; the other graphs have positive average angular velocity.',
+  '$\\bar{\\omega}=\\frac{1}{\\Delta t}\\int\\omega\\,dt$。图像 A 中正、负有符号面积相互抵消，所以 $\\bar{\\omega}=0$；其余图像的平均角速度均为正。',
 );
 
 const radiusCheck = mcq(
@@ -361,6 +424,30 @@ const rotationalKinematicsLesson: CurriculumLesson = {
       ],
     },
     {
+      heading: text('Classroom practice: three ways to read angular velocity–time graphs', '课堂练习：读取角速度—时间图像的三种方式'),
+      images: angularVelocityGraphSet,
+      paragraphs: [
+        text(
+          'Before calculating, identify what the question asks for: angular displacement comes from signed area, average angular acceleration comes from endpoint change divided by time, and average angular velocity comes from signed area divided by time.',
+          '计算前先判断题目要求什么：角位移来自有符号面积，平均角加速度来自端点变化量除以时间，平均角速度来自有符号面积除以时间。',
+        ),
+      ],
+      formulas: [
+        formula('Angular displacement', '角位移', '\\Delta\\theta=\\int\\omega\\,dt'),
+        formula('Average angular acceleration', '平均角加速度', '\\bar{\\alpha}=\\frac{\\omega_f-\\omega_i}{\\Delta t}'),
+        formula('Average angular velocity', '平均角速度', '\\bar{\\omega}=\\frac{1}{\\Delta t}\\int\\omega\\,dt'),
+      ],
+      classroomQuestions: [
+        angularDisplacementGraphPractice,
+        averageAngularAccelerationGraphPractice,
+        averageAngularVelocityGraphPractice,
+      ],
+      takeaway: text(
+        'Area, endpoint change, and average value are different operations even when the same graph is reused.',
+        '即使使用同一幅图像，面积、端点变化量和平均值仍是三种不同的运算。',
+      ),
+    },
+    {
       heading: text('Constant angular acceleration: derive before using', '恒定角加速度:先检查条件再使用'),
       paragraphs: [
         text(
@@ -408,6 +495,26 @@ const rotationalKinematicsLesson: CurriculumLesson = {
           formula('Integral links', '积分关系', '\\Delta\\theta=\\int\\omega\\,dt,\\qquad\\Delta\\omega=\\int\\alpha\\,dt'),
         ],
         bullets: [text('Use the three constant-$\\alpha$ equations only after confirming $\\alpha$ is constant.', '确认 $\\alpha$ 恒定后才能使用三条匀角加速度公式。')],
+      },
+      {
+        heading: text('Classroom practice: three ways to read angular velocity–time graphs', '课堂练习：读取角速度—时间图像的三种方式'),
+        images: angularVelocityGraphSet,
+        paragraphs: [
+          text(
+            'First decide whether the target is signed area, endpoint change, or an average over the interval.',
+            '先判断目标量对应有符号面积、端点变化量，还是时间段内的平均值。',
+          ),
+        ],
+        formulas: [
+          formula('Angular displacement', '角位移', '\\Delta\\theta=\\int\\omega\\,dt'),
+          formula('Average angular acceleration', '平均角加速度', '\\bar{\\alpha}=\\frac{\\omega_f-\\omega_i}{\\Delta t}'),
+          formula('Average angular velocity', '平均角速度', '\\bar{\\omega}=\\frac{1}{\\Delta t}\\int\\omega\\,dt'),
+        ],
+        classroomQuestions: [
+          angularDisplacementGraphPractice,
+          averageAngularAccelerationGraphPractice,
+          averageAngularVelocityGraphPractice,
+        ],
       },
       { heading: text('Self-check', '自测'), classroomQuestions: [angularGraphCheck] },
     ],

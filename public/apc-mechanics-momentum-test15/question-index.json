@@ -1,0 +1,12 @@
+{
+  "bankId": "apc-mechanics-momentum-test15",
+  "sourcePage": "https://www.crackap.com/ap/physics-c-mechanics/test15.html",
+  "rightsStatus": "unknown",
+  "reviewStatus": "approved_by_direct_assignment_request",
+  "questions": [
+    { "questionId": "crackap-apc-mechanics-test15-q02", "sourceQuestion": 2, "answer": "C", "difficulty": 1, "tags": ["Linear momentum", "Net force", "Newton's second law"] },
+    { "questionId": "crackap-apc-mechanics-test15-q05", "sourceQuestion": 5, "answer": "E", "difficulty": 3, "tags": ["Linear momentum conservation", "Center-of-mass velocity", "Maximum spring extension"] },
+    { "questionId": "crackap-apc-mechanics-test15-q06", "sourceQuestion": 6, "answer": "B", "difficulty": 2, "tags": ["Impulse", "Force-time graph", "Change in momentum"] },
+    { "questionId": "crackap-apc-mechanics-test15-q08", "sourceQuestion": 8, "answer": "C", "difficulty": 4, "tags": ["Center of mass", "Explosion", "Internal forces"] }
+  ]
+}

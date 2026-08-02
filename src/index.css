@@ -229,6 +229,10 @@ textarea::placeholder {
 
 .practice-question-image--responsive {
   min-width: 0;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
 }
 
 .practice-media figcaption {
@@ -298,6 +302,9 @@ textarea::placeholder {
 
   .practice-question-image--responsive {
     min-width: 0;
+    width: auto;
+    max-width: 100%;
+    height: auto;
   }
 
   .practice-equation {
