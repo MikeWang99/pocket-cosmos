@@ -131,13 +131,8 @@ export const HomeworkQuestionReview: React.FC<HomeworkQuestionReviewProps> = ({
             {language === 'zh' ? '原题' : 'Original question'}
           </div>
 
-          {step.context && (
-            <div className="mb-3 rounded-lg bg-black/20 px-3 py-2.5 text-sm leading-6 text-slate-400">
-              <MathText>{step.context}</MathText>
-            </div>
-          )}
           {!hideDuplicatePrompt && step.prompt && (
-            <div className="text-[15px] leading-7 text-slate-100">
+            <div className="text-[15px] leading-7 text-starlight">
               <MathText>{step.prompt}</MathText>
             </div>
           )}
