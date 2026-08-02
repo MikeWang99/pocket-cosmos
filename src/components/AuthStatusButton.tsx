@@ -45,7 +45,7 @@ export const AuthStatusButton: FC = () => {
             <button
               type="button"
               onClick={clearEmailJustConfirmed}
-              className="ml-auto rounded p-0.5 text-emerald-400 transition-colors hover:text-emerald-700"
+              className="ml-auto rounded p-0.5 text-emerald-700 transition-colors hover:text-emerald-700"
             >
               <X className="h-3.5 w-3.5" />
             </button>
@@ -75,7 +75,7 @@ export const AuthStatusButton: FC = () => {
       <button
         type="button"
         onClick={() => setAuthModalOpen(true)}
-        className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-nebula/25 bg-[#ffffff] px-4 text-sm font-semibold text-nebula shadow-sm transition-colors hover:border-nebula/45 hover:bg-nebula hover:text-[#ffffff]"
+        className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-nebula/25 bg-surface px-4 text-sm font-semibold text-nebula shadow-sm transition-colors hover:border-nebula/45 hover:bg-nebula hover:text-on-accent"
       >
         <LogIn className="h-4 w-4" />
         {t.auth.openAuth}

@@ -152,9 +152,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       type="button"
       onClick={() => void startGoogleSignIn()}
       disabled={busy}
-      className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-lg border border-[#d1d5db] bg-[#ffffff] px-5 text-sm font-semibold text-[#1f2937] shadow-sm transition-colors hover:border-nebula/40 hover:bg-[#f9fafb] disabled:cursor-not-allowed disabled:opacity-50"
+      className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-lg border border-[#d1d5db] bg-surface px-5 text-sm font-semibold text-[#1f2937] shadow-sm transition-colors hover:border-nebula/40 hover:bg-[#f9fafb] disabled:cursor-not-allowed disabled:opacity-50"
     >
-      <span className="grid h-5 w-5 place-items-center rounded-full bg-[#ffffff] text-base font-bold text-[#4285f4]">
+      <span className="grid h-5 w-5 place-items-center rounded-full bg-surface text-base font-bold text-[#4285f4]">
         G
       </span>
       {busy ? t.auth.working : t.auth.googleAction}
@@ -173,7 +173,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     <button
       type="submit"
       disabled={busy || disabled}
-      className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-nebula px-5 text-sm font-semibold text-[#ffffff] transition-colors hover:bg-nebula/90 disabled:cursor-not-allowed disabled:opacity-50"
+      className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-nebula px-5 text-sm font-semibold text-on-accent transition-colors hover:bg-nebula/90 disabled:cursor-not-allowed disabled:opacity-50"
     >
       {icon}
       {busy ? t.auth.working : label}
@@ -194,7 +194,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             role="dialog"
             aria-modal="true"
             aria-labelledby="auth-modal-title"
-            className="relative max-h-[calc(100dvh-1.5rem)] w-full max-w-md overflow-y-auto rounded-2xl bg-[#ffffff] shadow-2xl sm:max-h-[calc(100dvh-2rem)]"
+            className="relative max-h-[calc(100dvh-1.5rem)] w-full max-w-md overflow-y-auto rounded-2xl bg-surface shadow-2xl sm:max-h-[calc(100dvh-2rem)]"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -261,7 +261,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           value={email}
                           onChange={(event) => setEmail(event.target.value)}
                           placeholder={t.auth.emailPlaceholder}
-                          className="w-full rounded-lg border border-[#d1d5db] bg-[#ffffff] px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
+                          className="w-full rounded-lg border border-[#d1d5db] bg-surface px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
                           autoComplete="email"
                           required
                         />
@@ -275,7 +275,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           value={password}
                           onChange={(event) => setPasswordInput(event.target.value)}
                           placeholder={t.auth.passwordPlaceholder}
-                          className="w-full rounded-lg border border-[#d1d5db] bg-[#ffffff] px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
+                          className="w-full rounded-lg border border-[#d1d5db] bg-surface px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
                           autoComplete="current-password"
                           required
                         />
@@ -304,7 +304,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           type="button"
                           onClick={() => void submitResendConfirmation()}
                           disabled={busy}
-                          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-nebula/30 bg-[#ffffff] px-4 text-xs font-semibold text-nebula transition-colors hover:bg-nebula/5 disabled:cursor-not-allowed disabled:opacity-50"
+                          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-nebula/30 bg-surface px-4 text-xs font-semibold text-nebula transition-colors hover:bg-nebula/5 disabled:cursor-not-allowed disabled:opacity-50"
                         >
                           <Mail className="h-3.5 w-3.5" />
                           {busy ? t.auth.working : (t.auth.messages as Record<string, string>)['AUTH_RESEND_CONFIRMATION']}
@@ -328,7 +328,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           value={email}
                           onChange={(event) => setEmail(event.target.value)}
                           placeholder={t.auth.emailPlaceholder}
-                          className="w-full rounded-lg border border-[#d1d5db] bg-[#ffffff] px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
+                          className="w-full rounded-lg border border-[#d1d5db] bg-surface px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
                           autoComplete="off"
                         />
                       </div>
@@ -341,7 +341,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           value={password}
                           onChange={(event) => setPasswordInput(event.target.value)}
                           placeholder={t.auth.newPasswordPlaceholder}
-                          className="w-full rounded-lg border border-[#d1d5db] bg-[#ffffff] px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
+                          className="w-full rounded-lg border border-[#d1d5db] bg-surface px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
                           autoComplete="off"
                         />
                         {password && !isPasswordValid && (
@@ -357,7 +357,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           value={confirmPassword}
                           onChange={(event) => setConfirmPassword(event.target.value)}
                           placeholder={t.auth.confirmPasswordPlaceholder}
-                          className="w-full rounded-lg border border-[#d1d5db] bg-[#ffffff] px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
+                          className="w-full rounded-lg border border-[#d1d5db] bg-surface px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
                           autoComplete="off"
                         />
                         {confirmPassword && !passwordsMatch && (
@@ -368,7 +368,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         type="button"
                         onClick={() => void submitSignup()}
                         disabled={busy || !email.trim() || !isPasswordValid || !passwordsMatch}
-                        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-nebula px-5 text-sm font-semibold text-[#ffffff] transition-colors hover:bg-nebula/90 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-nebula px-5 text-sm font-semibold text-on-accent transition-colors hover:bg-nebula/90 disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         <UserPlus className="h-4 w-4" />
                         {busy ? t.auth.working : t.auth.signupTab}
@@ -398,7 +398,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                         type="button"
                         onClick={() => void submitResendConfirmation()}
                         disabled={busy}
-                        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-nebula/30 bg-[#ffffff] px-5 text-sm font-semibold text-nebula transition-colors hover:bg-nebula/5 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-nebula/30 bg-surface px-5 text-sm font-semibold text-nebula transition-colors hover:bg-nebula/5 disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         <Mail className="h-4 w-4" />
                         {busy ? t.auth.working : (t.auth.messages as Record<string, string>)['AUTH_RESEND_CONFIRMATION']}
@@ -427,7 +427,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                           value={email}
                           onChange={(event) => setEmail(event.target.value)}
                           placeholder={t.auth.emailPlaceholder}
-                          className="w-full rounded-lg border border-[#d1d5db] bg-[#ffffff] px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
+                          className="w-full rounded-lg border border-[#d1d5db] bg-surface px-4 py-2.5 text-sm text-[#111827] outline-none transition-colors placeholder:text-[#9ca3af] focus:border-nebula focus:ring-2 focus:ring-nebula/20"
                           autoComplete="email"
                           required
                         />

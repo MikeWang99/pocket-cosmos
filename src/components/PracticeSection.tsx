@@ -315,17 +315,17 @@ const QuestionAssetDownloads: React.FC<{ step: PracticeStep; language: 'en' | 'z
 
   return (
     <details className="mt-1">
-      <summary className="inline-flex min-h-9 w-fit cursor-pointer list-none items-center gap-2 rounded-full border border-white/10 bg-white/[0.025] px-3 py-1.5 text-[11px] font-semibold text-slate-400 transition-colors hover:border-nebula/40 hover:text-nebula">
+      <summary className="inline-flex min-h-9 w-fit cursor-pointer list-none items-center gap-2 rounded-full border border-line bg-surface-tint px-3 py-1.5 text-[11px] font-semibold text-ink-soft transition-colors hover:border-nebula/40 hover:text-nebula">
         <Download className="h-3.5 w-3.5" />
         {language === 'zh' ? `下载题目素材 (${step.assets.length})` : `Download assets (${step.assets.length})`}
       </summary>
-      <div className="mt-2 grid gap-2 rounded-lg border border-white/10 bg-black/10 p-3 sm:grid-cols-2 xl:grid-cols-3">
+      <div className="mt-2 grid gap-2 rounded-lg border border-line bg-surface-muted p-3 sm:grid-cols-2 xl:grid-cols-3">
         {step.assets.map((asset) => (
           <a
             key={asset.id}
             href={asset.src}
             download={asset.downloadName}
-            className="flex min-h-10 items-center gap-2 rounded-md border border-white/10 bg-black/15 px-3 py-2 text-xs text-slate-300 transition-colors hover:border-nebula/45 hover:text-nebula"
+            className="flex min-h-10 items-center gap-2 rounded-md border border-line bg-surface-muted px-3 py-2 text-xs text-ink-soft transition-colors hover:border-nebula/45 hover:text-nebula"
           >
             <Download className="h-3.5 w-3.5 shrink-0" />
             <span className="min-w-0 truncate">{asset.downloadName}</span>
@@ -863,10 +863,10 @@ export const PracticeSection: React.FC = () => {
             <ClipboardCheck className="w-4 h-4" />
             {setCopy.eyebrow}
           </div>
-          <h1 className="text-balance font-serif text-3xl font-light leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
+          <h1 className="text-balance font-serif text-3xl font-light leading-tight text-ink sm:text-4xl md:text-5xl lg:text-6xl">
             {setCopy.title}
           </h1>
-          <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-400 sm:mt-4 sm:text-base">
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-ink-soft sm:mt-4 sm:text-base">
             {setCopy.description}
           </p>
           {authEnabled && (
@@ -876,7 +876,7 @@ export const PracticeSection: React.FC = () => {
                   ? 'border-rose-500/25 bg-rose-500/10 text-rose-700'
                   : user
                     ? 'border-emerald-500/25 bg-emerald-500/10 text-emerald-700'
-                    : 'border-white/10 bg-white/[0.04] text-slate-500'
+                    : 'border-line bg-surface-tint text-slate-500'
               }`}
               title={syncError ?? undefined}
             >
@@ -905,7 +905,7 @@ export const PracticeSection: React.FC = () => {
                   {/* System header */}
                   <button
                     onClick={() => toggleNode(system.id)}
-                    className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-xs font-bold uppercase tracking-wider text-slate-300 transition-colors hover:bg-white/[0.04]"
+                    className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-xs font-bold uppercase tracking-wider text-ink-soft transition-colors hover:bg-surface-tint-strong"
                   >
                     <span className={`inline-block h-3 w-3 text-[10px] leading-3 transition-transform ${sysExpanded ? 'rotate-90' : ''}`}>▶</span>
                     {system.label}
@@ -913,7 +913,7 @@ export const PracticeSection: React.FC = () => {
                   </button>
                   {/* Question types / chapters / sets */}
                   {sysExpanded && (
-                    <div className="ml-3 border-l border-white/10 pl-3 space-y-1">
+                    <div className="ml-3 border-l border-line pl-3 space-y-1">
                       {system.courses.map((course) => {
                         const hasCourseLabel = course.label !== '';
                         const courseExpanded = !hasCourseLabel || expandedNodes.has(course.id);
@@ -922,7 +922,7 @@ export const PracticeSection: React.FC = () => {
                             {hasCourseLabel && (
                               <button
                                 onClick={() => toggleNode(course.id)}
-                                className="flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-left text-[11px] font-bold text-slate-300 transition-colors hover:bg-white/[0.04] hover:text-white"
+                                className="flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-left text-[11px] font-bold text-ink-soft transition-colors hover:bg-surface-tint-strong hover:text-ink"
                                 title={course.description}
                               >
                                 <span className={`inline-block h-2.5 w-2.5 text-[8px] leading-[10px] transition-transform ${courseExpanded ? 'rotate-90' : ''}`}>▶</span>
@@ -930,7 +930,7 @@ export const PracticeSection: React.FC = () => {
                               </button>
                             )}
                             {courseExpanded && (
-                              <div className={hasCourseLabel ? 'ml-3 border-l border-white/10 pl-3' : ''}>
+                              <div className={hasCourseLabel ? 'ml-3 border-l border-line pl-3' : ''}>
                                 {course.chapters.map((chapter) => {
                                   const hasChapterLabel = chapter.label !== '';
                                   const chExpanded = !hasChapterLabel || expandedNodes.has(chapter.id);
@@ -939,7 +939,7 @@ export const PracticeSection: React.FC = () => {
                                       {hasChapterLabel && (
                                         <button
                                           onClick={() => toggleNode(chapter.id)}
-                                          className="flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-left text-[11px] font-semibold text-slate-400 transition-colors hover:bg-white/[0.04] hover:text-slate-200"
+                                          className="flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-left text-[11px] font-semibold text-ink-soft transition-colors hover:bg-surface-tint-strong hover:text-ink"
                                         >
                                           <span className={`inline-block h-2.5 w-2.5 text-[8px] leading-[10px] transition-transform ${chExpanded ? 'rotate-90' : ''}`}>▶</span>
                                           {chapter.label}
@@ -955,8 +955,8 @@ export const PracticeSection: React.FC = () => {
                                                 onClick={() => selectPracticeSet(set.id)}
                                                 className={`min-h-8 shrink-0 rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors ${
                                                   isActive
-                                                    ? 'border-nebula/70 bg-nebula/15 text-white'
-                                                    : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/30 hover:text-white'
+                                                    ? 'border-nebula/70 bg-nebula/15 text-ink'
+                                                    : 'border-line bg-surface-tint text-ink-soft hover:border-line-strong hover:text-ink'
                                                 }`}
                                               >
                                                 {getSetCopy(set.id).label}
@@ -990,8 +990,8 @@ export const PracticeSection: React.FC = () => {
                       onClick={() => changeDifficultyFilter(level)}
                       className={`min-h-9 shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors ${
                         difficultyFilter === level
-                          ? 'border-quantum/70 bg-quantum/15 text-white'
-                          : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/30 hover:text-white'
+                          ? 'border-quantum/70 bg-quantum/15 text-ink'
+                          : 'border-line bg-surface-tint text-ink-soft hover:border-line-strong hover:text-ink'
                       }`}
                     >
                       {t.practice.difficultyFilter[level]}
@@ -1004,15 +1004,15 @@ export const PracticeSection: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs text-slate-400">
-            <span>{t.practice.progress} <strong className="text-slate-200">{completedCount}/{practiceSteps.length}</strong></span>
+          <div className="flex items-center gap-2 rounded-full border border-line bg-surface-tint px-4 py-2 text-xs text-ink-soft">
+            <span>{t.practice.progress} <strong className="text-ink">{completedCount}/{practiceSteps.length}</strong></span>
             {completedCount > 0 && (
-              <span className="border-l border-white/10 pl-2">{t.practice.score} <strong className="text-slate-200">{totalScore}/{totalPossible}</strong></span>
+              <span className="border-l border-line pl-2">{t.practice.score} <strong className="text-ink">{totalScore}/{totalPossible}</strong></span>
             )}
           </div>
           <button
             onClick={resetPractice}
-            className="grid h-8 w-8 place-items-center rounded-full border border-white/10 text-slate-500 transition-colors hover:border-nebula/60 hover:text-nebula"
+            className="grid h-8 w-8 place-items-center rounded-full border border-line text-slate-500 transition-colors hover:border-nebula/60 hover:text-nebula"
             title={t.practice.resetTitle}
           >
             <RotateCcw className="h-3.5 w-3.5" />
@@ -1024,7 +1024,7 @@ export const PracticeSection: React.FC = () => {
       {!hasAccess(activeSet.system) ? (
         <div className="glass-panel flex flex-col items-center justify-center gap-4 rounded-lg p-12 text-center">
           <Lock className="h-10 w-10 text-slate-500" />
-          <p className="text-sm text-slate-400 max-w-md">{t.practice.lockedMessage}</p>
+          <p className="text-sm text-ink-soft max-w-md">{t.practice.lockedMessage}</p>
         </div>
       ) : (
       <div className="grid gap-5 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-6 xl:grid-cols-[260px_minmax(0,1fr)]">
@@ -1039,7 +1039,7 @@ export const PracticeSection: React.FC = () => {
                 <Fragment key={step.id}>
                   {/* #9: Group separator every 10 questions */}
                   {index > 0 && index % 10 === 0 && (
-                    <div className="col-span-full h-px bg-white/10 my-1" />
+                    <div className="col-span-full h-px bg-surface-tint-strong my-1" />
                   )}
                   <button
                     onClick={() => goToStep(index)}
@@ -1050,7 +1050,7 @@ export const PracticeSection: React.FC = () => {
                           ? isCorrect
                             ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700 hover:border-emerald-500/55'
                             : 'border-rose-500/35 bg-rose-500/10 text-rose-700 hover:border-rose-500/55'
-                          : 'border-white/10 bg-white/[0.03] text-slate-500 hover:border-white/30 hover:text-nebula'
+                          : 'border-line bg-surface-tint text-slate-500 hover:border-line-strong hover:text-nebula'
                     }`}
                     title={`${t.practice.questionPath} ${index + 1}`}
                   >
@@ -1072,7 +1072,7 @@ export const PracticeSection: React.FC = () => {
         <section className="space-y-6">
           {practiceSteps.length === 0 ? (
             <div className="glass-panel rounded-lg p-8 text-center">
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-ink-soft">
                 {language === 'zh'
                   ? '当前难度下没有题目，请尝试其他难度筛选。'
                   : 'No questions at this difficulty level. Try a different filter.'}
@@ -1089,11 +1089,11 @@ export const PracticeSection: React.FC = () => {
               transition={{ duration: 0.2 }}
               className="glass-panel rounded-lg overflow-hidden"
             >
-              <div className="border-b border-white/10 p-4 sm:p-6 md:p-8">
+              <div className="border-b border-line p-4 sm:p-6 md:p-8">
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div className="min-w-0">
                     <div className="text-xs uppercase tracking-widest text-nebula mb-3">{activeStep.source}</div>
-                    <h2 className="text-balance font-serif text-2xl text-white md:text-3xl">{activeStep.title}</h2>
+                    <h2 className="text-balance font-serif text-2xl text-ink md:text-3xl">{activeStep.title}</h2>
                     {!!activeStep.tags?.length && (
                       <div className="mt-3 flex flex-wrap gap-2">
                         {activeStep.tags.slice(0, 4).map((tag) => (
@@ -1111,12 +1111,12 @@ export const PracticeSection: React.FC = () => {
                     <button
                       type="button"
                       onClick={copyCurrentQuestionLink}
-                      className="inline-flex min-h-10 items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs font-semibold text-slate-300 transition-colors hover:border-nebula/50 hover:text-nebula"
+                      className="inline-flex min-h-10 items-center gap-2 rounded-full border border-line px-4 py-2 text-xs font-semibold text-ink-soft transition-colors hover:border-nebula/50 hover:text-nebula"
                     >
                       <Link2 className="h-4 w-4" />
                       {shareCopied ? t.practice.linkCopied : t.practice.shareQuestion}
                     </button>
-                    <div className="rounded-full border border-white/10 px-4 py-2 text-sm text-slate-300 w-fit">
+                    <div className="rounded-full border border-line px-4 py-2 text-sm text-ink-soft w-fit">
                       {activeIndex + 1} / {practiceSteps.length}
                     </div>
                   </div>
@@ -1125,8 +1125,8 @@ export const PracticeSection: React.FC = () => {
                 {/* Hide duplicated OCR prompt when the question image already contains the stem. */}
                 {shouldShowPrompt && (
                 <div className="mt-6">
-                  <div className="rounded-lg border border-white/10 bg-white/[0.04] p-4 sm:p-5 md:p-6">
-                    <div className="space-y-3 whitespace-pre-line text-base leading-relaxed text-white md:text-lg">
+                  <div className="rounded-lg border border-line bg-surface-tint p-4 sm:p-5 md:p-6">
+                    <div className="space-y-3 whitespace-pre-line text-base leading-relaxed text-ink md:text-lg">
                       {splitPromptParts(activeStep.prompt).map((part) => (
                         <p key={part}>
                           <MathText>{part}</MathText>
@@ -1179,15 +1179,15 @@ export const PracticeSection: React.FC = () => {
                                   ? 'border-rose-500/50 bg-rose-500/10'
                                   : isSelected
                                     ? 'border-nebula/70 bg-nebula/10'
-                                    : 'border-white/10 bg-white/[0.03] hover:border-nebula/50'
+                                    : 'border-line bg-surface-tint hover:border-nebula/50'
                             }`}
                           >
                             <span className={`grid h-8 w-8 place-items-center rounded-md text-xs font-bold transition-colors ${
-                              isSelected ? 'bg-nebula text-white' : 'bg-white text-black'
+                              isSelected ? 'bg-nebula text-on-accent' : 'bg-slate-900 text-on-accent'
                             }`}>
                               {isSelected ? '✓' : choice.label}
                             </span>
-                            <span className="min-w-0 self-center text-sm md:text-base text-slate-200 leading-relaxed">
+                            <span className="min-w-0 self-center text-sm md:text-base text-ink leading-relaxed">
                               {choice.image ? (
                                 <>
                                   <img
@@ -1206,7 +1206,7 @@ export const PracticeSection: React.FC = () => {
                       })}
                     </div>
                     {currentResult && (
-                      <div className="mt-5 rounded-lg border border-white/10 bg-black/20 p-4">
+                      <div className="mt-5 rounded-lg border border-line bg-surface-muted p-4">
                         <div className="flex items-center justify-between gap-3">
                           <div className="text-xs uppercase tracking-widest text-slate-500">
                             {currentResult.score === 1 ? t.practice.correct : t.practice.notQuite}
@@ -1219,7 +1219,7 @@ export const PracticeSection: React.FC = () => {
                                   setResults((prev) => { const n = {...prev}; delete n[activeStep.id]; return n; });
                                   setAnswers((prev) => { const n = {...prev}; delete n[activeStep.id]; return n; });
                                 }}
-                                className="rounded-full border border-white/20 px-3 py-1.5 text-[11px] font-semibold text-slate-300 transition-colors hover:border-nebula hover:text-nebula"
+                                className="rounded-full border border-line px-3 py-1.5 text-[11px] font-semibold text-ink-soft transition-colors hover:border-nebula hover:text-nebula"
                               >
                                 {language === 'zh' ? '重试' : 'Retry'}
                               </button>
@@ -1228,14 +1228,14 @@ export const PracticeSection: React.FC = () => {
                             {activeIndex < practiceSteps.length - 1 && (
                               <button
                                 onClick={() => goToStep(activeIndex + 1)}
-                                className="rounded-full bg-nebula px-4 py-1.5 text-[11px] font-bold text-white transition-colors hover:bg-nebula/80"
+                                className="rounded-full bg-nebula px-4 py-1.5 text-[11px] font-bold text-on-accent transition-colors hover:bg-nebula/80"
                               >
                                 {language === 'zh' ? '下一题 →' : 'Next →'}
                               </button>
                             )}
                           </div>
                         </div>
-                        <p className="mt-3 text-sm text-slate-300 leading-relaxed">
+                        <p className="mt-3 text-sm text-ink-soft leading-relaxed">
                           <MathText>{activeStep.solution ?? ''}</MathText>
                         </p>
                       </div>
@@ -1252,8 +1252,8 @@ export const PracticeSection: React.FC = () => {
                         disabled={!speechSupported}
                         className={`w-10 h-10 rounded-full border flex items-center justify-center transition-colors ${
                           isListening
-                            ? 'border-rose-400 text-rose-300 bg-rose-400/10'
-                            : 'border-white/10 text-slate-300 hover:border-nebula hover:text-nebula disabled:opacity-30'
+                            ? 'border-rose-400 text-rose-700 bg-rose-400/10'
+                            : 'border-line text-ink-soft hover:border-nebula hover:text-nebula disabled:opacity-30'
                         }`}
                         title={speechSupported ? t.practice.dictate : t.practice.speechUnavailable}
                       >
@@ -1265,27 +1265,27 @@ export const PracticeSection: React.FC = () => {
                       id="practice-answer"
                       value={currentAnswer}
                       onChange={(event) => updateAnswer(event.target.value)}
-                      className="min-h-[180px] w-full rounded-lg border border-white/10 bg-black/30 p-4 text-base leading-relaxed text-white outline-none transition-colors placeholder:text-slate-600 focus:border-nebula/70 sm:text-sm"
+                      className="min-h-[180px] w-full rounded-lg border border-line bg-surface-muted p-4 text-base leading-relaxed text-ink outline-none transition-colors placeholder:text-slate-600 focus:border-nebula/70 sm:text-sm"
                       placeholder={t.practice.answerPlaceholder}
                     />
                     {(activeStep.sampleAnswer || activeStep.solution) && (
                       <div className="mt-4 flex flex-wrap gap-2">
                         {activeStep.sampleAnswer && (
-                          <details className="group rounded-lg border border-white/10 bg-white/[0.03] p-3">
+                          <details className="group rounded-lg border border-line bg-surface-tint p-3">
                             <summary className="cursor-pointer list-none text-xs font-bold uppercase tracking-widest text-nebula">
                               {language === 'zh' ? '露出答案' : 'Reveal answer'}
                             </summary>
-                            <p className="mt-3 text-sm leading-7 text-slate-300">
+                            <p className="mt-3 text-sm leading-7 text-ink-soft">
                               <MathText>{activeStep.sampleAnswer}</MathText>
                             </p>
                           </details>
                         )}
                         {activeStep.solution && (
-                          <details className="group rounded-lg border border-white/10 bg-white/[0.03] p-3">
+                          <details className="group rounded-lg border border-line bg-surface-tint p-3">
                             <summary className="cursor-pointer list-none text-xs font-bold uppercase tracking-widest text-nebula">
                               {language === 'zh' ? '解析' : 'Explanation'}
                             </summary>
-                            <p className="mt-3 text-sm leading-7 text-slate-300">
+                            <p className="mt-3 text-sm leading-7 text-ink-soft">
                               <MathText>{activeStep.solution}</MathText>
                             </p>
                           </details>
@@ -1301,7 +1301,7 @@ export const PracticeSection: React.FC = () => {
                     <button
                       onClick={() => goToStep(activeIndex - 1)}
                       disabled={activeIndex === 0}
-                      className="h-11 w-11 rounded-full border border-white/10 flex items-center justify-center hover:border-white/30 disabled:opacity-30"
+                      className="h-11 w-11 rounded-full border border-line flex items-center justify-center hover:border-line-strong disabled:opacity-30"
                       title={t.practice.previous}
                     >
                       <ArrowLeft className="w-4 h-4" />
@@ -1309,7 +1309,7 @@ export const PracticeSection: React.FC = () => {
                     <button
                       onClick={() => goToStep(activeIndex + 1)}
                       disabled={activeIndex === practiceSteps.length - 1}
-                      className="h-11 w-11 rounded-full border border-white/10 flex items-center justify-center hover:border-white/30 disabled:opacity-30"
+                      className="h-11 w-11 rounded-full border border-line flex items-center justify-center hover:border-line-strong disabled:opacity-30"
                       title={t.practice.next}
                     >
                       <ArrowRight className="w-4 h-4" />
@@ -1321,7 +1321,7 @@ export const PracticeSection: React.FC = () => {
                       disabled={
                         isActiveMultipleChoice ? !currentAnswer || Boolean(currentResult) : currentAnswer.trim().length < 8
                       }
-                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-bold uppercase tracking-widest text-black transition-colors hover:bg-nebula hover:text-white disabled:opacity-30"
+                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-xs font-bold uppercase tracking-widest text-on-accent transition-colors hover:bg-nebula hover:text-on-accent disabled:opacity-30"
                     >
                       <Sparkles className="w-4 h-4" />
                       {isActiveMultipleChoice ? t.practice.checkAnswer : t.practice.scoreResponse}
@@ -1341,8 +1341,8 @@ export const PracticeSection: React.FC = () => {
             >
               <div className="glass-panel rounded-lg p-5 sm:p-6">
                 <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-3">{t.practice.rubricScore}</div>
-                <div className="text-5xl font-serif text-white">{currentResult.score}/{currentResult.maxScore}</div>
-                <div className="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
+                <div className="text-5xl font-serif text-ink">{currentResult.score}/{currentResult.maxScore}</div>
+                <div className="mt-4 h-2 rounded-full bg-surface-tint-strong overflow-hidden">
                   <div
                     className="h-full bg-nebula"
                     style={{ width: `${(currentResult.score / currentResult.maxScore) * 100}%` }}
@@ -1353,14 +1353,14 @@ export const PracticeSection: React.FC = () => {
               <div className="glass-panel rounded-lg p-5 sm:p-6">
                 <div className="grid gap-5 md:grid-cols-2 md:gap-6">
                   <div>
-                    <div className="flex items-center gap-2 text-emerald-300 text-xs uppercase tracking-widest mb-3">
+                    <div className="flex items-center gap-2 text-emerald-700 text-xs uppercase tracking-widest mb-3">
                       <Target className="w-4 h-4" />
                       {t.practice.hitPoints}
                     </div>
                     <div className="space-y-2">
                       {currentResult.hits.length ? (
                         currentResult.hits.map((hit) => (
-                          <div key={hit.id} className="rounded-md border border-emerald-400/20 bg-emerald-400/5 p-3 text-sm text-slate-200">
+                          <div key={hit.id} className="rounded-md border border-emerald-400/20 bg-emerald-400/5 p-3 text-sm text-ink">
                             {hit.label}
                           </div>
                         ))
@@ -1371,30 +1371,30 @@ export const PracticeSection: React.FC = () => {
                   </div>
 
                   <div>
-                    <div className="flex items-center gap-2 text-amber-300 text-xs uppercase tracking-widest mb-3">
+                    <div className="flex items-center gap-2 text-amber-700 text-xs uppercase tracking-widest mb-3">
                       <FileText className="w-4 h-4" />
                       {t.practice.missingPoints}
                     </div>
                     <div className="space-y-2">
                       {currentResult.misses.length ? (
                         currentResult.misses.map((miss) => (
-                          <div key={miss.id} className="rounded-md border border-amber-400/20 bg-amber-400/5 p-3 text-sm text-slate-200">
+                          <div key={miss.id} className="rounded-md border border-amber-400/20 bg-amber-400/5 p-3 text-sm text-ink">
                             {miss.label}
                           </div>
                         ))
                       ) : (
-                        <div className="text-sm text-emerald-300">{t.practice.allRubricPoints}</div>
+                        <div className="text-sm text-emerald-700">{t.practice.allRubricPoints}</div>
                       )}
                     </div>
                   </div>
                 </div>
 
                 {currentResult.suggestions.length > 0 && (
-                  <div className="mt-6 border-t border-white/10 pt-5">
+                  <div className="mt-6 border-t border-line pt-5">
                     <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-3">{t.practice.revisionAdvice}</div>
                     <ul className="space-y-2">
                       {currentResult.suggestions.map((suggestion) => (
-                        <li key={suggestion} className="text-sm text-slate-300 leading-relaxed">
+                        <li key={suggestion} className="text-sm text-ink-soft leading-relaxed">
                           {suggestion}
                         </li>
                       ))}

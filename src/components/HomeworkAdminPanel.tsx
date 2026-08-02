@@ -76,9 +76,9 @@ const getAiSuggestion = (instruction: string, fallbackSetId: string) => {
 };
 
 const statusStyle: Record<HomeworkAssignment['status'], string> = {
-  draft: 'border-amber-500/25 bg-amber-500/10 text-amber-300',
-  published: 'border-emerald-500/25 bg-emerald-500/10 text-emerald-300',
-  archived: 'border-white/10 bg-white/5 text-slate-400',
+  draft: 'border-amber-500/25 bg-amber-500/10 text-amber-700',
+  published: 'border-emerald-500/25 bg-emerald-500/10 text-emerald-700',
+  archived: 'border-line bg-surface-tint text-ink-soft',
 };
 
 export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = false }) => {
@@ -342,7 +342,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
   };
 
   if (loading) {
-    return <div className="glass-panel rounded-xl p-8 text-sm text-slate-400">{language === 'zh' ? '正在加载作业后台…' : 'Loading homework admin…'}</div>;
+    return <div className="glass-panel rounded-xl p-8 text-sm text-ink-soft">{language === 'zh' ? '正在加载作业后台…' : 'Loading homework admin…'}</div>;
   }
 
   return (
@@ -353,7 +353,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
             <ClipboardPlus className="h-4 w-4" />
             {language === 'zh' ? '作业管理' : 'Homework Admin'}
           </div>
-          <h2 className="font-serif text-2xl text-white sm:text-3xl">
+          <h2 className="font-serif text-2xl text-ink sm:text-3xl">
             {language === 'zh' ? '创建、发布与查看整体完成情况' : 'Create, publish, and review completion'}
           </h2>
         </div>
@@ -362,7 +362,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
             <button
               type="button"
               onClick={resetDemo}
-              className="rounded-full border border-white/10 px-4 py-2 text-xs font-semibold text-slate-400 hover:border-white/30 hover:text-white"
+              className="rounded-full border border-line px-4 py-2 text-xs font-semibold text-ink-soft hover:border-line-strong hover:text-ink"
             >
               {language === 'zh' ? '重置演示数据' : 'Reset demo'}
             </button>
@@ -370,7 +370,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
           <button
             type="button"
             onClick={() => setView('overview')}
-            className={`rounded-full border px-4 py-2 text-xs font-semibold ${view === 'overview' ? 'border-nebula/60 bg-nebula/15 text-white' : 'border-white/10 text-slate-400'}`}
+            className={`rounded-full border px-4 py-2 text-xs font-semibold ${view === 'overview' ? 'border-nebula/60 bg-nebula/15 text-ink' : 'border-line text-ink-soft'}`}
           >
             <Eye className="mr-1.5 inline h-3.5 w-3.5" />
             {language === 'zh' ? '作业与数据' : 'Assignments'}
@@ -378,7 +378,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
           <button
             type="button"
             onClick={() => setView('create')}
-            className={`rounded-full border px-4 py-2 text-xs font-semibold ${view === 'create' ? 'border-nebula/60 bg-nebula/15 text-white' : 'border-white/10 text-slate-400'}`}
+            className={`rounded-full border px-4 py-2 text-xs font-semibold ${view === 'create' ? 'border-nebula/60 bg-nebula/15 text-ink' : 'border-line text-ink-soft'}`}
           >
             <Plus className="mr-1.5 inline h-3.5 w-3.5" />
             {language === 'zh' ? '添加作业' : 'New assignment'}
@@ -387,13 +387,13 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
       </div>
 
       {demoMode && (
-        <div className="mb-5 rounded-xl border border-cyan-400/20 bg-cyan-400/5 px-4 py-3 text-xs leading-6 text-cyan-100/80">
+        <div className="mb-5 rounded-xl border border-cyan-400/20 bg-cyan-400/5 px-4 py-3 text-xs leading-6 text-cyan-800">
           {language === 'zh'
             ? 'Preview 演示模式：创建、发布、做题和进度联动均可测试；数据保存在当前浏览器。上线时切换到 Supabase 表即可。'
             : 'Preview demo mode: creation, publishing, answering, and progress sync are testable. Data stays in this browser; production uses Supabase.'}
         </div>
       )}
-      {error && <div className="mb-5 rounded-xl border border-rose-500/25 bg-rose-500/10 p-4 text-sm text-rose-200">{error}</div>}
+      {error && <div className="mb-5 rounded-xl border border-rose-500/25 bg-rose-500/10 p-4 text-sm text-rose-800">{error}</div>}
 
       {view === 'overview' ? (
         <div className="grid gap-5 xl:grid-cols-[340px_minmax(0,1fr)]">
@@ -414,11 +414,11 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                   className={`w-full rounded-lg border p-4 text-left transition-colors ${
                     selectedAssignment?.id === assignment.id
                       ? 'border-nebula/60 bg-nebula/10'
-                      : 'border-white/5 bg-white/[0.02] hover:border-white/20'
+                      : 'border-line bg-surface-tint hover:border-line-strong'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <span className="text-sm font-semibold text-white">{assignment.title}</span>
+                    <span className="text-sm font-semibold text-ink">{assignment.title}</span>
                     <span className={`shrink-0 rounded-full border px-2 py-1 text-[9px] uppercase tracking-wider ${statusStyle[assignment.status]}`}>
                       {assignment.status}
                     </span>
@@ -444,15 +444,15 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                           ? language === 'zh' ? 'AI 创建' : 'Created by AI'
                           : language === 'zh' ? '手动创建' : 'Manual'}
                       </div>
-                      <h3 className="mt-2 font-serif text-2xl text-white">{selectedAssignment.title}</h3>
-                      <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">{selectedAssignment.description}</p>
+                      <h3 className="mt-2 font-serif text-2xl text-ink">{selectedAssignment.title}</h3>
+                      <p className="mt-2 max-w-2xl text-sm leading-6 text-ink-soft">{selectedAssignment.description}</p>
                     </div>
                     <div className="flex gap-2">
                       {selectedAssignment.status === 'draft' && (
                         <button
                           type="button"
                           onClick={() => void updateAssignmentStatus(selectedAssignment.id, 'published')}
-                          className="inline-flex items-center gap-2 rounded-full bg-nebula px-4 py-2 text-xs font-bold text-white"
+                          className="inline-flex items-center gap-2 rounded-full bg-nebula px-4 py-2 text-xs font-bold text-on-accent"
                         >
                           <Rocket className="h-3.5 w-3.5" />
                           {language === 'zh' ? '发布' : 'Publish'}
@@ -462,7 +462,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                         <button
                           type="button"
                           onClick={() => void updateAssignmentStatus(selectedAssignment.id, 'archived')}
-                          className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs text-slate-400"
+                          className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-xs text-ink-soft"
                         >
                           <Archive className="h-3.5 w-3.5" />
                           {language === 'zh' ? '归档' : 'Archive'}
@@ -471,15 +471,15 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                     </div>
                   </div>
                   <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                    <div className="rounded-lg border border-white/10 bg-white/[0.03] p-4">
+                    <div className="rounded-lg border border-line bg-surface-tint p-4">
                       <div className="text-[10px] uppercase tracking-widest text-slate-500">{language === 'zh' ? '题目' : 'Questions'}</div>
                       <div className="mt-1 text-2xl font-semibold">{selectedAssignment.items.length}</div>
                     </div>
-                    <div className="rounded-lg border border-white/10 bg-white/[0.03] p-4">
+                    <div className="rounded-lg border border-line bg-surface-tint p-4">
                       <div className="text-[10px] uppercase tracking-widest text-slate-500">{language === 'zh' ? '学生' : 'Students'}</div>
                       <div className="mt-1 text-2xl font-semibold">{selectedAssignment.assignedToAll ? profiles.length : selectedAssignment.studentIds.length}</div>
                     </div>
-                    <div className="rounded-lg border border-white/10 bg-white/[0.03] p-4">
+                    <div className="rounded-lg border border-line bg-surface-tint p-4">
                       <div className="text-[10px] uppercase tracking-widest text-slate-500">{language === 'zh' ? '截止时间' : 'Due'}</div>
                       <div className="mt-2 text-sm font-semibold">{formatDue(selectedAssignment.dueAt, language)}</div>
                     </div>
@@ -487,7 +487,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                 </div>
 
                 <div className="glass-panel overflow-hidden rounded-xl">
-                  <div className="border-b border-white/10 px-5 py-4 text-xs font-semibold uppercase tracking-widest text-slate-400">
+                  <div className="border-b border-line px-5 py-4 text-xs font-semibold uppercase tracking-widest text-ink-soft">
                     <UsersRound className="mr-2 inline h-4 w-4" />
                     {language === 'zh' ? '学生完成情况' : 'Student progress'}
                   </div>
@@ -510,17 +510,17 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                           return (
                             <tr
                               key={row.profile.userId}
-                              className={`border-t border-white/5 transition-colors ${
-                                isSelected ? 'bg-nebula/10' : 'hover:bg-white/[0.02]'
+                              className={`border-t border-line transition-colors ${
+                                isSelected ? 'bg-nebula/10' : 'hover:bg-surface-tint-strong'
                               }`}
                             >
                               <td className="px-5 py-4">
-                                <div className="font-semibold text-white">{row.profile.displayName}</div>
+                                <div className="font-semibold text-ink">{row.profile.displayName}</div>
                                 <div className="text-xs text-slate-500">{row.profile.email}</div>
                               </td>
                               <td className="px-5 py-4">
                                 <div className="flex items-center gap-3">
-                                  <div className="h-1.5 w-28 overflow-hidden rounded-full bg-white/10">
+                                  <div className="h-1.5 w-28 overflow-hidden rounded-full bg-surface-tint-strong">
                                     <div className="h-full rounded-full bg-nebula" style={{ width: `${percent}%` }} />
                                   </div>
                                   <span>{row.completed}/{row.total}</span>
@@ -528,7 +528,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                               </td>
                               <td className="px-5 py-4">{row.accuracy}%</td>
                               <td className="px-5 py-4">
-                                <span className={`rounded-full px-2.5 py-1 text-xs ${row.completed === row.total ? 'bg-emerald-500/10 text-emerald-300' : row.completed ? 'bg-amber-500/10 text-amber-300' : 'bg-white/5 text-slate-500'}`}>
+                                <span className={`rounded-full px-2.5 py-1 text-xs ${row.completed === row.total ? 'bg-emerald-500/10 text-emerald-700' : row.completed ? 'bg-amber-500/10 text-amber-700' : 'bg-surface-tint text-slate-500'}`}>
                                   {row.completed === row.total
                                     ? language === 'zh' ? '已完成' : 'Complete'
                                     : row.completed
@@ -543,8 +543,8 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                                   onClick={() => openStudentReview(row.profile.userId)}
                                   className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${
                                     isSelected
-                                      ? 'border-nebula/50 bg-nebula/15 text-white'
-                                      : 'border-white/10 text-slate-400 hover:border-white/30 hover:text-white'
+                                      ? 'border-nebula/50 bg-nebula/15 text-ink'
+                                      : 'border-line text-ink-soft hover:border-line-strong hover:text-ink'
                                   }`}
                                 >
                                   <Eye className="mr-1.5 inline h-3.5 w-3.5" />
@@ -577,7 +577,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                             {language === 'zh' ? '整份作业复盘' : 'Full assignment review'}
                           </div>
                           <div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                            <h3 className="font-serif text-xl text-white sm:text-2xl">
+                            <h3 className="font-serif text-xl text-ink sm:text-2xl">
                               {selectedStudentProgress.profile.displayName}
                             </h3>
                             <span className="text-xs text-slate-500">{selectedStudentProgress.profile.email}</span>
@@ -585,16 +585,16 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                         </div>
                         <div className="grid grid-cols-3 gap-2 text-center">
                           <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/[0.06] px-3 py-2">
-                            <div className="text-[9px] uppercase tracking-widest text-emerald-300/70">{language === 'zh' ? '正确' : 'Correct'}</div>
-                            <div className="mt-0.5 text-lg font-semibold text-emerald-300">{correctReviewCount}</div>
+                            <div className="text-[9px] uppercase tracking-widest text-emerald-700">{language === 'zh' ? '正确' : 'Correct'}</div>
+                            <div className="mt-0.5 text-lg font-semibold text-emerald-700">{correctReviewCount}</div>
                           </div>
                           <div className="rounded-lg border border-rose-500/20 bg-rose-500/[0.06] px-3 py-2">
-                            <div className="text-[9px] uppercase tracking-widest text-rose-300/70">{language === 'zh' ? '错误' : 'Wrong'}</div>
-                            <div className="mt-0.5 text-lg font-semibold text-rose-300">{incorrectReviewCount}</div>
+                            <div className="text-[9px] uppercase tracking-widest text-rose-700">{language === 'zh' ? '错误' : 'Wrong'}</div>
+                            <div className="mt-0.5 text-lg font-semibold text-rose-700">{incorrectReviewCount}</div>
                           </div>
-                          <div className="rounded-lg border border-white/10 bg-white/[0.025] px-3 py-2">
+                          <div className="rounded-lg border border-line bg-surface-tint px-3 py-2">
                             <div className="text-[9px] uppercase tracking-widest text-slate-500">{language === 'zh' ? '未答' : 'Open'}</div>
-                            <div className="mt-0.5 text-lg font-semibold text-slate-400">{unansweredReviewCount}</div>
+                            <div className="mt-0.5 text-lg font-semibold text-ink-soft">{unansweredReviewCount}</div>
                           </div>
                         </div>
                       </div>
@@ -617,12 +617,12 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                                 title={entry.resolved?.step.title ?? entry.item.questionTitle ?? entry.item.questionId}
                                 className={`grid h-9 w-9 place-items-center rounded-md border text-xs font-semibold transition-colors ${
                                   selected
-                                    ? 'border-nebula/80 bg-nebula/20 text-white ring-1 ring-nebula/30'
+                                    ? 'border-nebula/80 bg-nebula/20 text-ink ring-1 ring-nebula/30'
                                     : entry.attempt?.isCorrect
-                                      ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-300 hover:border-emerald-400'
+                                      ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700 hover:border-emerald-400'
                                       : entry.attempt
-                                        ? 'border-rose-500/35 bg-rose-500/10 text-rose-300 hover:border-rose-400'
-                                        : 'border-white/8 bg-white/[0.02] text-slate-600 hover:border-white/20'
+                                        ? 'border-rose-500/35 bg-rose-500/10 text-rose-700 hover:border-rose-400'
+                                        : 'border-line bg-surface-tint text-slate-600 hover:border-line-strong'
                                 }`}
                               >
                                 {entry.index + 1}
@@ -630,7 +630,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                             );
                           })}
                         </div>
-                        <div className="mt-1 space-y-1 border-t border-white/5 px-2 pt-3 text-[10px] text-slate-500">
+                        <div className="mt-1 space-y-1 border-t border-line px-2 pt-3 text-[10px] text-slate-500">
                           <div><span className="mr-2 inline-block h-2 w-2 rounded-full bg-rose-400" />{language === 'zh' ? '错误，建议优先讲解' : 'Incorrect — review first'}</div>
                           <div><span className="mr-2 inline-block h-2 w-2 rounded-full bg-emerald-400" />{language === 'zh' ? '回答正确' : 'Correct'}</div>
                           <div><span className="mr-2 inline-block h-2 w-2 rounded-full bg-slate-700" />{language === 'zh' ? '尚未作答' : 'Not answered'}</div>
@@ -669,24 +669,24 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
           <div className="glass-panel rounded-xl p-5 sm:p-6">
             <div className="mb-5 flex items-center gap-2">
               <FileEdit className="h-4 w-4 text-nebula" />
-              <h3 className="font-serif text-xl text-white">{language === 'zh' ? '作业信息与题目' : 'Assignment details'}</h3>
+              <h3 className="font-serif text-xl text-ink">{language === 'zh' ? '作业信息与题目' : 'Assignment details'}</h3>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="sm:col-span-2">
-                <span className="mb-2 block text-xs text-slate-400">{language === 'zh' ? '作业名称' : 'Title'}</span>
-                <input value={title} onChange={(event) => setTitle(event.target.value)} className="w-full rounded-lg border border-white/10 bg-black/25 px-4 py-3 text-sm text-white outline-none focus:border-nebula" placeholder={language === 'zh' ? '例如：运动学第 4 次课作业' : 'e.g. Motion · Lesson 04'} />
+                <span className="mb-2 block text-xs text-ink-soft">{language === 'zh' ? '作业名称' : 'Title'}</span>
+                <input value={title} onChange={(event) => setTitle(event.target.value)} className="w-full rounded-lg border border-line bg-surface-muted px-4 py-3 text-sm text-ink outline-none focus:border-nebula" placeholder={language === 'zh' ? '例如：运动学第 4 次课作业' : 'e.g. Motion · Lesson 04'} />
               </label>
               <label className="sm:col-span-2">
-                <span className="mb-2 block text-xs text-slate-400">{language === 'zh' ? '给学生的说明' : 'Student instructions'}</span>
-                <textarea value={description} onChange={(event) => setDescription(event.target.value)} className="min-h-24 w-full rounded-lg border border-white/10 bg-black/25 px-4 py-3 text-sm text-white outline-none focus:border-nebula" />
+                <span className="mb-2 block text-xs text-ink-soft">{language === 'zh' ? '给学生的说明' : 'Student instructions'}</span>
+                <textarea value={description} onChange={(event) => setDescription(event.target.value)} className="min-h-24 w-full rounded-lg border border-line bg-surface-muted px-4 py-3 text-sm text-ink outline-none focus:border-nebula" />
               </label>
               <label>
-                <span className="mb-2 block text-xs text-slate-400">{language === 'zh' ? '截止时间' : 'Due date'}</span>
-                <input type="datetime-local" value={dueAt} onChange={(event) => setDueAt(event.target.value)} className="w-full rounded-lg border border-white/10 bg-black/25 px-4 py-3 text-sm text-white outline-none focus:border-nebula" />
+                <span className="mb-2 block text-xs text-ink-soft">{language === 'zh' ? '截止时间' : 'Due date'}</span>
+                <input type="datetime-local" value={dueAt} onChange={(event) => setDueAt(event.target.value)} className="w-full rounded-lg border border-line bg-surface-muted px-4 py-3 text-sm text-ink outline-none focus:border-nebula" />
               </label>
               <label>
-                <span className="mb-2 block text-xs text-slate-400">{language === 'zh' ? '题库章节' : 'Question bank'}</span>
-                <select value={selectedSetId} onChange={(event) => setSelectedSetId(event.target.value)} className="w-full rounded-lg border border-white/10 bg-slate-950 px-4 py-3 text-sm text-white outline-none focus:border-nebula">
+                <span className="mb-2 block text-xs text-ink-soft">{language === 'zh' ? '题库章节' : 'Question bank'}</span>
+                <select value={selectedSetId} onChange={(event) => setSelectedSetId(event.target.value)} className="w-full rounded-lg border border-line bg-surface px-4 py-3 text-sm text-ink outline-none focus:border-nebula">
                   {practiceSets.map((set) => (
                     <option key={set.id} value={set.id}>{set.system.toUpperCase()} · {set.label} ({set.steps.length})</option>
                   ))}
@@ -694,16 +694,16 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
               </label>
             </div>
 
-            <div className="mt-5 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+            <div className="mt-5 rounded-xl border border-line bg-surface-tint p-4">
               <div className="flex flex-col gap-3 sm:flex-row">
                 <input
                   value={questionNumbers}
                   onChange={(event) => setQuestionNumbers(event.target.value)}
                   onKeyDown={(event) => { if (event.key === 'Enter') addQuestionNumbers(); }}
-                  className="min-h-11 flex-1 rounded-lg border border-white/10 bg-black/25 px-4 text-sm text-white outline-none focus:border-nebula"
+                  className="min-h-11 flex-1 rounded-lg border border-line bg-surface-muted px-4 text-sm text-ink outline-none focus:border-nebula"
                   placeholder={language === 'zh' ? '输入题号，如：1, 2, 5-8' : 'Question numbers, e.g. 1, 2, 5-8'}
                 />
-                <button type="button" onClick={addQuestionNumbers} className="min-h-11 rounded-lg bg-white px-5 text-xs font-bold text-black hover:bg-nebula hover:text-white">
+                <button type="button" onClick={addQuestionNumbers} className="min-h-11 rounded-lg bg-slate-900 px-5 text-xs font-bold text-on-accent hover:bg-nebula hover:text-on-accent">
                   <Plus className="mr-1.5 inline h-4 w-4" />
                   {language === 'zh' ? '加入作业' : 'Add'}
                 </button>
@@ -717,7 +717,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
 
             <div className="mt-5">
               <div className="mb-3 flex items-center justify-between">
-                <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">{language === 'zh' ? '本次作业题目' : 'Assignment questions'}</span>
+                <span className="text-xs font-semibold uppercase tracking-widest text-ink-soft">{language === 'zh' ? '本次作业题目' : 'Assignment questions'}</span>
                 <span className="text-xs text-slate-500">{draftItems.length} {language === 'zh' ? '题' : 'items'}</span>
               </div>
               <div className="max-h-[420px] space-y-2 overflow-y-auto pr-1">
@@ -725,19 +725,19 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                   const set = practiceSets.find((candidate) => candidate.id === item.practiceSetId);
                   const step = set?.steps.find((candidate) => candidate.id === item.questionId);
                   return (
-                    <div key={`${item.practiceSetId}:${item.questionId}`} className="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+                    <div key={`${item.practiceSetId}:${item.questionId}`} className="flex items-center gap-3 rounded-lg border border-line bg-surface-tint p-3">
                       <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-nebula/15 text-xs font-bold text-nebula">{index + 1}</span>
                       <div className="min-w-0 flex-1">
-                        <div className="truncate text-sm font-semibold text-white">{step?.title ?? item.questionId}</div>
+                        <div className="truncate text-sm font-semibold text-ink">{step?.title ?? item.questionId}</div>
                         <div className="truncate text-xs text-slate-500">{set?.label}</div>
                       </div>
-                      <button type="button" onClick={() => moveItem(index, -1)} disabled={index === 0} className="p-1.5 text-slate-500 hover:text-white disabled:opacity-20"><ArrowUp className="h-4 w-4" /></button>
-                      <button type="button" onClick={() => moveItem(index, 1)} disabled={index === draftItems.length - 1} className="p-1.5 text-slate-500 hover:text-white disabled:opacity-20"><ArrowDown className="h-4 w-4" /></button>
-                      <button type="button" onClick={() => setDraftItems((current) => current.filter((_, itemIndex) => itemIndex !== index))} className="p-1.5 text-slate-500 hover:text-rose-300"><Trash2 className="h-4 w-4" /></button>
+                      <button type="button" onClick={() => moveItem(index, -1)} disabled={index === 0} className="p-1.5 text-slate-500 hover:text-ink disabled:opacity-20"><ArrowUp className="h-4 w-4" /></button>
+                      <button type="button" onClick={() => moveItem(index, 1)} disabled={index === draftItems.length - 1} className="p-1.5 text-slate-500 hover:text-ink disabled:opacity-20"><ArrowDown className="h-4 w-4" /></button>
+                      <button type="button" onClick={() => setDraftItems((current) => current.filter((_, itemIndex) => itemIndex !== index))} className="p-1.5 text-slate-500 hover:text-rose-700"><Trash2 className="h-4 w-4" /></button>
                     </div>
                   );
                 })}
-                {!draftItems.length && <div className="rounded-lg border border-dashed border-white/10 p-8 text-center text-sm text-slate-600">{language === 'zh' ? '通过题号或 AI 添加题目。' : 'Add questions by number or AI.'}</div>}
+                {!draftItems.length && <div className="rounded-lg border border-dashed border-line p-8 text-center text-sm text-slate-600">{language === 'zh' ? '通过题号或 AI 添加题目。' : 'Add questions by number or AI.'}</div>}
               </div>
             </div>
           </div>
@@ -746,9 +746,9 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
             <div className="glass-panel rounded-xl p-5 sm:p-6">
               <div className="mb-3 flex items-center gap-2 text-nebula">
                 <Bot className="h-5 w-5" />
-                <h3 className="font-serif text-xl text-white">{language === 'zh' ? 'AI 自动创建' : 'AI assignment builder'}</h3>
+                <h3 className="font-serif text-xl text-ink">{language === 'zh' ? 'AI 自动创建' : 'AI assignment builder'}</h3>
               </div>
-              <p className="text-sm leading-6 text-slate-400">
+              <p className="text-sm leading-6 text-ink-soft">
                 {language === 'zh'
                   ? '输入自然语言要求，AI 先生成可检查的选题草案；确认后与手动作业走同一发布流程。'
                   : 'Describe the goal. AI creates a reviewable draft that uses the same publish flow as manual assignments.'}
@@ -756,14 +756,14 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
               <textarea
                 value={aiInstruction}
                 onChange={(event) => setAiInstruction(event.target.value)}
-                className="mt-4 min-h-28 w-full rounded-lg border border-nebula/20 bg-nebula/5 p-4 text-sm text-white outline-none focus:border-nebula"
+                className="mt-4 min-h-28 w-full rounded-lg border border-nebula/20 bg-nebula/5 p-4 text-sm text-ink outline-none focus:border-nebula"
                 placeholder={language === 'zh' ? '例如：给 Eden 生成 8 道运动学基础题，重点考察 acceleration 和速度图像。' : 'e.g. Create 8 foundation motion questions for Eden, focusing on acceleration and graphs.'}
               />
-              <button type="button" onClick={generateAiDraft} className="mt-3 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-nebula/40 bg-nebula/10 px-4 text-xs font-bold text-white hover:bg-nebula/20">
+              <button type="button" onClick={generateAiDraft} className="mt-3 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-nebula/40 bg-nebula/10 px-4 text-xs font-bold text-ink hover:bg-nebula/20">
                 <Sparkles className="h-4 w-4" />
                 {language === 'zh' ? '生成可编辑选题草案' : 'Generate editable draft'}
               </button>
-              <div className="mt-4 rounded-lg border border-white/10 bg-black/20 p-3 font-mono text-[11px] leading-5 text-slate-500">
+              <div className="mt-4 rounded-lg border border-line bg-surface-muted p-3 font-mono text-[11px] leading-5 text-slate-500">
                 POST /api/admin/assignments/ai<br />
                 instruction + resolvedItems[] + audience + publish
               </div>
@@ -772,16 +772,16 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
             <div className="glass-panel rounded-xl p-5 sm:p-6">
               <div className="mb-4 flex items-center gap-2">
                 <UsersRound className="h-4 w-4 text-nebula" />
-                <h3 className="font-serif text-lg text-white">{language === 'zh' ? '发布对象' : 'Audience'}</h3>
+                <h3 className="font-serif text-lg text-ink">{language === 'zh' ? '发布对象' : 'Audience'}</h3>
               </div>
-              <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-white/10 p-3">
+              <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-line p-3">
                 <input type="checkbox" checked={assignedToAll} onChange={(event) => setAssignedToAll(event.target.checked)} className="h-4 w-4 accent-violet-500" />
-                <span className="text-sm text-slate-300">{language === 'zh' ? '发布给全部学生' : 'Assign to all students'}</span>
+                <span className="text-sm text-ink-soft">{language === 'zh' ? '发布给全部学生' : 'Assign to all students'}</span>
               </label>
               {!assignedToAll && (
                 <div className="mt-3 space-y-2">
                   {profiles.map((profile) => (
-                    <label key={profile.userId} className="flex cursor-pointer items-center gap-3 rounded-lg border border-white/5 bg-white/[0.02] p-3">
+                    <label key={profile.userId} className="flex cursor-pointer items-center gap-3 rounded-lg border border-line bg-surface-tint p-3">
                       <input
                         type="checkbox"
                         checked={studentIds.includes(profile.userId)}
@@ -794,21 +794,21 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                         }
                         className="h-4 w-4 accent-violet-500"
                       />
-                      <span className="text-sm text-slate-300">{profile.displayName}</span>
+                      <span className="text-sm text-ink-soft">{profile.displayName}</span>
                       <span className="ml-auto text-xs text-slate-600">{profile.email}</span>
                     </label>
                   ))}
                 </div>
               )}
-              {formMessage && <div className="mt-4 rounded-lg border border-white/10 bg-white/[0.03] p-3 text-xs leading-5 text-slate-300">{formMessage}</div>}
+              {formMessage && <div className="mt-4 rounded-lg border border-line bg-surface-tint p-3 text-xs leading-5 text-ink-soft">{formMessage}</div>}
               <div className="mt-5 grid grid-cols-2 gap-3">
-                <button type="button" disabled={savingStatus !== null} onClick={() => void submit('draft')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-white/15 text-xs font-bold text-slate-300 disabled:opacity-40">
+                <button type="button" disabled={savingStatus !== null} onClick={() => void submit('draft')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-line text-xs font-bold text-ink-soft disabled:opacity-40">
                   <FileEdit className="h-4 w-4" />
                   {savingStatus === 'draft'
                     ? language === 'zh' ? '正在保存…' : 'Saving…'
                     : language === 'zh' ? '保存草稿' : 'Save draft'}
                 </button>
-                <button type="button" disabled={savingStatus !== null} onClick={() => void submit('published')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-nebula text-xs font-bold text-white disabled:opacity-40">
+                <button type="button" disabled={savingStatus !== null} onClick={() => void submit('published')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-nebula text-xs font-bold text-on-accent disabled:opacity-40">
                   <Rocket className="h-4 w-4" />
                   {savingStatus === 'published'
                     ? language === 'zh' ? '正在发布…' : 'Publishing…'

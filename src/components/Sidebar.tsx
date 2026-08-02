@@ -20,7 +20,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, showA
   ];
 
   return (
-    <aside className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 glass md:inset-x-auto md:left-0 md:top-0 md:h-full md:w-20 md:border-r md:border-t-0">
+    <aside className="fixed inset-x-0 bottom-0 z-50 border-t border-line glass md:inset-x-auto md:left-0 md:top-0 md:h-full md:w-20 md:border-r md:border-t-0">
       <div className="hidden w-full flex-col items-center gap-8 py-6 md:flex">
         <div
           className="text-[10px] font-bold tracking-widest opacity-40 uppercase"
@@ -51,12 +51,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, showA
               {isActive && (
                 <motion.div
                   layoutId="activeTab"
-                  className="absolute inset-0 rounded-xl border border-white/10 bg-white/5 md:rounded-full"
+                  className="absolute inset-0 rounded-xl border border-line bg-surface-tint md:rounded-full"
                   initial={false}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
               )}
-              <item.icon className={`w-5 h-5 shrink-0 relative z-10 transition-colors ${isActive ? 'text-nebula' : 'text-slate-400 group-hover:text-slate-200'}`} />
+              <item.icon className={`w-5 h-5 shrink-0 relative z-10 transition-colors ${isActive ? 'text-nebula' : 'text-ink-soft group-hover:text-ink'}`} />
               <span className={`relative z-10 leading-none md:hidden ${isActive ? 'text-nebula' : ''}`}>{item.label}</span>
             </button>
           );
@@ -71,7 +71,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, showA
 
       <button
         onClick={toggleLanguage}
-        className="absolute right-3 top-2 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-nebula md:hidden"
+        className="absolute right-3 top-2 grid h-10 w-10 place-items-center rounded-full border border-line bg-surface-tint text-nebula md:hidden"
         title={t.nav.language}
       >
         <Languages className="h-4 w-4" />

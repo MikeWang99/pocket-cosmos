@@ -12,6 +12,22 @@
   --color-starlight: #0f172a;
   --color-nebula: #4f46e5; /* indigo-600 */
   --color-quantum: #2563eb; /* blue-600 */
+
+  /*
+   * Light-theme color contract. Components use these role-based tokens instead
+   * of visually named dark-theme utilities. Keep this list in sync with
+   * scripts/check-color-contract.mjs.
+   */
+  --color-ink: #0f172a;
+  --color-ink-soft: #334155;
+  --color-ink-muted: #64748b;
+  --color-on-accent: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f8fafc;
+  --color-surface-tint: #f3f4ff;
+  --color-surface-tint-strong: #e8eaff;
+  --color-line: #dbe3ef;
+  --color-line-strong: #cbd5e1;
 }
 
 body {
@@ -83,65 +99,6 @@ a {
 
 .serif {
   font-family: var(--font-serif);
-}
-
-.text-white,
-.text-slate-200,
-.text-slate-300 {
-  color: #0f172a !important;
-}
-
-.text-slate-400 {
-  color: #475569 !important;
-}
-
-.text-slate-500 {
-  color: #64748b !important;
-}
-
-.text-slate-600 {
-  color: #64748b !important;
-}
-
-.text-indigo-200 {
-  color: #3730a3 !important;
-}
-
-.text-emerald-300 {
-  color: #047857 !important;
-}
-
-.text-amber-300 {
-  color: #b45309 !important;
-}
-
-.bg-white {
-  background-color: #0f172a !important;
-}
-
-.text-black {
-  color: #ffffff !important;
-}
-
-[class*="border-white/"] {
-  border-color: rgba(15, 23, 42, 0.1) !important;
-}
-
-[class*="hover:border-white/"]:hover,
-.hover\:border-white:hover {
-  border-color: rgba(79, 70, 229, 0.35) !important;
-}
-
-[class*="bg-white/"] {
-  background-color: rgba(79, 70, 229, 0.06) !important;
-}
-
-[class*="hover:bg-white/"]:hover {
-  background-color: rgba(79, 70, 229, 0.09) !important;
-}
-
-[class*="bg-black/"] {
-  background-color: rgba(248, 250, 252, 0.9) !important;
 }
 
 textarea {

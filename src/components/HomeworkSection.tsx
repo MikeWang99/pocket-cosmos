@@ -109,20 +109,20 @@ const assignmentStatus = (
   if (completed >= assignment.items.length && assignment.items.length) {
     return {
       label: language === 'zh' ? '已完成' : 'Completed',
-      className: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300',
+      className: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-700',
     };
   }
   const remaining = daysUntil(assignment.dueAt);
   if (remaining !== null && remaining < 0) {
     return {
       label: language === 'zh' ? '已逾期' : 'Overdue',
-      className: 'border-rose-500/30 bg-rose-500/10 text-rose-300',
+      className: 'border-rose-500/30 bg-rose-500/10 text-rose-700',
     };
   }
   if (completed > 0) {
     return {
       label: language === 'zh' ? '进行中' : 'In progress',
-      className: 'border-amber-500/30 bg-amber-500/10 text-amber-300',
+      className: 'border-amber-500/30 bg-amber-500/10 text-amber-700',
     };
   }
   return {
@@ -158,21 +158,21 @@ const QuestionCard: React.FC<{
       exit={{ opacity: 0, x: -16 }}
       className="glass-panel overflow-hidden rounded-xl"
     >
-      <div className="border-b border-white/10 p-5 sm:p-6 md:p-8">
+      <div className="border-b border-line p-5 sm:p-6 md:p-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="text-xs font-semibold uppercase tracking-widest text-nebula">
               {item.setLabel} · {step.source}
             </div>
-            <h2 className="mt-3 font-serif text-2xl text-white sm:text-3xl">{step.title}</h2>
+            <h2 className="mt-3 font-serif text-2xl text-ink sm:text-3xl">{step.title}</h2>
           </div>
-          <span className="w-fit rounded-full border border-white/10 px-4 py-2 text-sm text-slate-300">
+          <span className="w-fit rounded-full border border-line px-4 py-2 text-sm text-ink-soft">
             {index + 1} / {total}
           </span>
         </div>
 
         {!hideDuplicatePrompt && step.prompt && (
-          <div className="mt-6 rounded-lg border border-white/10 bg-white/[0.03] p-4 text-base leading-7 text-slate-100">
+          <div className="mt-6 rounded-lg border border-line bg-surface-tint p-4 text-base leading-7 text-ink">
             <MathText>{step.prompt}</MathText>
           </div>
         )}
@@ -212,13 +212,13 @@ const QuestionCard: React.FC<{
                         ? 'border-rose-500/50 bg-rose-500/10'
                         : isSelected
                           ? 'border-nebula/60 bg-nebula/10'
-                          : 'border-white/10 bg-white/[0.03] hover:border-nebula/45'
+                          : 'border-line bg-surface-tint hover:border-nebula/45'
                   }`}
                 >
-                  <span className={`grid h-9 w-9 place-items-center rounded-md text-xs font-bold ${isSelected ? 'bg-nebula text-white' : 'bg-white text-black'}`}>
+                  <span className={`grid h-9 w-9 place-items-center rounded-md text-xs font-bold ${isSelected ? 'bg-nebula text-on-accent' : 'bg-slate-900 text-on-accent'}`}>
                     {isSelected ? <Check className="h-4 w-4" /> : choice.label}
                   </span>
-                  <span className="min-w-0 text-sm leading-6 text-slate-200">
+                  <span className="min-w-0 text-sm leading-6 text-ink">
                     {choice.image ? (
                       <>
                         <img src={choice.image.src} alt={choice.image.alt} className="practice-choice-image" />
@@ -235,7 +235,7 @@ const QuestionCard: React.FC<{
             value={answer}
             disabled={Boolean(result)}
             onChange={(event) => onAnswer(event.target.value)}
-            className="min-h-44 w-full rounded-lg border border-white/10 bg-black/25 p-4 text-sm leading-7 text-white outline-none focus:border-nebula disabled:opacity-70"
+            className="min-h-44 w-full rounded-lg border border-line bg-surface-muted p-4 text-sm leading-7 text-ink outline-none focus:border-nebula disabled:opacity-70"
             placeholder={language === 'zh' ? '在这里写下答案或解题思路…' : 'Write your answer or reasoning here…'}
           />
         )}
@@ -243,8 +243,8 @@ const QuestionCard: React.FC<{
         {result && (
           <div className={`mt-5 rounded-xl border p-4 ${result.score >= result.maxScore && result.maxScore > 0 ? 'border-emerald-500/25 bg-emerald-500/10' : 'border-amber-500/25 bg-amber-500/10'}`}>
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="flex items-center gap-2 text-sm font-semibold text-white">
-                {result.score >= result.maxScore && result.maxScore > 0 ? <CheckCircle2 className="h-5 w-5 text-emerald-300" /> : <CircleAlert className="h-5 w-5 text-amber-300" />}
+              <div className="flex items-center gap-2 text-sm font-semibold text-ink">
+                {result.score >= result.maxScore && result.maxScore > 0 ? <CheckCircle2 className="h-5 w-5 text-emerald-700" /> : <CircleAlert className="h-5 w-5 text-amber-700" />}
                 {multipleChoice
                   ? result.score
                     ? language === 'zh' ? '回答正确，进度已同步' : 'Correct — progress synced'
@@ -252,7 +252,7 @@ const QuestionCard: React.FC<{
                   : language === 'zh' ? '答案已提交，进度已同步' : 'Response submitted — progress synced'}
               </div>
               {!result.score && (
-                <button type="button" onClick={onRetry} className="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 text-xs text-slate-300">
+                <button type="button" onClick={onRetry} className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-xs text-ink-soft">
                   <RotateCcw className="h-3.5 w-3.5" />
                   {language === 'zh' ? '重试' : 'Retry'}
                 </button>
@@ -261,7 +261,7 @@ const QuestionCard: React.FC<{
             {step.solution && (
               <details className="mt-3">
                 <summary className="cursor-pointer text-xs font-semibold text-nebula">{language === 'zh' ? '查看答案与解析' : 'View answer and explanation'}</summary>
-                <p className="mt-3 text-sm leading-7 text-slate-300"><MathText>{step.solution}</MathText></p>
+                <p className="mt-3 text-sm leading-7 text-ink-soft"><MathText>{step.solution}</MathText></p>
               </details>
             )}
           </div>
@@ -272,7 +272,7 @@ const QuestionCard: React.FC<{
             type="button"
             disabled={saving || (multipleChoice ? !answer : answer.trim().length < 3)}
             onClick={onSubmit}
-            className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-white px-6 text-xs font-bold uppercase tracking-widest text-black transition-colors hover:bg-nebula hover:text-white disabled:opacity-30 sm:w-auto"
+            className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-slate-900 px-6 text-xs font-bold uppercase tracking-widest text-on-accent transition-colors hover:bg-nebula hover:text-on-accent disabled:opacity-30 sm:w-auto"
           >
             <Sparkles className="h-4 w-4" />
             {saving
@@ -421,7 +421,7 @@ export const HomeworkSection: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="glass-panel rounded-xl p-10 text-sm text-slate-400">{language === 'zh' ? '正在加载作业…' : 'Loading homework…'}</div>;
+    return <div className="glass-panel rounded-xl p-10 text-sm text-ink-soft">{language === 'zh' ? '正在加载作业…' : 'Loading homework…'}</div>;
   }
 
   if (!demoMode && authEnabled && !user) {
@@ -429,8 +429,8 @@ export const HomeworkSection: React.FC = () => {
       <section className="max-w-4xl">
         <div className="glass-panel rounded-xl p-8 text-center">
           <GraduationCap className="mx-auto h-10 w-10 text-nebula" />
-          <h1 className="mt-4 font-serif text-3xl text-white">{language === 'zh' ? '登录后查看你的作业' : 'Sign in to view homework'}</h1>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-slate-400">
+          <h1 className="mt-4 font-serif text-3xl text-ink">{language === 'zh' ? '登录后查看你的作业' : 'Sign in to view homework'}</h1>
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-ink-soft">
             {language === 'zh' ? '作业、题库和做题状态使用同一个学生账号同步。' : 'Assignments and question-bank progress sync through the same student account.'}
           </p>
         </div>
@@ -446,24 +446,24 @@ export const HomeworkSection: React.FC = () => {
             <ClipboardCheck className="h-4 w-4" />
             {language === 'zh' ? 'Homework Hub' : 'Homework Hub'}
           </div>
-          <h1 className="font-serif text-4xl font-light text-white sm:text-5xl lg:text-6xl">
+          <h1 className="font-serif text-4xl font-light text-ink sm:text-5xl lg:text-6xl">
             {view === 'teacher'
               ? language === 'zh' ? '作业后台' : 'Homework Admin'
               : language === 'zh' ? '我的作业' : 'My Homework'}
           </h1>
-          <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-ink-soft sm:text-base">
             {view === 'teacher'
               ? language === 'zh' ? '按课程快速组题、发布，并在一个页面查看每位学生的整体进度。' : 'Build, publish, and review every student’s progress in one place.'
               : language === 'zh' ? '每次课的完整作业都在这里。按顺序完成即可，不再需要到不同章节寻找题目。' : 'Every lesson assignment lives here. Work through it in order without searching across chapters.'}
           </p>
         </div>
         {(isAdmin || demoMode) && (
-          <div className="flex rounded-full border border-white/10 bg-white/[0.03] p-1">
-            <button type="button" onClick={() => setView('teacher')} className={`rounded-full px-4 py-2 text-xs font-semibold ${view === 'teacher' ? 'bg-white text-black' : 'text-slate-400'}`}>
+          <div className="flex rounded-full border border-line bg-surface-tint p-1">
+            <button type="button" onClick={() => setView('teacher')} className={`rounded-full px-4 py-2 text-xs font-semibold ${view === 'teacher' ? 'bg-slate-900 text-on-accent' : 'text-ink-soft'}`}>
               <ShieldCheck className="mr-1.5 inline h-4 w-4" />
               {language === 'zh' ? '老师视图' : 'Teacher'}
             </button>
-            <button type="button" onClick={() => setView('student')} className={`rounded-full px-4 py-2 text-xs font-semibold ${view === 'student' ? 'bg-white text-black' : 'text-slate-400'}`}>
+            <button type="button" onClick={() => setView('student')} className={`rounded-full px-4 py-2 text-xs font-semibold ${view === 'student' ? 'bg-slate-900 text-on-accent' : 'text-ink-soft'}`}>
               <GraduationCap className="mr-1.5 inline h-4 w-4" />
               {language === 'zh' ? '学生视图' : 'Student'}
             </button>
@@ -471,13 +471,13 @@ export const HomeworkSection: React.FC = () => {
         )}
       </div>
 
-      {error && <div className="mb-5 rounded-xl border border-rose-500/25 bg-rose-500/10 p-4 text-sm text-rose-200">{error}</div>}
+      {error && <div className="mb-5 rounded-xl border border-rose-500/25 bg-rose-500/10 p-4 text-sm text-rose-800">{error}</div>}
 
       {view === 'teacher' ? (
         <HomeworkAdminPanel />
       ) : activeAssignment && activeItem ? (
         <div>
-          <button type="button" onClick={closeAssignment} className="mb-5 inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white">
+          <button type="button" onClick={closeAssignment} className="mb-5 inline-flex items-center gap-2 text-sm text-ink-soft hover:text-ink">
             <ChevronLeft className="h-4 w-4" />
             {language === 'zh' ? '返回作业列表' : 'Back to assignments'}
           </button>
@@ -486,10 +486,10 @@ export const HomeworkSection: React.FC = () => {
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
               <div>
                 <div className="text-[10px] uppercase tracking-widest text-nebula">{language === 'zh' ? '当前作业' : 'Current assignment'}</div>
-                <h2 className="mt-2 font-serif text-2xl text-white sm:text-3xl">{activeAssignment.title}</h2>
-                <p className="mt-2 text-sm leading-6 text-slate-400">{activeAssignment.description}</p>
+                <h2 className="mt-2 font-serif text-2xl text-ink sm:text-3xl">{activeAssignment.title}</h2>
+                <p className="mt-2 text-sm leading-6 text-ink-soft">{activeAssignment.description}</p>
               </div>
-              <div className="flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs text-slate-300">
+              <div className="flex items-center gap-2 rounded-full border border-line px-4 py-2 text-xs text-ink-soft">
                 <CalendarClock className="h-4 w-4 text-nebula" />
                 {formatDate(activeAssignment.dueAt, language)}
               </div>
@@ -508,9 +508,9 @@ export const HomeworkSection: React.FC = () => {
                         ? 'border-nebula/70 bg-nebula/15 text-nebula'
                         : attempt
                           ? attempt.isCorrect
-                            ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-300'
-                            : 'border-amber-500/35 bg-amber-500/10 text-amber-300'
-                          : 'border-white/10 bg-white/[0.03] text-slate-500'
+                            ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700'
+                            : 'border-amber-500/35 bg-amber-500/10 text-amber-700'
+                          : 'border-line bg-surface-tint text-slate-500'
                     }`}
                   >
                     {attempt ? <Check className="h-4 w-4" /> : index + 1}
@@ -545,11 +545,11 @@ export const HomeworkSection: React.FC = () => {
                 />
               </AnimatePresence>
               <div className="mt-5 mb-16 flex items-center justify-between md:mb-0">
-                <button type="button" disabled={activeIndex === 0} onClick={() => setActiveIndex((index) => Math.max(0, index - 1))} className="inline-flex h-11 items-center gap-2 rounded-full border border-white/10 px-4 text-xs text-slate-300 disabled:opacity-30">
+                <button type="button" disabled={activeIndex === 0} onClick={() => setActiveIndex((index) => Math.max(0, index - 1))} className="inline-flex h-11 items-center gap-2 rounded-full border border-line px-4 text-xs text-ink-soft disabled:opacity-30">
                   <ArrowLeft className="h-4 w-4" />
                   {language === 'zh' ? '上一题' : 'Previous'}
                 </button>
-                <button type="button" disabled={activeIndex === activeItems.length - 1} onClick={() => setActiveIndex((index) => Math.min(activeItems.length - 1, index + 1))} className="inline-flex h-11 items-center gap-2 rounded-full border border-white/10 px-4 text-xs text-slate-300 disabled:opacity-30">
+                <button type="button" disabled={activeIndex === activeItems.length - 1} onClick={() => setActiveIndex((index) => Math.min(activeItems.length - 1, index + 1))} className="inline-flex h-11 items-center gap-2 rounded-full border border-line px-4 text-xs text-ink-soft disabled:opacity-30">
                   {language === 'zh' ? '下一题' : 'Next'}
                   <ArrowRight className="h-4 w-4" />
                 </button>
@@ -558,7 +558,7 @@ export const HomeworkSection: React.FC = () => {
 
             <aside className="glass-panel h-fit rounded-xl p-4 lg:sticky lg:top-6">
               <div className="text-[10px] uppercase tracking-widest text-slate-500">{language === 'zh' ? '进度同步' : 'Progress sync'}</div>
-              <div className="mt-3 flex items-center gap-2 text-sm text-emerald-300">
+              <div className="mt-3 flex items-center gap-2 text-sm text-emerald-700">
                 <Cloud className="h-4 w-4" />
                 {language === 'zh' ? '作业与题库共用记录' : 'Shared with question bank'}
               </div>
@@ -570,7 +570,7 @@ export const HomeworkSection: React.FC = () => {
                 onClick={() => {
                   window.location.href = `/?tab=practice&set=${encodeURIComponent(activeItem.practiceSetId)}&q=${encodeURIComponent(activeItem.questionId)}`;
                 }}
-                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-xs text-slate-400 hover:border-nebula/40 hover:text-nebula"
+                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-line px-3 py-2 text-xs text-ink-soft hover:border-nebula/40 hover:text-nebula"
               >
                 <ExternalLink className="h-3.5 w-3.5" />
                 {language === 'zh' ? '在原题库中验证' : 'Verify in Practice'}
@@ -586,7 +586,7 @@ export const HomeworkSection: React.FC = () => {
                 {language === 'zh' ? '待完成作业' : 'Open assignments'}
                 <LayoutDashboard className="h-4 w-4 text-nebula" />
               </div>
-              <div className="mt-2 text-3xl font-semibold text-white">
+              <div className="mt-2 text-3xl font-semibold text-ink">
                 {publishedAssignments.filter((assignment) => completionFor(assignment) < assignment.items.length).length}
               </div>
             </div>
@@ -595,14 +595,14 @@ export const HomeworkSection: React.FC = () => {
                 {language === 'zh' ? '总进度' : 'Overall progress'}
                 <Target className="h-4 w-4 text-nebula" />
               </div>
-              <div className="mt-2 text-3xl font-semibold text-white">{totalCompleted}/{totalQuestions}</div>
+              <div className="mt-2 text-3xl font-semibold text-ink">{totalCompleted}/{totalQuestions}</div>
             </div>
             <div className="glass-panel rounded-xl p-4 sm:p-5">
               <div className="flex items-center justify-between text-[10px] uppercase tracking-widest text-slate-500">
                 {language === 'zh' ? '最近截止' : 'Next due'}
                 <Clock3 className="h-4 w-4 text-nebula" />
               </div>
-              <div className="mt-3 text-sm font-semibold text-white">{nextDue ? formatDate(nextDue.dueAt, language) : language === 'zh' ? '全部完成' : 'All clear'}</div>
+              <div className="mt-3 text-sm font-semibold text-ink">{nextDue ? formatDate(nextDue.dueAt, language) : language === 'zh' ? '全部完成' : 'All clear'}</div>
             </div>
           </div>
 
@@ -624,9 +624,9 @@ export const HomeworkSection: React.FC = () => {
                     </div>
                     <span className={`rounded-full border px-3 py-1 text-[10px] font-semibold ${status.className}`}>{status.label}</span>
                   </div>
-                  <h2 className="mt-5 font-serif text-2xl text-white">{assignment.title}</h2>
-                  <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-400">{assignment.description}</p>
-                  <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-white/10">
+                  <h2 className="mt-5 font-serif text-2xl text-ink">{assignment.title}</h2>
+                  <p className="mt-2 line-clamp-2 text-sm leading-6 text-ink-soft">{assignment.description}</p>
+                  <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-surface-tint-strong">
                     <div className="h-full rounded-full bg-nebula transition-all" style={{ width: `${progress}%` }} />
                   </div>
                   <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
@@ -639,8 +639,8 @@ export const HomeworkSection: React.FC = () => {
           </div>
           {!publishedAssignments.length && (
             <div className="glass-panel rounded-xl p-10 text-center">
-              <CheckCircle2 className="mx-auto h-10 w-10 text-emerald-300" />
-              <h2 className="mt-4 font-serif text-2xl text-white">{language === 'zh' ? '暂时没有新作业' : 'No new homework'}</h2>
+              <CheckCircle2 className="mx-auto h-10 w-10 text-emerald-700" />
+              <h2 className="mt-4 font-serif text-2xl text-ink">{language === 'zh' ? '暂时没有新作业' : 'No new homework'}</h2>
               <p className="mt-2 text-sm text-slate-500">{language === 'zh' ? '老师发布后会自动出现在这里。' : 'New assignments will appear here automatically.'}</p>
             </div>
           )}

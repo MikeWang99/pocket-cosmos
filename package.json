@@ -1,13 +1,14 @@
 {
   "name": "pocket-cosmos",
   "private": true,
-  "version": "1.7.1",
+  "version": "1.8.0",
   "type": "module",
   "scripts": {
     "dev": "next dev --hostname 0.0.0.0 --port 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "tsc --noEmit",
+    "lint": "tsc --noEmit && npm run check:colors",
+    "check:colors": "node scripts/check-color-contract.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

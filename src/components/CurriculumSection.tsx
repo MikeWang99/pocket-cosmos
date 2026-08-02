@@ -104,7 +104,7 @@ const UnitDirectory: React.FC<{
   ].filter((item) => item.count > 0);
 
   return (
-    <nav className={`rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4 ${className}`} aria-label={copy.title}>
+    <nav className={`rounded-lg border border-slate-200 bg-surface p-3 sm:p-4 ${className}`} aria-label={copy.title}>
       <div className="mb-3 flex items-center gap-2 text-nebula">
         <ListChecks className="h-4 w-4" />
         <h4 className="text-sm font-semibold">{copy.title}</h4>
@@ -126,7 +126,7 @@ const UnitDirectory: React.FC<{
             {unit.lessons.map((lesson: CurriculumLesson, lessonIndex) => {
               const content = lessonContentForMode(lesson, contentMode);
               return (
-                <div key={lesson.title.en} className="rounded-md bg-[#ffffff] p-2">
+                <div key={lesson.title.en} className="rounded-md bg-surface p-2">
                   <a
                     href={`#${lessonAnchorId(courseId, unit.number, lessonIndex)}`}
                     className="block text-xs font-semibold leading-5 text-slate-800 hover:text-nebula"
@@ -163,7 +163,7 @@ const CourseRouteMap: React.FC<{
   const copy = directoryCopy[language];
 
   return (
-    <nav className="rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4" aria-label={copy.courseMap}>
+    <nav className="rounded-lg border border-slate-200 bg-surface p-3 sm:p-4" aria-label={copy.courseMap}>
       <div className="mb-3 flex items-center gap-2 text-nebula">
         <BookOpenCheck className="h-4 w-4" />
         <h4 className="text-sm font-semibold">{copy.courseMap}</h4>
@@ -228,7 +228,7 @@ const LessonVideo: React.FC<{ video: CurriculumVideo; language: 'en' | 'zh' }> =
 
 const LessonImage: React.FC<{ image: CurriculumImage; language: 'en' | 'zh' }> = ({ image, language }) => (
   <figure className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
-    <div className="flex min-h-48 items-center justify-center bg-[#ffffff] p-3 sm:p-4">
+    <div className="flex min-h-48 items-center justify-center bg-surface p-3 sm:p-4">
       <img
         src={image.src}
         alt={image.alt[language]}
@@ -267,7 +267,7 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
       </p>
 
       {question.image && (
-        <figure className="mt-3 overflow-hidden rounded-lg border border-slate-200 bg-[#ffffff]">
+        <figure className="mt-3 overflow-hidden rounded-lg border border-slate-200 bg-surface">
           <img src={question.image.src} alt={question.image.alt} className="w-full object-contain" />
           {question.image.caption && (
             <figcaption className="border-t border-slate-200 px-3 py-2 text-xs text-slate-500">
@@ -282,7 +282,7 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
           <textarea
             value={writtenAnswer}
             onChange={(event) => setWrittenAnswer(event.target.value)}
-            className="mt-4 min-h-32 w-full rounded-lg border border-slate-200 bg-[#ffffff] p-3 text-sm leading-6 text-slate-800 outline-none transition-colors placeholder:text-slate-400 focus:border-nebula/60"
+            className="mt-4 min-h-32 w-full rounded-lg border border-slate-200 bg-surface p-3 text-sm leading-6 text-slate-800 outline-none transition-colors placeholder:text-ink-soft focus:border-nebula/60"
             placeholder={language === 'zh' ? '在这里写下你的答案。' : 'Write your answer here.'}
           />
 
@@ -290,7 +290,7 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
             <button
               type="button"
               onClick={() => setShowSampleAnswer((current) => !current)}
-              className="inline-flex min-h-10 items-center justify-center rounded-full border border-nebula/30 bg-[#ffffff] px-4 py-2 text-xs font-bold uppercase tracking-widest text-nebula transition-colors hover:border-nebula/60 hover:bg-nebula/5"
+              className="inline-flex min-h-10 items-center justify-center rounded-full border border-nebula/30 bg-surface px-4 py-2 text-xs font-bold uppercase tracking-widest text-nebula transition-colors hover:border-nebula/60 hover:bg-nebula/5"
             >
               {showSampleAnswer
                 ? language === 'zh' ? '收起答案' : 'Hide answer'
@@ -299,7 +299,7 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
             <button
               type="button"
               onClick={() => setShowExplanation((current) => !current)}
-              className="inline-flex min-h-10 items-center justify-center rounded-full border border-slate-300 bg-[#ffffff] px-4 py-2 text-xs font-bold uppercase tracking-widest text-slate-700 transition-colors hover:border-nebula/60 hover:text-nebula"
+              className="inline-flex min-h-10 items-center justify-center rounded-full border border-slate-300 bg-surface px-4 py-2 text-xs font-bold uppercase tracking-widest text-slate-700 transition-colors hover:border-nebula/60 hover:text-nebula"
             >
               {showExplanation
                 ? language === 'zh' ? '收起解析' : 'Hide explanation'
@@ -348,7 +348,7 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
                         ? 'border-rose-500/45 bg-rose-500/10'
                         : isSelected
                           ? 'border-nebula/60 bg-nebula/10'
-                          : 'border-slate-200 bg-[#ffffff] hover:border-nebula/50'
+                          : 'border-slate-200 bg-surface hover:border-nebula/50'
                   }`}
                 >
                   <span
@@ -358,7 +358,7 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
                         : isWrongChoice
                           ? 'border-rose-500/50 bg-rose-50 text-rose-800'
                           : isSelected
-                            ? 'border-nebula bg-nebula text-[#ffffff]'
+                            ? 'border-nebula bg-nebula text-on-accent'
                             : 'border-slate-300 bg-slate-50 text-slate-700'
                     }`}
                   >
@@ -377,7 +377,7 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
               type="button"
               onClick={() => setCheckedAnswer(selectedAnswer)}
               disabled={!selectedAnswer || hasChecked}
-              className="inline-flex min-h-10 items-center justify-center rounded-full border border-nebula bg-nebula px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#ffffff] transition-colors hover:bg-nebula/90 disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-[#ffffff] disabled:text-slate-400 disabled:opacity-100"
+              className="inline-flex min-h-10 items-center justify-center rounded-full border border-nebula bg-nebula px-4 py-2 text-xs font-bold uppercase tracking-widest text-on-accent transition-colors hover:bg-nebula/90 disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-surface disabled:text-ink-soft disabled:opacity-100"
             >
               {language === 'zh' ? '检查答案' : 'Check answer'}
             </button>
@@ -642,7 +642,7 @@ const ConceptDiagram: React.FC<{ diagram: CurriculumDiagram; language: 'en' | 'z
   })();
 
   return (
-    <figure className="rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
+    <figure className="rounded-lg border border-slate-200 bg-surface p-3 sm:p-4">
       <svg viewBox="0 0 280 180" className="h-44 w-full text-[14px] font-semibold text-slate-700 sm:h-52" role="img" aria-label={diagram.title[language]}>
         <defs>
           <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
@@ -732,7 +732,7 @@ export const CurriculumSection: React.FC = () => {
           <div
             role="group"
             aria-label={t.curriculum.contentMode}
-            className="grid shrink-0 grid-cols-2 gap-1 self-start rounded-lg border border-slate-200 bg-[#ffffff] p-1"
+            className="grid shrink-0 grid-cols-2 gap-1 self-start rounded-lg border border-slate-200 bg-surface p-1"
           >
             <button
               type="button"
@@ -740,7 +740,7 @@ export const CurriculumSection: React.FC = () => {
               aria-pressed={contentMode === 'teacher'}
               className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-md px-3 text-xs font-semibold transition-colors ${
                 contentMode === 'teacher'
-                  ? 'bg-nebula text-[#ffffff]'
+                  ? 'bg-nebula text-on-accent'
                   : 'text-slate-600 hover:bg-slate-50 hover:text-nebula'
               }`}
             >
@@ -753,7 +753,7 @@ export const CurriculumSection: React.FC = () => {
               aria-pressed={contentMode === 'student'}
               className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-md px-3 text-xs font-semibold transition-colors ${
                 contentMode === 'student'
-                  ? 'bg-nebula text-[#ffffff]'
+                  ? 'bg-nebula text-on-accent'
                   : 'text-slate-600 hover:bg-slate-50 hover:text-nebula'
               }`}
             >
@@ -776,8 +776,8 @@ export const CurriculumSection: React.FC = () => {
               onClick={() => selectSystem(system.id)}
               className={`min-h-24 rounded-lg border px-4 py-4 text-left transition-colors sm:min-h-28 ${
                 active
-                  ? 'border-nebula bg-white/10 text-nebula'
-                  : 'border-white/10 bg-white/5 text-slate-600 hover:border-white/30 hover:text-starlight'
+                  ? 'border-nebula bg-surface-tint-strong text-nebula'
+                  : 'border-line bg-surface-tint text-slate-600 hover:border-line-strong hover:text-starlight'
               }`}
             >
               <span className="block text-sm font-semibold leading-5">{system.label[language]}</span>
@@ -791,7 +791,7 @@ export const CurriculumSection: React.FC = () => {
       </div>
 
       {!course ? (
-        <div className="rounded-lg border border-slate-200 bg-[#ffffff] p-5 sm:p-6">
+        <div className="rounded-lg border border-slate-200 bg-surface p-5 sm:p-6">
           <p className="text-xs font-semibold uppercase tracking-widest text-nebula">{selectedSystem.status[language]}</p>
           <h3 className="mt-3 text-xl font-semibold">{selectedSystem.label[language]}</h3>
           <p className="mt-2 text-sm leading-6 text-slate-500">{selectedSystem.sourceNote[language]}</p>
@@ -811,8 +811,8 @@ export const CurriculumSection: React.FC = () => {
                     onClick={() => selectCourse(item.id)}
                     className={`min-h-14 rounded-lg border px-3 py-3 text-left transition-colors sm:min-h-16 ${
                       active
-                        ? 'border-nebula bg-white/10 text-nebula'
-                        : 'border-white/10 bg-white/5 text-slate-600 hover:border-white/30 hover:text-starlight'
+                        ? 'border-nebula bg-surface-tint-strong text-nebula'
+                        : 'border-line bg-surface-tint text-slate-600 hover:border-line-strong hover:text-starlight'
                     }`}
                   >
                     <span className="block text-sm font-semibold leading-5">{item.name[language]}</span>
@@ -835,7 +835,7 @@ export const CurriculumSection: React.FC = () => {
               <button
                 type="button"
                 onClick={toggleAll}
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-white/10 px-3 text-xs font-semibold text-slate-600 transition-colors hover:border-white/30 hover:text-nebula"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-line px-3 text-xs font-semibold text-slate-600 transition-colors hover:border-line-strong hover:text-nebula"
               >
                 <Layers3 className="h-4 w-4" />
                 {allOpen ? t.curriculum.collapseAll : t.curriculum.expandAll}
@@ -844,7 +844,7 @@ export const CurriculumSection: React.FC = () => {
                 href={course.sourceUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-white/10 px-3 text-xs font-semibold text-slate-600 transition-colors hover:border-white/30 hover:text-nebula"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-line px-3 text-xs font-semibold text-slate-600 transition-colors hover:border-line-strong hover:text-nebula"
               >
                 {course.sourceLabel?.[language] ?? t.curriculum.officialSource}
                 <ExternalLink className="h-4 w-4" />
@@ -868,7 +868,7 @@ export const CurriculumSection: React.FC = () => {
                     aria-controls={panelId}
                     className="group flex w-full items-center gap-3 py-4 text-left sm:gap-4 sm:py-5"
                   >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10 text-sm font-bold text-nebula sm:h-10 sm:w-10">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-surface-tint-strong text-sm font-bold text-nebula sm:h-10 sm:w-10">
                       {unit.number}
                     </span>
                     <span className="min-w-0 flex-1">
@@ -905,7 +905,7 @@ export const CurriculumSection: React.FC = () => {
 
                           <div className="min-w-0">
                             <div className="grid gap-4 xl:grid-cols-[1fr_1fr]">
-                              <section id={`${baseId}-focus`} className="scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-4">
+                              <section id={`${baseId}-focus`} className="scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-4">
                                 <div className="mb-3 flex items-center gap-2 text-nebula">
                                   <ListChecks className="h-4 w-4" />
                                   <h4 className="text-sm font-semibold">{t.curriculum.focusTitle}</h4>
@@ -920,7 +920,7 @@ export const CurriculumSection: React.FC = () => {
                                 </ul>
                               </section>
 
-                              <section id={`${baseId}-topics`} className="scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-4">
+                              <section id={`${baseId}-topics`} className="scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-4">
                                 <div className="mb-3 flex items-center gap-2 text-nebula">
                                   <ListChecks className="h-4 w-4" />
                                   <h4 className="text-sm font-semibold">{t.curriculum.checklistTitle}</h4>
@@ -937,7 +937,7 @@ export const CurriculumSection: React.FC = () => {
                             </div>
 
                             {!!unit.lessons?.length && (
-                              <section id={`${baseId}-lessons`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
+                              <section id={`${baseId}-lessons`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-3 sm:p-4">
                                 <div className="mb-3 flex items-center gap-2 text-nebula">
                                   <NotebookText className="h-4 w-4" />
                                   <h4 className="text-sm font-semibold">{t.curriculum.lessonsTitle}</h4>
@@ -962,11 +962,11 @@ export const CurriculumSection: React.FC = () => {
                                         key={section.heading.en}
                                         id={lessonSectionAnchorId(course.id, unit.number, lessonIndex, index)}
                                         open={lessonIndex === 0 && index === 0}
-                                        className="group scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] px-3 py-2"
+                                        className="group scroll-mt-24 rounded-lg border border-slate-200 bg-surface px-3 py-2"
                                       >
                                         <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-1 text-sm font-semibold text-slate-800">
                                           <span>{section.heading[language]}</span>
-                                          <ChevronDown className="h-4 w-4 shrink-0 text-slate-400 transition-transform group-open:rotate-180" />
+                                          <ChevronDown className="h-4 w-4 shrink-0 text-ink-soft transition-transform group-open:rotate-180" />
                                         </summary>
                                         <div className="space-y-3 pb-2 pt-3">
                                           {section.videos?.map((video) => (
@@ -1024,7 +1024,7 @@ export const CurriculumSection: React.FC = () => {
                             )}
 
                             {!!unit.formulas?.length && (
-                              <section id={`${baseId}-formulas`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
+                              <section id={`${baseId}-formulas`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-3 sm:p-4">
                             <div className="mb-3 flex items-center gap-2 text-nebula">
                               <FunctionSquare className="h-4 w-4" />
                               <h4 className="text-sm font-semibold">{t.curriculum.formulasTitle}</h4>
@@ -1042,7 +1042,7 @@ export const CurriculumSection: React.FC = () => {
                             )}
 
                             {!!unit.diagrams?.length && (
-                              <section id={`${baseId}-diagrams`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
+                              <section id={`${baseId}-diagrams`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-3 sm:p-4">
                             <div className="mb-3 flex items-center gap-2 text-nebula">
                               <ImageIcon className="h-4 w-4" />
                               <h4 className="text-sm font-semibold">{t.curriculum.diagramsTitle}</h4>
