@@ -99,7 +99,7 @@ export default function App() {
       
       <main className="relative z-10 flex min-h-screen flex-1 flex-col pb-24 md:ml-20 md:pb-0">
         <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-5 sm:px-6 sm:py-8 md:p-10 lg:p-14 xl:p-16">
-          <header className="mb-8 flex flex-col gap-5 border-b border-white/10 pb-5 sm:mb-10 sm:flex-row sm:items-end sm:justify-between md:mb-12 md:pb-6">
+          <header className="mb-8 flex flex-col gap-5 border-b border-line pb-5 sm:mb-10 sm:flex-row sm:items-end sm:justify-between md:mb-12 md:pb-6">
             <div className="flex min-w-0 items-center gap-3 sm:gap-4">
               <img
                 src="/assets/poco-mark.svg"
@@ -136,7 +136,7 @@ export default function App() {
             </AnimatePresence>
           </div>
           
-          <footer className="mt-12 flex items-center justify-between border-t border-white/10 pb-2 pt-6 text-[10px] uppercase tracking-widest opacity-30 sm:mt-16 sm:pb-8 sm:pt-8">
+          <footer className="mt-12 flex items-center justify-between border-t border-line pb-2 pt-6 text-[10px] uppercase tracking-widest text-ink-muted sm:mt-16 sm:pb-8 sm:pt-8">
             <div>{t.site.footerBrand}</div>
           </footer>
         </div>
