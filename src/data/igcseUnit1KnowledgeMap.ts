@@ -108,27 +108,77 @@ const massAndWeightStudentLesson: CurriculumLesson = {
       heading: text('0. Same object, different planet', '0. 同一物体，不同星球'),
       paragraphs: [
         text(
-          'An astronaut is as difficult to accelerate on the Moon as on Earth, but a spring balance gives a smaller reading. Mass is unchanged; weight changes.',
-          '宇航员在月球上和在地球上一样难以被加速，但弹簧测力计读数更小。质量不变，重量改变。',
+          'An astronaut is just as difficult to accelerate on the Moon as on Earth, but a force meter gives a smaller reading. The unchanged property is mass; the changing force is weight.',
+          '宇航员在月球上和在地球上一样难以被加速，但测力计在月球上的读数更小。不变的是质量，改变的是重量。',
         ),
       ],
     },
     {
-      heading: text('1. Mass, weight and gravitational field strength', '1. 质量、重量与重力场强'),
+      heading: text('1. Mass and weight are different quantities', '1. 质量与重量是不同的物理量'),
       paragraphs: [
         text(
-          'Mass is measured in kilograms and does not change when location changes. Weight is measured in newtons and depends on the local gravitational field strength.',
-          '质量以千克为单位，不因地点改变；重量以牛顿为单位，取决于当地的重力场强。',
+          'For an object at rest relative to the observer, mass is a measure of the quantity of matter. Mass is measured in kilograms. Weight is the gravitational force acting on an object with mass and is measured in newtons.',
+          '对于相对观察者静止的物体，质量表示物质的多少，以千克为单位。重量是重力场对有质量物体产生的力，以牛顿为单位。',
         ),
+        text(
+          'Gravitational field strength is force per unit mass. Near Earth, $g\approx9.8\,\mathrm{N\,kg^{-1}}$. It is numerically equivalent to the free-fall acceleration, whose unit is $\mathrm{m\,s^{-2}}$.',
+          '重力场强是单位质量所受的力。地球表面附近 $g\approx9.8\,\mathrm{N\,kg^{-1}}$。其数值等于自由落体加速度，后者单位为 $\mathrm{m\,s^{-2}}$。',
+        ),
+      ],
+      bullets: [
+        text('Mass: symbol $m$; unit $\mathrm{kg}$; unchanged when the gravitational field changes.', '质量：符号 $m$；单位 $\mathrm{kg}$；重力场改变时不变。'),
+        text('Weight: symbol $W$; unit $\mathrm{N}$; changes when gravitational field strength changes.', '重量：符号 $W$；单位 $\mathrm{N}$；随重力场强变化。'),
       ],
       formulas: [
         formula('Weight', '重量', 'W=mg'),
         formula('Gravitational field strength', '重力场强', 'g=\\frac{W}{m}'),
       ],
       takeaway: text(
-        'The same object has the same mass on Earth and the Moon, but different weight.',
-        '同一物体在地球和月球上的质量相同，重量不同。',
+        'Changing planet changes $W$ but not $m$.',
+        '更换星球会改变 $W$，但不会改变 $m$。',
       ),
+      classroomQuestions: [
+        {
+          id: 'igcse-u1-student-mass-weight-calculation',
+          title: text('Practice: weight in a gravitational field', '练习：重力场中的重量'),
+          prompt: text(
+            'A probe of mass $12\,\mathrm{kg}$ is on a planet where $g=4.0\,\mathrm{N\,kg^{-1}}$. What is its weight?',
+            '一个质量为 $12\,\mathrm{kg}$ 的探测器位于 $g=4.0\,\mathrm{N\,kg^{-1}}$ 的行星上。它的重量是多少？',
+          ),
+          choices: [
+            { label: 'A', text: text('$3.0\,\mathrm{N}$', '$3.0\,\mathrm{N}$') },
+            { label: 'B', text: text('$16\,\mathrm{N}$', '$16\,\mathrm{N}$') },
+            { label: 'C', text: text('$48\,\mathrm{N}$', '$48\,\mathrm{N}$') },
+            { label: 'D', text: text('$48\,\mathrm{kg}$', '$48\,\mathrm{kg}$') },
+          ],
+          correctAnswer: 'C',
+          feedback: text(
+            '$W=mg=12\times4.0=48\,\mathrm{N}$. Weight is a force, so its unit is the newton.',
+            '$W=mg=12\times4.0=48\,\mathrm{N}$。重量是力，因此单位是牛顿。',
+          ),
+        },
+      ],
+    },
+    {
+      heading: text('2. Comparing mass and weight', '2. 比较质量与重量'),
+      paragraphs: [
+        text(
+          'A balance compares the weights of two objects in the same gravitational field. The common factor $g$ cancels, so the comparison also gives their mass ratio. A force meter or spring balance measures force directly and therefore measures weight.',
+          '天平比较同一重力场中两个物体的重量。共同因子 $g$ 会约去，因此也能比较质量。测力计或弹簧测力计直接测量力，因此测量的是重量。',
+        ),
+      ],
+      takeaway: text(
+        'Use a balance to compare masses and a force meter to measure weight.',
+        '用天平比较质量，用测力计测量重量。',
+      ),
+    },
+    {
+      heading: text('3. Common errors', '3. 常见错误'),
+      bullets: [
+        text('Do not give mass in newtons or weight in kilograms.', '不要用牛顿表示质量，也不要用千克表示重量。'),
+        text('A smaller value of $g$ gives smaller weight, not smaller mass.', '$g$ 较小会使重量较小，而不是使质量较小。'),
+        text('$\mathrm{N\,kg^{-1}}$ describes field strength; $\mathrm{m\,s^{-2}}$ describes acceleration, although their numerical values are equal.', '$\mathrm{N\,kg^{-1}}$ 描述重力场强，$\mathrm{m\,s^{-2}}$ 描述加速度，二者数值相等但含义不同。'),
+      ],
     },
   ],
 };
@@ -296,23 +346,40 @@ const momentumStudentLesson: CurriculumLesson = {
       heading: text('0. What remains predictable in a collision', '0. 碰撞中仍可预测的量'),
       paragraphs: [
         text(
-          'Collision forces can be complicated, but total momentum remains predictable when external impulse is negligible.',
-          '碰撞力可能很复杂，但当外冲量可忽略时，总动量仍可预测。',
+          'Collision forces may be large and complicated, but total momentum remains predictable when the external impulse on the chosen system is negligible.',
+          '碰撞力可能很大且变化复杂，但当所选系统受到的外冲量可忽略时，总动量仍可预测。',
         ),
       ],
     },
     {
-      heading: text('1. Momentum and impulse', '1. 动量与冲量'),
+      heading: text('1. Momentum, direction and impulse', '1. 动量、方向与冲量'),
       paragraphs: [
         text(
-          'Momentum depends on mass and velocity. In an isolated system, total momentum before an interaction equals total momentum after it. Impulse equals change in momentum.',
-          '动量取决于质量和速度。在孤立系统中，相互作用前后的总动量相等。冲量等于动量变化。',
+          'Momentum is mass multiplied by velocity. Because velocity has direction, momentum is a vector. In one dimension, choose one positive direction and give motion in the opposite direction a negative sign.',
+          '动量等于质量乘以速度。由于速度有方向，动量也是矢量。一维问题中先规定一个正方向，反向运动取负号。',
+        ),
+        text(
+          'Impulse is force multiplied by the time for which it acts and equals the change in momentum. Resultant force is the change in momentum per unit time. For the same momentum change, increasing the stopping time reduces the average resultant force.',
+          '冲量等于力与作用时间的乘积，也等于动量变化。合力等于单位时间内的动量变化。动量变化相同时，延长停止时间会减小平均合力。',
         ),
       ],
       formulas: [
         formula('Momentum', '动量', '\\vec p=m\\vec v'),
-        formula('Momentum conservation', '动量守恒', '\\sum\\vec p_{\\mathrm{before}}=\\sum\\vec p_{\\mathrm{after}}'),
         formula('Impulse', '冲量', '\\vec J=\\vec F\\Delta t=\\Delta\\vec p'),
+        formula('Resultant force', '合力', '\\vec F_{\\mathrm{resultant}}=\\frac{\\Delta\\vec p}{\\Delta t}'),
+      ],
+      takeaway: text('Momentum has unit $\mathrm{kg\,m\,s^{-1}}$; impulse has unit $\mathrm{N\,s}$ and the same dimensions.', '动量单位为 $\mathrm{kg\,m\,s^{-1}}$；冲量单位为 $\mathrm{N\,s}$，二者量纲相同。'),
+    },
+    {
+      heading: text('2. Conservation of momentum', '2. 动量守恒'),
+      paragraphs: [
+        text(
+          'For a system with negligible external impulse, total momentum before an interaction equals total momentum after it. Use one sign convention for every velocity, add the momentum of every object, and conserve the total—not the momentum of each object separately.',
+          '若系统所受外冲量可忽略，相互作用前后的总动量相等。所有速度必须使用同一正负号约定，并把所有物体的动量相加；守恒的是总动量，而不是每个物体各自的动量。',
+        ),
+      ],
+      formulas: [
+        formula('Momentum conservation', '动量守恒', '\\sum\\vec p_{\\mathrm{before}}=\\sum\\vec p_{\\mathrm{after}}'),
       ],
       classroomQuestions: [
         {
@@ -334,6 +401,15 @@ const momentumStudentLesson: CurriculumLesson = {
             '$2(3)+1(0)=(2+1)v$，所以 $v=2\\,\\mathrm{m\\,s^{-1}}$。',
           ),
         },
+      ],
+    },
+    {
+      heading: text('3. Common errors and scope', '3. 常见错误与范围'),
+      bullets: [
+        text('Opposite directions require opposite signs.', '相反方向必须使用相反符号。'),
+        text('Momentum conservation applies to a chosen system only when its external impulse is negligible.', '只有所选系统受到的外冲量可忽略时，才能使用动量守恒。'),
+        text('Kinetic energy need not be conserved when objects stick together.', '物体粘在一起时，动能不一定守恒。'),
+        text('The syllabus requires simple one-dimensional problems; coefficient of restitution is not required.', '大纲要求简单的一维问题，不要求恢复系数。'),
       ],
     },
   ],
@@ -403,6 +479,249 @@ const physicalQuantitiesLesson: CurriculumLesson = {
   ],
 };
 
+const motionStudentLesson: CurriculumLesson = {
+  title: text('1.2 Motion', '1.2 运动'),
+  description: text(
+    'Speed, velocity, acceleration, motion graphs and falling with resistance.',
+    '速率、速度、加速度、运动图像，以及有阻力的下落运动。',
+  ),
+  sections: [
+    {
+      heading: text('0. Describe motion so another person can reconstruct it', '0. 让他人能够复原运动过程'),
+      paragraphs: [
+        text(
+          'Saying that a car is “moving fast” is incomplete. A useful description gives how far it travels, how long it takes, its direction and how its velocity changes.',
+          '只说汽车“开得很快”并不完整。有效的运动描述需要说明路程、时间、方向以及速度如何变化。',
+        ),
+      ],
+    },
+    {
+      heading: text('1. Speed, velocity and average speed', '1. 速率、速度与平均速率'),
+      paragraphs: [
+        text(
+          'Speed is distance travelled per unit time. Velocity is speed in a stated direction. Average speed uses total distance and total time, including any stops.',
+          '速率是单位时间内通过的路程。速度是带方向的速率。平均速率使用总路程除以总时间，总时间包括停留时间。',
+        ),
+      ],
+      formulas: [
+        formula('Speed', '速率', 'v=\\frac{s}{t}'),
+        formula('Average speed', '平均速率', 'v_{\\mathrm{avg}}=\\frac{\\text{total distance}}{\\text{total time}}'),
+      ],
+    },
+    {
+      heading: text('2. Distance–time and speed–time graphs', '2. 路程—时间图与速率—时间图'),
+      bullets: [
+        text('Distance–time gradient gives speed; a horizontal section means rest.', '路程—时间图斜率表示速率；水平线段表示静止。'),
+        text('Speed–time gradient gives acceleration; a horizontal section above zero means constant speed.', '速率—时间图斜率表示加速度；零以上的水平线段表示匀速。'),
+        text('Area under a speed–time graph gives distance for constant speed or constant acceleration.', '对于匀速或匀加速运动，速率—时间图下方面积表示路程。'),
+        text('A straight sloping speed–time line shows constant acceleration; a curve shows changing acceleration.', '倾斜直线表示匀加速；曲线表示加速度变化。'),
+      ],
+    },
+    {
+      heading: text('3. Acceleration and deceleration (Supplement)', '3. 加速度与减速度（Supplement）'),
+      paragraphs: [
+        text(
+          'Acceleration is change in velocity per unit time. A deceleration is a negative acceleration relative to the chosen positive direction. Negative acceleration does not always mean slowing down: compare the signs of velocity and acceleration.',
+          '加速度是单位时间内的速度变化。相对于所选正方向，减速度是负加速度。负加速度并不总表示变慢；应比较速度与加速度的符号。',
+        ),
+      ],
+      formulas: [
+        formula('Acceleration', '加速度', 'a=\\frac{\\Delta v}{\\Delta t}'),
+      ],
+      takeaway: text('Same signs for $v$ and $a$ mean speeding up; opposite signs mean slowing down.', '$v$ 与 $a$ 同号表示速率增大，异号表示速率减小。'),
+    },
+    {
+      heading: text('4. Free fall and terminal velocity', '4. 自由落体与终端速度'),
+      paragraphs: [
+        text(
+          'Near Earth, free-fall acceleration is approximately constant at $g\\approx9.8\\,\\mathrm{m\\,s^{-2}}$. Without resistance, speed increases at a constant rate. With air or liquid resistance, drag increases as speed increases, so acceleration decreases until drag equals weight. The resultant force and acceleration then become zero and the object moves at terminal velocity.',
+          '地球表面附近，自由落体加速度近似恒定，$g\\approx9.8\\,\\mathrm{m\\,s^{-2}}$。无阻力时，速率以恒定速率增加。有空气或液体阻力时，阻力随速率增加，使加速度逐渐减小；当阻力等于重量时，合力和加速度为零，物体以终端速度运动。',
+        ),
+      ],
+    },
+    {
+      heading: text('5. Common errors', '5. 常见错误'),
+      bullets: [
+        text('Average speed is not usually the arithmetic mean of two speeds.', '平均速率通常不是两个速率的算术平均。'),
+        text('Do not confuse graph gradient with graph height or graph area.', '不要混淆图像斜率、纵坐标高度和图下方面积。'),
+        text('Constant speed and constant acceleration describe different graph features.', '匀速与匀加速对应不同的图像特征。'),
+        text('Terminal velocity means constant non-zero velocity because resultant force is zero.', '终端速度是合力为零时的恒定非零速度。'),
+      ],
+    },
+  ],
+};
+
+const motionLesson: CurriculumLesson = {
+  title: text('1.2 Motion', '1.2 运动'),
+  description: text(
+    'Complete Core and Supplement motion content: definitions, calculations, graphs, free fall and terminal velocity.',
+    '完整覆盖 Core 与 Supplement：运动定义、计算、图像、自由落体与终端速度。',
+  ),
+  sections: [
+    {
+      heading: text('0. From a vague description to a measurable motion model', '0. 从模糊描述到可测量的运动模型'),
+      paragraphs: [
+        text(
+          'A runner, a braking car and a falling parachutist can all be described by distance, time, direction and change of velocity. The purpose of this unit is to translate between words, data, equations and graphs without changing the physical story.',
+          '跑步者、制动汽车和下落的跳伞者都可以用路程、时间、方向和速度变化来描述。本节目标是在文字、数据、公式和图像之间转换，同时保持物理过程一致。',
+        ),
+      ],
+    },
+    {
+      heading: text('1. Speed, velocity and average speed', '1. 速率、速度与平均速率'),
+      paragraphs: [
+        text(
+          'Speed is distance travelled per unit time and is a scalar. Velocity is speed in a given direction. Average speed is total distance divided by total elapsed time, so pauses and return journeys must be included correctly.',
+          '速率是单位时间内通过的路程，是标量。速度是带方向的速率。平均速率等于总路程除以总经过时间，因此停留和往返过程必须正确计入。',
+        ),
+      ],
+      formulas: [
+        formula('Speed', '速率', 'v=\\frac{s}{t}'),
+        formula('Average speed', '平均速率', 'v_{\\mathrm{avg}}=\\frac{\\text{total distance travelled}}{\\text{total time taken}}'),
+      ],
+      classroomQuestions: [
+        {
+          id: 'igcse-u1-teacher-average-speed',
+          mode: 'written',
+          title: text('Practice: total distance and total time', '练习：总路程与总时间'),
+          prompt: text(
+            'A cyclist travels $600\\,\\mathrm{m}$ in $40\\,\\mathrm{s}$, waits for $20\\,\\mathrm{s}$, then travels another $300\\,\\mathrm{m}$ in $30\\,\\mathrm{s}$. Calculate the average speed for the whole journey.',
+            '骑车者先在 $40\\,\\mathrm{s}$ 内行驶 $600\\,\\mathrm{m}$，停留 $20\\,\\mathrm{s}$，再在 $30\\,\\mathrm{s}$ 内行驶 $300\\,\\mathrm{m}$。计算全程平均速率。',
+          ),
+          sampleAnswer: text(
+            '$v_{\\mathrm{avg}}=(600+300)/(40+20+30)=10\\,\\mathrm{m\\,s^{-1}}$. The waiting time is part of the total elapsed time.',
+            '$v_{\\mathrm{avg}}=(600+300)/(40+20+30)=10\\,\\mathrm{m\\,s^{-1}}$。停留时间属于总经过时间。',
+          ),
+        },
+      ],
+    },
+    {
+      heading: text('2. Reading and constructing motion graphs', '2. 读取与绘制运动图像'),
+      paragraphs: [
+        text(
+          'On a distance–time graph, gradient is speed. A horizontal section means rest, a straight non-horizontal section means constant speed, and a changing gradient means changing speed.',
+          '路程—时间图中，斜率表示速率。水平线段表示静止，非水平直线表示匀速，斜率变化表示速率变化。',
+        ),
+        text(
+          'On a speed–time graph, the height is speed, the gradient is acceleration, and the area beneath the graph is distance for constant speed or constant acceleration. A horizontal line above zero is constant speed; a straight slope is constant acceleration; a curved slope is changing acceleration.',
+          '速率—时间图中，纵坐标表示速率，斜率表示加速度；对于匀速或匀加速运动，图下方面积表示路程。零以上水平线表示匀速，倾斜直线表示匀加速，曲线表示加速度变化。',
+        ),
+      ],
+      formulas: [
+        formula('Speed from distance–time gradient', '由路程—时间图斜率求速率', 'v=\\frac{\\Delta s}{\\Delta t}'),
+        formula('Acceleration from speed–time gradient', '由速率—时间图斜率求加速度', 'a=\\frac{\\Delta v}{\\Delta t}'),
+        formula('Distance from speed–time area', '由速率—时间图面积求路程', 's=\\text{area under the speed–time graph}'),
+      ],
+      classroomQuestions: [
+        {
+          id: 'igcse-u1-teacher-motion-graph',
+          mode: 'written',
+          title: text('Practice: gradient and area', '练习：斜率与面积'),
+          prompt: text(
+            'A speed–time graph rises uniformly from $0$ to $12\\,\\mathrm{m\\,s^{-1}}$ in $4.0\\,\\mathrm{s}$ and then remains at $12\\,\\mathrm{m\\,s^{-1}}$ for $6.0\\,\\mathrm{s}$. Calculate the acceleration and total distance.',
+            '速率—时间图在 $4.0\\,\\mathrm{s}$ 内从 $0$ 匀速增加到 $12\\,\\mathrm{m\\,s^{-1}}$，随后以 $12\\,\\mathrm{m\\,s^{-1}}$ 保持 $6.0\\,\\mathrm{s}$。计算加速度和总路程。',
+          ),
+          sampleAnswer: text(
+            '$a=12/4.0=3.0\\,\\mathrm{m\\,s^{-2}}$. Distance is the triangle plus rectangle: $\\frac12(4.0)(12)+(6.0)(12)=96\\,\\mathrm{m}$.',
+            '$a=12/4.0=3.0\\,\\mathrm{m\\,s^{-2}}$。路程等于三角形与矩形面积之和：$\\frac12(4.0)(12)+(6.0)(12)=96\\,\\mathrm{m}$。',
+          ),
+        },
+      ],
+    },
+    {
+      heading: text('3. Acceleration, deceleration and signs (Supplement)', '3. 加速度、减速度与符号（Supplement）'),
+      paragraphs: [
+        text(
+          'Acceleration is change in velocity per unit time. Deceleration is a negative acceleration relative to the chosen positive direction. Whether an object speeds up or slows down is decided by comparing the signs of velocity and acceleration: the same sign increases speed, opposite signs decrease speed.',
+          '加速度是单位时间内的速度变化。相对于所选正方向，减速度是负加速度。物体变快还是变慢，应比较速度与加速度的符号：同号速率增大，异号速率减小。',
+        ),
+      ],
+      formulas: [formula('Acceleration', '加速度', 'a=\\frac{\\Delta v}{\\Delta t}')],
+    },
+    {
+      heading: text('4. Free fall with and without resistance', '4. 有阻力与无阻力的自由落体'),
+      paragraphs: [
+        text(
+          'Near Earth, the acceleration of free fall is approximately constant at $g\\approx9.8\\,\\mathrm{m\\,s^{-2}}$. Without air or liquid resistance, velocity changes uniformly. With resistance, drag increases with speed, reducing the resultant downward force and acceleration.',
+          '地球表面附近，自由落体加速度近似恒定，$g\\approx9.8\\,\\mathrm{m\\,s^{-2}}$。没有空气或液体阻力时，速度均匀变化；有阻力时，阻力随速率增加，使向下合力和加速度减小。',
+        ),
+        text(
+          'Terminal velocity occurs when drag equals weight. The resultant force and acceleration are then zero, so the object continues at constant non-zero velocity. This sequence should be connected to both force balance and the changing gradient of a speed–time graph.',
+          '当阻力等于重量时达到终端速度。此时合力和加速度为零，物体以恒定非零速度继续运动。应把这一过程同时与受力平衡和速率—时间图斜率变化联系起来。',
+        ),
+      ],
+    },
+    {
+      heading: text('5. Decision rules and scope boundaries', '5. 判断规则与范围边界'),
+      bullets: [
+        text('Average speed always uses total distance and total elapsed time.', '平均速率始终使用总路程和总经过时间。'),
+        text('Distance–time gradient gives speed; speed–time gradient gives acceleration; speed–time area gives distance.', '路程—时间图斜率给速率；速率—时间图斜率给加速度；速率—时间图面积给路程。'),
+        text('A negative acceleration is defined by the coordinate direction, not automatically by whether the object slows down.', '负加速度由坐标正方向定义，并不自动表示物体变慢。'),
+        text('Terminal velocity is constant velocity caused by zero resultant force, not the absence of forces.', '终端速度是合力为零所产生的恒定速度，不是没有力作用。'),
+        text('The syllabus requires qualitative resistance and terminal-velocity reasoning; a detailed drag equation is outside scope.', '大纲要求定性分析阻力与终端速度，不要求具体阻力公式。'),
+      ],
+    },
+  ],
+  studentVersion: motionStudentLesson,
+};
+
+const densityStudentLesson: CurriculumLesson = {
+  title: text('1.4 Density', '1.4 密度'),
+  description: text(
+    'Mass per unit volume, density measurements and density-based floating decisions.',
+    '单位体积质量、密度测量，以及利用密度判断浮沉。',
+  ),
+  sections: [
+    {
+      heading: text('0. Size alone does not tell us how heavy an object is', '0. 只看大小不能判断物体有多重'),
+      paragraphs: [
+        text(
+          'A small metal block can have more mass than a much larger foam block. Density compares mass with the volume that contains it.',
+          '一小块金属的质量可能比一大块泡沫还大。密度把质量与容纳该质量的体积联系起来。',
+        ),
+      ],
+    },
+    {
+      heading: text('1. Definition, equation and units', '1. 定义、公式与单位'),
+      paragraphs: [
+        text(
+          'Density is mass per unit volume. Use compatible units before substitution: $\mathrm{kg}$ with $\mathrm{m^3}$, or $\mathrm{g}$ with $\mathrm{cm^3}$.',
+          '密度是单位体积的质量。代入公式前必须使用相容单位：$\mathrm{kg}$ 配 $\mathrm{m^3}$，或 $\mathrm{g}$ 配 $\mathrm{cm^3}$。',
+        ),
+      ],
+      formulas: [
+        formula('Density', '密度', '\\rho=\\frac{m}{V}'),
+        formula('Mass', '质量', 'm=\\rho V'),
+        formula('Volume', '体积', 'V=\\frac{m}{\\rho}'),
+        formula('Unit conversion', '单位换算', '1\\,\\mathrm{g\\,cm^{-3}}=1000\\,\\mathrm{kg\\,m^{-3}}'),
+      ],
+    },
+    {
+      heading: text('2. Three required measurement methods', '2. 三种必须掌握的测量方法'),
+      bullets: [
+        text('Liquid: mass the empty container, add a measured volume of liquid, mass again, and subtract the container mass.', '液体：先测空容器质量，再加入已知体积的液体测总质量，最后减去容器质量。'),
+        text('Regular solid: measure mass and the dimensions needed to calculate its geometrical volume.', '规则固体：测量质量及计算几何体积所需的尺寸。'),
+        text('Irregular sinking solid: measure mass, fully submerge it, and use $V=V_{\\mathrm{final}}-V_{\\mathrm{initial}}$.', '会下沉的不规则固体：测量质量，将其完全浸没，并使用 $V=V_{\\mathrm{final}}-V_{\\mathrm{initial}}$。'),
+      ],
+      takeaway: text('For every method: measure $m$, determine $V$, then calculate $\\rho=m/V$.', '所有方法都遵循：测量 $m$，确定 $V$，再计算 $\\rho=m/V$。'),
+    },
+    {
+      heading: text('3. Floating and liquid layers', '3. 浮沉与液体分层'),
+      paragraphs: [
+        text(
+          'An object floats if its average density is less than the liquid density and sinks if it is greater. If two liquids do not mix, the less dense liquid forms the upper layer.',
+          '物体平均密度小于液体密度时漂浮，大于液体密度时下沉。若两种液体互不相溶，密度较小的液体位于上层。',
+        ),
+      ],
+      bullets: [
+        text('Do not confuse greater mass with greater density.', '不要把质量更大等同于密度更大。'),
+        text('Displacement volume is the change in reading, not the final reading.', '排水体积是读数变化量，不是最终读数。'),
+        text('Remove the container mass and avoid trapped air or incomplete immersion.', '要扣除容器质量，并避免气泡和未完全浸没。'),
+      ],
+    },
+  ],
+};
+
 const densityLesson: CurriculumLesson = {
   title: text('1.4 Density', '1.4 密度'),
   description: text(
@@ -411,34 +730,184 @@ const densityLesson: CurriculumLesson = {
   ),
   sections: [
     {
-      heading: text('1. Density and unit control', '1. 密度与单位控制'),
+      heading: text('0. Why density is needed', '0. 为什么需要密度'),
       paragraphs: [
         text(
-          'Density is mass per unit volume. Mass and volume must use compatible units before substitution. Common units are $\\mathrm{kg\\,m^{-3}}$ and $\\mathrm{g\\,cm^{-3}}$.',
-          '密度是单位体积的质量。代入公式前，质量和体积必须使用相容单位。常用单位为 $\\mathrm{kg\\,m^{-3}}$ 和 $\\mathrm{g\\,cm^{-3}}$。',
+          'A small metal block can have more mass than a much larger foam block, and oil can form a layer above water. Mass alone and volume alone cannot explain either observation; density compares both.',
+          '一小块金属的质量可能比一大块泡沫还大，油也会浮在水面上。只看质量或只看体积都不能解释这些现象，密度把二者联系起来。',
+        ),
+      ],
+      takeaway: text('Density is a property that allows samples of different sizes to be compared.', '密度使不同大小的样品可以进行比较。'),
+    },
+    {
+      heading: text('1. Definition, rearrangement and unit control', '1. 定义、公式变形与单位控制'),
+      paragraphs: [
+        text(
+          'Density is mass per unit volume. Rearrange the relationship before substituting, and use compatible units: $\\mathrm{kg}$ with $\\mathrm{m^3}$, or $\\mathrm{g}$ with $\\mathrm{cm^3}$.',
+          '密度是单位体积的质量。代入前先完成公式变形，并使用相容单位：$\\mathrm{kg}$ 配 $\\mathrm{m^3}$，或 $\\mathrm{g}$ 配 $\\mathrm{cm^3}$。',
+        ),
+        text(
+          'Because $1\\,\\mathrm{m}=100\\,\\mathrm{cm}$, cubing the length conversion gives $1\\,\\mathrm{m^3}=10^6\\,\\mathrm{cm^3}$. This leads to $1\\,\\mathrm{g\\,cm^{-3}}=1000\\,\\mathrm{kg\\,m^{-3}}$.',
+          '由于 $1\\,\\mathrm{m}=100\\,\\mathrm{cm}$，长度换算立方后得到 $1\\,\\mathrm{m^3}=10^6\\,\\mathrm{cm^3}$，因此 $1\\,\\mathrm{g\\,cm^{-3}}=1000\\,\\mathrm{kg\\,m^{-3}}$。',
         ),
       ],
       formulas: [
         formula('Density', '密度', '\\rho=\\frac{m}{V}'),
+        formula('Mass', '质量', 'm=\\rho V'),
+        formula('Volume', '体积', 'V=\\frac{m}{\\rho}'),
         formula('Unit conversion', '单位换算', '1\\,\\mathrm{g\\,cm^{-3}}=1000\\,\\mathrm{kg\\,m^{-3}}'),
+      ],
+      classroomQuestions: [
+        {
+          id: 'igcse-u1-teacher-density-units',
+          title: text('Practice: density and unit control', '练习：密度与单位控制'),
+          prompt: text(
+            'A block has mass $540\\,\\mathrm{g}$ and volume $200\\,\\mathrm{cm^3}$. Calculate its density in both $\\mathrm{g\\,cm^{-3}}$ and $\\mathrm{kg\\,m^{-3}}$.',
+            '一个物块质量为 $540\\,\\mathrm{g}$，体积为 $200\\,\\mathrm{cm^3}$。分别用 $\\mathrm{g\\,cm^{-3}}$ 和 $\\mathrm{kg\\,m^{-3}}$ 表示其密度。',
+          ),
+          sampleAnswer: text(
+            '$\\rho=540/200=2.70\\,\\mathrm{g\\,cm^{-3}}=2700\\,\\mathrm{kg\\,m^{-3}}$.',
+            '$\\rho=540/200=2.70\\,\\mathrm{g\\,cm^{-3}}=2700\\,\\mathrm{kg\\,m^{-3}}$。',
+          ),
+          explanation: text(
+            'The numerical conversion from $\\mathrm{g\\,cm^{-3}}$ to $\\mathrm{kg\\,m^{-3}}$ multiplies by $1000$.',
+            '从 $\\mathrm{g\\,cm^{-3}}$ 换算到 $\\mathrm{kg\\,m^{-3}}$，数值乘以 $1000$。',
+          ),
+        },
       ],
     },
     {
       heading: text('2. Determining density experimentally', '2. 实验测定密度'),
+      paragraphs: [
+        text(
+          'Every method follows the same chain: measure mass, determine volume, then divide. The experimental difference is how volume is obtained.',
+          '所有方法都遵循同一条逻辑链：测质量、确定体积、再相除。不同实验的关键区别在于如何获得体积。',
+        ),
+      ],
       bullets: [
-        text('Liquid: find the mass of an empty container and the mass of the container plus a measured liquid volume; subtract to obtain the liquid mass.', '液体：测空容器质量和容器加已知体积液体的总质量，相减得到液体质量。'),
-        text('Regular solid: measure its mass and the dimensions needed to calculate its volume.', '规则固体：测量质量，并测量计算体积所需的各个尺寸。'),
-        text('Irregular solid that sinks: measure its mass, fully submerge it in a measuring cylinder, and obtain its volume from liquid displacement.', '会下沉的不规则固体：测量质量，将其完全浸没在量筒中，以排开液体的体积作为物体体积。'),
-        text('Repeat measurements where practical and avoid trapped air, parallax and incomplete immersion.', '条件允许时重复测量，并避免气泡、视差和未完全浸没。'),
+        text('Liquid: mass an empty container, measure a liquid volume at eye level, mass the container plus liquid, and subtract the tare mass.', '液体：测空容器质量，平视读取液体体积，再测容器与液体总质量，并减去空容器质量。'),
+        text('Regular solid: measure mass and all dimensions needed for the correct geometrical volume formula; repeat dimensions if the object is not perfectly uniform.', '规则固体：测质量并测量正确几何体积公式所需的全部尺寸；若物体不完全均匀，应重复测量尺寸。'),
+        text('Irregular solid that sinks: record initial liquid volume, fully submerge the object, record final volume, and use $V=V_{\\mathrm{final}}-V_{\\mathrm{initial}}$.', '会下沉的不规则固体：记录初始液体体积，将物体完全浸没，记录最终体积，并使用 $V=V_{\\mathrm{final}}-V_{\\mathrm{initial}}$。'),
+        text('Improve validity by avoiding trapped air, splashing, parallax, incomplete immersion and water left on the outside of equipment.', '避免气泡、液体溅出、视差、未完全浸没，以及器材外壁残留液体，以提高实验有效性。'),
+      ],
+      classroomQuestions: [
+        {
+          id: 'igcse-u1-teacher-density-method',
+          mode: 'written',
+          title: text('Practice: irregular-solid density method', '练习：不规则固体密度实验'),
+          prompt: text(
+            'Describe how to determine the density of a small irregular stone that sinks in water. State the measurements, calculation and two precautions.',
+            '描述如何测定一块会在水中下沉的小型不规则石块的密度。写出测量量、计算方法和两项注意事项。',
+          ),
+          sampleAnswer: text(
+            'Measure mass $m$ with a balance. Record $V_i$ in a measuring cylinder, fully submerge the stone and record $V_f$. Then $V=V_f-V_i$ and $\\rho=m/V$. Read at eye level and ensure full immersion with no trapped bubbles.',
+            '用天平测质量 $m$。记录量筒初始读数 $V_i$，将石块完全浸没后记录 $V_f$。则 $V=V_f-V_i$，$\\rho=m/V$。应平视读数，并确保完全浸没且无气泡。',
+          ),
+        },
       ],
     },
     {
       heading: text('3. Floating and layering', '3. 浮沉与液体分层'),
       paragraphs: [
         text(
-          'An object floats in a liquid when its average density is less than the liquid density and sinks when it is greater. For immiscible liquids, the less dense liquid forms the upper layer.',
-          '物体平均密度小于液体密度时会漂浮，大于液体密度时会下沉。对于互不相溶的液体，密度较小的液体位于上层。',
+          'An object floats when its average density is less than the liquid density, is neutrally suspended when the densities are equal, and sinks when its density is greater. Hollow objects must be judged by their overall average density.',
+          '物体平均密度小于液体密度时漂浮，二者相等时可悬浮，大于液体密度时下沉。空心物体应使用整体平均密度判断。',
         ),
+        text(
+          'For two immiscible liquids, the less dense liquid forms the upper layer and the denser liquid forms the lower layer. The condition that they do not mix is essential.',
+          '对于两种互不相溶的液体，密度较小者位于上层，密度较大者位于下层。“互不相溶”是这一判断成立的必要条件。',
+        ),
+      ],
+    },
+    {
+      heading: text('4. Decision rules and common errors', '4. 判断规则与常见错误'),
+      bullets: [
+        text('Greater mass does not necessarily mean greater density; volume must also be considered.', '质量更大不一定密度更大，还必须考虑体积。'),
+        text('Use the displaced-volume change, not the final cylinder reading.', '应使用排水前后的体积变化量，而不是量筒最终读数。'),
+        text('Subtract the empty-container mass when measuring a liquid.', '测液体密度时必须扣除空容器质量。'),
+        text('Density data alone can decide float or sink; this subsection does not require an upthrust calculation.', '仅利用密度数据即可判断浮沉；本节不要求计算浮力。'),
+      ],
+    },
+  ],
+  studentVersion: densityStudentLesson,
+};
+
+const energyWorkPowerStudentLesson: CurriculumLesson = {
+  title: text('1.7 Energy, Work and Power', '1.7 能量、功与功率'),
+  description: text(
+    'Energy stores and transfer pathways, conservation, work, resources, efficiency and power.',
+    '能量储存与转移路径、能量守恒、功、能源、效率与功率。',
+  ),
+  sections: [
+    {
+      heading: text('0. Track energy through a change', '0. 追踪变化过程中的能量'),
+      paragraphs: [
+        text(
+          'A falling object, a charging phone and a loudspeaker look different, but each can be described by identifying an initial store, a transfer pathway and a final store.',
+          '下落物体、充电手机和扬声器看起来不同，但都可以通过“初始能量储存—转移路径—最终能量储存”来描述。',
+        ),
+      ],
+    },
+    {
+      heading: text('1. Stores and transfer pathways', '1. 能量储存与转移路径'),
+      bullets: [
+        text('Stores: kinetic, gravitational potential, chemical, elastic, nuclear, electrostatic and internal (thermal).', '能量储存：动能、重力势能、化学能、弹性势能、核能、静电能和内能（热能）。'),
+        text('Pathways: mechanically by forces, electrically by currents, by heating, and by electromagnetic, sound or other waves.', '转移路径：力做机械功、电流做电功、加热，以及电磁波、声波或其他波。'),
+      ],
+      takeaway: text('A force or a wave is a transfer pathway, not an energy store.', '力或波是能量转移路径，不是能量储存形式。'),
+    },
+    {
+      heading: text('2. Conservation and Sankey diagrams', '2. 能量守恒与桑基图'),
+      paragraphs: [
+        text(
+          'Energy is not created or destroyed. Total input energy equals all useful and dissipated outputs. In a Sankey diagram, arrow widths represent energy amounts, so the outgoing widths must account for the incoming width.',
+          '能量不会被创造或消灭。总输入能量等于全部有用输出与耗散输出之和。桑基图中箭头宽度代表能量大小，因此所有输出宽度必须与输入相对应。',
+        ),
+      ],
+    },
+    {
+      heading: text('3. Kinetic and gravitational potential energy (Supplement)', '3. 动能与重力势能（Supplement）'),
+      formulas: [
+        formula('Kinetic energy', '动能', 'E_k=\\frac12mv^2'),
+        formula('Change in gravitational potential energy', '重力势能变化', '\\Delta E_p=mg\\Delta h'),
+      ],
+      bullets: [
+        text('Doubling speed makes kinetic energy four times as large.', '速率加倍会使动能变为四倍。'),
+        text('Use vertical height change $\\Delta h$, not distance along a slope.', '使用竖直高度变化 $\\Delta h$，而不是沿斜面的路程。'),
+      ],
+    },
+    {
+      heading: text('4. Work and power', '4. 功与功率'),
+      paragraphs: [
+        text(
+          'Mechanical or electrical work done equals energy transferred. Power describes how quickly work is done or energy is transferred.',
+          '机械功或电功等于所转移的能量。功率描述做功或能量转移的快慢。',
+        ),
+      ],
+      formulas: [
+        formula('Mechanical work', '机械功', 'W=Fd=\\Delta E', 'Use the distance moved in the force direction.', '使用沿力方向移动的距离。'),
+        formula('Power from work', '由功计算功率', 'P=\\frac{W}{t}'),
+        formula('Power from energy transfer', '由能量转移计算功率', 'P=\\frac{\\Delta E}{t}'),
+      ],
+    },
+    {
+      heading: text('5. Energy resources', '5. 能源'),
+      bullets: [
+        text('Required resources: fossil fuels, biofuels, waves, tides, hydroelectric reservoirs, geothermal, nuclear fuel, solar cells, solar heating and wind.', '必须掌握的能源：化石燃料、生物燃料、波浪、潮汐、水力、地热、核燃料、太阳能电池、太阳能加热和风能。'),
+        text('Compare each by renewability, availability, reliability, scale and environmental impact.', '从可再生性、可获得性、可靠性、规模和环境影响比较各种能源。'),
+        text('Solar radiation is the main origin of most resources except geothermal, nuclear and tidal energy. The Sun releases energy by fusion; large-scale controlled-fusion electricity remains a research goal.', '除地热、核能和潮汐能外，大多数能源最终来自太阳辐射。太阳通过核聚变释放能量；大规模可控核聚变发电仍是研究目标。'),
+      ],
+    },
+    {
+      heading: text('6. Efficiency and common errors', '6. 效率与常见错误'),
+      formulas: [
+        formula('Energy efficiency', '能量效率', '\\eta=\\frac{E_{\\mathrm{useful}}}{E_{\\mathrm{input}}}\\times100\\%'),
+        formula('Power efficiency', '功率效率', '\\eta=\\frac{P_{\\mathrm{useful}}}{P_{\\mathrm{input}}}\\times100\\%'),
+      ],
+      bullets: [
+        text('Efficiency cannot exceed $1$ or $100\\%$.', '效率不可能超过 $1$ 或 $100\\%$。'),
+        text('Energy transferred to the surroundings is dissipated, not destroyed.', '转移到环境中的能量是耗散了，而不是消失了。'),
+        text('The joule measures energy or work; the watt measures power.', '焦耳是能量或功的单位；瓦特是功率单位。'),
       ],
     },
   ],
@@ -452,6 +921,19 @@ const energyWorkPowerLesson: CurriculumLesson = {
   ),
   sections: [
     {
+      heading: text('0. One conserved quantity, many visible processes', '0. 一个守恒量，多种可见过程'),
+      paragraphs: [
+        text(
+          'A falling object speeds up, a phone battery charges, and a loudspeaker warms its surroundings. These events look unrelated until each is written as an initial energy store, a transfer pathway, and one or more final stores.',
+          '下落物体加速、手机电池充电、扬声器使周围升温，这些现象看似无关，但都可以写成“初始能量储存—转移路径—一个或多个最终能量储存”。',
+        ),
+      ],
+      takeaway: text(
+        'Energy accounting explains what changes while preserving the total.',
+        '能量核算既解释变化，也保证总量守恒。',
+      ),
+    },
+    {
       heading: text('1. Energy stores and transfer pathways', '1. 能量储存与转移路径'),
       paragraphs: [
         text(
@@ -459,40 +941,139 @@ const energyWorkPowerLesson: CurriculumLesson = {
           '能量可储存在动能、重力势能、化学能、弹性势能、核能、静电能和内能中。能量可通过力做机械功、电流做电功、加热，以及电磁波、声波或其他波来转移。',
         ),
         text(
-          'Energy is conserved: it moves between stores but is not created or destroyed. Simple flow diagrams and multi-stage Sankey diagrams must account for all input energy, including energy dissipated to the surroundings.',
-          '能量守恒：能量只在不同储存形式间转移，不会被创造或消灭。简单能量流图和多阶段桑基图都必须计入全部输入能量，包括耗散到环境中的能量。',
+          'A store describes where energy is held; a pathway describes how it moves between stores. For example, a falling object transfers energy mechanically from its gravitational-potential store to its kinetic store, while a heater transfers energy electrically into internal-energy stores.',
+          '能量储存描述能量“在哪里”，转移路径描述能量“如何移动”。例如，下落物体通过机械方式把重力势能转移为动能；电热器通过电流把能量转移到内能储存中。',
         ),
       ],
-      formulas: [
-        formula('Kinetic energy (Supplement)', '动能（Supplement）', 'E_k=\\frac12mv^2'),
-        formula('Change in gravitational potential energy (Supplement)', '重力势能变化（Supplement）', '\\Delta E_p=mg\\Delta h'),
+      bullets: [
+        text('Stores: kinetic, gravitational potential, chemical, elastic (strain), nuclear, electrostatic, internal (thermal).', '能量储存：动能、重力势能、化学能、弹性（形变）能、核能、静电能、内能（热能）。'),
+        text('Pathways: mechanical work, electrical work, heating, electromagnetic waves, sound waves and other waves.', '转移路径：机械功、电功、加热、电磁波、声波和其他波。'),
+      ],
+      classroomQuestions: [
+        {
+          id: 'igcse-u1-teacher-energy-store-pathway',
+          title: text('Practice: store or pathway?', '练习：储存还是路径？'),
+          prompt: text(
+            'A battery powers a lamp. Which description correctly separates stores and pathways?',
+            '电池给灯供电。下列哪项正确区分了能量储存和转移路径？',
+          ),
+          choices: [
+            { label: 'A', text: text('Chemical store → electrically → internal and light-transfer outcomes', '化学能储存 → 通过电流转移 → 内能及光传递结果') },
+            { label: 'B', text: text('Electricity store → chemically → light store', '电能储存 → 通过化学方式 → 光能储存') },
+            { label: 'C', text: text('Force store → current store → heat pathway', '力能储存 → 电流储存 → 热路径') },
+            { label: 'D', text: text('Light store → battery pathway → internal store', '光能储存 → 电池路径 → 内能储存') },
+          ],
+          correctAnswer: 'A',
+          feedback: text(
+            'The battery contains a chemical energy store. Current is an electrical transfer pathway; the lamp increases internal-energy stores and transfers energy by electromagnetic waves.',
+            '电池中储存的是化学能。电流是电学转移路径；灯会增加内能，并通过电磁波转移能量。',
+          ),
+        },
       ],
     },
     {
-      heading: text('2. Work done', '2. 功'),
+      heading: text('2. Conservation, flow diagrams and Sankey diagrams', '2. 能量守恒、能量流图与桑基图'),
+      paragraphs: [
+        text(
+          'Energy is conserved: it is transferred between stores but is not created or destroyed. A complete account includes useful output and energy dissipated to the surroundings. Calling dissipated energy “lost” means it is less useful, not that it has vanished.',
+          '能量守恒：能量只在储存形式之间转移，不会被创造或消灭。完整核算必须包含有用输出和耗散到环境中的能量。“损失”表示能量变得不易利用，并不是能量消失。',
+        ),
+        text(
+          'A simple flow diagram names the input and outputs. In a Sankey diagram, arrow width represents energy or power. At every stage, the total width entering equals the total width leaving, including downward dissipated branches.',
+          '简单能量流图标出输入和输出。桑基图中，箭头宽度代表能量或功率；每一个阶段的输入总宽度都必须等于输出总宽度，包括向下的耗散分支。',
+        ),
+      ],
+      formulas: [
+        formula('Energy accounting', '能量核算', 'E_{\\mathrm{input}}=E_{\\mathrm{useful}}+E_{\\mathrm{dissipated}}'),
+      ],
+      classroomQuestions: [
+        {
+          id: 'igcse-u1-teacher-energy-sankey',
+          mode: 'written',
+          title: text('Practice: multi-stage energy accounting', '练习：多阶段能量核算'),
+          prompt: text(
+            'A device receives $500\\,\\mathrm{J}$. The first stage dissipates $80\\,\\mathrm{J}$ and the second stage produces $300\\,\\mathrm{J}$ of useful output. How much energy is dissipated at the second stage, and what should the Sankey widths show?',
+            '某装置输入 $500\\,\\mathrm{J}$。第一阶段耗散 $80\\,\\mathrm{J}$，第二阶段产生 $300\\,\\mathrm{J}$ 有用输出。第二阶段耗散多少能量？桑基图箭头宽度应满足什么关系？',
+          ),
+          sampleAnswer: text(
+            'Energy entering stage 2 is $500-80=420\\,\\mathrm{J}$, so stage-2 dissipation is $420-300=120\\,\\mathrm{J}$. The $500\\,\\mathrm{J}$ input width must equal the combined widths for $300\\,\\mathrm{J}$ useful output, $80\\,\\mathrm{J}$ first-stage dissipation and $120\\,\\mathrm{J}$ second-stage dissipation.',
+            '进入第二阶段的能量为 $500-80=420\\,\\mathrm{J}$，所以第二阶段耗散 $420-300=120\\,\\mathrm{J}$。$500\\,\\mathrm{J}$ 输入箭头宽度应等于 $300\\,\\mathrm{J}$ 有用输出、$80\\,\\mathrm{J}$ 第一阶段耗散与 $120\\,\\mathrm{J}$ 第二阶段耗散宽度之和。',
+          ),
+        },
+      ],
+    },
+    {
+      heading: text('3. Kinetic and gravitational potential energy (Supplement)', '3. 动能与重力势能（Supplement）'),
+      paragraphs: [
+        text(
+          'Kinetic energy depends on the square of speed, so doubling speed produces four times the kinetic energy. The change in gravitational potential energy depends on vertical height change, not on the length of a sloping path.',
+          '动能与速率的平方有关，因此速率加倍会使动能变为四倍。重力势能变化取决于竖直高度变化，而不是斜线路径长度。',
+        ),
+        text(
+          'These equations can be combined with conservation across several stages. State the chosen system and identify any transfer to internal energy when friction or drag is present.',
+          '这些公式可以与多阶段能量守恒结合使用。应先确定系统；若存在摩擦或阻力，还要说明向内能的转移。',
+        ),
+      ],
+      formulas: [
+        formula('Kinetic energy', '动能', 'E_k=\\frac12mv^2'),
+        formula('Change in gravitational potential energy', '重力势能变化', '\\Delta E_p=mg\\Delta h'),
+      ],
+    },
+    {
+      heading: text('4. Work done', '4. 功'),
       paragraphs: [
         text(
           'Mechanical or electrical work done equals the energy transferred. For a constant force acting along the direction of movement, mechanical work is force multiplied by distance moved.',
           '机械功或电功等于所转移的能量。恒力沿运动方向作用时，机械功等于力与沿力方向移动距离的乘积。',
         ),
       ],
-      formulas: [formula('Mechanical work', '机械功', 'W=Fd=\\Delta E')],
-    },
-    {
-      heading: text('3. Energy resources', '3. 能源'),
-      paragraphs: [
-        text(
-          'Useful energy or electrical power may be obtained from fossil fuels, biofuels, waves, tides, hydroelectric reservoirs, geothermal resources, nuclear fuel, solar cells, solar heating and wind. Where relevant, the chain includes a boiler, turbine and generator.',
-          '可从化石燃料、生物燃料、波浪、潮汐、水力发电、地热、核燃料、太阳能电池、太阳能加热和风能获得有用能量或电功率。适用时，转换链包含锅炉、涡轮机和发电机。',
-        ),
-        text(
-          'Each resource is compared by renewability, availability, reliability, scale and environmental impact. Radiation from the Sun is the main source of most resources except geothermal, nuclear and tidal energy. The Sun releases energy by nuclear fusion, and controlled fusion is being researched for large-scale electricity generation.',
-          '各种能源需从可再生性、可获得性、可靠性、规模和环境影响比较。除地热、核能和潮汐能外，大多数能源的主要来源是太阳辐射。太阳通过核聚变释放能量，人类正在研究利用可控核聚变大规模发电。',
-        ),
+      formulas: [
+        formula('Mechanical work', '机械功', 'W=Fd=\\Delta E', 'Use the distance moved in the direction of the force.', '使用沿力方向移动的距离。'),
+      ],
+      classroomQuestions: [
+        {
+          id: 'igcse-u1-teacher-work-done',
+          title: text('Practice: work as energy transfer', '练习：功与能量转移'),
+          prompt: text(
+            'A constant horizontal force of $75\\,\\mathrm{N}$ moves a box $4.0\\,\\mathrm{m}$ in the force direction. How much energy is transferred mechanically?',
+            '一个恒定的 $75\\,\\mathrm{N}$ 水平力使箱子沿力方向移动 $4.0\\,\\mathrm{m}$。机械方式转移了多少能量？',
+          ),
+          choices: [
+            { label: 'A', text: text('$18.75\\,\\mathrm{J}$', '$18.75\\,\\mathrm{J}$') },
+            { label: 'B', text: text('$79\\,\\mathrm{J}$', '$79\\,\\mathrm{J}$') },
+            { label: 'C', text: text('$300\\,\\mathrm{J}$', '$300\\,\\mathrm{J}$') },
+            { label: 'D', text: text('$300\\,\\mathrm{W}$', '$300\\,\\mathrm{W}$') },
+          ],
+          correctAnswer: 'C',
+          feedback: text('$W=Fd=75\\times4.0=300\\,\\mathrm{J}$.', '$W=Fd=75\\times4.0=300\\,\\mathrm{J}$。'),
+        },
       ],
     },
     {
-      heading: text('4. Efficiency', '4. 效率'),
+      heading: text('5. Energy resources and generation chains', '5. 能源与发电转换链'),
+      paragraphs: [
+        text(
+          'Fossil fuels and biofuels release chemical energy, usually heating water in a boiler so steam drives a turbine and generator. Nuclear fuel and some geothermal stations similarly supply thermal energy before the turbine–generator stages. Hydroelectric water, tides, waves and wind can drive turbines more directly. Solar cells transfer energy from light directly to electrical output, while solar panels use solar radiation to heat water.',
+          '化石燃料和生物燃料释放化学能，通常在锅炉中加热水，使蒸汽驱动涡轮机和发电机。核燃料与部分地热电站也先提供热能，再经过涡轮机—发电机环节。水力、潮汐、波浪和风能可更直接地驱动涡轮机。太阳能电池把光能直接转化为电能，太阳能集热板则利用太阳辐射加热水。',
+        ),
+        text(
+          'Evaluate each resource using all five syllabus criteria: renewability, availability, reliability, scale and environmental impact. A strong comparison identifies a benefit, a limitation and the context in which each matters rather than labelling a source simply “good” or “bad”.',
+          '评价能源时应覆盖大纲规定的五个维度：可再生性、可获得性、可靠性、规模和环境影响。高质量比较应说明优点、局限及其适用情境，而不是简单把某种能源说成“好”或“坏”。',
+        ),
+        text(
+          'Radiation from the Sun is the main original source of most energy resources: it drives winds, the water cycle, waves and biomass formation. The explicit exceptions are geothermal, nuclear and tidal energy. The Sun releases energy by nuclear fusion; research is investigating controlled fusion for large-scale electrical generation, but it is not presented as an established commercial resource.',
+          '太阳辐射是大多数能源的原始来源：它驱动风、水循环、波浪与生物质形成。明确的例外是地热、核能和潮汐能。太阳通过核聚变释放能量；人类正在研究利用可控核聚变大规模发电，但它还不能被视为成熟的商业能源。',
+        ),
+      ],
+      bullets: [
+        text('Renewability: whether the resource is replaced on a human timescale.', '可再生性：资源能否在人类时间尺度内得到补充。'),
+        text('Availability and reliability: where and when it can be used, and whether output is controllable.', '可获得性与可靠性：在哪里、何时可以使用，以及输出能否被控制。'),
+        text('Scale: achievable power output and suitability for local or national supply.', '规模：可达到的功率，以及是否适合局部或全国供能。'),
+        text('Environmental impact: emissions, waste, habitats, land use, visual/noise effects and accident risk as relevant.', '环境影响：根据具体能源考虑排放、废物、生态栖息地、土地使用、视觉/噪声影响和事故风险。'),
+      ],
+    },
+    {
+      heading: text('6. Efficiency', '6. 效率'),
       paragraphs: [
         text(
           'Efficiency is the fraction of the input energy or power that becomes useful output. It cannot exceed $1$ or $100\\%$. The remainder is transferred to less useful stores, often as internal energy of the surroundings.',
@@ -503,9 +1084,27 @@ const energyWorkPowerLesson: CurriculumLesson = {
         formula('Energy efficiency', '能量效率', '\\eta=\\frac{E_{\\mathrm{useful}}}{E_{\\mathrm{input}}}\\times100\\%'),
         formula('Power efficiency', '功率效率', '\\eta=\\frac{P_{\\mathrm{useful}}}{P_{\\mathrm{input}}}\\times100\\%'),
       ],
+      classroomQuestions: [
+        {
+          id: 'igcse-u1-teacher-efficiency',
+          title: text('Practice: energy efficiency', '练习：能量效率'),
+          prompt: text(
+            'A motor receives $2.4\\,\\mathrm{kJ}$ and transfers $1.8\\,\\mathrm{kJ}$ usefully. What is its efficiency?',
+            '一台电动机输入 $2.4\\,\\mathrm{kJ}$，其中 $1.8\\,\\mathrm{kJ}$ 为有用输出。效率是多少？',
+          ),
+          choices: [
+            { label: 'A', text: text('$25\\%$', '$25\\%$') },
+            { label: 'B', text: text('$75\\%$', '$75\\%$') },
+            { label: 'C', text: text('$133\\%$', '$133\\%$') },
+            { label: 'D', text: text('$4.32\\%$', '$4.32\\%$') },
+          ],
+          correctAnswer: 'B',
+          feedback: text('$\\eta=(1.8/2.4)\\times100\\%=75\\%$.', '$\\eta=(1.8/2.4)\\times100\\%=75\\%$。'),
+        },
+      ],
     },
     {
-      heading: text('5. Power', '5. 功率'),
+      heading: text('7. Power', '7. 功率'),
       paragraphs: [
         text(
           'Power is the rate of doing work or the rate of transferring energy. Two devices may transfer the same energy but the device that does so in less time has greater power.',
@@ -515,6 +1114,90 @@ const energyWorkPowerLesson: CurriculumLesson = {
       formulas: [
         formula('Power from work', '由功计算功率', 'P=\\frac{W}{t}'),
         formula('Power from energy transfer', '由能量转移计算功率', 'P=\\frac{\\Delta E}{t}'),
+      ],
+      classroomQuestions: [
+        {
+          id: 'igcse-u1-teacher-power',
+          mode: 'written',
+          title: text('Practice: same energy, different power', '练习：相同能量，不同功率'),
+          prompt: text(
+            'Two pumps each transfer $36\\,\\mathrm{kJ}$. Pump A takes $30\\,\\mathrm{s}$ and pump B takes $45\\,\\mathrm{s}$. Calculate both powers and identify the more powerful pump.',
+            '两台泵都转移 $36\\,\\mathrm{kJ}$ 能量。泵 A 用时 $30\\,\\mathrm{s}$，泵 B 用时 $45\\,\\mathrm{s}$。计算两者功率并判断哪台功率更大。',
+          ),
+          sampleAnswer: text(
+            '$P_A=36000/30=1200\\,\\mathrm{W}$ and $P_B=36000/45=800\\,\\mathrm{W}$. Pump A is more powerful because it transfers the same energy in less time.',
+            '$P_A=36000/30=1200\\,\\mathrm{W}$，$P_B=36000/45=800\\,\\mathrm{W}$。泵 A 在更短时间内转移相同能量，因此功率更大。',
+          ),
+        },
+      ],
+    },
+    {
+      heading: text('8. Decision rules and scope boundaries', '8. 判断规则与范围边界'),
+      bullets: [
+        text('Name the store before and after, then name the transfer pathway between them.', '先说明初始与最终能量储存，再说明二者之间的转移路径。'),
+        text('In any energy account, useful plus dissipated output equals total input.', '任何能量核算中，有用输出与耗散输出之和等于总输入。'),
+        text('Use vertical $\\Delta h$ for gravitational potential energy and the squared speed in kinetic energy.', '重力势能使用竖直 $\\Delta h$，动能中的速率必须平方。'),
+        text('For $W=Fd$, use the distance moved along the force direction in the required syllabus case.', '使用 $W=Fd$ 时，应采用大纲所要求情形中沿力方向移动的距离。'),
+        text('Do not confuse energy in joules with power in watts.', '不要混淆以焦耳表示的能量和以瓦特表示的功率。'),
+        text('Advanced work integrals and nuclear-reaction equations are outside this subsection.', '高级功积分和核反应方程不属于本节要求。'),
+      ],
+    },
+  ],
+  studentVersion: energyWorkPowerStudentLesson,
+};
+
+const pressureStudentLesson: CurriculumLesson = {
+  title: text('1.8 Pressure', '1.8 压强'),
+  description: text(
+    'Force per unit area and the effect of liquid depth and density.',
+    '单位面积上的力，以及液体深度和密度对压强的影响。',
+  ),
+  sections: [
+    {
+      heading: text('0. Same force, different effect', '0. 相同的力，不同的效果'),
+      paragraphs: [
+        text(
+          'A sharp blade cuts more easily than its blunt edge because the same force acts over a smaller area. A dam wall is thicker lower down because liquid pressure increases with depth.',
+          '锋利刀刃比钝边更容易切开物体，因为相同的力作用在更小面积上。水坝下部更厚，因为液体压强随深度增加。',
+        ),
+      ],
+    },
+    {
+      heading: text('1. Pressure on a surface', '1. 表面压强'),
+      paragraphs: [
+        text(
+          'Pressure is perpendicular force per unit area. For the same area, increasing force increases pressure. For the same force, increasing area decreases pressure.',
+          '压强是单位面积上的垂直作用力。面积相同时，力增大会使压强增大；力相同时，面积增大会使压强减小。',
+        ),
+      ],
+      formulas: [
+        formula('Pressure', '压强', 'p=\\frac{F}{A}'),
+        formula('Pascal', '帕斯卡', '1\\,\\mathrm{Pa}=1\\,\\mathrm{N\\,m^{-2}}'),
+      ],
+      bullets: [
+        text('Convert $\\mathrm{cm^2}$ to $\\mathrm{m^2}$ by dividing by $10^4$.', '把 $\\mathrm{cm^2}$ 换算为 $\\mathrm{m^2}$ 时，数值除以 $10^4$。'),
+        text('Sharp blades and needles increase pressure; snowshoes and wide foundations reduce pressure.', '锋利刀刃和针尖增大压强；雪鞋和宽地基减小压强。'),
+      ],
+    },
+    {
+      heading: text('2. Pressure beneath a liquid surface', '2. 液面下的压强'),
+      paragraphs: [
+        text(
+          'Liquid pressure increases with vertical depth and with liquid density. At equal depth in the same liquid, pressure is the same even if the container shapes differ.',
+          '液体压强随竖直深度和液体密度增加。同一液体的相同深度处，即使容器形状不同，压强也相同。',
+        ),
+      ],
+      formulas: [
+        formula('Liquid pressure change (Supplement)', '液体压强变化（Supplement）', '\\Delta p=\\rho g\\Delta h'),
+      ],
+      takeaway: text('$\\Delta p$ is a pressure difference; add surface pressure only when total pressure is requested.', '$\\Delta p$ 是压强差；只有题目要求总压强时才需要加上液面压强。'),
+    },
+    {
+      heading: text('3. Common errors', '3. 常见错误'),
+      bullets: [
+        text('Pressure is not force; pressure also depends on area.', '压强不是力；压强还取决于面积。'),
+        text('Use vertical depth, not distance along a sloping wall.', '使用竖直深度，而不是沿倾斜容器壁的距离。'),
+        text('Do not treat $\\Delta p=\\rho g\\Delta h$ as total pressure automatically.', '不要自动把 $\\Delta p=\\rho g\\Delta h$ 当作总压强。'),
       ],
     },
   ],
@@ -528,34 +1211,113 @@ const pressureLesson: CurriculumLesson = {
   ),
   sections: [
     {
-      heading: text('1. Pressure on a surface', '1. 表面压强'),
+      heading: text('0. Same force, different effect', '0. 相同的力，不同的效果'),
       paragraphs: [
         text(
-          'Pressure is force per unit area. For the same area, a larger perpendicular force produces greater pressure. For the same force, a smaller contact area produces greater pressure.',
-          '压强是单位面积上的力。面积相同时，垂直作用力越大，压强越大；力相同时，接触面积越小，压强越大。',
+          'A sharp knife cuts more easily than its blunt edge, snowshoes prevent a person sinking deeply into snow, and dam walls are thicker lower down. These observations show that force alone does not determine the physical effect: area, depth and fluid density matter.',
+          '锋利刀刃比钝边更容易切开物体，雪鞋能防止人深陷雪中，水坝下部也更厚。这些现象说明，物理效果不只由力决定；面积、深度和流体密度同样重要。',
         ),
       ],
-      formulas: [formula('Pressure', '压强', 'p=\\frac{F}{A}')],
     },
     {
-      heading: text('2. Pressure beneath a liquid surface', '2. 液面下的压强'),
+      heading: text('1. Pressure on a surface: definition and units', '1. 表面压强：定义与单位'),
+      paragraphs: [
+        text(
+          'Pressure is perpendicular force per unit area. For the same area, a larger force produces greater pressure. For the same force, a smaller contact area produces greater pressure.',
+          '压强是单位面积上的垂直作用力。面积相同时，力越大，压强越大；力相同时，接触面积越小，压强越大。',
+        ),
+        text(
+          'The SI unit is the pascal, where $1\\,\\mathrm{Pa}=1\\,\\mathrm{N\\,m^{-2}}$. Area must therefore be expressed in square metres when force is in newtons and pressure is required in pascals. Since area is squared, $1\\,\\mathrm{cm^2}=10^{-4}\\,\\mathrm{m^2}$.',
+          '国际单位是帕斯卡，$1\\,\\mathrm{Pa}=1\\,\\mathrm{N\\,m^{-2}}$。因此，当力用牛顿、压强用帕斯卡时，面积必须换成平方米。由于面积是长度的平方，$1\\,\\mathrm{cm^2}=10^{-4}\\,\\mathrm{m^2}$。',
+        ),
+      ],
+      formulas: [
+        formula('Pressure', '压强', 'p=\\frac{F}{A}'),
+        formula('Force', '力', 'F=pA'),
+        formula('Area', '面积', 'A=\\frac{F}{p}'),
+        formula('Pascal', '帕斯卡', '1\\,\\mathrm{Pa}=1\\,\\mathrm{N\\,m^{-2}}'),
+      ],
+      classroomQuestions: [
+        {
+          id: 'igcse-u1-teacher-pressure-area',
+          title: text('Practice: force, area and pressure', '练习：力、面积与压强'),
+          prompt: text(
+            'A block rests on a table. It is turned from a face of area $120\\,\\mathrm{cm^2}$ onto a face of area $40\\,\\mathrm{cm^2}$. Its weight is unchanged. What happens to the pressure?',
+            '一个物块放在桌面上，从面积为 $120\\,\\mathrm{cm^2}$ 的面翻到面积为 $40\\,\\mathrm{cm^2}$ 的面，重量不变。压强如何变化？',
+          ),
+          choices: [
+            { label: 'A', text: text('It becomes one third as large.', '变为原来的三分之一。') },
+            { label: 'B', text: text('It is unchanged.', '保持不变。') },
+            { label: 'C', text: text('It becomes three times as large.', '变为原来的三倍。') },
+            { label: 'D', text: text('It becomes nine times as large.', '变为原来的九倍。') },
+          ],
+          correctAnswer: 'C',
+          feedback: text('The force is unchanged and the area becomes one third, so $p=F/A$ becomes three times as large.', '力不变，面积变为三分之一，因此由 $p=F/A$ 可知压强变为三倍。'),
+        },
+      ],
+    },
+    {
+      heading: text('2. Everyday pressure design', '2. 日常压强设计'),
+      paragraphs: [
+        text(
+          'Sharp blades, needles and drawing pins use a small area to create a large pressure from a manageable force. Snowshoes, tractor tracks, wide tyres and building foundations spread a force over a larger area to reduce pressure. In every explanation, state what stays constant and what changes.',
+          '锋利刀刃、针尖和图钉利用小面积，使有限的力产生较大压强；雪鞋、履带、宽轮胎和建筑地基把力分布在较大面积上，以减小压强。解释时应明确哪个量保持不变、哪个量发生变化。',
+        ),
+      ],
+    },
+    {
+      heading: text('3. Pressure beneath a liquid surface', '3. 液面下的压强'),
       paragraphs: [
         text(
           'Liquid pressure increases with depth because a deeper point supports a taller column of liquid. At the same depth, a denser liquid produces a greater pressure increase.',
           '液体压强随深度增加，因为更深处承受更高液柱的重量。同一深度处，密度更大的液体产生更大的压强增量。',
         ),
         text(
-          'The equation gives the change in pressure between two depths in a liquid of uniform density. It does not by itself include atmospheric pressure acting on the surface.',
-          '该公式给出均匀密度液体中两个深度之间的压强变化，本身不包含液面上的大气压强。',
+          'At equal vertical depth in the same connected liquid, pressure is the same even when the container is wide, narrow or irregularly shaped. Container shape does not replace depth in the comparison.',
+          '同一连通液体中，相同竖直深度处的压强相同，即使容器宽窄或形状不同。比较时不能用容器形状代替深度。',
+        ),
+        text(
+          'The equation gives the pressure difference between two depths in a liquid of uniform density. It does not by itself include pressure acting on the surface. If total pressure is requested, the surface pressure must be added separately.',
+          '该公式给出均匀密度液体中两个深度之间的压强差，本身不包含液面所受压强。若题目要求总压强，必须另加液面压强。',
         ),
       ],
-      formulas: [formula('Liquid pressure change (Supplement)', '液体压强变化（Supplement）', '\\Delta p=\\rho g\\Delta h')],
+      formulas: [
+        formula('Liquid pressure change (Supplement)', '液体压强变化（Supplement）', '\\Delta p=\\rho g\\Delta h'),
+        formula('Total pressure when surface pressure is known', '已知液面压强时的总压强', 'p_{\\mathrm{total}}=p_{\\mathrm{surface}}+\\rho gh', 'Use only when total pressure is explicitly required.', '仅在题目明确要求总压强时使用。'),
+      ],
+      classroomQuestions: [
+        {
+          id: 'igcse-u1-teacher-liquid-pressure',
+          mode: 'written',
+          title: text('Practice: pressure difference in a liquid', '练习：液体中的压强差'),
+          prompt: text(
+            'Two points in water are separated vertically by $3.0\\,\\mathrm{m}$. Take $\\rho=1000\\,\\mathrm{kg\\,m^{-3}}$ and $g=9.8\\,\\mathrm{N\\,kg^{-1}}$. Calculate the pressure difference and state whether the result is the total pressure at the lower point.',
+            '水中两点的竖直高度差为 $3.0\\,\\mathrm{m}$。取 $\\rho=1000\\,\\mathrm{kg\\,m^{-3}}$，$g=9.8\\,\\mathrm{N\\,kg^{-1}}$。计算压强差，并说明该结果是否为较低点的总压强。',
+          ),
+          sampleAnswer: text(
+            '$\\Delta p=\\rho g\\Delta h=1000\\times9.8\\times3.0=2.94\\times10^4\\,\\mathrm{Pa}$. This is a pressure difference, not the total pressure unless the pressure at the upper point is zero gauge pressure and the question is using gauge pressure.',
+            '$\\Delta p=\\rho g\\Delta h=1000\\times9.8\\times3.0=2.94\\times10^4\\,\\mathrm{Pa}$。这是压强差，并非自动等于较低点总压强；只有在上方为零表压且题目采用表压时才能这样理解。',
+          ),
+        },
+      ],
+    },
+    {
+      heading: text('4. Decision rules and scope boundaries', '4. 判断规则与范围边界'),
+      bullets: [
+        text('Pressure is not force; always identify the contact area as well.', '压强不是力；必须同时确定接触面积。'),
+        text('Convert area units by squaring the length conversion.', '面积单位换算必须把长度换算因子平方。'),
+        text('For liquid pressure, compare vertical depth and liquid density—not container volume or shape.', '比较液体压强时看竖直深度和液体密度，而不是容器体积或形状。'),
+        text('$\\Delta p=\\rho g\\Delta h$ gives a pressure change, not automatically absolute pressure.', '$\\Delta p=\\rho g\\Delta h$ 给出压强变化，并不自动等于绝对压强。'),
+        text('Atmospheric-pressure measurement and hydraulic systems are not specified in this subsection.', '大气压测量与液压系统不属于本节大纲要求。'),
+      ],
     },
   ],
+  studentVersion: pressureStudentLesson,
 };
 
 export const igcseUnit1Lessons: CurriculumLesson[] = [
   physicalQuantitiesLesson,
+  motionLesson,
   {
     title: text('1.3 Mass and Weight', '1.3 质量与重量'),
     description: text(
@@ -592,6 +1354,24 @@ export const igcseUnit1Lessons: CurriculumLesson[] = [
           'Gravitational field strength is force per unit mass and is numerically equivalent to free-fall acceleration.',
           '重力场强是单位质量所受的力，在数值上等于自由落体加速度。',
         ),
+        classroomQuestions: [
+          {
+            id: 'igcse-u1-teacher-mass-weight-calculation',
+            title: text('Practice: weight in a gravitational field', '练习：重力场中的重量'),
+            prompt: text(
+              'A probe of mass $12\\,\\mathrm{kg}$ is on a planet where $g=4.0\\,\\mathrm{N\\,kg^{-1}}$. What is its weight?',
+              '一个质量为 $12\\,\\mathrm{kg}$ 的探测器位于 $g=4.0\\,\\mathrm{N\\,kg^{-1}}$ 的行星上。它的重量是多少？',
+            ),
+            choices: [
+              { label: 'A', text: text('$3.0\\,\\mathrm{N}$', '$3.0\\,\\mathrm{N}$') },
+              { label: 'B', text: text('$16\\,\\mathrm{N}$', '$16\\,\\mathrm{N}$') },
+              { label: 'C', text: text('$48\\,\\mathrm{N}$', '$48\\,\\mathrm{N}$') },
+              { label: 'D', text: text('$48\\,\\mathrm{kg}$', '$48\\,\\mathrm{kg}$') },
+            ],
+            correctAnswer: 'C',
+            feedback: text('$W=mg=12\\times4.0=48\\,\\mathrm{N}$.', '$W=mg=12\\times4.0=48\\,\\mathrm{N}$。'),
+          },
+        ],
       },
       {
         heading: text('2. Comparing masses and weights', '2. 比较质量与重量'),
@@ -606,7 +1386,17 @@ export const igcseUnit1Lessons: CurriculumLesson[] = [
           ),
         ],
       },
+      {
+        heading: text('3. Decision rules and common errors', '3. 判断规则与常见错误'),
+        bullets: [
+          text('Mass is measured in kilograms; weight is a force measured in newtons.', '质量以千克表示；重量是力，以牛顿表示。'),
+          text('Changing gravitational field strength changes weight but not mass.', '改变重力场强会改变重量，但不会改变质量。'),
+          text('A balance compares masses because both sides experience the same $g$; a force meter measures weight directly.', '天平两侧受到相同的 $g$，因此可比较质量；测力计直接测量重量。'),
+          text('$\\mathrm{N\\,kg^{-1}}$ and $\\mathrm{m\\,s^{-2}}$ have different meanings even though gravitational field strength and free-fall acceleration are numerically equivalent.', '$\\mathrm{N\\,kg^{-1}}$ 与 $\\mathrm{m\\,s^{-2}}$ 含义不同，尽管重力场强与自由落体加速度在数值上相等。'),
+        ],
+      },
     ],
+    studentVersion: massAndWeightStudentLesson,
   },
   densityLesson,
   {
@@ -772,8 +1562,8 @@ export const igcseUnit1Lessons: CurriculumLesson[] = [
         heading: text('0. What remains predictable during a collision', '0. 碰撞过程中什么量仍可预测'),
         paragraphs: [
           text(
-            'During a collision, the contact forces can be large and the details can be complicated. If external forces are negligible, the total momentum of the system remains constant, allowing the final motion to be predicted.',
-            '碰撞过程中接触力可能很大，细节也可能很复杂。若外力可忽略，系统总动量保持不变，因此仍可预测碰撞后的运动。',
+            'During a collision, the contact forces can be large and the details can be complicated. If the external impulse on the chosen system is negligible, its total momentum remains constant, allowing the final motion to be predicted.',
+            '碰撞过程中接触力可能很大，细节也可能很复杂。若所选系统受到的外冲量可忽略，系统总动量保持不变，因此仍可预测碰撞后的运动。',
           ),
         ],
       },
@@ -783,6 +1573,10 @@ export const igcseUnit1Lessons: CurriculumLesson[] = [
           text(
             'Momentum is the product of mass and velocity and therefore has direction. For an isolated system, vector momentum before an interaction equals vector momentum after it. This applies to collisions, explosions, and recoil.',
             '动量是质量与速度的乘积，因此具有方向。对于孤立系统，相互作用前后的矢量总动量相等，适用于碰撞、爆炸和反冲。',
+          ),
+          text(
+            'For every one-dimensional problem, choose a positive direction before substituting. Velocities and momenta in the opposite direction are negative. Conservation applies to the total momentum of the complete chosen system, not to each object separately.',
+            '处理一维问题时，代入前必须先规定正方向。反向速度和动量取负值。守恒的是完整所选系统的总动量，而不是每个物体各自的动量。',
           ),
           text(
             'Impulse is the change in momentum. Increasing the time over which a given momentum change occurs reduces the average force.',
@@ -828,6 +1622,21 @@ export const igcseUnit1Lessons: CurriculumLesson[] = [
         formulas: [
           formula('Resultant force', '合力', '\\vec F_{\\mathrm{resultant}}=\\frac{\\Delta\\vec p}{\\Delta t}'),
         ],
+        classroomQuestions: [
+          {
+            id: 'igcse-u1-teacher-impulse-force',
+            mode: 'written',
+            title: text('Practice: stopping time and force', '练习：停止时间与平均力'),
+            prompt: text(
+              'A $0.20\\,\\mathrm{kg}$ ball moving at $15\\,\\mathrm{m\\,s^{-1}}$ is brought to rest. Calculate the magnitude of the average resultant force if it stops in (i) $0.010\\,\\mathrm{s}$ and (ii) $0.050\\,\\mathrm{s}$. Explain the comparison.',
+              '一个质量为 $0.20\\,\\mathrm{kg}$、速度为 $15\\,\\mathrm{m\\,s^{-1}}$ 的球停止运动。若停止时间分别为 (i) $0.010\\,\\mathrm{s}$ 和 (ii) $0.050\\,\\mathrm{s}$，计算平均合力大小并解释差异。',
+            ),
+            sampleAnswer: text(
+              '$|\\Delta p|=0.20\\times15=3.0\\,\\mathrm{kg\\,m\\,s^{-1}}$. Thus (i) $F=3.0/0.010=300\\,\\mathrm{N}$ and (ii) $F=3.0/0.050=60\\,\\mathrm{N}$. The same momentum change over five times the time gives one fifth of the average force.',
+              '$|\\Delta p|=0.20\\times15=3.0\\,\\mathrm{kg\\,m\\,s^{-1}}$。因此 (i) $F=3.0/0.010=300\\,\\mathrm{N}$；(ii) $F=3.0/0.050=60\\,\\mathrm{N}$。相同动量变化用五倍时间完成，平均力变为五分之一。',
+            ),
+          },
+        ],
       },
       {
         heading: text('3. Common errors', '3. 常见错误'),
@@ -835,9 +1644,12 @@ export const igcseUnit1Lessons: CurriculumLesson[] = [
           text('Momentum is a vector; opposite directions require opposite signs.', '动量是矢量；相反方向需要使用相反符号。'),
           text('Momentum conservation applies to the chosen system when external impulse is negligible.', '只有当所选系统受到的外冲量可忽略时，才能使用动量守恒。'),
           text('Kinetic energy does not have to be conserved in an inelastic collision.', '非弹性碰撞中动能不一定守恒。'),
+          text('In $F=\\Delta p/\\Delta t$, $F$ is the resultant force and is usually an average over the stated interval.', '在 $F=\\Delta p/\\Delta t$ 中，$F$ 是合力，通常表示所给时间间隔内的平均值。'),
+          text('The required syllabus problems are simple and one-dimensional; coefficient of restitution is outside scope.', '大纲要求简单的一维问题，恢复系数不在范围内。'),
         ],
       },
     ],
+    studentVersion: momentumStudentLesson,
   },
   energyWorkPowerLesson,
   pressureLesson,
