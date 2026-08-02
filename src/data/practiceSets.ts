@@ -3,6 +3,12 @@ import {
   apcMechanicsRotationTest16Meta,
   apcMechanicsRotationTest16Steps,
 } from './apcMechanicsRotationTest16';
+import {
+  apcMechanicsMomentumTest15Meta,
+  apcMechanicsMomentumTest15Steps,
+  apcMechanicsRotationTest5Meta,
+  apcMechanicsRotationTest5Steps,
+} from './apcMechanicsHomeworkBanks';
 import { dynamicsMultipleChoiceMeta, dynamicsMultipleChoiceSteps } from './dynamicsMultipleChoice';
 import { practiceSetMeta as frq2025Meta, practiceSteps as frq2025Steps } from './frq2025Mechanics';
 import {
@@ -122,6 +128,17 @@ export const practiceSets: PracticeSet[] = [
     steps: linearMomentumLabDesignSteps,
   },
   {
+    id: 'apc-mechanics-momentum-test15',
+    category: 'mechanics',
+    label: 'Momentum & COM · Test 15',
+    system: 'ap-c-mech',
+    practiceKind: 'mcq',
+    chapter: 4,
+    chapterTitle: 'Linear Momentum and Center of Mass',
+    ...apcMechanicsMomentumTest15Meta,
+    steps: apcMechanicsMomentumTest15Steps,
+  },
+  {
     id: 'apc-mechanics-rotation-test16',
     category: 'mechanics',
     label: 'Rotation I · Test 16',
@@ -131,6 +148,17 @@ export const practiceSets: PracticeSet[] = [
     chapterTitle: 'Torque and Rotational Dynamics',
     ...apcMechanicsRotationTest16Meta,
     steps: apcMechanicsRotationTest16Steps,
+  },
+  {
+    id: 'apc-mechanics-rotation-test5',
+    category: 'mechanics',
+    label: 'Rotation · Test 5',
+    system: 'ap-c-mech',
+    practiceKind: 'mcq',
+    chapter: 5,
+    chapterTitle: 'Torque and Rotational Dynamics',
+    ...apcMechanicsRotationTest5Meta,
+    steps: apcMechanicsRotationTest5Steps,
   },
   {
     id: 'physics-bowl-em-question-bank',

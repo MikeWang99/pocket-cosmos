@@ -972,9 +972,13 @@ export const CurriculumSection: React.FC = () => {
                                           {section.videos?.map((video) => (
                                             <LessonVideo key={video.sourceUrl} video={video} language={language} />
                                           ))}
-                                          {section.images?.map((image) => (
-                                            <LessonImage key={image.src} image={image} language={language} />
-                                          ))}
+                                          {!!section.images?.length && (
+                                            <div className={section.images.length > 1 ? 'grid gap-3 sm:grid-cols-2' : ''}>
+                                              {section.images.map((image) => (
+                                                <LessonImage key={image.src} image={image} language={language} />
+                                              ))}
+                                            </div>
+                                          )}
                                           {section.paragraphs?.map((paragraph) => (
                                             <p key={paragraph.en} className="text-sm leading-7 text-slate-600">
                                               <InlineMathText>{paragraph[language]}</InlineMathText>
