@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-02T03:51:12.076Z",
+  "generatedAt": "2026-08-02T04:11:38.875Z",
   "bankId": "crackap-apc-mechanics-test16",
   "title": "Rotation I: Kinematics, Force, Work, and Energy",
   "sourcePage": "https://www.crackap.com/ap/physics-c-mechanics/test16.html",
@@ -151,8 +151,8 @@
       "file": "q03-stem.svg",
       "downloadUrl": "/apc-mechanics-test16/generated/q03-stem.svg",
       "width": 800,
-      "height": 230,
-      "sha256": "dae1ce0f90bc238334f7d37a55af89c0db47aa84c30069f2d63de12a5e97160c"
+      "height": 610,
+      "sha256": "ff68374f0fd38fc09fa8a39af1e14534a2f7be57e1d5f68e702d5c29257a5b08"
     },
     {
       "id": "q03-choice-a",
@@ -216,8 +216,8 @@
       "file": "q04-stem.svg",
       "downloadUrl": "/apc-mechanics-test16/generated/q04-stem.svg",
       "width": 800,
-      "height": 210,
-      "sha256": "fe0b15b015f52812bbacc7615211c15e2e7a9bf7115bd3ecc5d9dec41c745c00"
+      "height": 610,
+      "sha256": "c44272b578f5437a150e1b6afa1d55c1be8ff3ab1f2a7a01d5d85bede4e26d1e"
     },
     {
       "id": "q04-choice-a",

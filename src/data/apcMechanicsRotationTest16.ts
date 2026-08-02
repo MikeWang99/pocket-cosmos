@@ -44,6 +44,7 @@ export const apcMechanicsRotationTest16Steps: PracticeStep[] = bank.questions.ma
   }));
   const sourceNames = new Set<string>([
     ...('stemSourceAssets' in question ? question.stemSourceAssets ?? [] : []),
+    ...('referenceGraphAssets' in question ? question.referenceGraphAssets ?? [] : []),
     ...question.choices.flatMap((choice) => ('sourceAssets' in choice ? choice.sourceAssets ?? [] : [])),
   ]);
   const sourceAssets: PracticeAsset[] = [...sourceNames].map((name) => ({
@@ -70,7 +71,6 @@ export const apcMechanicsRotationTest16Steps: PracticeStep[] = bank.questions.ma
     image: {
       src: stemSrc,
       alt: question.stemText,
-      caption: `Source question ${question.sourceQuestionId} · stem asset`,
       role: 'question',
       width: 800,
       height: question.stemHeight,
@@ -79,19 +79,20 @@ export const apcMechanicsRotationTest16Steps: PracticeStep[] = bank.questions.ma
     },
     assets: [stemAsset, ...choiceAssets, ...sourceAssets],
     maxScore: 1,
-    source: `${bank.sourceLabel} · Q${question.number}`,
+    source: `CrackAP · Test 16 · Q${question.number}`,
     answerNudge: question.trainingFocus,
     criteria: [],
+    choiceLayout: question.number === 2 ? 'grid' : 'stacked',
     choices: question.choices.map((choice, index) => ({
       label: choice.label,
       text: choice.text,
-      image: {
+      image: question.number === 2 ? {
         src: choiceAssets[index].src,
         alt: choiceAssets[index].alt,
         width: 1200,
         height: question.choiceHeight,
         downloadName: choiceAssets[index].downloadName,
-      },
+      } : undefined,
     })),
     correctAnswer: question.answer,
     solution: question.solution,
