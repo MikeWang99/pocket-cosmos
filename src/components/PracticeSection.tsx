@@ -314,11 +314,12 @@ const QuestionAssetDownloads: React.FC<{ step: PracticeStep; language: 'en' | 'z
   if (!step.assets?.length) return null;
 
   return (
-    <details className="mt-3 rounded-lg border border-white/10 bg-white/[0.025] p-3">
-      <summary className="cursor-pointer text-xs font-semibold text-slate-400">
-        {language === 'zh' ? `题目资源索引 · ${step.assets.length} 个文件` : `Question asset index · ${step.assets.length} files`}
+    <details className="mt-1">
+      <summary className="inline-flex min-h-9 w-fit cursor-pointer list-none items-center gap-2 rounded-full border border-white/10 bg-white/[0.025] px-3 py-1.5 text-[11px] font-semibold text-slate-400 transition-colors hover:border-nebula/40 hover:text-nebula">
+        <Download className="h-3.5 w-3.5" />
+        {language === 'zh' ? `下载题目素材 (${step.assets.length})` : `Download assets (${step.assets.length})`}
       </summary>
-      <div className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
+      <div className="mt-2 grid gap-2 rounded-lg border border-white/10 bg-black/10 p-3 sm:grid-cols-2 xl:grid-cols-3">
         {step.assets.map((asset) => (
           <a
             key={asset.id}
@@ -1095,7 +1096,7 @@ export const PracticeSection: React.FC = () => {
                     <h2 className="text-balance font-serif text-2xl text-white md:text-3xl">{activeStep.title}</h2>
                     {!!activeStep.tags?.length && (
                       <div className="mt-3 flex flex-wrap gap-2">
-                        {activeStep.tags.map((tag) => (
+                        {activeStep.tags.slice(0, 4).map((tag) => (
                           <span
                             key={tag}
                             className="rounded-full border border-nebula/20 bg-nebula/5 px-2.5 py-1 text-[10px] font-semibold text-nebula"
@@ -1149,7 +1150,7 @@ export const PracticeSection: React.FC = () => {
               <div className="p-4 sm:p-6 md:p-8">
                 {isActiveMultipleChoice ? (
                   <div>
-                    <div className="grid gap-3" role="group" aria-label={t.practice.chooseAnswer}>
+                    <div className={activeStep.choiceLayout === 'grid' ? 'grid gap-3 md:grid-cols-2' : 'grid gap-2.5'} role="group" aria-label={t.practice.chooseAnswer}>
                       {activeStep.choices?.map((choice) => {
                         const selectedLabels = currentAnswer.split(',').filter(Boolean);
                         const correctLabels = (activeStep.correctAnswer ?? '').split(',').filter(Boolean);
@@ -1171,7 +1172,7 @@ export const PracticeSection: React.FC = () => {
                               updateAnswer(next.sort().join(','));
                             }}
                             aria-pressed={isSelected}
-                            className={`grid grid-cols-[34px_minmax(0,1fr)] gap-3 rounded-lg border p-3 text-left transition-colors sm:grid-cols-[40px_minmax(0,1fr)] sm:p-4 ${
+                            className={`grid grid-cols-[34px_minmax(0,1fr)] items-center gap-3 rounded-lg border text-left transition-colors sm:grid-cols-[40px_minmax(0,1fr)] ${choice.image ? 'p-3 sm:p-4' : 'min-h-14 px-3 py-2.5 sm:px-4'} ${
                               isCorrectChoice
                                 ? 'border-emerald-500/50 bg-emerald-500/10'
                                 : isWrongChoice

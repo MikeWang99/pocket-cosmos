@@ -40,3 +40,9 @@ The user explicitly requested this single-source import and direct publication. 
 - `/apc-mechanics-test16/asset-index.json`
 
 The asset index includes a SHA-256 checksum and direct download URL for every generated and original image. All five choices belonging to the same question use an identical canvas size, with the source content centered and scaled using `object-fit: contain`.
+
+## Display policy
+
+- Questions 3 and 4 reproduce the full five-graph reference set inside each stem so that either question can be answered independently.
+- Graphical choices are rendered as images; text-only and formula-only choices use compact native controls while their separate downloadable image assets remain indexed.
+- Asset downloads are available through a compact secondary control and do not interrupt the primary answering flow.

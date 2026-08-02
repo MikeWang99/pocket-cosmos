@@ -64,8 +64,9 @@ const stemSvgDocument = async (question) => {
   const height = question.stemHeight;
   const lines = wrapText(question.stemText);
   const diagramName = (question.stemSourceAssets ?? []).find((name) => name === 'image01254.jpeg');
+  const referenceGraphAssets = question.referenceGraphAssets ?? [];
   const lineHeight = 42;
-  const hasDiagram = Boolean(diagramName);
+  const hasDiagram = Boolean(diagramName) || referenceGraphAssets.length > 0;
   const textBlockHeight = lines.length * lineHeight;
   const textTop = hasDiagram ? 45 : Math.max(48, (height - textBlockHeight) / 2 + 25);
   const text = lines.map((line, index) =>
@@ -75,6 +76,24 @@ const stemSvgDocument = async (question) => {
   if (diagramName) {
     const url = await assetDataUrl(diagramName);
     diagram = `<image href="${url}" x="114" y="${Math.max(textTop + textBlockHeight + 14, 245)}" width="572" height="235" preserveAspectRatio="xMidYMid meet" />`;
+  }
+  if (referenceGraphAssets.length) {
+    const placements = [
+      { x: 24, y: 222 },
+      { x: 290, y: 222 },
+      { x: 556, y: 222 },
+      { x: 156, y: 420 },
+      { x: 422, y: 420 },
+    ];
+    const graphImages = [];
+    for (const [index, name] of referenceGraphAssets.entries()) {
+      const url = await assetDataUrl(name);
+      const { x, y } = placements[index];
+      const label = String.fromCharCode(65 + index);
+      graphImages.push(`<text x="${x + 110}" y="${y - 12}" text-anchor="middle" fill="#334155" font-family="Arial, sans-serif" font-size="22" font-weight="700">${label}</text>`);
+      graphImages.push(`<image href="${url}" x="${x}" y="${y}" width="220" height="155" preserveAspectRatio="xMidYMid meet" />`);
+    }
+    diagram = graphImages.join('\n  ');
   }
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeXml(question.stemText)}">
@@ -132,6 +151,7 @@ for (const question of bank.questions) {
   });
 
   for (const name of question.stemSourceAssets ?? []) sourceNames.add(name);
+  for (const name of question.referenceGraphAssets ?? []) sourceNames.add(name);
 
   for (const choice of question.choices) {
     const choiceName = `q${q}-choice-${choice.label.toLowerCase()}.svg`;

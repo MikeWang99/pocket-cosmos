@@ -38,6 +38,7 @@ export interface PracticeStep {
     responsive?: boolean;
   };
   assets?: PracticeAsset[];
+  choiceLayout?: 'stacked' | 'grid';
   maxScore: number;
   source: string;
   answerNudge: string;
