@@ -147,8 +147,9 @@ const QuestionCard: React.FC<{
   const multipleChoice = isMultipleChoice(step);
   const selected = answer.split(',').filter(Boolean);
   const correct = (step.correctAnswer ?? '').split(',').filter(Boolean);
-  const hideDuplicatePrompt =
-    step.image?.role === 'question' && step.prompt.startsWith('Select the correct option');
+  // A `question` image is the complete source question, not a supporting diagram.
+  // Keep OCR in the data for search/indexing, but never render it beside the image.
+  const hideDuplicatePrompt = step.image?.role === 'question';
 
   return (
     <motion.div
