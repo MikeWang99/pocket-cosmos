@@ -9,10 +9,12 @@ import {
   ClipboardPlus,
   Eye,
   FileEdit,
+  Pencil,
   Plus,
   Rocket,
   Sparkles,
   Trash2,
+  Undo2,
   UsersRound,
 } from 'lucide-react';
 import { practiceSets } from '../data/practiceSets';
@@ -92,6 +94,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
     demoMode,
     currentStudentId,
     createAssignment,
+    updateAssignment,
     updateAssignmentStatus,
     resetDemo,
   } = useHomeworkData();
@@ -113,12 +116,49 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
   const [sourceType, setSourceType] = useState<'manual' | 'ai'>('manual');
   const [formMessage, setFormMessage] = useState<string | null>(null);
   const [savingStatus, setSavingStatus] = useState<'draft' | 'published' | null>(null);
+  const [editingAssignmentId, setEditingAssignmentId] = useState<string | null>(null);
 
   const selectedAssignment =
     assignments.find((assignment) => assignment.id === selectedAssignmentId) ??
     assignments.find((assignment) => assignment.status === 'published') ??
     assignments[0] ??
     null;
+
+  const resetEditor = () => {
+    setTitle('');
+    setDescription('');
+    setDueAt('');
+    setDraftItems([]);
+    setQuestionNumbers('');
+    setAiInstruction('');
+    setSourceType('manual');
+    setAssignedToAll(false);
+    setStudentIds(demoMode ? ['demo-student-eden'] : []);
+    setEditingAssignmentId(null);
+    setFormMessage(null);
+  };
+
+  const startNewAssignment = () => {
+    resetEditor();
+    setView('create');
+  };
+
+  const startEditingAssignment = (assignment: HomeworkAssignment) => {
+    if (assignment.status !== 'draft') return;
+    setEditingAssignmentId(assignment.id);
+    setTitle(assignment.title);
+    setDescription(assignment.description);
+    setDueAt(assignment.dueAt ? new Date(assignment.dueAt).toISOString().slice(0, 16) : '');
+    setDraftItems(assignment.items.map((item) => ({ practiceSetId: item.practiceSetId, questionId: item.questionId })));
+    setSelectedSetId(assignment.items[0]?.practiceSetId ?? 'igcse-cie-topic-1-2');
+    setAssignedToAll(assignment.assignedToAll);
+    setStudentIds(assignment.studentIds);
+    setAiInstruction(assignment.aiInstruction ?? '');
+    setSourceType(assignment.sourceType);
+    setQuestionNumbers('');
+    setFormMessage(language === 'zh' ? '正在编辑已保存的线上草稿。' : 'Editing the saved online draft.');
+    setView('create');
+  };
 
   const addQuestionNumbers = () => {
     const parsed = questionsFromNumbers(selectedSetId, questionNumbers);
@@ -200,20 +240,15 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
         aiInstruction: sourceType === 'ai' ? aiInstruction : undefined,
         items: draftItems,
       };
-      const result = await createAssignment(input);
+      const result = editingAssignmentId
+        ? await updateAssignment(editingAssignmentId, input)
+        : await createAssignment(input);
       if (result.error) {
         setFormMessage(result.error);
         return;
       }
       setFormMessage(language === 'zh' ? (status === 'published' ? '作业已发布。' : '草稿已保存。') : status === 'published' ? 'Homework published.' : 'Draft saved.');
-      setTitle('');
-      setDescription('');
-      setDueAt('');
-      setDraftItems([]);
-      setQuestionNumbers('');
-      setAiInstruction('');
-      setSourceType('manual');
-      setStudentIds(demoMode ? ['demo-student-eden'] : []);
+      resetEditor();
       setView('overview');
       if (result.assignment) setSelectedAssignmentId(result.assignment.id);
     } catch {
@@ -377,7 +412,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
           </button>
           <button
             type="button"
-            onClick={() => setView('create')}
+            onClick={startNewAssignment}
             className={`rounded-full border px-4 py-2 text-xs font-semibold ${view === 'create' ? 'border-nebula/60 bg-nebula/15 text-ink' : 'border-line text-ink-soft'}`}
           >
             <Plus className="mr-1.5 inline h-3.5 w-3.5" />
@@ -451,11 +486,31 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                       {selectedAssignment.status === 'draft' && (
                         <button
                           type="button"
+                          onClick={() => startEditingAssignment(selectedAssignment)}
+                          className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-xs font-semibold text-ink-soft hover:border-line-strong hover:text-ink"
+                        >
+                          <Pencil className="h-3.5 w-3.5" />
+                          {language === 'zh' ? '编辑草稿' : 'Edit draft'}
+                        </button>
+                      )}
+                      {selectedAssignment.status === 'draft' && (
+                        <button
+                          type="button"
                           onClick={() => void updateAssignmentStatus(selectedAssignment.id, 'published')}
                           className="inline-flex items-center gap-2 rounded-full bg-nebula px-4 py-2 text-xs font-bold text-on-accent"
                         >
                           <Rocket className="h-3.5 w-3.5" />
                           {language === 'zh' ? '发布' : 'Publish'}
+                        </button>
+                      )}
+                      {selectedAssignment.status === 'published' && (
+                        <button
+                          type="button"
+                          onClick={() => void updateAssignmentStatus(selectedAssignment.id, 'draft')}
+                          className="inline-flex items-center gap-2 rounded-full border border-amber-500/35 bg-amber-500/10 px-4 py-2 text-xs font-semibold text-amber-800"
+                        >
+                          <Undo2 className="h-3.5 w-3.5" />
+                          {language === 'zh' ? '撤回' : 'Withdraw'}
                         </button>
                       )}
                       {selectedAssignment.status !== 'archived' && (
@@ -669,7 +724,11 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
           <div className="glass-panel rounded-xl p-5 sm:p-6">
             <div className="mb-5 flex items-center gap-2">
               <FileEdit className="h-4 w-4 text-nebula" />
-              <h3 className="font-serif text-xl text-ink">{language === 'zh' ? '作业信息与题目' : 'Assignment details'}</h3>
+              <h3 className="font-serif text-xl text-ink">
+                {editingAssignmentId
+                  ? language === 'zh' ? '编辑线上草稿' : 'Edit online draft'
+                  : language === 'zh' ? '作业信息与题目' : 'Assignment details'}
+              </h3>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="sm:col-span-2">
@@ -806,7 +865,9 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                   <FileEdit className="h-4 w-4" />
                   {savingStatus === 'draft'
                     ? language === 'zh' ? '正在保存…' : 'Saving…'
-                    : language === 'zh' ? '保存草稿' : 'Save draft'}
+                    : editingAssignmentId
+                      ? language === 'zh' ? '保存修改' : 'Save changes'
+                      : language === 'zh' ? '保存草稿' : 'Save draft'}
                 </button>
                 <button type="button" disabled={savingStatus !== null} onClick={() => void submit('published')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-nebula text-xs font-bold text-on-accent disabled:opacity-40">
                   <Rocket className="h-4 w-4" />

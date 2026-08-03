@@ -13,6 +13,7 @@ import {
   writeStored,
 } from '../homework/storage';
 import type {
+  AssignmentStatus,
   CreateHomeworkInput,
   HomeworkAssignment,
   HomeworkAttempt,
@@ -334,15 +335,155 @@ export const useHomeworkData = () => {
     [assignments, demoMode, isAdmin, refresh, supabase, user],
   );
 
+  const updateAssignment = useCallback(
+    async (assignmentId: string, input: CreateHomeworkInput) => {
+      const existing = assignments.find((assignment) => assignment.id === assignmentId);
+      if (!existing || existing.status !== 'draft') {
+        return { assignment: null, error: 'Only draft assignments can be edited.' };
+      }
+
+      if (demoMode) {
+        const timestamp = new Date().toISOString();
+        const updated: HomeworkAssignment = {
+          ...existing,
+          title: input.title,
+          description: input.description,
+          status: input.status,
+          sourceType: input.sourceType,
+          dueAt: input.dueAt,
+          publishedAt: input.status === 'published' ? timestamp : null,
+          assignedToAll: input.assignedToAll,
+          aiInstruction: input.aiInstruction ?? null,
+          updatedAt: timestamp,
+          studentIds: input.assignedToAll ? [] : input.studentIds,
+          items: input.items.map((item, position) => {
+            const set = findPracticeSet(item.practiceSetId);
+            const step = set?.steps.find((candidate) => candidate.id === item.questionId);
+            return {
+              id: `${assignmentId}-item-${position + 1}`,
+              assignmentId,
+              position,
+              practiceSetId: item.practiceSetId,
+              questionId: item.questionId,
+              practiceSetTitle: set?.title,
+              questionTitle: step?.title,
+            };
+          }),
+        };
+        const next = assignments.map((assignment) => assignment.id === assignmentId ? updated : assignment);
+        setAssignments(next);
+        persistDemoAssignments(next);
+        return { assignment: updated, error: null };
+      }
+
+      if (!supabase || !user || !isAdmin) {
+        return { assignment: null, error: 'Administrator access is required.' };
+      }
+      const validStudentIds = input.assignedToAll
+        ? []
+        : Array.from(new Set(input.studentIds.filter(isSupabaseUuid)));
+      if (!input.assignedToAll && validStudentIds.length === 0) {
+        return { assignment: null, error: 'Select at least one valid student.' };
+      }
+
+      const itemRows = input.items.map((item, position) => {
+        const set = findPracticeSet(item.practiceSetId);
+        const step = set?.steps.find((candidate) => candidate.id === item.questionId);
+        return {
+          assignment_id: assignmentId,
+          position,
+          practice_set_id: item.practiceSetId,
+          question_id: item.questionId,
+          practice_set_title: set?.title ?? item.practiceSetId,
+          question_title: step?.title ?? item.questionId,
+        };
+      });
+
+      const { error: deleteItemsError } = await supabase.from('assignment_items').delete().eq('assignment_id', assignmentId);
+      if (deleteItemsError) return { assignment: null, error: deleteItemsError.message };
+      const { error: insertItemsError } = await supabase.from('assignment_items').insert(itemRows);
+      if (insertItemsError) {
+        const restoreRows = existing.items.map((item, position) => ({
+          assignment_id: assignmentId,
+          position,
+          practice_set_id: item.practiceSetId,
+          question_id: item.questionId,
+          practice_set_title: item.practiceSetTitle ?? item.practiceSetId,
+          question_title: item.questionTitle ?? item.questionId,
+        }));
+        if (restoreRows.length) await supabase.from('assignment_items').insert(restoreRows);
+        return { assignment: null, error: insertItemsError.message };
+      }
+
+      const { error: deleteStudentsError } = await supabase.from('assignment_students').delete().eq('assignment_id', assignmentId);
+      if (deleteStudentsError) return { assignment: null, error: deleteStudentsError.message };
+      if (!input.assignedToAll) {
+        const { error: insertStudentsError } = await supabase.from('assignment_students').insert(
+          validStudentIds.map((studentId) => ({ assignment_id: assignmentId, student_id: studentId })),
+        );
+        if (insertStudentsError) return { assignment: null, error: insertStudentsError.message };
+      }
+
+      // Keep the assignment in draft while its questions and audience are replaced.
+      // Publishing is the final write so students can never see a partially updated assignment.
+      const { error: metadataError } = await supabase
+        .from('assignments')
+        .update({
+          title: input.title,
+          description: input.description,
+          status: input.status,
+          source_type: input.sourceType,
+          due_at: input.dueAt,
+          published_at: input.status === 'published' ? new Date().toISOString() : null,
+          assigned_to_all: input.assignedToAll,
+          ai_instruction: input.aiInstruction ?? null,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', assignmentId)
+        .eq('status', 'draft');
+      if (metadataError) return { assignment: null, error: metadataError.message };
+
+      await refresh();
+      const updated: HomeworkAssignment = {
+        ...existing,
+        title: input.title,
+        description: input.description,
+        status: input.status,
+        sourceType: input.sourceType,
+        dueAt: input.dueAt,
+        publishedAt: input.status === 'published' ? new Date().toISOString() : null,
+        assignedToAll: input.assignedToAll,
+        aiInstruction: input.aiInstruction ?? null,
+        studentIds: validStudentIds,
+        items: itemRows.map((item, position) => ({
+          id: `${assignmentId}-item-${position + 1}`,
+          assignmentId,
+          position,
+          practiceSetId: item.practice_set_id,
+          questionId: item.question_id,
+          practiceSetTitle: item.practice_set_title,
+          questionTitle: item.question_title,
+        })),
+        updatedAt: new Date().toISOString(),
+      };
+      return { assignment: updated, error: null };
+    },
+    [assignments, demoMode, isAdmin, refresh, supabase, user],
+  );
+
   const updateAssignmentStatus = useCallback(
-    async (assignmentId: string, status: 'published' | 'archived') => {
+    async (assignmentId: string, status: AssignmentStatus) => {
       if (demoMode) {
         const next = assignments.map((assignment) =>
           assignment.id === assignmentId
             ? {
                 ...assignment,
                 status,
-                publishedAt: status === 'published' ? assignment.publishedAt ?? new Date().toISOString() : assignment.publishedAt,
+                publishedAt: status === 'published'
+                  ? assignment.publishedAt ?? new Date().toISOString()
+                  : status === 'draft'
+                    ? null
+                    : assignment.publishedAt,
                 updatedAt: new Date().toISOString(),
               }
             : assignment,
@@ -356,7 +497,7 @@ export const useHomeworkData = () => {
         .from('assignments')
         .update({
           status,
-          published_at: status === 'published' ? new Date().toISOString() : undefined,
+          published_at: status === 'published' ? new Date().toISOString() : status === 'draft' ? null : undefined,
           updated_at: new Date().toISOString(),
         })
         .eq('id', assignmentId);
@@ -468,6 +609,7 @@ export const useHomeworkData = () => {
       demoMode,
       currentStudentId,
       createAssignment,
+      updateAssignment,
       updateAssignmentStatus,
       saveAttempt,
       refresh,
@@ -482,6 +624,7 @@ export const useHomeworkData = () => {
       demoMode,
       currentStudentId,
       createAssignment,
+      updateAssignment,
       updateAssignmentStatus,
       saveAttempt,
       refresh,
