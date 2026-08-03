@@ -423,14 +423,14 @@ export const PracticeSection: React.FC = () => {
 
   const activeStep = practiceSteps[activeIndex] ?? practiceSteps[0];
   const isActiveMultipleChoice = activeStep ? isMultipleChoiceStep(activeStep) : false;
-  const shouldHideImageDuplicatePrompt =
+  const hasCompleteQuestionImage = activeStep?.image?.role === 'question';
+  const shouldHideAnswerWorkspace =
     activeStep?.image?.role === 'question' &&
     activeSet.system === 'igcse' &&
     (activePracticeKind === 'structured' || activePracticeKind === 'paper5');
-  const shouldHideAnswerWorkspace = shouldHideImageDuplicatePrompt;
   const shouldShowPrompt =
     activeStep &&
-    !shouldHideImageDuplicatePrompt &&
+    !hasCompleteQuestionImage &&
     !activeStep.prompt.startsWith('Select the correct option');
   const currentAnswer = activeStep ? (answers[activeStep.id] ?? '') : '';
   const currentResult = activeStep ? results[activeStep.id] : undefined;
@@ -1122,7 +1122,7 @@ export const PracticeSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Hide duplicated OCR prompt when the question image already contains the stem. */}
+                {/* Full question images contain the source stem; OCR is retained only for indexing. */}
                 {shouldShowPrompt && (
                 <div className="mt-6">
                   <div className="rounded-lg border border-line bg-surface-tint p-4 sm:p-5 md:p-6">

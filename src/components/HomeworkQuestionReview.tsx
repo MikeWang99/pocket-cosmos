@@ -63,8 +63,9 @@ export const HomeworkQuestionReview: React.FC<HomeworkQuestionReviewProps> = ({
   const selectedAnswers = new Set((attempt?.answer ?? '').split(',').filter(Boolean));
   const correctAnswers = new Set((step.correctAnswer ?? '').split(',').filter(Boolean));
   const multipleChoice = Boolean(step.choices?.length);
-  const hideDuplicatePrompt =
-    step.image?.role === 'question' && step.prompt.startsWith('Select the correct option');
+  // Full question images already contain the stem and labels. OCR remains useful
+  // for indexing, but rendering it here duplicates the question and exposes noise.
+  const hideDuplicatePrompt = step.image?.role === 'question';
   const feedback = attempt
     ? [
         ...attempt.result.misses.map((miss) => ({
@@ -149,10 +150,12 @@ export const HomeworkQuestionReview: React.FC<HomeworkQuestionReviewProps> = ({
 
           {step.image && (
             <figure className="practice-media practice-media--question mt-4">
-              <div className="mb-2 flex items-center gap-2 text-[10px] uppercase tracking-widest text-slate-500">
-                <ImageIcon className="h-3.5 w-3.5" />
-                {language === 'zh' ? '题目图片' : 'Question image'}
-              </div>
+              {step.image.role !== 'question' && (
+                <div className="mb-2 flex items-center gap-2 text-[10px] uppercase tracking-widest text-slate-500">
+                  <ImageIcon className="h-3.5 w-3.5" />
+                  {language === 'zh' ? '题目图片' : 'Question image'}
+                </div>
+              )}
               <div className="practice-question-image-scroll">
                 <img
                   src={step.image.src}
