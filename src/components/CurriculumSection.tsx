@@ -782,9 +782,6 @@ export const CurriculumSection: React.FC = () => {
             >
               <span className="block text-sm font-semibold leading-5">{system.label[language]}</span>
               <span className="mt-2 block text-xs leading-5 opacity-70">{system.description[language]}</span>
-              <span className="mt-3 inline-flex rounded-full border border-nebula/20 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-nebula">
-                {system.status[language]}
-              </span>
             </button>
           );
         })}
@@ -792,8 +789,7 @@ export const CurriculumSection: React.FC = () => {
 
       {!course ? (
         <div className="rounded-lg border border-slate-200 bg-surface p-5 sm:p-6">
-          <p className="text-xs font-semibold uppercase tracking-widest text-nebula">{selectedSystem.status[language]}</p>
-          <h3 className="mt-3 text-xl font-semibold">{selectedSystem.label[language]}</h3>
+          <h3 className="text-xl font-semibold">{selectedSystem.label[language]}</h3>
           <p className="mt-2 text-sm leading-6 text-slate-500">{selectedSystem.sourceNote[language]}</p>
         </div>
       ) : (
