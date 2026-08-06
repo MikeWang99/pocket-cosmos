@@ -56,8 +56,20 @@ const toPracticeStep = (record: FrqRecord): PracticeStep => ({
     caption: `${record.topicTitle} · ${record.marks} marks`,
     role: 'question',
   },
-  solution: `See the mark scheme image for the official answer.`,
-  sampleAnswer: undefined,
+  assets: record.answerImage
+    ? [
+        {
+          id: `${record.id}-mark-scheme`,
+          kind: 'source' as const,
+          src: record.answerImage,
+          alt: `Mark scheme for ${record.topicId} Q${record.questionNumber}`,
+          downloadName: `${record.topicId}-q${record.questionNumber}-mark-scheme.png`,
+        },
+      ]
+    : undefined,
+  solution: record.answerImage
+    ? 'See the mark scheme image below for the official answer.'
+    : 'See the official mark scheme for the answer.',
 });
 
 /** Topic metadata for FRQ sets */
