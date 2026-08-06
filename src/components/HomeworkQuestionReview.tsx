@@ -232,6 +232,19 @@ export const HomeworkQuestionReview: React.FC<HomeworkQuestionReviewProps> = ({
                 );
               })}
             </div>
+          ) : attempt?.answerImageUrl ? (
+            <div className="space-y-2">
+              <div className="text-[10px] uppercase tracking-widest text-slate-500">
+                {language === 'zh' ? '学生提交的答案' : 'Student submitted answer'}
+              </div>
+              <div className="overflow-hidden rounded-lg border border-line">
+                <img
+                  src={attempt.answerImageUrl}
+                  alt={language === 'zh' ? '学生答案图片' : 'Student answer image'}
+                  className="max-h-[500px] w-full object-contain"
+                />
+              </div>
+            </div>
           ) : (
             <div className="rounded-lg border border-line bg-surface-muted p-3">
               <div className="text-[10px] uppercase tracking-widest text-slate-500">

@@ -35,6 +35,7 @@ export interface HomeworkAttempt {
   practiceSetId: string;
   questionId: string;
   answer: string;
+  answerImageUrl?: string | null;
   score: number;
   maxScore: number;
   isCorrect: boolean;

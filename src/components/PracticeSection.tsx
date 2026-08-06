@@ -24,6 +24,7 @@ import { useLanguage } from '../LanguageContext';
 import { useAuth } from '../auth/AuthContext';
 import { usePracticeProgress, type SavedPracticeAttempt } from '../hooks/usePracticeProgress';
 import { usePracticePermissions } from '../hooks/usePracticePermissions';
+import { StudentWorkUpload } from './StudentWorkUpload';
 
 type SpeechRecognitionConstructor = new () => SpeechRecognition;
 
@@ -348,6 +349,7 @@ export const PracticeSection: React.FC = () => {
   const [activeSetId, setActiveSetId] = useState(initialSelection.setId);
   const [activeIndex, setActiveIndex] = useState(initialSelection.index);
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [answerImages, setAnswerImages] = useState<Record<string, string>>({});
   const [results, setResults] = useState<Record<string, EvaluationResult>>({});
   const [isListening, setIsListening] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
@@ -424,15 +426,12 @@ export const PracticeSection: React.FC = () => {
   const activeStep = practiceSteps[activeIndex] ?? practiceSteps[0];
   const isActiveMultipleChoice = activeStep ? isMultipleChoiceStep(activeStep) : false;
   const hasCompleteQuestionImage = activeStep?.image?.role === 'question';
-  const shouldHideAnswerWorkspace =
-    activeStep?.image?.role === 'question' &&
-    activeSet.system === 'igcse' &&
-    (activePracticeKind === 'structured' || activePracticeKind === 'paper5');
   const shouldShowPrompt =
     activeStep &&
     !hasCompleteQuestionImage &&
     !activeStep.prompt.startsWith('Select the correct option');
   const currentAnswer = activeStep ? (answers[activeStep.id] ?? '') : '';
+  const currentAnswerImage = activeStep ? (answerImages[activeStep.id] ?? null) : null;
   const currentResult = activeStep ? results[activeStep.id] : undefined;
   const completedCount = Object.keys(results).length;
   const resultList: EvaluationResult[] = Object.keys(results).map((key) => results[key]);
@@ -708,7 +707,7 @@ export const PracticeSection: React.FC = () => {
     setAnswers((previous) => ({ ...previous, [activeStep.id]: value }));
   };
 
-  const recordResult = (result: EvaluationResult, answer: string) => {
+  const recordResult = (result: EvaluationResult, answer: string, answerImageUrl?: string | null) => {
     setResults((previous) => ({ ...previous, [activeStep.id]: result }));
 
     void saveAttempt({
@@ -717,6 +716,7 @@ export const PracticeSection: React.FC = () => {
       questionId: activeStep.id,
       questionTitle: activeStep.title,
       answer,
+      answerImageUrl: answerImageUrl ?? undefined,
       score: result.score,
       maxScore: result.maxScore,
       isCorrect: result.maxScore > 0 && result.score >= result.maxScore,
@@ -763,6 +763,19 @@ export const PracticeSection: React.FC = () => {
 
     const result = evaluateLocally(activeStep, currentAnswer);
     recordResult(result, currentAnswer);
+  };
+
+  const submitFreeResponse = () => {
+    if (!currentAnswerImage) return;
+    // No auto-grading for image submissions; teacher reviews manually
+    const result: EvaluationResult = {
+      score: 0,
+      maxScore: activeStep.maxScore ?? 10,
+      hits: [],
+      misses: [],
+      suggestions: [],
+    };
+    recordResult(result, '', currentAnswerImage);
   };
 
   const goToStep = (index: number) => {
@@ -1241,32 +1254,23 @@ export const PracticeSection: React.FC = () => {
                       </div>
                     )}
                   </div>
-                ) : shouldHideAnswerWorkspace ? null : (
+                ) : (
                   <>
-                    <div className="flex items-center justify-between gap-4 mb-3">
-                      <label htmlFor="practice-answer" className="text-xs uppercase tracking-widest text-slate-500">
-                        {t.practice.response}
-                      </label>
-                      <button
-                        onClick={toggleSpeech}
-                        disabled={!speechSupported}
-                        className={`w-10 h-10 rounded-full border flex items-center justify-center transition-colors ${
-                          isListening
-                            ? 'border-rose-400 text-rose-700 bg-rose-400/10'
-                            : 'border-line text-ink-soft hover:border-nebula hover:text-nebula disabled:opacity-30'
-                        }`}
-                        title={speechSupported ? t.practice.dictate : t.practice.speechUnavailable}
-                      >
-                        {isListening ? <Square className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
-                      </button>
-                    </div>
-
-                    <textarea
-                      id="practice-answer"
-                      value={currentAnswer}
-                      onChange={(event) => updateAnswer(event.target.value)}
-                      className="min-h-[180px] w-full rounded-lg border border-line bg-surface-muted p-4 text-base leading-relaxed text-ink outline-none transition-colors placeholder:text-slate-600 focus:border-nebula/70 sm:text-sm"
-                      placeholder={t.practice.answerPlaceholder}
+                    <StudentWorkUpload
+                      practiceSetId={activeSet.id}
+                      questionId={activeStep.id}
+                      existingImageUrl={currentAnswerImage}
+                      onUploadComplete={(imageUrl) => {
+                        setAnswerImages((prev) => ({ ...prev, [activeStep.id]: imageUrl }));
+                      }}
+                      onClear={() => {
+                        setAnswerImages((prev) => {
+                          const next = { ...prev };
+                          delete next[activeStep.id];
+                          return next;
+                        });
+                      }}
+                      language={language}
                     />
                     {(activeStep.sampleAnswer || activeStep.solution) && (
                       <div className="mt-4 flex flex-wrap gap-2">
@@ -1315,16 +1319,23 @@ export const PracticeSection: React.FC = () => {
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
-                  {!shouldHideAnswerWorkspace && (
+                  {!isActiveMultipleChoice ? (
                     <button
-                      onClick={submitAnswer}
-                      disabled={
-                        isActiveMultipleChoice ? !currentAnswer || Boolean(currentResult) : currentAnswer.trim().length < 8
-                      }
+                      onClick={submitFreeResponse}
+                      disabled={!currentAnswerImage || Boolean(currentResult)}
                       className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-xs font-bold uppercase tracking-widest text-on-accent transition-colors hover:bg-nebula hover:text-on-accent disabled:opacity-30"
                     >
                       <Sparkles className="w-4 h-4" />
-                      {isActiveMultipleChoice ? t.practice.checkAnswer : t.practice.scoreResponse}
+                      {language === 'zh' ? '提交答案' : 'Submit answer'}
+                    </button>
+                  ) : (
+                    <button
+                      onClick={submitAnswer}
+                      disabled={!currentAnswer || Boolean(currentResult)}
+                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-xs font-bold uppercase tracking-widest text-on-accent transition-colors hover:bg-nebula hover:text-on-accent disabled:opacity-30"
+                    >
+                      <Sparkles className="w-4 h-4" />
+                      {t.practice.checkAnswer}
                     </button>
                   )}
                 </div>
