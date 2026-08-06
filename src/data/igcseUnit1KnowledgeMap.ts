@@ -1041,6 +1041,27 @@ const densityLesson: CurriculumLesson = {
         text('Density data alone can decide float or sink; this subsection does not require an upthrust calculation.', '仅利用密度数据即可判断浮沉；本节不要求计算浮力。'),
       ],
     },
+    {
+      heading: text('5. Microscopic view: why pressure increases with depth', '5. 微观视角：为什么压强随深度增加'),
+      paragraphs: [
+        text(
+          'At the microscopic level, water molecules are held together by electromagnetic forces. In a liquid, the molecules are already packed closely together, but they are not rigidly fixed — they can slide past one another. When you go deeper, the weight of all the water above pushes down on the molecules below. This extra load slightly compresses the electromagnetic bonds between molecules, squeezing them a little closer together.',
+          '在微观层面，水分子之间由电磁力相互维系。液体中分子已经紧密排列，但并非刚性固定——它们可以相互滑动。当你到达更深处时，上方所有水的重量向下压迫下方的分子。这个额外的载荷会轻微压缩分子之间的电磁键，使它们彼此更靠近一点。',
+        ),
+        text(
+          'Because the molecules are squeezed closer, there are slightly more molecules per unit volume at greater depth — the density increases a little. More molecules hitting a surface per unit area means a greater total force on that area, which is exactly what we observe as higher pressure. So the chain is: greater depth → more weight above → electromagnetic bonds compressed → density slightly higher → more molecular collisions per unit area → greater pressure.',
+          '由于分子被挤压得更近，深度越大处单位体积内的分子数略多——密度略有增加。更多分子撞击单位面积的表面，意味着该面积上受到更大的总力，这正是我们观察到的压强增大。因此因果链是：深度更大 → 上方重量更大 → 电磁键被压缩 → 密度略增 → 单位面积上分子碰撞更多 → 压强更大。',
+        ),
+        text(
+          'Water is very resistant to compression — its bulk modulus is about $2.2\\times10^9\\,\\mathrm{Pa}$. This means even at the bottom of the Mariana Trench (depth $\\approx 11\\,\\mathrm{km}$, pressure $\\approx 1100\\,\\mathrm{atm}$), the density increases by only about 5%. For almost all IGCSE-level calculations we treat water as incompressible and use a constant density of $1000\\,\\mathrm{kg\\,m^{-3}}$, but the microscopic picture shows why pressure still increases with depth even when the density change is tiny.',
+          '水非常难以压缩——其体积弹性模量约为 $2.2\\times10^9\\,\\mathrm{Pa}$。这意味着即使在马里亚纳海沟底部（深度约 $11\\,\\mathrm{km}$，压强约 $1100\\,\\mathrm{atm}$），密度也只增加约 5%。在几乎所有 IGCSE 级别的计算中，我们将水视为不可压缩并使用恒定密度 $1000\\,\\mathrm{kg\\,m^{-3}}$，但微观图像解释了为什么即使密度变化极小，压强仍随深度增加。',
+        ),
+      ],
+      takeaway: text(
+        'Pressure increases with depth because the weight above compresses molecular bonds, raising density slightly and increasing collision frequency on surfaces. For everyday calculations, water density is treated as constant.',
+        '压强随深度增加，是因为上方重量压缩了分子键，使密度略微升高，从而增加了表面上的碰撞频率。在日常计算中，水的密度被视为常数。',
+      ),
+    },
   ],
   studentVersion: densityStudentLesson,
 };
