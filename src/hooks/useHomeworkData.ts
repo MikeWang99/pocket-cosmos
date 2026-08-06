@@ -53,6 +53,7 @@ interface AttemptRow {
   practice_set_id: string;
   question_id: string;
   answer: string | null;
+  answer_image_url: string | null;
   score: number | string;
   max_score: number | string;
   is_correct: boolean;
@@ -105,6 +106,7 @@ const normalizeAttempt = (row: AttemptRow): HomeworkAttempt => ({
   practiceSetId: row.practice_set_id,
   questionId: row.question_id,
   answer: row.answer ?? '',
+  answerImageUrl: row.answer_image_url,
   score: Number(row.score),
   maxScore: Number(row.max_score),
   isCorrect: row.is_correct,
@@ -179,7 +181,7 @@ export const useHomeworkData = () => {
 
     const attemptsQuery = supabase
       .from('practice_attempts')
-      .select('student_id, student_email, practice_set_id, question_id, answer, score, max_score, is_correct, result, updated_at')
+      .select('student_id, student_email, practice_set_id, question_id, answer, answer_image_url, score, max_score, is_correct, result, updated_at')
       .order('updated_at', { ascending: false });
 
     const queries: PromiseLike<unknown>[] = [assignmentQuery, attemptsQuery];

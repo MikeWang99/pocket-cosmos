@@ -15,6 +15,7 @@ export type PracticeSyncState = 'off' | 'idle' | 'loading' | 'syncing' | 'error'
 export interface SavedPracticeAttempt {
   questionId: string;
   answer: string;
+  answerImageUrl?: string;
   result: EvaluationResult;
   isCorrect: boolean;
   updatedAt: string;
@@ -23,6 +24,7 @@ export interface SavedPracticeAttempt {
 interface PracticeAttemptRow {
   question_id: string;
   answer: string | null;
+  answer_image_url: string | null;
   score: number | string;
   max_score: number | string;
   is_correct: boolean;
@@ -36,6 +38,7 @@ interface SavePracticeAttemptInput {
   questionId: string;
   questionTitle: string;
   answer: string;
+  answerImageUrl?: string;
   score: number;
   maxScore: number;
   isCorrect: boolean;
@@ -123,7 +126,7 @@ export const usePracticeProgress = (practiceSetId: string) => {
 
     supabase
       .from('practice_attempts')
-      .select('question_id, answer, score, max_score, is_correct, result, updated_at')
+      .select('question_id, answer, answer_image_url, score, max_score, is_correct, result, updated_at')
       .eq('practice_set_id', practiceSetId)
       .order('updated_at', { ascending: false })
       .then(({ data, error }) => {
@@ -144,6 +147,7 @@ export const usePracticeProgress = (practiceSetId: string) => {
           map[typedRow.question_id] = {
             questionId: typedRow.question_id,
             answer: typedRow.answer ?? '',
+            answerImageUrl: typedRow.answer_image_url ?? undefined,
             result: normalizeResult(typedRow),
             isCorrect: typedRow.is_correct,
             updatedAt: typedRow.updated_at,
@@ -180,6 +184,7 @@ export const usePracticeProgress = (practiceSetId: string) => {
       const nextSavedAttempt: SavedPracticeAttempt = {
         questionId: attempt.questionId,
         answer: attempt.answer,
+        answerImageUrl: attempt.answerImageUrl,
         result: attempt.result,
         isCorrect: attempt.isCorrect,
         updatedAt: new Date().toISOString(),
@@ -194,6 +199,7 @@ export const usePracticeProgress = (practiceSetId: string) => {
           practiceSetId: attempt.practiceSetId,
           questionId: attempt.questionId,
           answer: attempt.answer,
+          answerImageUrl: attempt.answerImageUrl,
           score: attempt.score,
           maxScore: attempt.maxScore,
           isCorrect: attempt.isCorrect,
@@ -218,6 +224,7 @@ export const usePracticeProgress = (practiceSetId: string) => {
           question_id: attempt.questionId,
           question_title: attempt.questionTitle,
           answer: attempt.answer,
+          answer_image_url: attempt.answerImageUrl ?? null,
           score: attempt.score,
           max_score: attempt.maxScore,
           is_correct: attempt.isCorrect,
