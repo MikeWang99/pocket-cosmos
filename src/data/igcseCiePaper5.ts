@@ -73,7 +73,20 @@ const toPracticeStep = (record: Paper5Record): PracticeStep => ({
     caption: record.title,
     role: 'question',
   },
-  solution: `See the mark scheme image for the official answer.`,
+  assets: record.answerImage
+    ? [
+        {
+          id: `${record.id}-mark-scheme`,
+          kind: 'source' as const,
+          src: record.answerImage,
+          alt: `Mark scheme for ${record.year} ${record.session} Q${record.questionNumber}`,
+          downloadName: `paper5-${record.year}-q${record.questionNumber}-mark-scheme.png`,
+        },
+      ]
+    : undefined,
+  solution: record.answerImage
+    ? 'See the mark scheme image below for the official answer.'
+    : 'See the official mark scheme for the answer.',
 });
 
 /** Year groupings for Paper 5 sets */
