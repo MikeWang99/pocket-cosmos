@@ -126,14 +126,14 @@ export const HomeworkQuestionReview: React.FC<HomeworkQuestionReviewProps> = ({
         )}
       </header>
 
-      <div className="grid xl:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.92fr)]">
+      <div className="grid xl:grid-cols-[minmax(0,1.1fr)_minmax(340px,0.9fr)]">
         <div className="border-b border-line p-4 sm:p-5 xl:border-b-0 xl:border-r">
           <div className="mb-3 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
             {language === 'zh' ? '原题' : 'Original question'}
           </div>
 
           {!hideDuplicatePrompt && step.prompt && (
-            <div className="text-[15px] leading-7 text-starlight">
+            <div className="text-base leading-7 text-ink">
               <MathText>{step.prompt}</MathText>
             </div>
           )}
@@ -160,7 +160,8 @@ export const HomeworkQuestionReview: React.FC<HomeworkQuestionReviewProps> = ({
                 <img
                   src={step.image.src}
                   alt={step.image.alt}
-                  className={`practice-media-image practice-question-image ${step.image.responsive ? 'practice-question-image--responsive' : ''}`}
+                  className="practice-media-image practice-question-image"
+                  style={{ minWidth: '100%', width: 'auto', maxWidth: 'none' }}
                 />
               </div>
               {step.image.caption && <figcaption>{step.image.caption}</figcaption>}
@@ -242,11 +243,7 @@ export const HomeworkQuestionReview: React.FC<HomeworkQuestionReviewProps> = ({
             </div>
           )}
 
-          <div className="mt-3 grid grid-cols-3 gap-2">
-            <div className="rounded-lg border border-line bg-surface-tint p-2.5">
-              <div className="text-[9px] uppercase tracking-widest text-slate-600">{language === 'zh' ? '学生答案' : 'Student'}</div>
-              <div className="mt-1 break-words text-sm font-semibold text-ink">{attempt?.answer || '—'}</div>
-            </div>
+          <div className="mt-3 grid grid-cols-2 gap-2">
             <div className="rounded-lg border border-line bg-surface-tint p-2.5">
               <div className="text-[9px] uppercase tracking-widest text-slate-600">{language === 'zh' ? '正确答案' : 'Correct'}</div>
               <div className="mt-1 break-words text-sm font-semibold text-emerald-700">{step.correctAnswer || '—'}</div>
