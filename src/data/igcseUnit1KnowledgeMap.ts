@@ -415,11 +415,11 @@ const momentumStudentLesson: CurriculumLesson = {
   ],
 };
 
-const physicalQuantitiesLesson: CurriculumLesson = {
+const physicalQuantitiesStudentLesson: CurriculumLesson = {
   title: text('1.1 Physical Quantities and Measurement Techniques', '1.1 物理量与测量技术'),
   description: text(
-    'Length, volume and time measurements; repeated measurements; scalars, vectors and right-angle resultants.',
-    '长度、体积与时间测量；多次测量；标量、矢量与直角矢量合成。',
+    'Core measurement techniques for length, volume, time and density; SI units; scalars and vectors.',
+    '长度、体积、时间与密度的核心测量技术；SI 单位；标量与矢量。',
   ),
   sections: [
     {
@@ -477,6 +477,219 @@ const physicalQuantitiesLesson: CurriculumLesson = {
       ),
     },
   ],
+};
+
+const physicalQuantitiesLesson: CurriculumLesson = {
+  title: text('1.1 Physical Quantities and Measurement Techniques', '1.1 物理量与测量技术'),
+  description: text(
+    'SI units, instruments for length/volume/time, density measurement, mechanical methods for small distances, repeated readings, scalars and vectors.',
+    'SI 单位，长度/体积/时间测量仪器，密度测量，微小距离的机械测量方法，多次读数，标量与矢量。',
+  ),
+  sections: [
+    {
+      heading: text('1. SI units and unit conversion', '1. SI 单位与单位换算'),
+      paragraphs: [
+        text(
+          'Every physical quantity must be reported with a unit. The SI system defines base units for mass (kilogram, kg), length (metre, m) and time (second, s). Derived units follow from these: speed is m/s, density is kg/m³ or g/cm³, force is the newton (N = kg·m/s²).',
+          '每个物理量都必须带单位报告。SI 制为质量（千克，kg）、长度（米，m）和时间（秒，s）定义了基本单位。导出单位由此而来：速率单位是 m/s，密度单位是 kg/m³ 或 g/cm³，力的单位是牛顿（N = kg·m/s²）。',
+        ),
+        text(
+          'Prefixes scale units by powers of ten: milli (10⁻³), centi (10⁻²), kilo (10³), mega (10⁶). Converting between units requires multiplying or dividing by the appropriate power of ten. Area and volume conversions use the square or cube of the length factor.',
+          '前缀以 10 的幂次缩放单位：毫（10⁻³）、厘（10²）、千（10³）、兆（10⁶）。单位换算需要乘以或除以相应的 10 的幂次。面积和体积换算使用长度换算因子的平方或立方。',
+        ),
+      ],
+      bullets: [
+        text('1 m = 100 cm = 1000 mm; 1 km = 1000 m.', '1 m = 100 cm = 1000 mm；1 km = 1000 m。'),
+        text('1 kg = 1000 g; 1 tonne = 1000 kg.', '1 kg = 1000 g；1 吨 = 1000 kg。'),
+        text('1 m³ = 10⁶ cm³ = 1000 L; 1 L = 1000 cm³.', '1 m³ = 10⁶ cm³ = 1000 L；1 L = 1000 cm³。'),
+        text('1 h = 3600 s; 1 min = 60 s.', '1 h = 3600 s；1 min = 60 s。'),
+      ],
+    },
+    {
+      heading: text('2. Measuring length', '2. 测量长度'),
+      paragraphs: [
+        text(
+          'A ruler is read at eye level from the correct zero mark. If the zero end is damaged, take two readings and subtract. The smallest scale division determines the reading precision (typically 1 mm for a standard ruler). Avoid parallax error by keeping the eye directly above the mark.',
+          '刻度尺应从正确的零刻度开始并平视读数；若零端损坏，可读取两个位置后相减。最小分度决定读数精度（普通刻度尺通常为 1 mm）。避免视差：眼睛应正对刻度。',
+        ),
+        text(
+          'For longer distances, a tape measure is appropriate. For very small distances (diameter of a wire, thickness of a sheet of paper), use a micrometer screw gauge or vernier calipers.',
+          '较长距离用卷尺。对于极小距离（导线直径、纸张厚度），使用螺旋测微器或游标卡尺。',
+        ),
+      ],
+      formulas: [
+        formula('Average small length', '微小长度平均值', 'd=\\frac{\\text{total length of } N \\text{ identical items}}{N}'),
+      ],
+      classroomQuestions: [
+        {
+          id: 'igcse-u1-teacher-ruler-reading',
+          title: text('Practice: ruler reading', '练习：刻度尺读数'),
+          prompt: text(
+            'A student measures the length of a pencil. The left end is at the 2.0 cm mark and the right end is at the 14.5 cm mark. What is the length of the pencil?',
+            '学生测量铅笔长度。左端对准 2.0 cm 刻度，右端对准 14.5 cm 刻度。铅笔长度是多少？',
+          ),
+          choices: [
+            { label: 'A', text: text('$14.5\\,\\mathrm{cm}$', '$14.5\\,\\mathrm{cm}$') },
+            { label: 'B', text: text('$12.5\\,\\mathrm{cm}$', '$12.5\\,\\mathrm{cm}$') },
+            { label: 'C', text: text('$16.5\\,\\mathrm{cm}$', '$16.5\\,\\mathrm{cm}$') },
+            { label: 'D', text: text('$2.0\\,\\mathrm{cm}$', '$2.0\\,\\mathrm{cm}$') },
+          ],
+          correctAnswer: 'B',
+          feedback: text(
+            '$L = 14.5 - 2.0 = 12.5\\,\\mathrm{cm}$. When the zero end is not used, subtract the two readings.',
+            '$L = 14.5 - 2.0 = 12.5\\,\\mathrm{cm}$。未从零刻度开始时，应减去两个读数。',
+          ),
+        },
+      ],
+    },
+    {
+      heading: text('3. Measuring volume', '3. 测量体积'),
+      paragraphs: [
+        text(
+          'The volume of a liquid is read directly from a measuring cylinder at eye level, at the bottom of the meniscus for water (or the top for mercury). The scale division determines the precision.',
+          '液体体积由量筒在液面处平视读出：水读弯月面底部，汞读顶部。最小分度决定精度。',
+        ),
+        text(
+          'For a regular solid (cube, cuboid, cylinder), measure the relevant dimensions with a ruler or calipers and calculate the volume using the appropriate geometric formula.',
+          '规则固体（立方体、长方体、圆柱体）用刻度尺或卡尺测量相关尺寸，再用几何公式计算体积。',
+        ),
+        text(
+          'For an irregular solid that sinks, use the displacement method: record the initial water level $V_i$ in a measuring cylinder, fully submerge the object, record the final level $V_f$, and the object volume is $V_f - V_i$. The object must be fully submerged with no trapped air bubbles.',
+          '对于会下沉的不规则固体，使用排水法：记录量筒初始水位 $V_i$，将物体完全浸没，记录最终水位 $V_f$，物体体积为 $V_f - V_i$。物体必须完全浸没且无气泡。',
+        ),
+      ],
+      formulas: [
+        formula('Volume of cuboid', '长方体体积', 'V=l\\times w\\times h'),
+        formula('Volume of cylinder', '圆柱体体积', 'V=\\pi r^2 h'),
+        formula('Displacement volume', '排水体积', 'V_{\\mathrm{object}}=V_{\\mathrm{final}}-V_{\\mathrm{initial}}'),
+      ],
+    },
+    {
+      heading: text('4. Measuring mass and density', '4. 测量质量与密度'),
+      paragraphs: [
+        text(
+          'Mass is measured with a balance (top-pan or beam balance). The balance should be on a level surface and zeroed before use. Mass is a scalar and does not change with location.',
+          '质量用天平（托盘天平或杠杆天平）测量。天平应放在水平台上，使用前调零。质量是标量，不随位置变化。',
+        ),
+        text(
+          'Density is mass per unit volume. To measure the density of a regular solid: measure its mass with a balance, measure its dimensions with a ruler or calipers, calculate the volume, then divide mass by volume. To measure the density of a liquid: measure the mass of an empty measuring cylinder, add a known volume of liquid, measure the combined mass, subtract to find the liquid mass, then divide by the volume.',
+          '密度是单位体积的质量。测量规则固体密度：用天平测质量，用刻度尺或卡尺测尺寸，计算体积，再用质量除以体积。测量液体密度：先测空量筒质量，加入已知体积的液体，测总质量，相减得液体质量，再除以体积。',
+        ),
+        text(
+          'To measure the density of an irregular solid: measure its mass with a balance, then use the displacement method to find its volume, and divide mass by volume.',
+          '测量不规则固体密度：用天平测质量，再用排水法测体积，最后用质量除以体积。',
+        ),
+      ],
+      formulas: [
+        formula('Density', '密度', '\\rho=\\frac{m}{V}'),
+        formula('Density of liquid', '液体密度', '\\rho=\\frac{m_{\\mathrm{cylinder+liquid}}-m_{\\mathrm{cylinder}}}{V_{\\mathrm{liquid}}}'),
+      ],
+      classroomQuestions: [
+        {
+          id: 'igcse-u1-teacher-density-liquid',
+          title: text('Practice: density of a liquid', '练习：液体密度'),
+          prompt: text(
+            'An empty measuring cylinder has mass $80\\,\\mathrm{g}$. After adding $50\\,\\mathrm{cm^3}$ of liquid, the total mass is $120\\,\\mathrm{g}$. What is the density of the liquid?',
+            '空量筒质量为 $80\\,\\mathrm{g}$。加入 $50\\,\\mathrm{cm^3}$ 液体后总质量为 $120\\,\\mathrm{g}$。液体密度是多少？',
+          ),
+          choices: [
+            { label: 'A', text: text('$0.8\\,\\mathrm{g/cm^3}$', '$0.8\\,\\mathrm{g/cm^3}$') },
+            { label: 'B', text: text('$2.4\\,\\mathrm{g/cm^3}$', '$2.4\\,\\mathrm{g/cm^3}$') },
+            { label: 'C', text: text('$0.4\\,\\mathrm{g/cm^3}$', '$0.4\\,\\mathrm{g/cm^3}$') },
+            { label: 'D', text: text('$1.6\\,\\mathrm{g/cm^3}$', '$1.6\\,\\mathrm{g/cm^3}$') },
+          ],
+          correctAnswer: 'A',
+          feedback: text(
+            '$m_{\\mathrm{liquid}}=120-80=40\\,\\mathrm{g}$. $\\rho=40/50=0.8\\,\\mathrm{g/cm^3}$.',
+            '$m_{\\mathrm{liquid}}=120-80=40\\,\\mathrm{g}$。$\\rho=40/50=0.8\\,\\mathrm{g/cm^3}$。',
+          ),
+        },
+      ],
+    },
+    {
+      heading: text('5. Mechanical methods for small distances (Supplement)', '5. 微小距离的机械测量方法（Supplement）'),
+      paragraphs: [
+        text(
+          'A micrometer screw gauge measures small distances (typically 0–25 mm) with a precision of 0.01 mm. The main scale on the sleeve gives whole and half millimetres; the thimble scale gives hundredths of a millimetre. Always check for zero error before use.',
+          '螺旋测微器测量小距离（通常 0–25 mm），精度为 0.01 mm。套筒主尺给出整毫米和半毫米；微分筒刻度给出百分之一毫米。使用前必须检查零误差。',
+        ),
+        text(
+          'Vernier calipers measure internal, external and depth dimensions with a precision of 0.1 mm or 0.05 mm. The main scale gives millimetres; the vernier scale gives the fractional part. Always check for zero error.',
+          '游标卡尺可测量内径、外径和深度，精度为 0.1 mm 或 0.05 mm。主尺给出毫米数；游标尺给出小数部分。使用前必须检查零误差。',
+        ),
+        text(
+          'For very thin objects (a sheet of paper, a wire), measure a stack of $N$ identical items together and divide by $N$ to reduce the percentage uncertainty.',
+          '对于极薄物体（一张纸、一根导线），把 $N$ 个相同物品叠在一起测量总厚度，再除以 $N$，以减小百分比不确定度。',
+        ),
+      ],
+      formulas: [
+        formula('Micrometer reading', '螺旋测微器读数', '\\text{reading}=\\text{main scale}+\\text{thimble scale}\\times 0.01\\,\\mathrm{mm}'),
+        formula('Vernier caliper reading', '游标卡尺读数', '\\text{reading}=\\text{main scale}+\\text{vernier coincidence}\\times\\text{least count}'),
+      ],
+      takeaway: text(
+        'Choose the instrument whose precision matches the size of the quantity being measured.',
+        '选择精度与被测量大小匹配的仪器。',
+      ),
+    },
+    {
+      heading: text('6. Measuring time intervals', '6. 测量时间间隔'),
+      paragraphs: [
+        text(
+          'Clocks measure long time intervals; digital timers (stopwatches) measure short intervals. Human reaction time (typically 0.2–0.3 s) introduces uncertainty, especially for short intervals.',
+          '时钟测量长时间间隔；数字计时器（秒表）测量短时间间隔。人的反应时间（通常 0.2–0.3 s）会引入不确定度，对短时间间隔影响尤其显著。',
+        ),
+        text(
+          'For a pendulum, time $N$ complete oscillations from the same reference point and in the same direction, then divide by $N$ to obtain the period $T$. Using a reference marker at the equilibrium position reduces the start/stop timing error.',
+          '测量单摆周期时，从同一参考位置、同一运动方向开始，为 $N$ 个完整振动计时，再除以 $N$ 得周期 $T$。在平衡位置设置参考标记可减小起止计时误差。',
+        ),
+      ],
+      formulas: [
+        formula('Average small quantity', '微小量平均值', '\\text{average}=\\frac{\\text{total measured value}}{\\text{number of equal items or intervals}}'),
+        formula('Pendulum period', '单摆周期', 'T=\\frac{t}{N}'),
+      ],
+    },
+    {
+      heading: text('7. Repeated readings and reducing uncertainty', '7. 多次读数与减小不确定度'),
+      paragraphs: [
+        text(
+          'Random errors cause readings to scatter around the true value. Taking multiple readings and calculating the mean reduces the effect of random errors. The spread of readings gives an estimate of the uncertainty.',
+          '随机误差使读数围绕真值散布。多次读数并取平均值可减小随机误差的影响。读数的散布范围给出不确定度的估计。',
+        ),
+        text(
+          'Systematic errors shift all readings in the same direction (e.g., a zero error on a micrometer). These are not reduced by repeated readings; they must be identified and corrected.',
+          '系统误差使所有读数向同一方向偏移（如螺旋测微器的零误差）。多次读数不能减小系统误差；必须识别并修正。',
+        ),
+      ],
+      bullets: [
+        text('Measure $N$ identical items together and divide by $N$ to reduce percentage uncertainty.', '把 $N$ 个相同物品一起测量再除以 $N$，以减小百分比不确定度。'),
+        text('Time $N$ oscillations of a pendulum and divide by $N$ to reduce reaction-time error.', '为单摆 $N$ 次振动计时再除以 $N$，以减小反应时间误差。'),
+        text('Check for zero error before using a micrometer or vernier caliper.', '使用螺旋测微器或游标卡尺前检查零误差。'),
+        text('Read at eye level to avoid parallax error.', '平视读数以避免视差。'),
+      ],
+    },
+    {
+      heading: text('8. Scalars and vectors (Supplement)', '8. 标量与矢量（Supplement）'),
+      paragraphs: [
+        text(
+          'A scalar has magnitude only. A vector has both magnitude and direction. Distance, speed, time, mass, energy and temperature are scalars. Force, weight, velocity, acceleration, momentum, electric field strength and gravitational field strength are vectors.',
+          '标量只有大小；矢量同时具有大小和方向。路程、速率、时间、质量、能量和温度是标量；力、重量、速度、加速度、动量、电场强度和重力场强是矢量。',
+        ),
+        text(
+          'For two perpendicular forces or velocities, the resultant can be found by a scale drawing or by resolving the vectors into a right-angled triangle. Its direction must be stated as well as its magnitude.',
+          '对于两个互相垂直的力或速度，可用比例作图或直角三角形计算合矢量。答案必须同时给出大小和方向。',
+        ),
+      ],
+      formulas: [
+        formula('Right-angle resultant', '直角合矢量', 'R=\\sqrt{A^2+B^2}'),
+        formula('Resultant direction', '合矢量方向', '\\tan\\theta=\\frac{B}{A}'),
+      ],
+      takeaway: text(
+        'A number and unit are sufficient for a scalar; a vector answer also needs a direction.',
+        '标量答案只需数值和单位；矢量答案还必须包含方向。',
+      ),
+    },
+  ],
+  studentVersion: physicalQuantitiesStudentLesson,
 };
 
 const motionStudentLesson: CurriculumLesson = {
