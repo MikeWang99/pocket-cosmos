@@ -896,6 +896,10 @@ const energyWorkPowerStudentLesson: CurriculumLesson = {
         text('Required resources: fossil fuels, biofuels, waves, tides, hydroelectric reservoirs, geothermal, nuclear fuel, solar cells, solar heating and wind.', '必须掌握的能源：化石燃料、生物燃料、波浪、潮汐、水力、地热、核燃料、太阳能电池、太阳能加热和风能。'),
         text('Compare each by renewability, availability, reliability, scale and environmental impact.', '从可再生性、可获得性、可靠性、规模和环境影响比较各种能源。'),
         text('Solar radiation is the main origin of most resources except geothermal, nuclear and tidal energy. The Sun releases energy by fusion; large-scale controlled-fusion electricity remains a research goal.', '除地热、核能和潮汐能外，大多数能源最终来自太阳辐射。太阳通过核聚变释放能量；大规模可控核聚变发电仍是研究目标。'),
+        text('Renewable: biofuels (if sustainably replanted), hydroelectric, wind, tidal, wave, geothermal, solar cells, solar heating. Non-renewable: fossil fuels, nuclear fuel.', '可再生：生物燃料（可持续补种时）、水力、风能、潮汐、波浪、地热、太阳能电池、太阳能集热。不可再生：化石燃料、核燃料。'),
+        text('Reliable and dispatchable (output on demand): fossil fuels, hydroelectric with reservoir, geothermal, nuclear. Intermittent (weather-dependent): wind, wave, solar. Predictable but tide-locked: tidal.', '可靠且可按需调度：化石燃料、有水库的水力、地热、核能。间歇性（依赖天气）：风能、波浪、太阳能。可预测但受潮汐锁定：潮汐能。'),
+        text('Large-scale base-load capable: fossil fuels, hydroelectric, nuclear, geothermal (locally). Medium scale: wind farms, tidal barrages. Small to medium: solar installations, biofuels, wave devices.', '可大规模基载运行：化石燃料、水力、核能、地热（局部）。中等规模：风电场、潮汐坝。小到中等规模：太阳能装置、生物燃料、波浪能设备。'),
+        text('Low or zero operational emissions: hydroelectric, wind, tidal, wave, geothermal, solar cells, solar heating, nuclear. High emissions: fossil fuels. Biofuels are carbon-neutral in principle but land-use change can offset this.', '运行中低排放或零排放：水力、风能、潮汐、波浪、地热、太阳能电池、太阳能集热、核能。高排放：化石燃料。生物燃料理论上碳中和，但土地利用变化可能抵消这一优势。'),
       ],
     },
     {
@@ -1057,12 +1061,52 @@ const energyWorkPowerLesson: CurriculumLesson = {
           '化石燃料和生物燃料释放化学能，通常在锅炉中加热水，使蒸汽驱动涡轮机和发电机。核燃料与部分地热电站也先提供热能，再经过涡轮机—发电机环节。水力、潮汐、波浪和风能可更直接地驱动涡轮机。太阳能电池把光能直接转化为电能，太阳能集热板则利用太阳辐射加热水。',
         ),
         text(
-          'Evaluate each resource using all five syllabus criteria: renewability, availability, reliability, scale and environmental impact. A strong comparison identifies a benefit, a limitation and the context in which each matters rather than labelling a source simply “good” or “bad”.',
-          '评价能源时应覆盖大纲规定的五个维度：可再生性、可获得性、可靠性、规模和环境影响。高质量比较应说明优点、局限及其适用情境，而不是简单把某种能源说成“好”或“坏”。',
+          'Evaluate each resource using all five syllabus criteria: renewability, availability, reliability, scale and environmental impact. A strong comparison identifies a benefit, a limitation and the context in which each matters rather than labelling a source simply "good" or "bad".',
+          '评价能源时应覆盖大纲规定的五个维度：可再生性、可获得性、可靠性、规模和环境影响。高质量比较应说明优点、局限及其适用情境，而不是简单把某种能源说成"好"或"坏"。',
         ),
         text(
           'Radiation from the Sun is the main original source of most energy resources: it drives winds, the water cycle, waves and biomass formation. The explicit exceptions are geothermal, nuclear and tidal energy. The Sun releases energy by nuclear fusion; research is investigating controlled fusion for large-scale electrical generation, but it is not presented as an established commercial resource.',
           '太阳辐射是大多数能源的原始来源：它驱动风、水循环、波浪与生物质形成。明确的例外是地热、核能和潮汐能。太阳通过核聚变释放能量；人类正在研究利用可控核聚变大规模发电，但它还不能被视为成熟的商业能源。',
+        ),
+        text(
+          'Fossil fuels (coal, oil, natural gas): non-renewable; widely available where reserves exist; highly reliable and dispatchable; large-scale base-load supply; emit CO₂ and other pollutants, drive climate change, and cause habitat damage through extraction.',
+          '化石燃料（煤、石油、天然气）：不可再生；在储量丰富的地区广泛可获得；高度可靠、可按需调度；适合大规模基载供电；排放 CO₂ 和其他污染物，推动气候变化，开采过程破坏栖息地。',
+        ),
+        text(
+          'Biofuels (wood, bioethanol, biodiesel): renewable if replanted sustainably; available wherever biomass can be grown; reliability depends on supply chain; medium scale; carbon-neutral in principle but land competition with food and deforestation are concerns.',
+          '生物燃料（木材、生物乙醇、生物柴油）：若可持续补种则可再生；在可种植生物质的地区可获得；可靠性取决于供应链；中等规模；理论上碳中和，但与粮食争地及毁林是主要问题。',
+        ),
+        text(
+          'Hydroelectric: renewable (water cycle); available where suitable rivers and dams exist; highly reliable and dispatchable with reservoir storage; large scale; floods valleys, displaces communities, and alters ecosystems, but produces no direct emissions.',
+          '水力发电：可再生（水循环）；在具备合适河流和坝址的地区可获得；有水库调节时高度可靠、可按需调度；大规模；淹没河谷、迁移居民、改变生态系统，但不直接排放温室气体。',
+        ),
+        text(
+          'Wind: renewable; available wherever wind speeds are sufficient; intermittent and weather-dependent, so not dispatchable without storage; medium to large scale (onshore and offshore farms); no emissions in operation but visual impact, noise and bird/bat mortality are concerns.',
+          '风能：可再生；在风速足够的地区可获得；间歇性、依赖天气，无储能时不可按需调度；中到大规模（陆上和海上风电场）；运行中无排放，但有视觉影响、噪声和对鸟类/蝙蝠的影响。',
+        ),
+        text(
+          'Tidal: renewable; available only at coastlines with large tidal range; predictable (astronomical cycles) but output varies with tide; medium scale; can affect marine habitats and sediment flow, but no emissions.',
+          '潮汐能：可再生；仅在潮差大的海岸可获得；可预测（天文周期）但输出随潮汐变化；中等规模；可能影响海洋栖息地和泥沙运动，但无排放。',
+        ),
+        text(
+          'Wave: renewable; available on exposed coastlines; intermittent and weather-dependent; currently small to medium scale (emerging technology); no emissions but devices must survive harsh marine conditions.',
+          '波浪能：可再生；在开阔海岸可获得；间歇性、依赖天气；目前小到中等规模（新兴技术）；无排放，但设备须承受恶劣海洋环境。',
+        ),
+        text(
+          'Geothermal: renewable on human timescales; available only in geologically active regions (volcanic zones, rift valleys); highly reliable and baseload; medium scale locally; minimal emissions but drilling can release underground gases and affect local geology.',
+          '地热能：在人类时间尺度上可再生；仅在地质活跃地区（火山带、裂谷）可获得；高度可靠、可基载运行；局部中等规模；排放极少，但钻井可能释放地下气体并影响局部地质。',
+        ),
+        text(
+          'Nuclear fuel (uranium/plutonium fission): non-renewable fuel but extremely energy-dense; available where enrichment and reactor infrastructure exist; highly reliable baseload; very large scale; no CO₂ in operation but produces long-lived radioactive waste and carries accident risk (Chernobyl, Fukushima).',
+          '核燃料（铀/钚裂变）：燃料不可再生但能量密度极高；在具备浓缩和反应堆基础设施的地区可获得；高度可靠、可基载运行；极大规模；运行中不排放 CO₂，但产生长寿命放射性废物，且存在事故风险（切尔诺贝利、福岛）。',
+        ),
+        text(
+          'Solar cells (photovoltaic): renewable; available wherever sunlight reaches; intermittent (day/night, weather), not dispatchable without storage; small to large scale (rooftop to solar farms); no emissions in operation but manufacturing involves hazardous chemicals and end-of-life recycling is a growing concern.',
+          '太阳能电池（光伏）：可再生；在有阳光照射的地区均可获得；间歇性（昼夜、天气），无储能时不可按需调度；小到大规模（屋顶到太阳能电站）；运行中无排放，但制造过程涉及有害化学品，报废回收是日益突出的问题。',
+        ),
+        text(
+          'Solar heating (thermal panels): renewable; same availability as solar cells; intermittent; small to medium scale for domestic hot water and space heating; no emissions; simpler and cheaper than photovoltaics but only produces heat, not electricity.',
+          '太阳能集热（热利用）：可再生；与太阳能电池相同的可获得性；间歇性；小到中等规模，用于家庭热水和供暖；无排放；比光伏更简单、更便宜，但只能产热、不能发电。',
         ),
       ],
       bullets: [
