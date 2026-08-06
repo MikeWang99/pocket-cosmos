@@ -12,8 +12,56 @@ interface StudentWorkUploadProps {
   language: 'en' | 'zh';
 }
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const MAX_UPLOAD_SIZE = 2 * 1024 * 1024; // 2MB target after compression
+const MAX_DIMENSION = 2048; // max width/height in pixels
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic'];
+
+/** Compress image via Canvas: resize + JPEG quality reduction */
+const compressImage = (file: File): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+
+      // Calculate target dimensions (keep aspect ratio)
+      let { width, height } = img;
+      if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+        const scale = MAX_DIMENSION / Math.max(width, height);
+        width = Math.round(width * scale);
+        height = Math.round(height * scale);
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        reject(new Error('Canvas not supported'));
+        return;
+      }
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // Convert to JPEG with quality reduction
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            reject(new Error('Compression failed'));
+            return;
+          }
+          resolve(blob);
+        },
+        'image/jpeg',
+        0.82,
+      );
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error('Failed to load image'));
+    };
+    img.src = objectUrl;
+  });
+};
 
 export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
   practiceSetId,
@@ -28,32 +76,33 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(existingImageUrl ?? null);
   const [uploading, setUploading] = useState(false);
+  const [compressing, setCompressing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
 
   const t = language === 'zh'
     ? {
         uploadTitle: '上传你的答案',
-        uploadHint: '拍照或上传手写答案的图片',
+        uploadHint: '拍照或上传手写答案的图片，大图片会自动压缩',
         takePhoto: '拍照',
         uploadFile: '上传图片',
+        compressing: '压缩中...',
         uploading: '上传中...',
         uploaded: '已上传',
         clear: '清除',
-        errorTooLarge: '图片太大（最大 10MB）',
         errorType: '请选择图片文件（JPG、PNG 或 WebP）',
         errorUpload: '上传失败，请重试',
         replace: '重新上传',
       }
     : {
         uploadTitle: 'Upload your answer',
-        uploadHint: 'Take a photo or upload an image of your written work',
+        uploadHint: 'Take a photo or upload an image of your written work. Large images are auto-compressed.',
         takePhoto: 'Take photo',
         uploadFile: 'Upload image',
+        compressing: 'Compressing...',
         uploading: 'Uploading...',
         uploaded: 'Uploaded',
         clear: 'Clear',
-        errorTooLarge: 'Image too large (max 10MB)',
         errorType: 'Please select an image file (JPG, PNG, or WebP)',
         errorUpload: 'Upload failed, please try again',
         replace: 'Re-upload',
@@ -62,12 +111,8 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
   const handleFile = useCallback(async (file: File) => {
     setError(null);
 
-    if (!ALLOWED_TYPES.includes(file.type)) {
+    if (!file.type.startsWith('image/')) {
       setError(t.errorType);
-      return;
-    }
-    if (file.size > MAX_FILE_SIZE) {
-      setError(t.errorTooLarge);
       return;
     }
 
@@ -75,6 +120,22 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
     const localUrl = URL.createObjectURL(file);
     setPreview(localUrl);
     setFileName(file.name);
+
+    // Prepare upload payload (compress if needed)
+    let uploadBlob: Blob = file;
+    const needsCompression = file.size > MAX_UPLOAD_SIZE;
+
+    if (needsCompression) {
+      setCompressing(true);
+      try {
+        uploadBlob = await compressImage(file);
+      } catch (err) {
+        console.error('Compression error:', err);
+        // Fall back to original file if compression fails
+        uploadBlob = file;
+      }
+      setCompressing(false);
+    }
 
     // Upload to Supabase Storage
     setUploading(true);
@@ -85,12 +146,11 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
       return;
     }
 
-    const ext = file.name.split('.').pop() || 'jpg';
-    const path = `${user.id}/${practiceSetId}/${questionId}-${Date.now()}.${ext}`;
+    const path = `${user.id}/${practiceSetId}/${questionId}-${Date.now()}.jpg`;
 
     const { error: uploadError } = await supabase.storage
       .from('student-work')
-      .upload(path, file, { upsert: true, contentType: file.type });
+      .upload(path, uploadBlob, { upsert: true, contentType: 'image/jpeg' });
 
     if (uploadError) {
       console.error('Storage upload error:', uploadError);
@@ -179,22 +239,22 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
               alt={fileName ?? 'Student work'}
               className="max-h-[400px] w-full object-contain"
             />
-            {uploading && (
+            {(compressing || uploading) && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                 <Loader2 className="h-6 w-6 animate-spin text-white" />
-                <span className="ml-2 text-sm text-white">{t.uploading}</span>
+                <span className="ml-2 text-sm text-white">{compressing ? t.compressing : t.uploading}</span>
               </div>
             )}
           </div>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-xs text-slate-500">
-              {uploading ? (
+              {compressing || uploading ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
               ) : (
                 <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
               )}
-              <span>{uploading ? t.uploading : t.uploaded}</span>
+              <span>{compressing ? t.compressing : uploading ? t.uploading : t.uploaded}</span>
             </div>
             <div className="flex gap-2">
               <button
