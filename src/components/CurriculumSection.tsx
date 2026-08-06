@@ -1,10 +1,16 @@
 import React, { useMemo, useState } from 'react';
 import katex from 'katex';
-import { BookOpenCheck, ChevronDown, ExternalLink, FunctionSquare, Image as ImageIcon, Layers3, ListChecks, NotebookText } from 'lucide-react';
+import { BookOpenCheck, ChevronDown, ExternalLink, FunctionSquare, GraduationCap, Image as ImageIcon, Layers3, ListChecks, NotebookText, Presentation } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useLanguage } from '../LanguageContext';
+import { useAuth } from '../auth/AuthContext';
 import { learningSystems, type LearningSystemId } from '../data/physicsLearningSystems';
-import type { CurriculumClassroomQuestion, CurriculumDiagram, CurriculumLesson, CurriculumUnit, CurriculumVideo } from '../data/apPhysicsCurriculum';
+import type { CurriculumClassroomQuestion, CurriculumDiagram, CurriculumImage, CurriculumLesson, CurriculumLessonContent, CurriculumUnit, CurriculumVideo } from '../data/apPhysicsCurriculum';
+
+type CurriculumContentMode = 'teacher' | 'student';
+
+const lessonContentForMode = (lesson: CurriculumLesson, mode: CurriculumContentMode): CurriculumLessonContent =>
+  mode === 'student' && lesson.studentVersion ? lesson.studentVersion : lesson;
 
 const renderMath = (value: string, displayMode = true) =>
   katex.renderToString(value, {
@@ -50,6 +56,7 @@ const unitAnchorBase = (courseId: string, unitNumber: number) => `${courseId}-un
 
 const directoryCopy = {
   en: {
+    courseMap: 'Course route',
     title: 'Unit directory',
     focus: 'Learning focus',
     topics: 'Knowledge checklist',
@@ -59,6 +66,7 @@ const directoryCopy = {
     sections: 'Sections',
   },
   zh: {
+    courseMap: '课程路线图',
     title: '单元目录',
     focus: '学习重点',
     topics: '知识清单',
@@ -82,7 +90,9 @@ const UnitDirectory: React.FC<{
   unit: CurriculumUnit;
   courseId: string;
   language: 'en' | 'zh';
-}> = ({ unit, courseId, language }) => {
+  contentMode: CurriculumContentMode;
+  className?: string;
+}> = ({ unit, courseId, language, contentMode, className = '' }) => {
   const copy = directoryCopy[language];
   const base = unitAnchorBase(courseId, unit.number);
   const topLinks = [
@@ -94,13 +104,13 @@ const UnitDirectory: React.FC<{
   ].filter((item) => item.count > 0);
 
   return (
-    <nav className="mb-5 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4" aria-label={copy.title}>
+    <nav className={`rounded-lg border border-slate-200 bg-surface p-3 sm:p-4 ${className}`} aria-label={copy.title}>
       <div className="mb-3 flex items-center gap-2 text-nebula">
         <ListChecks className="h-4 w-4" />
         <h4 className="text-sm font-semibold">{copy.title}</h4>
       </div>
 
-      <div className="grid gap-2 min-[520px]:grid-cols-2 lg:grid-cols-5">
+      <div className="grid gap-2 min-[520px]:grid-cols-2">
         {topLinks.map((item) => (
           <a key={item.id} href={`#${item.id}`} className={anchorLinkClass}>
             <span className="block">{item.label}</span>
@@ -113,30 +123,77 @@ const UnitDirectory: React.FC<{
         <div className="mt-3 max-h-72 overflow-y-auto rounded-lg border border-slate-200 bg-slate-50 p-2">
           <div className="mb-2 px-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">{copy.sections}</div>
           <div className="space-y-2">
-            {unit.lessons.map((lesson: CurriculumLesson, lessonIndex) => (
-              <div key={lesson.title.en} className="rounded-md bg-[#ffffff] p-2">
-                <a
-                  href={`#${lessonAnchorId(courseId, unit.number, lessonIndex)}`}
-                  className="block text-xs font-semibold leading-5 text-slate-800 hover:text-nebula"
-                >
-                  {lesson.title[language]}
-                </a>
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  {lesson.sections.map((section, sectionIndex) => (
-                    <a
-                      key={section.heading.en}
-                      href={`#${lessonSectionAnchorId(courseId, unit.number, lessonIndex, sectionIndex)}`}
-                      className="rounded-full border border-slate-200 px-2 py-1 text-[10px] font-medium leading-4 text-slate-600 transition-colors hover:border-nebula/50 hover:text-nebula"
-                    >
-                      {section.heading[language]}
-                    </a>
-                  ))}
+            {unit.lessons.map((lesson: CurriculumLesson, lessonIndex) => {
+              const content = lessonContentForMode(lesson, contentMode);
+              return (
+                <div key={lesson.title.en} className="rounded-md bg-surface p-2">
+                  <a
+                    href={`#${lessonAnchorId(courseId, unit.number, lessonIndex)}`}
+                    className="block text-xs font-semibold leading-5 text-slate-800 hover:text-nebula"
+                  >
+                    {content.title[language]}
+                  </a>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {content.sections.map((section, sectionIndex) => (
+                      <a
+                        key={section.heading.en}
+                        href={`#${lessonSectionAnchorId(courseId, unit.number, lessonIndex, sectionIndex)}`}
+                        className="rounded-full border border-slate-200 px-2 py-1 text-[10px] font-medium leading-4 text-slate-600 transition-colors hover:border-nebula/50 hover:text-nebula"
+                      >
+                        {section.heading[language]}
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
+    </nav>
+  );
+};
+
+const CourseRouteMap: React.FC<{
+  units: CurriculumUnit[];
+  activeUnits: Set<number>;
+  language: 'en' | 'zh';
+  onSelectUnit: (number: number) => void;
+}> = ({ units, activeUnits, language, onSelectUnit }) => {
+  const copy = directoryCopy[language];
+
+  return (
+    <nav className="rounded-lg border border-slate-200 bg-surface p-3 sm:p-4" aria-label={copy.courseMap}>
+      <div className="mb-3 flex items-center gap-2 text-nebula">
+        <BookOpenCheck className="h-4 w-4" />
+        <h4 className="text-sm font-semibold">{copy.courseMap}</h4>
+      </div>
+      <div className="flex gap-2 overflow-x-auto pb-1 sm:grid sm:grid-cols-2 sm:overflow-visible lg:grid-cols-4">
+        {units.map((unit) => {
+          const active = activeUnits.has(unit.number);
+          return (
+            <button
+              key={unit.number}
+              type="button"
+              onClick={() => onSelectUnit(unit.number)}
+              className={`min-w-[13.5rem] shrink-0 rounded-lg border p-3 text-left transition-colors sm:min-w-0 sm:shrink ${
+                active
+                  ? 'border-nebula/50 bg-nebula/5 text-nebula'
+                  : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-nebula/40 hover:bg-nebula/5 hover:text-nebula'
+              }`}
+            >
+              <span className="block text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                {language === 'zh' ? '单元' : 'Unit'} {unit.number}
+              </span>
+              <span className="mt-1 line-clamp-2 block text-sm font-semibold leading-5">{unit.title[language]}</span>
+              <span className="mt-2 block text-[10px] leading-4 text-slate-500">
+                {unit.topics.length} {language === 'zh' ? '个 topic' : 'topics'}
+                {unit.lessons?.length ? ` · ${unit.lessons.length} ${language === 'zh' ? '个 lesson' : 'lessons'}` : ''}
+              </span>
+            </button>
+          );
+        })}
+      </div>
     </nav>
   );
 };
@@ -169,6 +226,25 @@ const LessonVideo: React.FC<{ video: CurriculumVideo; language: 'en' | 'zh' }> =
   </figure>
 );
 
+const LessonImage: React.FC<{ image: CurriculumImage; language: 'en' | 'zh' }> = ({ image, language }) => (
+  <figure className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
+    <div className="flex min-h-48 items-center justify-center bg-surface p-3 sm:p-4">
+      <img
+        src={image.src}
+        alt={image.alt[language]}
+        loading="lazy"
+        className="max-h-[32rem] w-full object-contain"
+      />
+    </div>
+    {(image.caption || image.sourceLabel) && (
+      <figcaption className="flex flex-col gap-1 border-t border-slate-200 px-3 py-2 text-xs leading-5 text-slate-500 sm:flex-row sm:items-start sm:justify-between">
+        {image.caption && <span>{image.caption[language]}</span>}
+        {image.sourceLabel && <span className="shrink-0 font-semibold text-slate-600">{image.sourceLabel[language]}</span>}
+      </figcaption>
+    )}
+  </figure>
+);
+
 const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; language: 'en' | 'zh' }> = ({ question, language }) => {
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [checkedAnswer, setCheckedAnswer] = useState('');
@@ -191,7 +267,7 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
       </p>
 
       {question.image && (
-        <figure className="mt-3 overflow-hidden rounded-lg border border-slate-200 bg-[#ffffff]">
+        <figure className="mt-3 overflow-hidden rounded-lg border border-slate-200 bg-surface">
           <img src={question.image.src} alt={question.image.alt} className="w-full object-contain" />
           {question.image.caption && (
             <figcaption className="border-t border-slate-200 px-3 py-2 text-xs text-slate-500">
@@ -206,15 +282,15 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
           <textarea
             value={writtenAnswer}
             onChange={(event) => setWrittenAnswer(event.target.value)}
-            className="mt-4 min-h-32 w-full rounded-lg border border-slate-200 bg-[#ffffff] p-3 text-sm leading-6 text-slate-800 outline-none transition-colors placeholder:text-slate-400 focus:border-nebula/60"
-            placeholder={language === 'zh' ? '在这里写下你的实验设计思路。' : 'Write your experimental design here.'}
+            className="mt-4 min-h-32 w-full rounded-lg border border-slate-200 bg-surface p-3 text-sm leading-6 text-slate-800 outline-none transition-colors placeholder:text-ink-soft focus:border-nebula/60"
+            placeholder={language === 'zh' ? '在这里写下你的答案。' : 'Write your answer here.'}
           />
 
           <div className="mt-4 flex flex-wrap gap-2">
             <button
               type="button"
               onClick={() => setShowSampleAnswer((current) => !current)}
-              className="inline-flex min-h-10 items-center justify-center rounded-full border border-nebula/30 bg-[#ffffff] px-4 py-2 text-xs font-bold uppercase tracking-widest text-nebula transition-colors hover:border-nebula/60 hover:bg-nebula/5"
+              className="inline-flex min-h-10 items-center justify-center rounded-full border border-nebula/30 bg-surface px-4 py-2 text-xs font-bold uppercase tracking-widest text-nebula transition-colors hover:border-nebula/60 hover:bg-nebula/5"
             >
               {showSampleAnswer
                 ? language === 'zh' ? '收起答案' : 'Hide answer'
@@ -223,7 +299,7 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
             <button
               type="button"
               onClick={() => setShowExplanation((current) => !current)}
-              className="inline-flex min-h-10 items-center justify-center rounded-full border border-slate-300 bg-[#ffffff] px-4 py-2 text-xs font-bold uppercase tracking-widest text-slate-700 transition-colors hover:border-nebula/60 hover:text-nebula"
+              className="inline-flex min-h-10 items-center justify-center rounded-full border border-slate-300 bg-surface px-4 py-2 text-xs font-bold uppercase tracking-widest text-slate-700 transition-colors hover:border-nebula/60 hover:text-nebula"
             >
               {showExplanation
                 ? language === 'zh' ? '收起解析' : 'Hide explanation'
@@ -272,10 +348,20 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
                         ? 'border-rose-500/45 bg-rose-500/10'
                         : isSelected
                           ? 'border-nebula/60 bg-nebula/10'
-                          : 'border-slate-200 bg-[#ffffff] hover:border-nebula/50'
+                          : 'border-slate-200 bg-surface hover:border-nebula/50'
                   }`}
                 >
-                  <span className="grid h-8 w-8 place-items-center rounded-full bg-slate-900 text-xs font-bold text-white">
+                  <span
+                    className={`grid h-8 w-8 place-items-center rounded-full border text-xs font-bold transition-colors ${
+                      isCorrectChoice
+                        ? 'border-emerald-500/50 bg-emerald-50 text-emerald-800'
+                        : isWrongChoice
+                          ? 'border-rose-500/50 bg-rose-50 text-rose-800'
+                          : isSelected
+                            ? 'border-nebula bg-nebula text-on-accent'
+                            : 'border-slate-300 bg-slate-50 text-slate-700'
+                    }`}
+                  >
                     {choice.label}
                   </span>
                   <span className="self-center text-sm leading-6 text-slate-700">
@@ -291,7 +377,7 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
               type="button"
               onClick={() => setCheckedAnswer(selectedAnswer)}
               disabled={!selectedAnswer || hasChecked}
-              className="inline-flex min-h-10 items-center justify-center rounded-full bg-slate-900 px-4 py-2 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-nebula disabled:opacity-35"
+              className="inline-flex min-h-10 items-center justify-center rounded-full border border-nebula bg-nebula px-4 py-2 text-xs font-bold uppercase tracking-widest text-on-accent transition-colors hover:bg-nebula/90 disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-surface disabled:text-ink-soft disabled:opacity-100"
             >
               {language === 'zh' ? '检查答案' : 'Check answer'}
             </button>
@@ -476,10 +562,36 @@ const ConceptDiagram: React.FC<{ diagram: CurriculumDiagram; language: 'en' | 'z
       case 'energy-levels':
         return (
           <>
-            {[132, 102, 76, 48].map((y, index) => <line key={y} x1="64" y1={y} x2="206" y2={y} stroke={index === 0 ? muted : stroke} strokeWidth="3" />)}
-            <line x1="132" y1="102" x2="132" y2="54" stroke={accent} strokeWidth="3" markerEnd="url(#arrow)" />
-            <path d="M150 84 q20 -18 42 0 q18 16 38 0" fill="none" stroke={accent} strokeWidth="3" />
-            <text x="116" y="76">hf</text>
+            {/* Y-axis: Energy */}
+            <line x1="44" y1="164" x2="44" y2="16" stroke={muted} strokeWidth="1.5" markerEnd="url(#arrow)" />
+            <text x="30" y="22" fontSize="11" fill={muted}>E</text>
+            <text x="30" y="172" fontSize="8" fill={muted}>eV</text>
+            {/* Ionization limit E=0 (dashed) */}
+            <line x1="58" y1="26" x2="210" y2="26" stroke={muted} strokeWidth="1.5" strokeDasharray="5 4" />
+            <text x="214" y="30" fontSize="9" fill={muted}>0</text>
+            {/* n=4: -0.85 eV */}
+            <line x1="58" y1="40" x2="210" y2="40" stroke={stroke} strokeWidth="2.5" />
+            <text x="214" y="44" fontSize="9" fill={stroke}>n=4</text>
+            <text x="54" y="44" fontSize="8" fill={muted} textAnchor="end">−0.85</text>
+            {/* n=3: -1.51 eV */}
+            <line x1="58" y1="58" x2="210" y2="58" stroke={stroke} strokeWidth="2.5" />
+            <text x="214" y="62" fontSize="9" fill={stroke}>n=3</text>
+            <text x="54" y="62" fontSize="8" fill={muted} textAnchor="end">−1.51</text>
+            {/* n=2: -3.4 eV */}
+            <line x1="58" y1="84" x2="210" y2="84" stroke={stroke} strokeWidth="2.5" />
+            <text x="214" y="88" fontSize="9" fill={stroke}>n=2</text>
+            <text x="54" y="88" fontSize="8" fill={muted} textAnchor="end">−3.4</text>
+            {/* n=1: -13.6 eV (ground state) */}
+            <line x1="58" y1="152" x2="210" y2="152" stroke={stroke} strokeWidth="3" />
+            <text x="214" y="156" fontSize="9" fill={stroke}>n=1</text>
+            <text x="54" y="156" fontSize="8" fill={muted} textAnchor="end">−13.6</text>
+            {/* Absorption arrow: n=1 → n=2 */}
+            <line x1="96" y1="148" x2="96" y2="90" stroke={accent} strokeWidth="2.5" markerEnd="url(#arrow)" />
+            <text x="72" y="124" fontSize="9" fill={accent}>absorb</text>
+            {/* Emission wavy photon: n=3 → n=1 */}
+            <path d="M158 62 C162 55 166 69 170 62 C174 55 178 69 182 62 C186 55 190 69 194 62" fill="none" stroke="#dc2626" strokeWidth="2" />
+            <line x1="194" y1="62" x2="194" y2="146" stroke="#dc2626" strokeWidth="2" markerEnd="url(#arrow)" />
+            <text x="160" y="112" fontSize="9" fill="#dc2626">emit γ</text>
           </>
         );
       case 'spacetime':
@@ -530,8 +642,8 @@ const ConceptDiagram: React.FC<{ diagram: CurriculumDiagram; language: 'en' | 'z
   })();
 
   return (
-    <figure className="rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
-      <svg viewBox="0 0 280 180" className="h-36 w-full text-[14px] font-semibold text-slate-700 sm:h-44" role="img" aria-label={diagram.title[language]}>
+    <figure className="rounded-lg border border-slate-200 bg-surface p-3 sm:p-4">
+      <svg viewBox="0 0 280 180" className="h-44 w-full text-[14px] font-semibold text-slate-700 sm:h-52" role="img" aria-label={diagram.title[language]}>
         <defs>
           <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
             <path d="M0,0 L0,6 L8,3 z" fill={accent} />
@@ -549,6 +661,9 @@ const ConceptDiagram: React.FC<{ diagram: CurriculumDiagram; language: 'en' | 'z
 
 export const CurriculumSection: React.FC = () => {
   const { language, t } = useLanguage();
+  const { isAdmin } = useAuth();
+  const [adminContentMode, setAdminContentMode] = useState<CurriculumContentMode>('teacher');
+  const contentMode: CurriculumContentMode = isAdmin ? adminContentMode : 'student';
   const [systemId, setSystemId] = useState<LearningSystemId>('ap');
   const selectedSystem = learningSystems.find((item) => item.id === systemId) ?? learningSystems[0];
   const [courseId, setCourseId] = useState(selectedSystem.courses[0]?.id ?? '');
@@ -589,6 +704,14 @@ export const CurriculumSection: React.FC = () => {
     setOpenUnits(allOpen ? new Set() : new Set(course.units.map((unit) => unit.number)));
   };
 
+  const selectUnitFromRoute = (number: number) => {
+    if (!course) return;
+    setOpenUnits(new Set([number]));
+    window.requestAnimationFrame(() => {
+      document.getElementById(unitAnchorBase(course.id, number))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  };
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 10 }}
@@ -596,13 +719,49 @@ export const CurriculumSection: React.FC = () => {
       exit={{ opacity: 0, y: -10 }}
       className="space-y-6 sm:space-y-8"
     >
-      <div className="max-w-3xl">
-        <div className="mb-4 flex items-center gap-2 text-nebula">
-          <BookOpenCheck className="h-4 w-4" />
-          <span className="text-xs font-bold uppercase tracking-widest">{t.curriculum.sectionLabel}</span>
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+        <div className="max-w-3xl">
+          <div className="mb-4 flex items-center gap-2 text-nebula">
+            <BookOpenCheck className="h-4 w-4" />
+            <span className="text-xs font-bold uppercase tracking-widest">{t.curriculum.sectionLabel}</span>
+          </div>
+          <h2 className="text-balance text-3xl font-light md:text-4xl">{t.curriculum.title}</h2>
+          <p className="mt-4 text-sm leading-7 text-slate-600 md:text-base">{t.curriculum.description}</p>
         </div>
-        <h2 className="text-balance text-3xl font-light md:text-4xl">{t.curriculum.title}</h2>
-        <p className="mt-4 text-sm leading-7 text-slate-600 md:text-base">{t.curriculum.description}</p>
+        {isAdmin && (
+          <div
+            role="group"
+            aria-label={t.curriculum.contentMode}
+            className="grid shrink-0 grid-cols-2 gap-1 self-start rounded-lg border border-slate-200 bg-surface p-1"
+          >
+            <button
+              type="button"
+              onClick={() => setAdminContentMode('teacher')}
+              aria-pressed={contentMode === 'teacher'}
+              className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-md px-3 text-xs font-semibold transition-colors ${
+                contentMode === 'teacher'
+                  ? 'bg-nebula text-on-accent'
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-nebula'
+              }`}
+            >
+              <Presentation className="h-4 w-4" />
+              {t.curriculum.teacherMode}
+            </button>
+            <button
+              type="button"
+              onClick={() => setAdminContentMode('student')}
+              aria-pressed={contentMode === 'student'}
+              className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-md px-3 text-xs font-semibold transition-colors ${
+                contentMode === 'student'
+                  ? 'bg-nebula text-on-accent'
+                  : 'text-slate-600 hover:bg-slate-50 hover:text-nebula'
+              }`}
+            >
+              <GraduationCap className="h-4 w-4" />
+              {t.curriculum.studentMode}
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4" role="tablist" aria-label={t.curriculum.systemSelector}>
@@ -617,24 +776,20 @@ export const CurriculumSection: React.FC = () => {
               onClick={() => selectSystem(system.id)}
               className={`min-h-24 rounded-lg border px-4 py-4 text-left transition-colors sm:min-h-28 ${
                 active
-                  ? 'border-nebula bg-white/10 text-nebula'
-                  : 'border-white/10 bg-white/5 text-slate-600 hover:border-white/30 hover:text-starlight'
+                  ? 'border-nebula bg-surface-tint-strong text-nebula'
+                  : 'border-line bg-surface-tint text-slate-600 hover:border-line-strong hover:text-starlight'
               }`}
             >
               <span className="block text-sm font-semibold leading-5">{system.label[language]}</span>
               <span className="mt-2 block text-xs leading-5 opacity-70">{system.description[language]}</span>
-              <span className="mt-3 inline-flex rounded-full border border-nebula/20 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-nebula">
-                {system.status[language]}
-              </span>
             </button>
           );
         })}
       </div>
 
       {!course ? (
-        <div className="rounded-lg border border-slate-200 bg-[#ffffff] p-5 sm:p-6">
-          <p className="text-xs font-semibold uppercase tracking-widest text-nebula">{selectedSystem.status[language]}</p>
-          <h3 className="mt-3 text-xl font-semibold">{selectedSystem.label[language]}</h3>
+        <div className="rounded-lg border border-slate-200 bg-surface p-5 sm:p-6">
+          <h3 className="text-xl font-semibold">{selectedSystem.label[language]}</h3>
           <p className="mt-2 text-sm leading-6 text-slate-500">{selectedSystem.sourceNote[language]}</p>
         </div>
       ) : (
@@ -652,8 +807,8 @@ export const CurriculumSection: React.FC = () => {
                     onClick={() => selectCourse(item.id)}
                     className={`min-h-14 rounded-lg border px-3 py-3 text-left transition-colors sm:min-h-16 ${
                       active
-                        ? 'border-nebula bg-white/10 text-nebula'
-                        : 'border-white/10 bg-white/5 text-slate-600 hover:border-white/30 hover:text-starlight'
+                        ? 'border-nebula bg-surface-tint-strong text-nebula'
+                        : 'border-line bg-surface-tint text-slate-600 hover:border-line-strong hover:text-starlight'
                     }`}
                   >
                     <span className="block text-sm font-semibold leading-5">{item.name[language]}</span>
@@ -676,7 +831,7 @@ export const CurriculumSection: React.FC = () => {
               <button
                 type="button"
                 onClick={toggleAll}
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-white/10 px-3 text-xs font-semibold text-slate-600 transition-colors hover:border-white/30 hover:text-nebula"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-line px-3 text-xs font-semibold text-slate-600 transition-colors hover:border-line-strong hover:text-nebula"
               >
                 <Layers3 className="h-4 w-4" />
                 {allOpen ? t.curriculum.collapseAll : t.curriculum.expandAll}
@@ -685,7 +840,7 @@ export const CurriculumSection: React.FC = () => {
                 href={course.sourceUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-white/10 px-3 text-xs font-semibold text-slate-600 transition-colors hover:border-white/30 hover:text-nebula"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-line px-3 text-xs font-semibold text-slate-600 transition-colors hover:border-line-strong hover:text-nebula"
               >
                 {course.sourceLabel?.[language] ?? t.curriculum.officialSource}
                 <ExternalLink className="h-4 w-4" />
@@ -693,13 +848,15 @@ export const CurriculumSection: React.FC = () => {
             </div>
           </div>
 
+          <CourseRouteMap units={course.units} activeUnits={openUnits} language={language} onSelectUnit={selectUnitFromRoute} />
+
           <div className="divide-y divide-slate-200 border-y border-slate-200">
             {course.units.map((unit) => {
               const open = openUnits.has(unit.number);
               const panelId = `${course.id}-unit-${unit.number}`;
               const baseId = unitAnchorBase(course.id, unit.number);
               return (
-                <article key={unit.number}>
+                <article key={unit.number} id={baseId} className="scroll-mt-28">
                   <button
                     type="button"
                     onClick={() => toggleUnit(unit.number)}
@@ -707,7 +864,7 @@ export const CurriculumSection: React.FC = () => {
                     aria-controls={panelId}
                     className="group flex w-full items-center gap-3 py-4 text-left sm:gap-4 sm:py-5"
                   >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10 text-sm font-bold text-nebula sm:h-10 sm:w-10">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-surface-tint-strong text-sm font-bold text-nebula sm:h-10 sm:w-10">
                       {unit.number}
                     </span>
                     <span className="min-w-0 flex-1">
@@ -719,7 +876,8 @@ export const CurriculumSection: React.FC = () => {
                       </span>
                     </span>
                     <span className="hidden text-xs text-slate-500 md:block">
-                      {unit.weighting} {t.curriculum.examWeight}
+                      {unit.weighting}
+                      {course.id === 'cambridge-igcse-0625' ? '' : ` ${t.curriculum.examWeight}`}
                     </span>
                     <ChevronDown className={`h-5 w-5 shrink-0 text-slate-500 transition-transform ${open ? 'rotate-180' : ''}`} />
                   </button>
@@ -738,79 +896,119 @@ export const CurriculumSection: React.FC = () => {
                           </p>
                         )}
 
-                        <UnitDirectory unit={unit} courseId={course.id} language={language} />
+                        <div className="grid gap-4 lg:grid-cols-[280px_minmax(0,1fr)]">
+                          <UnitDirectory unit={unit} courseId={course.id} language={language} contentMode={contentMode} className="lg:sticky lg:top-6 lg:max-h-[calc(100vh-3rem)] lg:overflow-y-auto" />
 
-                        <div className="grid gap-4 xl:grid-cols-[1fr_1fr]">
-                          <section id={`${baseId}-focus`} className="scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-4">
-                            <div className="mb-3 flex items-center gap-2 text-nebula">
-                              <ListChecks className="h-4 w-4" />
-                              <h4 className="text-sm font-semibold">{t.curriculum.focusTitle}</h4>
-                            </div>
-                            <ul className="space-y-2">
-                              {(unit.focus ?? []).map((item) => (
-                                <li key={item.en} className="flex gap-2 text-sm leading-6 text-slate-600">
-                                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-nebula" />
-                                  <span><InlineMathText>{item[language]}</InlineMathText></span>
-                                </li>
-                              ))}
-                            </ul>
-                          </section>
-
-                          <section id={`${baseId}-topics`} className="scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-4">
-                            <div className="mb-3 flex items-center gap-2 text-nebula">
-                              <ListChecks className="h-4 w-4" />
-                              <h4 className="text-sm font-semibold">{t.curriculum.checklistTitle}</h4>
-                            </div>
-                            <div className="grid gap-2 min-[520px]:grid-cols-2">
-                              {unit.topics.map((item) => (
-                                <div key={item.id} className="flex min-h-12 items-start gap-3 rounded-md bg-slate-50 px-3 py-2">
-                                  <span className="mt-0.5 shrink-0 font-mono text-xs font-semibold text-nebula">{item.id}</span>
-                                  <span className="text-sm leading-5 text-slate-600">{item.title[language]}</span>
+                          <div className="min-w-0">
+                            <div className="grid gap-4 xl:grid-cols-[1fr_1fr]">
+                              <section id={`${baseId}-focus`} className="scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-4">
+                                <div className="mb-3 flex items-center gap-2 text-nebula">
+                                  <ListChecks className="h-4 w-4" />
+                                  <h4 className="text-sm font-semibold">{t.curriculum.focusTitle}</h4>
                                 </div>
-                              ))}
-                            </div>
-                          </section>
-                        </div>
+                                <ul className="space-y-2">
+                                  {(unit.focus ?? []).map((item) => (
+                                    <li key={item.en} className="flex gap-2 text-sm leading-6 text-slate-600">
+                                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-nebula" />
+                                      <span><InlineMathText>{item[language]}</InlineMathText></span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </section>
 
-                        {!!unit.lessons?.length && (
-                          <section id={`${baseId}-lessons`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
-                            <div className="mb-3 flex items-center gap-2 text-nebula">
-                              <NotebookText className="h-4 w-4" />
-                              <h4 className="text-sm font-semibold">{t.curriculum.lessonsTitle}</h4>
+                              <section id={`${baseId}-topics`} className="scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-4">
+                                <div className="mb-3 flex items-center gap-2 text-nebula">
+                                  <ListChecks className="h-4 w-4" />
+                                  <h4 className="text-sm font-semibold">{t.curriculum.checklistTitle}</h4>
+                                </div>
+                                <div className="grid gap-2 min-[520px]:grid-cols-2">
+                                  {unit.topics.map((item) => (
+                                    <div key={item.id} className="flex min-h-12 items-start gap-3 rounded-md bg-slate-50 px-3 py-2">
+                                      <span className="mt-0.5 shrink-0 font-mono text-xs font-semibold text-nebula">{item.id}</span>
+                                      <span className="text-sm leading-5 text-slate-600">{item.title[language]}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </section>
                             </div>
-                            <div className="space-y-4">
-                              {unit.lessons.map((lesson, lessonIndex) => (
-                                <article
-                                  key={lesson.title.en}
-                                  id={lessonAnchorId(course.id, unit.number, lessonIndex)}
-                                  className="scroll-mt-24 rounded-lg border border-slate-200 bg-slate-50 p-4"
-                                >
-                                  <h5 className="text-base font-semibold text-slate-900">{lesson.title[language]}</h5>
-                                  <p className="mt-2 text-sm leading-6 text-slate-600">
-                                    <InlineMathText>{lesson.description[language]}</InlineMathText>
-                                  </p>
 
-                                  <div className="mt-4 space-y-2">
-                                    {lesson.sections.map((section, index) => (
+                            {!!unit.lessons?.length && (
+                              <section id={`${baseId}-lessons`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-3 sm:p-4">
+                                <div className="mb-3 flex items-center gap-2 text-nebula">
+                                  <NotebookText className="h-4 w-4" />
+                                  <h4 className="text-sm font-semibold">{t.curriculum.lessonsTitle}</h4>
+                                </div>
+                                <div className="space-y-4">
+                                  {unit.lessons.map((lesson, lessonIndex) => {
+                                    const content = lessonContentForMode(lesson, contentMode);
+                                    return (
+                                      <article
+                                        key={lesson.title.en}
+                                        id={lessonAnchorId(course.id, unit.number, lessonIndex)}
+                                        className="scroll-mt-24 rounded-lg border border-slate-200 bg-slate-50 p-4"
+                                      >
+                                        <h5 className="text-base font-semibold text-slate-900">{content.title[language]}</h5>
+                                        <p className="mt-2 text-sm leading-6 text-slate-600">
+                                          <InlineMathText>{content.description[language]}</InlineMathText>
+                                        </p>
+
+                                        <div className="mt-4 space-y-2">
+                                          {content.sections.map((section, index) => (
                                       <details
                                         key={section.heading.en}
                                         id={lessonSectionAnchorId(course.id, unit.number, lessonIndex, index)}
                                         open={lessonIndex === 0 && index === 0}
-                                        className="group scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] px-3 py-2"
+                                        className="group scroll-mt-24 rounded-lg border border-slate-200 bg-surface px-3 py-2"
                                       >
                                         <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-1 text-sm font-semibold text-slate-800">
                                           <span>{section.heading[language]}</span>
-                                          <ChevronDown className="h-4 w-4 shrink-0 text-slate-400 transition-transform group-open:rotate-180" />
+                                          <ChevronDown className="h-4 w-4 shrink-0 text-ink-soft transition-transform group-open:rotate-180" />
                                         </summary>
                                         <div className="space-y-3 pb-2 pt-3">
                                           {section.videos?.map((video) => (
                                             <LessonVideo key={video.sourceUrl} video={video} language={language} />
                                           ))}
+                                          {!!section.images?.length && (
+                                            <div className={section.images.length > 1 ? 'grid gap-3 sm:grid-cols-2' : ''}>
+                                              {section.images.map((image) => (
+                                                <LessonImage key={image.src} image={image} language={language} />
+                                              ))}
+                                            </div>
+                                          )}
                                           {section.paragraphs?.map((paragraph) => (
                                             <p key={paragraph.en} className="text-sm leading-7 text-slate-600">
                                               <InlineMathText>{paragraph[language]}</InlineMathText>
                                             </p>
                                           ))}
+                                          {section.table && (
+                                            <figure className="overflow-x-auto rounded-lg border border-slate-200 bg-surface">
+                                              <table className="w-full text-sm">
+                                                <caption className="px-3 pt-2 pb-1 text-left text-xs font-semibold text-slate-500">
+                                                  {section.table.caption[language]}
+                                                </caption>
+                                                <thead>
+                                                  <tr className="border-b border-slate-200 bg-slate-50">
+                                                    {section.table.headers.map((h) => (
+                                                      <th key={h.en} className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">
+                                                        {h[language]}
+                                                      </th>
+                                                    ))}
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  {section.table.rows.map((row, ri) => (
+                                                    <tr key={ri} className="border-b border-slate-100 last:border-0">
+                                                      {row.map((cell, ci) => (
+                                                        <td key={ci} className="px-3 py-2 text-slate-600">
+                                                          <InlineMathText>{cell[language]}</InlineMathText>
+                                                        </td>
+                                                      ))}
+                                                    </tr>
+                                                  ))}
+                                                </tbody>
+                                              </table>
+                                            </figure>
+                                          )}
                                           {section.classroomQuestions?.map((question) => (
                                             <ClassroomQuestionCard key={question.id} question={question} language={language} />
                                           ))}
@@ -841,16 +1039,17 @@ export const CurriculumSection: React.FC = () => {
                                           )}
                                         </div>
                                       </details>
-                                    ))}
-                                  </div>
-                                </article>
-                              ))}
-                            </div>
-                          </section>
-                        )}
+                                          ))}
+                                        </div>
+                                      </article>
+                                    );
+                                  })}
+                                </div>
+                              </section>
+                            )}
 
-                        {!!unit.formulas?.length && (
-                          <section id={`${baseId}-formulas`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
+                            {!!unit.formulas?.length && (
+                              <section id={`${baseId}-formulas`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-3 sm:p-4">
                             <div className="mb-3 flex items-center gap-2 text-nebula">
                               <FunctionSquare className="h-4 w-4" />
                               <h4 className="text-sm font-semibold">{t.curriculum.formulasTitle}</h4>
@@ -864,11 +1063,11 @@ export const CurriculumSection: React.FC = () => {
                                 </div>
                               ))}
                             </div>
-                          </section>
-                        )}
+                              </section>
+                            )}
 
-                        {!!unit.diagrams?.length && (
-                          <section id={`${baseId}-diagrams`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-[#ffffff] p-3 sm:p-4">
+                            {!!unit.diagrams?.length && (
+                              <section id={`${baseId}-diagrams`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-3 sm:p-4">
                             <div className="mb-3 flex items-center gap-2 text-nebula">
                               <ImageIcon className="h-4 w-4" />
                               <h4 className="text-sm font-semibold">{t.curriculum.diagramsTitle}</h4>
@@ -878,8 +1077,10 @@ export const CurriculumSection: React.FC = () => {
                                 <ConceptDiagram key={`${item.kind}-${item.title.en}`} diagram={item} language={language} />
                               ))}
                             </div>
-                          </section>
-                        )}
+                              </section>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     </motion.div>
                   )}

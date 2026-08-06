@@ -7,5 +7,7 @@ coverage/
 .DS_Store
 *.log
 *.tsbuildinfo
+outputs/crackap-apc-mechanics-test16/source-snapshots/
 .env*
 !.env.example
+.vercel

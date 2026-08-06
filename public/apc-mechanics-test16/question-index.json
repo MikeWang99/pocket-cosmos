@@ -1,0 +1,444 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-02T04:11:38.875Z",
+  "bankId": "crackap-apc-mechanics-test16",
+  "title": "Rotation I: Kinematics, Force, Work, and Energy",
+  "sourcePage": "https://www.crackap.com/ap/physics-c-mechanics/test16.html",
+  "rightsStatus": "unknown",
+  "reviewStatus": "approved_by_user_request",
+  "questions": [
+    {
+      "id": "crackap-apc-mechanics-test16-q01",
+      "number": 1,
+      "sourceQuestionId": 153,
+      "sourceAnswer": "D",
+      "independentlyVerifiedAnswer": "D",
+      "answerVerified": true,
+      "difficulty": 2,
+      "knowledgeTags": [
+        "Torque",
+        "Rotational dynamics",
+        "Angular acceleration"
+      ],
+      "skillTags": [
+        "Convert rotations per second to radians per second",
+        "Apply $\\tau=I\\alpha$"
+      ],
+      "trainingFocus": "Angular units and the rotational analogue of Newton's second law",
+      "stemAsset": "/apc-mechanics-test16/generated/q01-stem.svg",
+      "choiceAssets": [
+        {
+          "label": "A",
+          "asset": "/apc-mechanics-test16/generated/q01-choice-a.svg"
+        },
+        {
+          "label": "B",
+          "asset": "/apc-mechanics-test16/generated/q01-choice-b.svg"
+        },
+        {
+          "label": "C",
+          "asset": "/apc-mechanics-test16/generated/q01-choice-c.svg"
+        },
+        {
+          "label": "D",
+          "asset": "/apc-mechanics-test16/generated/q01-choice-d.svg"
+        },
+        {
+          "label": "E",
+          "asset": "/apc-mechanics-test16/generated/q01-choice-e.svg"
+        }
+      ],
+      "explanation": "Convert the final speed to angular speed: $\\omega_f=2\\pi f$. Since the disk starts from rest, $\\alpha=\\Delta\\omega/t=2\\pi f/t$. Therefore $\\tau=I\\alpha=2\\pi fI/t$, so the answer is D."
+    },
+    {
+      "id": "crackap-apc-mechanics-test16-q02",
+      "number": 2,
+      "sourceQuestionId": 154,
+      "sourceAnswer": "B",
+      "independentlyVerifiedAnswer": "B",
+      "answerVerified": true,
+      "difficulty": 3,
+      "knowledgeTags": [
+        "Angular displacement",
+        "Angular velocity-time graphs",
+        "Rotational kinematics"
+      ],
+      "skillTags": [
+        "Interpret area under an $\\omega$-$t$ graph",
+        "Compare signed areas"
+      ],
+      "trainingFocus": "Graph-to-quantity translation: area represents angular displacement",
+      "stemAsset": "/apc-mechanics-test16/generated/q02-stem.svg",
+      "choiceAssets": [
+        {
+          "label": "A",
+          "asset": "/apc-mechanics-test16/generated/q02-choice-a.svg"
+        },
+        {
+          "label": "B",
+          "asset": "/apc-mechanics-test16/generated/q02-choice-b.svg"
+        },
+        {
+          "label": "C",
+          "asset": "/apc-mechanics-test16/generated/q02-choice-c.svg"
+        },
+        {
+          "label": "D",
+          "asset": "/apc-mechanics-test16/generated/q02-choice-d.svg"
+        },
+        {
+          "label": "E",
+          "asset": "/apc-mechanics-test16/generated/q02-choice-e.svg"
+        }
+      ],
+      "explanation": "Angular displacement is $\\Delta\\theta=\\int \\omega\\,dt$, the signed area under the $\\omega$-versus-$t$ graph. Graph B encloses area 1 over the displayed interval, which is larger than the signed area for every other graph. The answer is B."
+    },
+    {
+      "id": "crackap-apc-mechanics-test16-q03",
+      "number": 3,
+      "sourceQuestionId": 155,
+      "sourceAnswer": "E",
+      "independentlyVerifiedAnswer": "E",
+      "answerVerified": true,
+      "difficulty": 3,
+      "knowledgeTags": [
+        "Average angular acceleration",
+        "Angular velocity-time graphs",
+        "Rotational kinematics"
+      ],
+      "skillTags": [
+        "Use endpoints rather than instantaneous slope",
+        "Calculate $\\Delta\\omega/\\Delta t$"
+      ],
+      "trainingFocus": "Distinguishing average angular acceleration from the changing slope of a curve",
+      "stemAsset": "/apc-mechanics-test16/generated/q03-stem.svg",
+      "choiceAssets": [
+        {
+          "label": "A",
+          "asset": "/apc-mechanics-test16/generated/q03-choice-a.svg"
+        },
+        {
+          "label": "B",
+          "asset": "/apc-mechanics-test16/generated/q03-choice-b.svg"
+        },
+        {
+          "label": "C",
+          "asset": "/apc-mechanics-test16/generated/q03-choice-c.svg"
+        },
+        {
+          "label": "D",
+          "asset": "/apc-mechanics-test16/generated/q03-choice-d.svg"
+        },
+        {
+          "label": "E",
+          "asset": "/apc-mechanics-test16/generated/q03-choice-e.svg"
+        }
+      ],
+      "explanation": "Average angular acceleration is $\\bar{\\alpha}=(\\omega_f-\\omega_i)/\\Delta t$. Graphs C and E both change from 0 to 1 over the same time interval, so they tie for the greatest average angular acceleration. The answer is E."
+    },
+    {
+      "id": "crackap-apc-mechanics-test16-q04",
+      "number": 4,
+      "sourceQuestionId": 156,
+      "sourceAnswer": "A",
+      "independentlyVerifiedAnswer": "A",
+      "answerVerified": true,
+      "difficulty": 3,
+      "knowledgeTags": [
+        "Average angular velocity",
+        "Angular velocity-time graphs",
+        "Signed area"
+      ],
+      "skillTags": [
+        "Use signed area",
+        "Distinguish average value from average acceleration"
+      ],
+      "trainingFocus": "Signed graphical area and the average value of a time-dependent quantity",
+      "stemAsset": "/apc-mechanics-test16/generated/q04-stem.svg",
+      "choiceAssets": [
+        {
+          "label": "A",
+          "asset": "/apc-mechanics-test16/generated/q04-choice-a.svg"
+        },
+        {
+          "label": "B",
+          "asset": "/apc-mechanics-test16/generated/q04-choice-b.svg"
+        },
+        {
+          "label": "C",
+          "asset": "/apc-mechanics-test16/generated/q04-choice-c.svg"
+        },
+        {
+          "label": "D",
+          "asset": "/apc-mechanics-test16/generated/q04-choice-d.svg"
+        },
+        {
+          "label": "E",
+          "asset": "/apc-mechanics-test16/generated/q04-choice-e.svg"
+        }
+      ],
+      "explanation": "Average angular velocity is $\\bar{\\omega}=\\Delta\\theta/\\Delta t=(1/\\Delta t)\\int\\omega\\,dt$. In graph A, the positive and negative signed areas cancel, giving zero average angular velocity. Every other graph has a positive area, so A is the smallest."
+    },
+    {
+      "id": "crackap-apc-mechanics-test16-q05",
+      "number": 5,
+      "sourceQuestionId": 157,
+      "sourceAnswer": "A",
+      "independentlyVerifiedAnswer": "A",
+      "answerVerified": true,
+      "difficulty": 4,
+      "knowledgeTags": [
+        "Rolling motion",
+        "Angular velocity vector",
+        "Angular acceleration vector"
+      ],
+      "skillTags": [
+        "Apply the right-hand rule",
+        "Relate slowing rotation to angular acceleration direction"
+      ],
+      "trainingFocus": "Three-dimensional direction reasoning for rolling wheels",
+      "stemAsset": "/apc-mechanics-test16/generated/q05-stem.svg",
+      "choiceAssets": [
+        {
+          "label": "A",
+          "asset": "/apc-mechanics-test16/generated/q05-choice-a.svg"
+        },
+        {
+          "label": "B",
+          "asset": "/apc-mechanics-test16/generated/q05-choice-b.svg"
+        },
+        {
+          "label": "C",
+          "asset": "/apc-mechanics-test16/generated/q05-choice-c.svg"
+        },
+        {
+          "label": "D",
+          "asset": "/apc-mechanics-test16/generated/q05-choice-d.svg"
+        },
+        {
+          "label": "E",
+          "asset": "/apc-mechanics-test16/generated/q05-choice-e.svg"
+        }
+      ],
+      "explanation": "For rolling in the $+y$ direction, the wheel's angular velocity points in the $-x$ direction. Slowing down means the angular acceleration opposes the angular velocity, so $\\vec{\\alpha}$ points in the $+x$ direction. The answer is A."
+    },
+    {
+      "id": "crackap-apc-mechanics-test16-q06",
+      "number": 6,
+      "sourceQuestionId": 158,
+      "sourceAnswer": "B",
+      "independentlyVerifiedAnswer": "B",
+      "answerVerified": true,
+      "difficulty": 2,
+      "knowledgeTags": [
+        "Rigid-body rotation",
+        "Linear speed",
+        "Angular speed"
+      ],
+      "skillTags": [
+        "Apply $v=r\\omega$",
+        "Compare points at different radii"
+      ],
+      "trainingFocus": "The radius dependence of tangential speed",
+      "stemAsset": "/apc-mechanics-test16/generated/q06-stem.svg",
+      "choiceAssets": [
+        {
+          "label": "A",
+          "asset": "/apc-mechanics-test16/generated/q06-choice-a.svg"
+        },
+        {
+          "label": "B",
+          "asset": "/apc-mechanics-test16/generated/q06-choice-b.svg"
+        },
+        {
+          "label": "C",
+          "asset": "/apc-mechanics-test16/generated/q06-choice-c.svg"
+        },
+        {
+          "label": "D",
+          "asset": "/apc-mechanics-test16/generated/q06-choice-d.svg"
+        },
+        {
+          "label": "E",
+          "asset": "/apc-mechanics-test16/generated/q06-choice-e.svg"
+        }
+      ],
+      "explanation": "For a rigid disk, $v=r\\omega$. Point A is at twice the radius of point B while both points share the same $\\omega$, so $v_A=2v_B$. The answer is B."
+    },
+    {
+      "id": "crackap-apc-mechanics-test16-q07",
+      "number": 7,
+      "sourceQuestionId": 159,
+      "sourceAnswer": "C",
+      "independentlyVerifiedAnswer": "C",
+      "answerVerified": true,
+      "difficulty": 1,
+      "knowledgeTags": [
+        "Rigid-body rotation",
+        "Angular speed"
+      ],
+      "skillTags": [
+        "Recognize a shared angular speed on a rigid body",
+        "Distinguish angular speed from linear speed"
+      ],
+      "trainingFocus": "The difference between common angular speed and radius-dependent linear speed",
+      "stemAsset": "/apc-mechanics-test16/generated/q07-stem.svg",
+      "choiceAssets": [
+        {
+          "label": "A",
+          "asset": "/apc-mechanics-test16/generated/q07-choice-a.svg"
+        },
+        {
+          "label": "B",
+          "asset": "/apc-mechanics-test16/generated/q07-choice-b.svg"
+        },
+        {
+          "label": "C",
+          "asset": "/apc-mechanics-test16/generated/q07-choice-c.svg"
+        },
+        {
+          "label": "D",
+          "asset": "/apc-mechanics-test16/generated/q07-choice-d.svg"
+        },
+        {
+          "label": "E",
+          "asset": "/apc-mechanics-test16/generated/q07-choice-e.svg"
+        }
+      ],
+      "explanation": "Every point on a rigid body completes each revolution in the same time, so all points have the same angular speed. The answer is C."
+    },
+    {
+      "id": "crackap-apc-mechanics-test16-q08",
+      "number": 8,
+      "sourceQuestionId": 160,
+      "sourceAnswer": "B",
+      "independentlyVerifiedAnswer": "B",
+      "answerVerified": true,
+      "difficulty": 3,
+      "knowledgeTags": [
+        "Torque",
+        "Rotational inertia",
+        "Tangential acceleration",
+        "Rotational dynamics"
+      ],
+      "skillTags": [
+        "Apply $\\tau=I\\alpha$",
+        "Connect $a_t=\\alpha R$",
+        "Use a standard moment of inertia"
+      ],
+      "trainingFocus": "Linking torque, angular acceleration, and the cable's linear acceleration",
+      "stemAsset": "/apc-mechanics-test16/generated/q08-stem.svg",
+      "choiceAssets": [
+        {
+          "label": "A",
+          "asset": "/apc-mechanics-test16/generated/q08-choice-a.svg"
+        },
+        {
+          "label": "B",
+          "asset": "/apc-mechanics-test16/generated/q08-choice-b.svg"
+        },
+        {
+          "label": "C",
+          "asset": "/apc-mechanics-test16/generated/q08-choice-c.svg"
+        },
+        {
+          "label": "D",
+          "asset": "/apc-mechanics-test16/generated/q08-choice-d.svg"
+        },
+        {
+          "label": "E",
+          "asset": "/apc-mechanics-test16/generated/q08-choice-e.svg"
+        }
+      ],
+      "explanation": "The applied torque is $\\tau=FR$. Using $\\tau=I\\alpha$ and $I=\\tfrac12MR^2$ gives $\\alpha=2F/(MR)$. With no slipping between cable and cylinder, $a=\\alpha R=2F/M$. The answer is B."
+    },
+    {
+      "id": "crackap-apc-mechanics-test16-q09",
+      "number": 9,
+      "sourceQuestionId": 161,
+      "sourceAnswer": "E",
+      "independentlyVerifiedAnswer": "E",
+      "answerVerified": true,
+      "difficulty": 3,
+      "knowledgeTags": [
+        "Net torque",
+        "Lever arm",
+        "Force components",
+        "Torque sign convention"
+      ],
+      "skillTags": [
+        "Identify the perpendicular force component",
+        "Assign clockwise and counterclockwise signs",
+        "Calculate $\\tau=rF\\sin\\theta$"
+      ],
+      "trainingFocus": "Torque direction and the perpendicular component of an angled force",
+      "stemAsset": "/apc-mechanics-test16/generated/q09-stem.svg",
+      "choiceAssets": [
+        {
+          "label": "A",
+          "asset": "/apc-mechanics-test16/generated/q09-choice-a.svg"
+        },
+        {
+          "label": "B",
+          "asset": "/apc-mechanics-test16/generated/q09-choice-b.svg"
+        },
+        {
+          "label": "C",
+          "asset": "/apc-mechanics-test16/generated/q09-choice-c.svg"
+        },
+        {
+          "label": "D",
+          "asset": "/apc-mechanics-test16/generated/q09-choice-d.svg"
+        },
+        {
+          "label": "E",
+          "asset": "/apc-mechanics-test16/generated/q09-choice-e.svg"
+        }
+      ],
+      "explanation": "Taking counterclockwise as positive, $F_1$ produces $+F_1\\ell_1$. Only the component $F_2\\sin\\theta$ perpendicular to the bar produces torque, and it acts clockwise, giving $-F_2\\ell_2\\sin\\theta$. Thus $\\tau_{net}=F_1\\ell_1-F_2\\ell_2\\sin\\theta$, answer E."
+    },
+    {
+      "id": "crackap-apc-mechanics-test16-q10",
+      "number": 10,
+      "sourceQuestionId": 162,
+      "sourceAnswer": "C",
+      "independentlyVerifiedAnswer": "C",
+      "answerVerified": true,
+      "difficulty": 4,
+      "knowledgeTags": [
+        "Angular displacement",
+        "Piecewise angular motion",
+        "Angular velocity-time graphs"
+      ],
+      "skillTags": [
+        "Find area under a piecewise $\\omega$-$t$ graph",
+        "Relate symmetric acceleration and deceleration intervals"
+      ],
+      "trainingFocus": "Combining triangular and rectangular areas for multi-stage rotational motion",
+      "stemAsset": "/apc-mechanics-test16/generated/q10-stem.svg",
+      "choiceAssets": [
+        {
+          "label": "A",
+          "asset": "/apc-mechanics-test16/generated/q10-choice-a.svg"
+        },
+        {
+          "label": "B",
+          "asset": "/apc-mechanics-test16/generated/q10-choice-b.svg"
+        },
+        {
+          "label": "C",
+          "asset": "/apc-mechanics-test16/generated/q10-choice-c.svg"
+        },
+        {
+          "label": "D",
+          "asset": "/apc-mechanics-test16/generated/q10-choice-d.svg"
+        },
+        {
+          "label": "E",
+          "asset": "/apc-mechanics-test16/generated/q10-choice-e.svg"
+        }
+      ],
+      "explanation": "The peak angular speed is $\\omega_{max}=\\alpha\\Delta t_1$. The acceleration and deceleration intervals have equal duration and equal triangular areas on an $\\omega$-$t$ graph, together contributing $\\alpha(\\Delta t_1)^2$. The constant-speed interval contributes $\\omega_{max}\\Delta t_2=\\alpha\\Delta t_1\\Delta t_2$. Their sum is choice C."
+    }
+  ]
+}

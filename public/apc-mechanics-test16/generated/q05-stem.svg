@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="250" viewBox="0 0 800 250" role="img" aria-label="A truck drives on the xy-plane in the positive y-direction. If it is slowing down, in what direction is the angular acceleration of its wheels?">
+  <rect width="100%" height="100%" rx="18" fill="#ffffff" />
+  <text fill="#111827" font-family="Georgia, 'Times New Roman', serif" font-size="30" line-height="1.4">
+      <tspan x="52" y="66">A truck drives on the xy-plane in the</tspan>
+      <tspan x="52" y="108">positive y-direction. If it is slowing down,</tspan>
+      <tspan x="52" y="150">in what direction is the angular</tspan>
+      <tspan x="52" y="192">acceleration of its wheels?</tspan>
+  </text>
+  
+</svg>

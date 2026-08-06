@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="290" viewBox="0 0 800 290" role="img" aria-label="A centrifuge rotor accelerates from rest, rotates at constant speed, and then slows at the same acceleration magnitude until it stops. What is the total angular displacement?">
+  <rect width="100%" height="100%" rx="18" fill="#ffffff" />
+  <text fill="#111827" font-family="Georgia, 'Times New Roman', serif" font-size="30" line-height="1.4">
+      <tspan x="52" y="65">A centrifuge rotor accelerates from rest,</tspan>
+      <tspan x="52" y="107">rotates at constant speed, and then slows at</tspan>
+      <tspan x="52" y="149">the same acceleration magnitude until it</tspan>
+      <tspan x="52" y="191">stops. What is the total angular</tspan>
+      <tspan x="52" y="233">displacement?</tspan>
+  </text>
+  
+</svg>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="310" viewBox="0 0 800 310" role="img" aria-label="A cable is wrapped around a uniform solid cylinder of mass M and radius R. Its moment of inertia is I = 1/2 MR². The cable is pulled tangentially with force F. What is the linear acceleration of a point on the cable?">
+  <rect width="100%" height="100%" rx="18" fill="#ffffff" />
+  <text fill="#111827" font-family="Georgia, 'Times New Roman', serif" font-size="30" line-height="1.4">
+      <tspan x="52" y="54">A cable is wrapped around a uniform solid</tspan>
+      <tspan x="52" y="96">cylinder of mass M and radius R. Its moment</tspan>
+      <tspan x="52" y="138">of inertia is I = 1/2 MR². The cable is</tspan>
+      <tspan x="52" y="180">pulled tangentially with force F. What is</tspan>
+      <tspan x="52" y="222">the linear acceleration of a point on the</tspan>
+      <tspan x="52" y="264">cable?</tspan>
+  </text>
+  
+</svg>

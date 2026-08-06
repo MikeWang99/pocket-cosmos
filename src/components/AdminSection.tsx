@@ -1,13 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion } from 'motion/react';
 import katex from 'katex';
 import {
+  ArrowRight,
   BarChart3,
   CheckCircle2,
   CircleX,
   ClipboardList,
   FileText,
+  Lock,
+  ListChecks,
   ShieldCheck,
+  Unlock,
   UserRound,
   UsersRound,
 } from 'lucide-react';
@@ -15,6 +19,7 @@ import { practiceSets } from '../data/practiceSets';
 import { useAuth } from '../auth/AuthContext';
 import { useLanguage } from '../LanguageContext';
 import { getSupabaseClient } from '../lib/supabaseClient';
+import { ALL_SYSTEMS } from '../hooks/usePracticePermissions';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
 
 interface PracticeAttemptRow {
@@ -259,7 +264,7 @@ export const AdminSection: React.FC = () => {
             <ShieldCheck className="h-5 w-5" />
             <span className="text-xs font-semibold uppercase tracking-widest">{t.admin.title}</span>
           </div>
-          <h1 className="mt-4 font-serif text-3xl font-light text-white sm:text-4xl">{t.admin.configTitle}</h1>
+          <h1 className="mt-4 font-serif text-3xl font-light text-ink sm:text-4xl">{t.admin.configTitle}</h1>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-500">{t.admin.configText}</p>
         </div>
       </section>
@@ -278,7 +283,7 @@ export const AdminSection: React.FC = () => {
             <ShieldCheck className="h-5 w-5" />
             <span className="text-xs font-semibold uppercase tracking-widest">{t.admin.restricted}</span>
           </div>
-          <h1 className="mt-4 font-serif text-3xl font-light text-white sm:text-4xl">{t.admin.lockedTitle}</h1>
+          <h1 className="mt-4 font-serif text-3xl font-light text-ink sm:text-4xl">{t.admin.lockedTitle}</h1>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-500">{t.admin.lockedText}</p>
         </div>
       </section>
@@ -293,8 +298,8 @@ export const AdminSection: React.FC = () => {
             <ShieldCheck className="h-4 w-4" />
             {t.admin.eyebrow}
           </div>
-          <h1 className="font-serif text-3xl font-light leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">{t.admin.title}</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-400 sm:mt-4 sm:text-base">{t.admin.description}</p>
+          <h1 className="font-serif text-3xl font-light leading-tight text-ink sm:text-4xl md:text-5xl lg:text-6xl">{t.admin.title}</h1>
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-ink-soft sm:mt-4 sm:text-base">{t.admin.description}</p>
         </div>
 
         <div className="grid w-full grid-cols-3 gap-2 sm:gap-3 lg:w-auto lg:min-w-[280px]">
@@ -317,6 +322,29 @@ export const AdminSection: React.FC = () => {
 
       {error && <div className="mb-6 rounded-lg border border-rose-500/25 bg-rose-500/10 p-4 text-sm text-rose-700">{error}</div>}
 
+      <a
+        href="/?tab=homework"
+        className="mb-6 flex flex-col gap-4 rounded-xl border border-nebula/25 bg-nebula/[0.08] p-5 transition-colors hover:border-nebula/50 sm:flex-row sm:items-center"
+      >
+        <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-nebula/15 text-nebula">
+          <ListChecks className="h-5 w-5" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="text-sm font-semibold text-ink">
+            {language === 'zh' ? '查看某次作业的完成情况与逐题答案' : 'Review an assignment and every student answer'}
+          </div>
+          <div className="mt-1 text-xs leading-5 text-ink-soft">
+            {language === 'zh'
+              ? '作业数据统一放在「作业 → 老师视图」。本页只保留日常练习记录和账号权限。'
+              : 'Assignment data now lives in Homework → Teacher. This page is for general practice records and account access.'}
+          </div>
+        </div>
+        <span className="inline-flex items-center gap-2 text-xs font-semibold text-nebula">
+          {language === 'zh' ? '前往老师视图' : 'Open Teacher view'}
+          <ArrowRight className="h-4 w-4" />
+        </span>
+      </a>
+
       <div className="grid gap-5 xl:grid-cols-[320px_minmax(0,1fr)] xl:gap-6 2xl:grid-cols-[340px_minmax(0,1fr)]">
         <aside className="glass-panel h-fit rounded-lg p-3 xl:sticky xl:top-6">
           <div className="flex items-center gap-2 px-3 py-3 text-[10px] uppercase tracking-widest text-slate-500">
@@ -336,8 +364,8 @@ export const AdminSection: React.FC = () => {
                   }}
                   className={`min-w-[250px] rounded-md border p-4 text-left transition-colors xl:w-full xl:min-w-0 ${
                     isSelected
-                      ? 'border-nebula/70 bg-white/8 text-white'
-                      : 'border-white/5 bg-white/[0.02] text-slate-400 hover:border-white/20 hover:text-white'
+                      ? 'border-nebula/70 bg-surface-tint text-ink'
+                      : 'border-line bg-surface-tint text-ink-soft hover:border-line-strong hover:text-ink'
                   }`}
                 >
                   <div className="flex min-w-0 items-center gap-3">
@@ -366,18 +394,18 @@ export const AdminSection: React.FC = () => {
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                   <div className="min-w-0">
                     <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.selectedStudent}</div>
-                    <h2 className="mt-1 truncate font-serif text-xl text-white sm:text-2xl">{selectedStudent.email}</h2>
+                    <h2 className="mt-1 truncate font-serif text-xl text-ink sm:text-2xl">{selectedStudent.email}</h2>
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-center sm:gap-3">
-                    <div className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3">
+                    <div className="rounded-lg border border-line bg-surface-tint px-4 py-3">
                       <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.records}</div>
                       <div className="mt-1 text-xl font-semibold">{selectedStudent.completed}</div>
                     </div>
-                    <div className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3">
+                    <div className="rounded-lg border border-line bg-surface-tint px-4 py-3">
                       <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.correctShort}</div>
                       <div className="mt-1 text-xl font-semibold">{selectedStudent.correct}</div>
                     </div>
-                    <div className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3">
+                    <div className="rounded-lg border border-line bg-surface-tint px-4 py-3">
                       <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.accuracy}</div>
                       <div className="mt-1 text-xl font-semibold">{selectedAccuracy}%</div>
                     </div>
@@ -397,8 +425,8 @@ export const AdminSection: React.FC = () => {
                         }}
                         className={`min-h-10 shrink-0 rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
                           isSelected
-                            ? 'border-nebula/70 bg-nebula/15 text-white'
-                            : 'border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/30 hover:text-white'
+                            ? 'border-nebula/70 bg-nebula/15 text-ink'
+                            : 'border-line bg-surface-tint text-ink-soft hover:border-line-strong hover:text-ink'
                         }`}
                       >
                         {set.label}
@@ -409,12 +437,17 @@ export const AdminSection: React.FC = () => {
               </div>
 
               <div className="grid gap-5 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-6 xl:grid-cols-[260px_minmax(0,1fr)]">
-                <aside className="glass-panel h-fit rounded-lg p-3">
+                <aside className="glass-panel h-fit rounded-lg p-3 lg:sticky lg:top-6">
                   <div className="flex items-center gap-2 px-3 py-2 text-[10px] uppercase tracking-widest text-slate-500">
                     <ClipboardList className="h-4 w-4" />
                     {t.admin.questionRecords}
                   </div>
-                  <div className="flex gap-2 overflow-x-auto pb-1 lg:flex-col">
+                  {/* Summary */}
+                  <div className="px-3 pb-2 text-xs text-ink-soft">
+                    {selectedSet.steps.filter((s) => selectedSetAttempts.has(s.id)).length}/{selectedSet.steps.length} {language === 'zh' ? '已答' : 'answered'}
+                  </div>
+                  {/* Compact grid */}
+                  <div className="grid grid-cols-5 gap-1.5 max-h-[50vh] overflow-y-auto px-1 pb-2 sm:grid-cols-6 lg:grid-cols-5">
                     {selectedSet.steps.map((step, index) => {
                       const attempt = selectedSetAttempts.get(step.id);
                       const isSelected = selectedStep.id === step.id;
@@ -424,27 +457,18 @@ export const AdminSection: React.FC = () => {
                           type="button"
                           disabled={!attempt}
                           onClick={() => setSelectedQuestionId(step.id)}
-                          className={`min-w-[150px] rounded-md border px-3 py-3 text-left transition-colors sm:min-w-[170px] lg:min-w-0 ${
+                          title={`${step.title || `${t.admin.question} ${index + 1}`}${attempt ? ` ${Number(attempt.score)}/${Number(attempt.max_score)}` : ` ${t.admin.notAttempted}`}`}
+                          className={`relative grid h-9 w-9 place-items-center rounded-md border text-xs font-semibold transition-colors ${
                             isSelected
-                              ? 'border-nebula/70 bg-white/8 text-white'
+                              ? 'border-nebula/70 bg-nebula/12 text-nebula'
                               : attempt
-                                ? 'border-white/5 bg-white/[0.02] text-slate-400 hover:border-white/20 hover:text-white'
-                                : 'border-white/5 bg-white/[0.01] text-slate-500 opacity-45'
+                                ? attempt.is_correct
+                                  ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700 hover:border-emerald-500/55'
+                                  : 'border-rose-500/35 bg-rose-500/10 text-rose-700 hover:border-rose-500/55'
+                                : 'border-line bg-surface-tint text-slate-600 opacity-50'
                           }`}
                         >
-                          <div className="flex items-center justify-between gap-3">
-                            <span className="text-xs font-semibold">{step.title || `${t.admin.question} ${index + 1}`}</span>
-                            {attempt && (
-                              attempt.is_correct ? (
-                                <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-500" />
-                              ) : (
-                                <CircleX className="h-4 w-4 shrink-0 text-rose-500" />
-                              )
-                            )}
-                          </div>
-                          <div className="mt-1 text-[10px] opacity-60">
-                            {attempt ? `${Number(attempt.score)}/${Number(attempt.max_score)}` : t.admin.notAttempted}
-                          </div>
+                          {index + 1}
                         </button>
                       );
                     })}
@@ -453,11 +477,11 @@ export const AdminSection: React.FC = () => {
 
                 <section className="space-y-6">
                   <div className="glass-panel overflow-hidden rounded-lg">
-                    <div className="border-b border-white/10 p-4 sm:p-6 md:p-8">
+                    <div className="border-b border-line p-4 sm:p-6 md:p-8">
                       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                         <div className="min-w-0">
                           <div className="mb-3 text-xs uppercase tracking-widest text-nebula">{selectedStep.source}</div>
-                          <h2 className="text-balance font-serif text-2xl text-white md:text-3xl">{selectedStep.title}</h2>
+                          <h2 className="text-balance font-serif text-2xl text-ink md:text-3xl">{selectedStep.title}</h2>
                           {selectedStep.tags?.length ? (
                             <div className="mt-4 flex flex-wrap gap-2">
                               {selectedStep.tags.map((tag) => (
@@ -480,15 +504,15 @@ export const AdminSection: React.FC = () => {
                       </div>
 
                       <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_1.2fr]">
-                        <div className="rounded-lg border border-white/5 bg-black/20 p-4">
+                        <div className="rounded-lg border border-line bg-surface-muted p-4">
                           <div className="mb-2 text-[10px] uppercase tracking-widest text-slate-500">{t.practice.setup}</div>
-                          <p className="text-sm leading-relaxed text-slate-300">
+                          <p className="text-sm leading-relaxed text-ink-soft">
                             <MathText>{selectedStep.context}</MathText>
                           </p>
                         </div>
-                        <div className="rounded-lg border border-white/10 bg-white/[0.04] p-4">
+                        <div className="rounded-lg border border-line bg-surface-tint p-4">
                           <div className="mb-2 text-[10px] uppercase tracking-widest text-slate-500">{t.practice.task}</div>
-                          <div className="space-y-2 text-base leading-relaxed text-white">
+                          <div className="space-y-2 text-base leading-relaxed text-ink">
                             {splitPromptParts(selectedStep.prompt).map((part) => (
                               <p key={part}>
                                 <MathText>{part}</MathText>
@@ -520,14 +544,21 @@ export const AdminSection: React.FC = () => {
                                       ? 'border-emerald-500/50 bg-emerald-500/10'
                                       : isStudentAnswer
                                         ? 'border-rose-500/50 bg-rose-500/10'
-                                        : 'border-white/10 bg-white/[0.03]'
+                                        : 'border-line bg-surface-tint'
                                   }`}
                                 >
-                                  <span className="grid h-8 w-8 place-items-center rounded-full bg-white text-xs font-bold text-black">
+                                  <span className="grid h-8 w-8 place-items-center rounded-full bg-slate-900 text-xs font-bold text-on-accent">
                                     {choice.label}
                                   </span>
-                                  <span className="self-center text-sm leading-relaxed text-slate-200 md:text-base">
-                                    <MathText>{choice.text}</MathText>
+                                  <span className="self-center text-sm leading-relaxed text-ink md:text-base">
+                                    {choice.image ? (
+                                      <>
+                                        <img src={choice.image.src} alt={choice.image.alt} className="practice-choice-image" />
+                                        <span className="sr-only">{choice.text}</span>
+                                      </>
+                                    ) : (
+                                      <MathText>{choice.text}</MathText>
+                                    )}
                                   </span>
                                 </div>
                               );
@@ -535,24 +566,24 @@ export const AdminSection: React.FC = () => {
                           </div>
                         </div>
                       ) : (
-                        <div className="rounded-lg border border-white/10 bg-black/20 p-4">
+                        <div className="rounded-lg border border-line bg-surface-muted p-4">
                           <div className="mb-2 text-xs uppercase tracking-widest text-slate-500">{t.admin.studentAnswer}</div>
-                          <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-300">
+                          <p className="whitespace-pre-wrap text-sm leading-relaxed text-ink-soft">
                             {selectedAttempt?.answer || t.admin.emptyAnswer}
                           </p>
                         </div>
                       )}
 
                       <div className="mt-5 grid gap-3 sm:grid-cols-3 sm:gap-4">
-                        <div className="rounded-lg border border-white/10 bg-white/[0.03] p-4">
+                        <div className="rounded-lg border border-line bg-surface-tint p-4">
                           <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.studentAnswer}</div>
                           <div className="mt-1 text-2xl font-semibold">{selectedAttempt?.answer || '-'}</div>
                         </div>
-                        <div className="rounded-lg border border-white/10 bg-white/[0.03] p-4">
+                        <div className="rounded-lg border border-line bg-surface-tint p-4">
                           <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.correctAnswer}</div>
                           <div className="mt-1 text-2xl font-semibold">{selectedStep.correctAnswer ?? '-'}</div>
                         </div>
-                        <div className="rounded-lg border border-white/10 bg-white/[0.03] p-4">
+                        <div className="rounded-lg border border-line bg-surface-tint p-4">
                           <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.score}</div>
                           <div className="mt-1 text-2xl font-semibold">
                             {selectedResult ? `${selectedResult.score}/${selectedResult.maxScore}` : '-'}
@@ -561,12 +592,12 @@ export const AdminSection: React.FC = () => {
                       </div>
 
                       {selectedStep.solution && (
-                        <div className="mt-5 rounded-lg border border-white/10 bg-black/20 p-4">
+                        <div className="mt-5 rounded-lg border border-line bg-surface-muted p-4">
                           <div className="mb-2 flex items-center gap-2 text-xs uppercase tracking-widest text-slate-500">
                             <FileText className="h-4 w-4" />
                             {t.admin.solution}
                           </div>
-                          <p className="text-sm leading-relaxed text-slate-300">
+                          <p className="text-sm leading-relaxed text-ink-soft">
                             <MathText>{selectedStep.solution}</MathText>
                           </p>
                         </div>
@@ -585,7 +616,7 @@ export const AdminSection: React.FC = () => {
                         <div className="space-y-2">
                           {selectedResult?.hits.length ? (
                             selectedResult.hits.map((hit) => (
-                              <div key={hit.id} className="rounded-md border border-emerald-400/20 bg-emerald-400/5 p-3 text-sm text-slate-200">
+                              <div key={hit.id} className="rounded-md border border-emerald-400/20 bg-emerald-400/5 p-3 text-sm text-ink">
                                 {hit.label}
                               </div>
                             ))
@@ -600,7 +631,7 @@ export const AdminSection: React.FC = () => {
                         <div className="space-y-2">
                           {selectedResult?.misses.length ? (
                             selectedResult.misses.map((miss) => (
-                              <div key={miss.id} className="rounded-md border border-amber-400/20 bg-amber-400/5 p-3 text-sm text-slate-200">
+                              <div key={miss.id} className="rounded-md border border-amber-400/20 bg-amber-400/5 p-3 text-sm text-ink">
                                 {miss.label}
                               </div>
                             ))
@@ -619,6 +650,145 @@ export const AdminSection: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* Permission Management */}
+      <PermissionManager />
     </motion.section>
+  );
+};
+
+// --- Permission Manager ---
+
+interface ProfileRow {
+  user_id: string;
+  email: string | null;
+  display_name: string | null;
+  created_at: string;
+}
+
+interface PermissionRow {
+  user_id: string;
+  system: string;
+}
+
+const SYSTEM_LABELS_KEY: Record<string, 'systemApCMech' | 'systemApCEm' | 'systemIgcse'> = {
+  'ap-c-mech': 'systemApCMech',
+  'ap-c-em': 'systemApCEm',
+  igcse: 'systemIgcse',
+};
+
+const PermissionManager: React.FC = () => {
+  const { language, t } = useLanguage();
+  const { isAdmin, user } = useAuth();
+  const supabase = getSupabaseClient();
+  const [profiles, setProfiles] = useState<ProfileRow[]>([]);
+  const [permissions, setPermissions] = useState<PermissionRow[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = useCallback(async () => {
+    if (!supabase || !isAdmin) return;
+    setLoading(true);
+    const [profilesRes, permsRes] = await Promise.all([
+      supabase.from('profiles').select('user_id, email, display_name, created_at').order('created_at', { ascending: true }),
+      supabase.from('practice_permissions').select('user_id, system'),
+    ]);
+    setProfiles((profilesRes.data ?? []) as ProfileRow[]);
+    setPermissions((permsRes.data ?? []) as PermissionRow[]);
+    setLoading(false);
+  }, [supabase, isAdmin]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const permSet = useMemo(() => {
+    const set = new Set<string>();
+    permissions.forEach((p) => set.add(`${p.user_id}:${p.system}`));
+    return set;
+  }, [permissions]);
+
+  const togglePermission = async (userId: string, system: string) => {
+    if (!supabase) return;
+    const key = `${userId}:${system}`;
+    if (permSet.has(key)) {
+      await supabase.from('practice_permissions').delete().eq('user_id', userId).eq('system', system);
+      setPermissions((prev) => prev.filter((p) => !(p.user_id === userId && p.system === system)));
+    } else {
+      await supabase.from('practice_permissions').insert({ user_id: userId, system, granted_by: user?.id ?? null });
+      setPermissions((prev) => [...prev, { user_id: userId, system }]);
+    }
+  };
+
+  const updateDisplayName = async (userId: string, name: string) => {
+    if (!supabase) return;
+    await supabase.from('profiles').update({ display_name: name }).eq('user_id', userId);
+    setProfiles((prev) => prev.map((p) => (p.user_id === userId ? { ...p, display_name: name } : p)));
+  };
+
+  if (!isAdmin) return null;
+
+  return (
+    <div className="mt-10">
+      <div className="mb-6">
+        <div className="flex items-center gap-2 mb-2">
+          <ShieldCheck className="h-4 w-4 text-nebula" />
+          <h2 className="text-lg font-serif text-ink">{t.admin.permissions}</h2>
+        </div>
+        <p className="text-sm text-ink-soft">{t.admin.permissionsDesc}</p>
+      </div>
+
+      {loading ? (
+        <div className="glass-panel rounded-lg p-6 text-sm text-slate-500">{t.admin.loadingRecords}</div>
+      ) : profiles.length === 0 ? (
+        <div className="glass-panel rounded-lg p-6 text-sm text-slate-500">{t.admin.noUsers}</div>
+      ) : (
+        <div className="glass-panel overflow-x-auto rounded-lg">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="border-b border-line text-[10px] uppercase tracking-widest text-slate-500">
+                <th className="px-4 py-3">{t.admin.registeredUsers}</th>
+                {ALL_SYSTEMS.map((sys) => (
+                  <th key={sys} className="px-4 py-3 text-center">{t.admin[SYSTEM_LABELS_KEY[sys]]}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {profiles.map((profile) => (
+                <tr key={profile.user_id} className="border-b border-line hover:bg-surface-tint-strong">
+                  <td className="px-4 py-3">
+                    <input
+                      defaultValue={profile.display_name || ''}
+                      placeholder={profile.email || profile.user_id.slice(0, 8)}
+                      onBlur={(e) => { if (e.target.value !== (profile.display_name || '')) updateDisplayName(profile.user_id, e.target.value); }}
+                      onKeyDown={(e) => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur(); }}
+                      className="w-full max-w-[180px] rounded border border-line bg-surface-tint px-2 py-1 text-sm text-ink placeholder:text-slate-600 focus:border-nebula focus:outline-none"
+                    />
+                    <div className="text-xs text-slate-500 mt-1">{profile.email}</div>
+                  </td>
+                  {ALL_SYSTEMS.map((sys) => {
+                    const granted = permSet.has(`${profile.user_id}:${sys}`);
+                    return (
+                      <td key={sys} className="px-4 py-3 text-center">
+                        <button
+                          onClick={() => togglePermission(profile.user_id, sys)}
+                          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
+                            granted
+                              ? 'bg-emerald-500/15 text-emerald-700 border border-emerald-500/30 hover:bg-emerald-500/25'
+                              : 'bg-surface-tint text-slate-500 border border-line hover:border-line-strong hover:text-ink-soft'
+                          }`}
+                        >
+                          {granted ? <Unlock className="h-3 w-3" /> : <Lock className="h-3 w-3" />}
+                          {granted ? t.admin.revokeAccess : t.admin.grantAccess}
+                        </button>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
   );
 };
