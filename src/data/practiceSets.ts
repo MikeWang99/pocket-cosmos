@@ -30,6 +30,8 @@ import {
 import { kinematicsMultipleChoiceMeta, kinematicsMultipleChoiceSteps } from './kinematicsMultipleChoice';
 import { linearMomentumLabDesignMeta, linearMomentumLabDesignSteps } from './linearMomentumLabDesign';
 import { physicsBowlEmMeta, physicsBowlEmSteps } from './physicsBowlEmQuestionBank';
+import { apcEmFrq1Meta, apcEmFrq1Steps } from './apcEmFrqTest1';
+import { apcEmFrq2Meta, apcEmFrq2Steps } from './apcEmFrqTest2';
 import { workEnergyMultipleChoiceMeta, workEnergyMultipleChoiceSteps } from './workEnergyMultipleChoice';
 import type { PracticeStep } from '../types/practice';
 
@@ -167,6 +169,28 @@ export const practiceSets: PracticeSet[] = [
     system: 'ap-c-em',
     ...physicsBowlEmMeta,
     steps: physicsBowlEmSteps,
+  },
+  {
+    id: 'apc-em-frq-test1',
+    category: 'electromagnetism',
+    label: 'E&M FRQ Test 1 · Electric Forces & Fields',
+    system: 'ap-c-em',
+    practiceKind: 'structured',
+    chapter: 1,
+    chapterTitle: 'Electric Forces and Fields',
+    ...apcEmFrq1Meta,
+    steps: apcEmFrq1Steps,
+  },
+  {
+    id: 'apc-em-frq-test2',
+    category: 'electromagnetism',
+    label: 'E&M FRQ Test 2 · Electric Potential & Capacitance',
+    system: 'ap-c-em',
+    practiceKind: 'structured',
+    chapter: 2,
+    chapterTitle: 'Electric Potential and Capacitance',
+    ...apcEmFrq2Meta,
+    steps: apcEmFrq2Steps,
   },
   // IGCSE per-topic MCQ sets (all chapters)
   ...igcseAllTopics.map((topic): PracticeSet => ({
