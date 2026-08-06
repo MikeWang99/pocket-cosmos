@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Vertical loop force models</title>
+  <desc id="desc">Free-body diagrams at the top and bottom of a vertical loop, with the top contact threshold.</desc>
+  <rect width="1200" height="700" fill="#ffffff"/>
+  <defs><marker id="force" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#dc2626"/></marker><marker id="normal" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#2563eb"/></marker></defs>
+  <circle cx="380" cy="365" r="255" fill="#f8fafc" stroke="#334155" stroke-width="13"/>
+  <g transform="translate(380 108)"><rect x="-58" y="-24" width="116" height="48" rx="10" fill="#22c55e" stroke="#0f172a" stroke-width="7"/><circle cx="-36" cy="-30" r="11"/><circle cx="36" cy="-30" r="11"/></g>
+  <g transform="translate(380 622)"><rect x="-58" y="-24" width="116" height="48" rx="10" fill="#f97316" stroke="#0f172a" stroke-width="7"/><circle cx="-36" cy="30" r="11"/><circle cx="36" cy="30" r="11"/></g>
+  <line x1="380" y1="126" x2="380" y2="240" stroke="#dc2626" stroke-width="12" marker-end="url(#force)"/>
+  <text x="405" y="205" font-family="Arial, sans-serif" font-size="36" fill="#b91c1c">mg</text>
+  <line x1="380" y1="604" x2="380" y2="490" stroke="#2563eb" stroke-width="12" marker-end="url(#normal)"/>
+  <text x="405" y="538" font-family="Arial, sans-serif" font-size="36" fill="#1d4ed8">N</text>
+  <line x1="380" y1="604" x2="380" y2="674" stroke="#dc2626" stroke-width="12" marker-end="url(#force)"/>
+  <text x="405" y="670" font-family="Arial, sans-serif" font-size="36" fill="#b91c1c">mg</text>
+  <g transform="translate(760 135)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#0f172a">Top contact threshold</text>
+    <rect x="0" y="45" width="360" height="180" rx="18" fill="#fef3c7" stroke="#f59e0b" stroke-width="5"/>
+    <text x="180" y="112" text-anchor="middle" font-family="Arial, sans-serif" font-size="44" fill="#92400e">N = 0</text>
+    <text x="180" y="178" text-anchor="middle" font-family="Arial, sans-serif" font-size="44" fill="#92400e">v = √(gr)</text>
+    <text x="0" y="300" font-family="Arial, sans-serif" font-size="32" fill="#475569">Contact force reaches zero.</text>
+    <text x="0" y="350" font-family="Arial, sans-serif" font-size="32" fill="#475569">Gravity is still inward.</text>
+  </g>
+</svg>

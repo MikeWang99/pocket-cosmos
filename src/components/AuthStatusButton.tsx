@@ -1,12 +1,12 @@
 import { useEffect, useState, type FC } from 'react';
-import { LogIn, LogOut, ShieldAlert, UserCircle2 } from 'lucide-react';
+import { CheckCircle2, LogIn, LogOut, ShieldAlert, UserCircle2, X } from 'lucide-react';
 import { useAuth } from '../auth/AuthContext';
 import { useLanguage } from '../LanguageContext';
 import { AuthModal } from './AuthModal';
 
 export const AuthStatusButton: FC = () => {
   const { t } = useLanguage();
-  const { authEnabled, configured, loading, passwordRecovery, passwordSetupRequired, user, signOut } = useAuth();
+  const { authEnabled, configured, loading, emailJustConfirmed, clearEmailJustConfirmed, passwordRecovery, passwordSetupRequired, user, signOut } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
 
   useEffect(() => {
@@ -38,6 +38,19 @@ export const AuthStatusButton: FC = () => {
   if (user) {
     return (
       <>
+        {emailJustConfirmed && (
+          <div className="mb-2 flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-medium text-emerald-800">
+            <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
+            <span>{(t.auth.messages as Record<string, string>)['AUTH_EMAIL_CONFIRMED']}</span>
+            <button
+              type="button"
+              onClick={clearEmailJustConfirmed}
+              className="ml-auto rounded p-0.5 text-emerald-700 transition-colors hover:text-emerald-700"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        )}
         <div className="flex max-w-full flex-wrap items-center gap-2">
           <div className="inline-flex h-10 min-w-0 items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-4 text-xs font-semibold text-emerald-700">
             <UserCircle2 className="h-4 w-4 shrink-0" />
@@ -62,7 +75,7 @@ export const AuthStatusButton: FC = () => {
       <button
         type="button"
         onClick={() => setAuthModalOpen(true)}
-        className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-nebula/25 bg-[#ffffff] px-4 text-sm font-semibold text-nebula shadow-sm transition-colors hover:border-nebula/45 hover:bg-nebula hover:text-[#ffffff]"
+        className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-nebula/25 bg-surface px-4 text-sm font-semibold text-nebula shadow-sm transition-colors hover:border-nebula/45 hover:bg-nebula hover:text-on-accent"
       >
         <LogIn className="h-4 w-4" />
         {t.auth.openAuth}

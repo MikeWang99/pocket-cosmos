@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="title desc">
+  <title id="title">Tangent velocity and inward acceleration</title>
+  <desc id="desc">Velocity is tangent to a circular path while centripetal acceleration points toward the center.</desc>
+  <rect width="900" height="700" fill="#ffffff"/>
+  <circle cx="430" cy="380" r="245" fill="#f8fafc" stroke="#4f46e5" stroke-width="14"/>
+  <circle cx="430" cy="380" r="12" fill="#0f172a"/>
+  <circle cx="430" cy="135" r="18" fill="#0891b2"/>
+  <defs>
+    <marker id="blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#2563eb"/></marker>
+    <marker id="red" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#dc2626"/></marker>
+  </defs>
+  <line x1="430" y1="135" x2="735" y2="135" stroke="#2563eb" stroke-width="14" marker-end="url(#blue)"/>
+  <line x1="430" y1="135" x2="430" y2="350" stroke="#dc2626" stroke-width="14" marker-end="url(#red)"/>
+  <path d="M430 135 h42 v42" fill="none" stroke="#0f172a" stroke-width="7"/>
+  <text x="752" y="151" font-family="Arial, sans-serif" font-size="50" font-weight="700" fill="#1d4ed8">v</text>
+  <text x="456" y="275" font-family="Arial, sans-serif" font-size="48" font-weight="700" fill="#b91c1c">a<tspan baseline-shift="sub" font-size="30">c</tspan></text>
+  <line x1="430" y1="380" x2="430" y2="155" stroke="#64748b" stroke-width="5" stroke-dasharray="14 12"/>
+  <text x="394" y="270" font-family="Arial, sans-serif" font-size="38" fill="#475569">r</text>
+</svg>

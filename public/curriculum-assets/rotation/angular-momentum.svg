@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" role="img" aria-labelledby="title desc">
+  <title id="title">Angular momentum depends on system and axis</title>
+  <desc id="desc">A particle moving past a reference point and a rotating figure changing mass distribution.</desc>
+  <rect width="900" height="420" fill="#ffffff"/>
+  <g font-family="Arial, sans-serif">
+    <circle cx="105" cy="290" r="9" fill="#4f46e5"/>
+    <line x1="105" y1="290" x2="340" y2="120" stroke="#4f46e5" stroke-width="5"/>
+    <circle cx="340" cy="120" r="18" fill="#0891b2"/>
+    <line x1="340" y1="120" x2="510" y2="120" stroke="#0891b2" stroke-width="6"/>
+    <path d="M510 120 l-24-12 v24 z" fill="#0891b2"/>
+    <line x1="105" y1="290" x2="105" y2="120" stroke="#f59e0b" stroke-width="4" stroke-dasharray="10 8"/>
+    <text x="88" y="328" font-size="24" fill="#334155">reference point</text>
+    <text x="210" y="180" font-size="28" fill="#312e81">r</text>
+    <text x="414" y="102" font-size="28" fill="#0e7490">p = mv</text>
+    <text x="118" y="204" font-size="26" fill="#b45309">r⊥</text>
+    <text x="88" y="385" font-size="29" fill="#312e81">L = r × p</text>
+    <g transform="translate(650 200)" stroke="#4f46e5" stroke-width="7" fill="none">
+      <circle cx="0" cy="0" r="35" fill="#eef2ff"/>
+      <line x1="0" y1="35" x2="0" y2="125"/>
+      <line x1="0" y1="58" x2="-76" y2="93"/>
+      <line x1="0" y1="58" x2="76" y2="93"/>
+      <line x1="0" y1="125" x2="-55" y2="175"/>
+      <line x1="0" y1="125" x2="55" y2="175"/>
+    </g>
+    <path d="M588 82 A92 92 0 1 1 720 70" fill="none" stroke="#0891b2" stroke-width="5"/>
+    <path d="M720 70 l-24 2 l12 20" fill="#0891b2"/>
+    <text x="575" y="390" font-size="26" fill="#334155">zero external torque: Iω = constant</text>
+  </g>
+</svg>

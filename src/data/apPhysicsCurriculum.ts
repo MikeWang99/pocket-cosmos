@@ -28,6 +28,13 @@ export interface CurriculumVideo {
   sourceLabel: LocalizedText;
 }
 
+export interface CurriculumImage {
+  src: string;
+  alt: LocalizedText;
+  caption?: LocalizedText;
+  sourceLabel?: LocalizedText;
+}
+
 export interface CurriculumClassroomQuestion {
   id: string;
   mode?: 'multiple_choice' | 'written';
@@ -48,20 +55,32 @@ export interface CurriculumClassroomQuestion {
   explanation?: LocalizedText;
 }
 
+export interface CurriculumTable {
+  caption: LocalizedText;
+  headers: LocalizedText[];
+  rows: LocalizedText[][];
+}
+
 export interface CurriculumLessonSection {
   heading: LocalizedText;
   videos?: CurriculumVideo[];
+  images?: CurriculumImage[];
   classroomQuestions?: CurriculumClassroomQuestion[];
   paragraphs?: LocalizedText[];
+  table?: CurriculumTable;
   bullets?: LocalizedText[];
   formulas?: CurriculumFormula[];
   takeaway?: LocalizedText;
 }
 
-export interface CurriculumLesson {
+export interface CurriculumLessonContent {
   title: LocalizedText;
   description: LocalizedText;
   sections: CurriculumLessonSection[];
+}
+
+export interface CurriculumLesson extends CurriculumLessonContent {
+  studentVersion?: CurriculumLessonContent;
 }
 
 export interface CurriculumUnit {

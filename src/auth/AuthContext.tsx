@@ -15,12 +15,15 @@ interface AuthContextValue {
   isAdmin: boolean;
   loading: boolean;
   message: string | null;
+  emailJustConfirmed: boolean;
   passwordRecovery: boolean;
   passwordSetupRequired: boolean;
   session: Session | null;
   user: User | null;
   clearMessage: () => void;
+  clearEmailJustConfirmed: () => void;
   clearPasswordRecovery: () => void;
+  resendConfirmationEmail: (email: string) => Promise<AuthActionResult>;
   sendEmailSignUpCode: (email: string) => Promise<AuthActionResult>;
   sendPasswordReset: (email: string) => Promise<AuthActionResult>;
   setPassword: (password: string) => Promise<AuthActionResult>;
@@ -35,9 +38,35 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 const PASSWORD_SETUP_STORAGE_KEY = 'pocket-cosmos-email-password-setup';
 const ADMIN_EMAILS = new Set(['mike.wang.de@gmail.com']);
 
-const authError = (error: { message?: string } | null | undefined): AuthActionResult => ({
+interface AuthErrorLike {
+  code?: string;
+  message?: unknown;
+  msg?: unknown;
+  name?: string;
+  status?: number;
+}
+
+const readableAuthError = (
+  error: AuthErrorLike | null | undefined,
+  fallback: string,
+) => {
+  const candidates = [error?.message, error?.msg];
+
+  for (const candidate of candidates) {
+    if (typeof candidate !== 'string') continue;
+    const message = candidate.trim();
+    if (message && message !== '{}' && message !== '[object Object]') return message;
+  }
+
+  return fallback;
+};
+
+const authError = (
+  error: AuthErrorLike | null | undefined,
+  fallback = 'AUTH_UNKNOWN_ERROR',
+): AuthActionResult => ({
   ok: false,
-  message: error?.message ?? 'AUTH_UNKNOWN_ERROR',
+  message: readableAuthError(error, fallback),
 });
 
 const authSuccess = (message?: string): AuthActionResult => ({ ok: true, message });
@@ -67,6 +96,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(Boolean(supabase));
   const [message, setMessage] = useState<string | null>(null);
+  const [emailJustConfirmed, setEmailJustConfirmed] = useState(false);
   const [passwordRecovery, setPasswordRecovery] = useState(false);
   const [passwordSetupRequired, setPasswordSetupRequired] = useState(false);
 
@@ -80,7 +110,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     supabase.auth.getSession().then(({ data, error }) => {
       if (!mounted) return;
-      if (error) setMessage(error.message);
+      if (error) setMessage(readableAuthError(error, 'AUTH_SERVICE_UNAVAILABLE'));
       const currentSession = data.session ?? null;
       setSession(currentSession);
       if (currentSession?.user && (passwordSetupPending() || userNeedsPasswordSetup(currentSession.user))) {
@@ -95,6 +125,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setSession(nextSession);
       setLoading(false);
       setMessage(null);
+
+      // Detect email confirmation redirect: URL hash contains type=signup
+      if (event === 'SIGNED_IN' && typeof window !== 'undefined') {
+        const hash = window.location.hash;
+        if (hash.includes('type=signup')) {
+          setEmailJustConfirmed(true);
+          setMessage('AUTH_EMAIL_CONFIRMED');
+          // Clean up URL hash
+          window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+      }
+
       if (event === 'PASSWORD_RECOVERY') {
         setPasswordRecovery(true);
       }
@@ -104,6 +146,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (event === 'SIGNED_OUT') {
         setPasswordRecovery(false);
         setPasswordSetupRequired(false);
+        setEmailJustConfirmed(false);
         clearPasswordSetupPending();
       }
     });
@@ -116,6 +159,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const clearMessage = useCallback(() => {
     setMessage(null);
+  }, []);
+
+  const clearEmailJustConfirmed = useCallback(() => {
+    setEmailJustConfirmed(false);
   }, []);
 
   const clearPasswordRecovery = useCallback(() => {
@@ -136,8 +183,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (error) {
-        setMessage(error.message);
-        return authError(error);
+        const msg = error.message?.toLowerCase() ?? '';
+        if (msg.includes('email not confirmed')) {
+          setMessage('AUTH_EMAIL_NOT_CONFIRMED');
+          return { ok: false, message: 'AUTH_EMAIL_NOT_CONFIRMED' };
+        }
+        const failure = authError(error, 'AUTH_LOGIN_FAILED');
+        setMessage(failure.message ?? 'AUTH_LOGIN_FAILED');
+        return failure;
       }
 
       setPasswordRecovery(false);
@@ -163,8 +216,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
 
     if (error) {
-      setMessage(error.message);
-      return authError(error);
+      const failure = authError(error, 'AUTH_GOOGLE_FAILED');
+      setMessage(failure.message ?? 'AUTH_GOOGLE_FAILED');
+      return failure;
     }
 
     return authSuccess('AUTH_GOOGLE_REDIRECT');
@@ -187,11 +241,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (error) {
-        setMessage(error.message);
-        return authError(error);
+        const failure = authError(error, 'AUTH_CONFIRMATION_EMAIL_FAILED');
+        setMessage(failure.message ?? 'AUTH_CONFIRMATION_EMAIL_FAILED');
+        return failure;
       }
 
       return authSuccess('AUTH_SIGNUP_SUCCESS');
+    },
+    [supabase],
+  );
+
+  const resendConfirmationEmail = useCallback(
+    async (email: string) => {
+      if (!supabase) {
+        setMessage('AUTH_NOT_CONFIGURED');
+        return authError({ message: 'AUTH_NOT_CONFIGURED' });
+      }
+
+      setMessage(null);
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+        },
+      });
+
+      if (error) {
+        const failure = authError(error, 'AUTH_CONFIRMATION_EMAIL_FAILED');
+        setMessage(failure.message ?? 'AUTH_CONFIRMATION_EMAIL_FAILED');
+        return failure;
+      }
+
+      return authSuccess('AUTH_CONFIRMATION_RESENT');
     },
     [supabase],
   );
@@ -217,8 +299,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (error) {
-        setMessage(error.message);
-        return authError(error);
+        const failure = authError(error, 'AUTH_CODE_FAILED');
+        setMessage(failure.message ?? 'AUTH_CODE_FAILED');
+        return failure;
       }
 
       markPasswordSetupPending();
@@ -242,8 +325,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (error) {
-        setMessage(error.message);
-        return authError(error);
+        const failure = authError(error, 'AUTH_CODE_INVALID');
+        setMessage(failure.message ?? 'AUTH_CODE_INVALID');
+        return failure;
       }
 
       markPasswordSetupPending();
@@ -272,8 +356,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (error) {
-        setMessage(error.message);
-        return authError(error);
+        const failure = authError(error, 'AUTH_PASSWORD_FAILED');
+        setMessage(failure.message ?? 'AUTH_PASSWORD_FAILED');
+        return failure;
       }
 
       setPasswordRecovery(false);
@@ -297,8 +382,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (error) {
-        setMessage(error.message);
-        return authError(error);
+        const failure = authError(error, 'AUTH_RESET_FAILED');
+        setMessage(failure.message ?? 'AUTH_RESET_FAILED');
+        return failure;
       }
 
       return authSuccess('AUTH_RESET_SENT');
@@ -309,7 +395,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signOut = useCallback(async () => {
     if (!supabase) return;
     const { error } = await supabase.auth.signOut();
-    if (error) setMessage(error.message);
+    if (error) setMessage(readableAuthError(error, 'AUTH_SERVICE_UNAVAILABLE'));
   }, [supabase]);
 
   const value = useMemo<AuthContextValue>(
@@ -319,12 +405,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       isAdmin: ADMIN_EMAILS.has((session?.user.email ?? '').toLowerCase()),
       loading,
       message,
+      emailJustConfirmed,
       passwordRecovery,
       passwordSetupRequired,
       session,
       user: session?.user ?? null,
       clearMessage,
+      clearEmailJustConfirmed,
       clearPasswordRecovery,
+      resendConfirmationEmail,
       sendEmailSignUpCode,
       sendPasswordReset,
       setPassword,
@@ -336,11 +425,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }),
     [
       clearMessage,
+      clearEmailJustConfirmed,
       clearPasswordRecovery,
+      emailJustConfirmed,
       loading,
       message,
       passwordRecovery,
       passwordSetupRequired,
+      resendConfirmationEmail,
       sendEmailSignUpCode,
       sendPasswordReset,
       session,
