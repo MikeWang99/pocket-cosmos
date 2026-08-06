@@ -55,12 +55,19 @@ export interface CurriculumClassroomQuestion {
   explanation?: LocalizedText;
 }
 
+export interface CurriculumTable {
+  caption: LocalizedText;
+  headers: LocalizedText[];
+  rows: LocalizedText[][];
+}
+
 export interface CurriculumLessonSection {
   heading: LocalizedText;
   videos?: CurriculumVideo[];
   images?: CurriculumImage[];
   classroomQuestions?: CurriculumClassroomQuestion[];
   paragraphs?: LocalizedText[];
+  table?: CurriculumTable;
   bullets?: LocalizedText[];
   formulas?: CurriculumFormula[];
   takeaway?: LocalizedText;

@@ -980,6 +980,35 @@ export const CurriculumSection: React.FC = () => {
                                               <InlineMathText>{paragraph[language]}</InlineMathText>
                                             </p>
                                           ))}
+                                          {section.table && (
+                                            <figure className="overflow-x-auto rounded-lg border border-slate-200 bg-surface">
+                                              <table className="w-full text-sm">
+                                                <caption className="px-3 pt-2 pb-1 text-left text-xs font-semibold text-slate-500">
+                                                  {section.table.caption[language]}
+                                                </caption>
+                                                <thead>
+                                                  <tr className="border-b border-slate-200 bg-slate-50">
+                                                    {section.table.headers.map((h) => (
+                                                      <th key={h.en} className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">
+                                                        {h[language]}
+                                                      </th>
+                                                    ))}
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  {section.table.rows.map((row, ri) => (
+                                                    <tr key={ri} className="border-b border-slate-100 last:border-0">
+                                                      {row.map((cell, ci) => (
+                                                        <td key={ci} className="px-3 py-2 text-slate-600">
+                                                          <InlineMathText>{cell[language]}</InlineMathText>
+                                                        </td>
+                                                      ))}
+                                                    </tr>
+                                                  ))}
+                                                </tbody>
+                                              </table>
+                                            </figure>
+                                          )}
                                           {section.classroomQuestions?.map((question) => (
                                             <ClassroomQuestionCard key={question.id} question={question} language={language} />
                                           ))}
