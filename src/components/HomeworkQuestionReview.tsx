@@ -161,7 +161,6 @@ export const HomeworkQuestionReview: React.FC<HomeworkQuestionReviewProps> = ({
                   src={step.image.src}
                   alt={step.image.alt}
                   className="practice-media-image practice-question-image"
-                  style={{ minWidth: '100%', width: 'auto', maxWidth: 'none' }}
                 />
               </div>
               {step.image.caption && <figcaption>{step.image.caption}</figcaption>}
