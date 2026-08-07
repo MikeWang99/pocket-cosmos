@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import type { HomeworkAttempt } from '../homework/types';
 import type { PracticeStep } from '../types/practice';
+import { QuestionPrompt } from './QuestionPrompt';
 
 const renderMath = (value: string) =>
   katex.renderToString(value, { throwOnError: false, strict: false });
@@ -133,9 +134,7 @@ export const HomeworkQuestionReview: React.FC<HomeworkQuestionReviewProps> = ({
           </div>
 
           {!hideDuplicatePrompt && step.prompt && (
-            <div className="text-base leading-7 text-ink">
-              <MathText>{step.prompt}</MathText>
-            </div>
+            <QuestionPrompt prompt={step.prompt} className="text-base leading-7 text-ink" />
           )}
 
           {!!step.equations?.length && (
