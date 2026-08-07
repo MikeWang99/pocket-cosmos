@@ -56,7 +56,7 @@ const normalizeUrlForTab = (tab: string, mode: 'push' | 'replace' = 'push') => {
 export default function App() {
   const [activeTab, setActiveTab] = useState('curriculum');
   const { t, language } = useLanguage();
-  const { isAdmin } = useAuth();
+  const { isAdmin, loading: authLoading } = useAuth();
 
   const selectTab = (tab: string) => {
     setActiveTab(tab);
@@ -85,11 +85,11 @@ export default function App() {
       normalizeUrlForTab('curriculum', 'replace');
       return;
     }
-    if (!isAdmin && activeTab === 'admin') {
+    if (!authLoading && !isAdmin && activeTab === 'admin') {
       setActiveTab('practice');
       normalizeUrlForTab('practice', 'replace');
     }
-  }, [activeTab, isAdmin]);
+  }, [activeTab, isAdmin, authLoading]);
 
   return (
     <div className="min-h-screen bg-space-950 font-sans text-starlight antialiased selection:bg-quantum/20 flex">
