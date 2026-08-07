@@ -10,6 +10,8 @@ interface StudentWorkUploadProps {
   onUploadComplete: (imageUrl: string) => void;
   onClear: () => void;
   language: 'en' | 'zh';
+  /** Fires while the file is compressing/uploading so parents can explain why submit stays disabled. */
+  onBusyChange?: (busy: boolean) => void;
 }
 
 const MAX_UPLOAD_SIZE = 2 * 1024 * 1024; // 2MB target after compression
@@ -70,6 +72,7 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
   onUploadComplete,
   onClear,
   language,
+  onBusyChange,
 }) => {
   const { user } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -79,6 +82,13 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
   const [compressing, setCompressing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
+  const [pendingRetry, setPendingRetry] = useState<File | null>(null);
+
+  const setBusyState = (compressingNext: boolean, uploadingNext: boolean) => {
+    setCompressing(compressingNext);
+    setUploading(uploadingNext);
+    onBusyChange?.(compressingNext || uploadingNext);
+  };
 
   const t = language === 'zh'
     ? {
@@ -90,6 +100,7 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
         uploading: '上传中...',
         uploaded: '已上传',
         clear: '清除',
+        retry: '重试上传',
         errorType: '请选择图片文件（JPG、PNG 或 WebP）',
         errorUpload: '上传失败，请重试',
         replace: '重新上传',
@@ -103,6 +114,7 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
         uploading: 'Uploading...',
         uploaded: 'Uploaded',
         clear: 'Clear',
+        retry: 'Retry upload',
         errorType: 'Please select an image file (JPG, PNG, or WebP)',
         errorUpload: 'Upload failed, please try again',
         replace: 'Re-upload',
@@ -110,6 +122,7 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
 
   const handleFile = useCallback(async (file: File) => {
     setError(null);
+    setPendingRetry(null);
 
     if (!file.type.startsWith('image/')) {
       setError(t.errorType);
@@ -126,7 +139,7 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
     const needsCompression = file.size > MAX_UPLOAD_SIZE;
 
     if (needsCompression) {
-      setCompressing(true);
+      setBusyState(true, false);
       try {
         uploadBlob = await compressImage(file);
       } catch (err) {
@@ -134,15 +147,16 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
         // Fall back to original file if compression fails
         uploadBlob = file;
       }
-      setCompressing(false);
+      setBusyState(false, false);
     }
 
     // Upload to Supabase Storage
-    setUploading(true);
+    setBusyState(false, true);
     const supabase = getSupabaseClient();
     if (!supabase || !user) {
       setError(t.errorUpload);
-      setUploading(false);
+      setPendingRetry(file);
+      setBusyState(false, false);
       return;
     }
 
@@ -155,7 +169,8 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
     if (uploadError) {
       console.error('Storage upload error:', uploadError);
       setError(t.errorUpload);
-      setUploading(false);
+      setPendingRetry(file);
+      setBusyState(false, false);
       return;
     }
 
@@ -163,8 +178,8 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
     const publicUrl = urlData.publicUrl;
 
     onUploadComplete(publicUrl);
-    setUploading(false);
-  }, [user, practiceSetId, questionId, onUploadComplete, t]);
+    setBusyState(false, false);
+  }, [user, practiceSetId, questionId, onUploadComplete, t, setBusyState]);
 
   const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -177,6 +192,7 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
     setPreview(null);
     setFileName(null);
     setError(null);
+    setPendingRetry(null);
     onClear();
   };
 
@@ -251,12 +267,25 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
             <div className="flex items-center gap-2 text-xs text-slate-500">
               {compressing || uploading ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              ) : error ? (
+                <X className="h-3.5 w-3.5 text-rose-600" />
               ) : (
                 <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
               )}
-              <span>{compressing ? t.compressing : uploading ? t.uploading : t.uploaded}</span>
+              <span className={error ? 'text-rose-600' : undefined}>
+                {compressing ? t.compressing : uploading ? t.uploading : error ? error : t.uploaded}
+              </span>
             </div>
             <div className="flex gap-2">
+              {pendingRetry && !compressing && !uploading && (
+                <button
+                  type="button"
+                  onClick={() => void handleFile(pendingRetry)}
+                  className="rounded-md border border-rose-400/40 px-3 py-1.5 text-xs font-semibold text-rose-600 hover:bg-rose-400/10"
+                >
+                  {t.retry}
+                </button>
+              )}
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
