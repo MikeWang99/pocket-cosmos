@@ -11,3 +11,5 @@ outputs/crackap-apc-mechanics-test16/source-snapshots/
 .env*
 !.env.example
 .vercel
+supabase/.temp/
+tmp/

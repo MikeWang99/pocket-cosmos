@@ -346,6 +346,9 @@ export const PracticeSection: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(initialSelection.index);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [answerImages, setAnswerImages] = useState<Record<string, string>>({});
+  // True while the answer image is still compressing/uploading, so the submit
+  // button can explain why it stays disabled instead of looking broken.
+  const [workUploadBusy, setWorkUploadBusy] = useState(false);
   const [results, setResults] = useState<Record<string, EvaluationResult>>({});
   const [isListening, setIsListening] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
@@ -778,6 +781,7 @@ export const PracticeSection: React.FC = () => {
     recognitionRef.current?.stop();
     setIsListening(false);
     setShareCopied(false);
+    setWorkUploadBusy(false);
     const nextIndex = Math.min(Math.max(index, 0), practiceSteps.length - 1);
     setActiveIndex(nextIndex);
     updatePracticeUrl(activeSet.id, practiceSteps[nextIndex].id);
@@ -1262,6 +1266,7 @@ export const PracticeSection: React.FC = () => {
                           return next;
                         });
                       }}
+                      onBusyChange={setWorkUploadBusy}
                       language={language}
                     />
                     {(activeStep.sampleAnswer || activeStep.solution) && (
@@ -1312,14 +1317,28 @@ export const PracticeSection: React.FC = () => {
                     </button>
                   </div>
                   {!isActiveMultipleChoice ? (
-                    <button
-                      onClick={submitFreeResponse}
-                      disabled={!currentAnswerImage || Boolean(currentResult)}
-                      className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-xs font-bold uppercase tracking-widest text-on-accent transition-colors hover:bg-nebula hover:text-on-accent disabled:opacity-30"
-                    >
-                      <Sparkles className="w-4 h-4" />
-                      {language === 'zh' ? '提交答案' : 'Submit answer'}
-                    </button>
+                    <div className="flex flex-col items-stretch gap-1.5 sm:items-end">
+                      <button
+                        onClick={submitFreeResponse}
+                        disabled={!currentAnswerImage || Boolean(currentResult) || workUploadBusy}
+                        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-xs font-bold uppercase tracking-widest text-on-accent transition-colors hover:bg-nebula hover:text-on-accent disabled:opacity-30"
+                      >
+                        <Sparkles className="w-4 h-4" />
+                        {workUploadBusy
+                          ? language === 'zh' ? '上传中…' : 'Uploading…'
+                          : language === 'zh' ? '提交答案' : 'Submit answer'}
+                      </button>
+                      {!currentResult && !currentAnswerImage && !workUploadBusy && (
+                        <p className="text-[11px] text-ink-soft">
+                          {language === 'zh' ? '请先拍照或上传图片，上传完成后即可提交' : 'Take a photo or upload an image first — you can submit once it finishes uploading.'}
+                        </p>
+                      )}
+                      {!currentResult && workUploadBusy && (
+                        <p className="text-[11px] text-ink-soft">
+                          {language === 'zh' ? '图片正在上传，完成后按钮自动可用' : 'Your image is uploading — the button unlocks when it finishes.'}
+                        </p>
+                      )}
+                    </div>
                   ) : (
                     <button
                       onClick={submitAnswer}
