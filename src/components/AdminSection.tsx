@@ -31,6 +31,7 @@ interface PracticeAttemptRow {
   question_id: string;
   question_title: string;
   answer: string | null;
+  answer_image_url: string | null;
   score: number | string;
   max_score: number | string;
   is_correct: boolean;
@@ -159,7 +160,7 @@ export const AdminSection: React.FC = () => {
     supabase
       .from('practice_attempts')
       .select(
-        'id, student_id, student_email, practice_set_id, practice_set_title, question_id, question_title, answer, score, max_score, is_correct, tags, result, created_at, updated_at',
+        'id, student_id, student_email, practice_set_id, practice_set_title, question_id, question_title, answer, answer_image_url, score, max_score, is_correct, tags, result, created_at, updated_at',
       )
       .order('updated_at', { ascending: false })
       .then(({ data, error: queryError }) => {
@@ -568,8 +569,23 @@ export const AdminSection: React.FC = () => {
                       ) : (
                         <div className="rounded-lg border border-line bg-surface-muted p-4">
                           <div className="mb-2 text-xs uppercase tracking-widest text-slate-500">{t.admin.studentAnswer}</div>
-                          <p className="whitespace-pre-wrap text-sm leading-relaxed text-ink-soft">
-                            {selectedAttempt?.answer || t.admin.emptyAnswer}
+                          {selectedAttempt?.answer_image_url ? (
+                            <a
+                              href={selectedAttempt.answer_image_url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="block overflow-hidden rounded-lg border border-line bg-white"
+                              title={language === 'zh' ? '点击放大查看' : 'Click to open full size'}
+                            >
+                              <img
+                                src={selectedAttempt.answer_image_url}
+                                alt={language === 'zh' ? '学生答案图片' : 'Student answer image'}
+                                className="max-h-[480px] w-full object-contain"
+                              />
+                            </a>
+                          ) : null}
+                          <p className={`whitespace-pre-wrap text-sm leading-relaxed text-ink-soft ${selectedAttempt?.answer_image_url ? 'mt-2' : ''}`}>
+                            {selectedAttempt?.answer || (selectedAttempt?.answer_image_url ? '' : t.admin.emptyAnswer)}
                           </p>
                         </div>
                       )}
@@ -577,7 +593,9 @@ export const AdminSection: React.FC = () => {
                       <div className="mt-5 grid gap-3 sm:grid-cols-3 sm:gap-4">
                         <div className="rounded-lg border border-line bg-surface-tint p-4">
                           <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.studentAnswer}</div>
-                          <div className="mt-1 text-2xl font-semibold">{selectedAttempt?.answer || '-'}</div>
+                          <div className="mt-1 text-2xl font-semibold">
+                            {selectedAttempt?.answer || (selectedAttempt?.answer_image_url ? (language === 'zh' ? '图片' : 'Image') : '-')}
+                          </div>
                         </div>
                         <div className="rounded-lg border border-line bg-surface-tint p-4">
                           <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.correctAnswer}</div>
