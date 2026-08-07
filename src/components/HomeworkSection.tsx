@@ -30,6 +30,7 @@ import { useLanguage } from '../LanguageContext';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
 import { evaluateLocally } from '../utils/rubricScoring';
 import { HomeworkAdminPanel } from './HomeworkAdminPanel';
+import { QuestionPrompt } from './QuestionPrompt';
 
 type HomeworkView = 'student' | 'teacher';
 
@@ -174,7 +175,7 @@ const QuestionCard: React.FC<{
 
         {!hideDuplicatePrompt && step.prompt && (
           <div className="mt-6 rounded-lg border border-line bg-surface-tint p-4 text-base leading-7 text-ink">
-            <MathText>{step.prompt}</MathText>
+            <QuestionPrompt prompt={step.prompt} />
           </div>
         )}
 

@@ -25,6 +25,7 @@ import { useAuth } from '../auth/AuthContext';
 import { usePracticeProgress, type SavedPracticeAttempt } from '../hooks/usePracticeProgress';
 import { usePracticePermissions } from '../hooks/usePracticePermissions';
 import { StudentWorkUpload } from './StudentWorkUpload';
+import { QuestionPrompt } from './QuestionPrompt';
 
 type SpeechRecognitionConstructor = new () => SpeechRecognition;
 
@@ -122,11 +123,6 @@ const prettifyMath = (value: string) =>
     .replace(/\bF0\b/g, 'F₀')
     .replace(/\^([0-9()+\-=n]+)/g, (_, run: string) => translateRun(run, superscripts))
     .replace(/_([0-9]+)/g, (_, run: string) => translateRun(run, subscripts));
-
-const splitPromptParts = (prompt: string) => {
-  const parts = prompt.split(/\s(?=[a-d]\.\s)/).filter(Boolean);
-  return parts.length > 1 ? parts : [prompt];
-};
 
 const RichText: React.FC<{ children: string; className?: string }> = ({ children, className }) => (
   <span className={className}>{prettifyMath(children)}</span>
@@ -1139,12 +1135,8 @@ export const PracticeSection: React.FC = () => {
                 {shouldShowPrompt && (
                 <div className="mt-6">
                   <div className="rounded-lg border border-line bg-surface-tint p-4 sm:p-5 md:p-6">
-                    <div className="space-y-3 whitespace-pre-line text-base leading-relaxed text-ink md:text-lg">
-                      {splitPromptParts(activeStep.prompt).map((part) => (
-                        <p key={part}>
-                          <MathText>{part}</MathText>
-                        </p>
-                      ))}
+                    <div className="text-base leading-relaxed text-ink md:text-lg">
+                      <QuestionPrompt prompt={activeStep.prompt} />
                     </div>
                   </div>
                 </div>
