@@ -320,6 +320,12 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
     );
   }, [assignments, selectedStudent]);
 
+  // 保存时未勾选学生的草稿不属于任何学生，单独展示，避免在后台中丢失。
+  const unassignedDrafts = useMemo(
+    () => assignments.filter((assignment) => !assignment.assignedToAll && assignment.studentIds.length === 0),
+    [assignments],
+  );
+
   const getStudentAssignmentStats = (assignment: HomeworkAssignment, studentId: string) => {
     const itemKeys = new Set(
       assignment.items.map((item) => `${item.practiceSetId}:${item.questionId}`),
@@ -342,7 +348,9 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
     };
   };
   const viewingAssignment =
-    selectedAssignment && studentAssignments.some((assignment) => assignment.id === selectedAssignment.id)
+    selectedAssignment &&
+    (studentAssignments.some((assignment) => assignment.id === selectedAssignment.id) ||
+      unassignedDrafts.some((assignment) => assignment.id === selectedAssignment.id))
       ? selectedAssignment
       : null;
 
@@ -479,6 +487,62 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
               </div>
             )}
           </div>
+
+          {!!unassignedDrafts.length && (
+            <div className="glass-panel overflow-hidden rounded-xl">
+              <div className="flex flex-col gap-1 border-b border-line px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-2 text-sm font-semibold text-ink">
+                  <FileEdit className="h-4 w-4 text-nebula" />
+                  {language === 'zh' ? '未分配学生的草稿' : 'Unassigned drafts'}
+                </div>
+                <span className="text-xs text-slate-500">
+                  {language === 'zh'
+                    ? `${unassignedDrafts.length} 份 · 编辑后可选择学生发布`
+                    : `${unassignedDrafts.length} · edit, pick students, then publish`}
+                </span>
+              </div>
+              <div className="divide-y divide-line">
+                {unassignedDrafts.map((assignment) => (
+                  <div key={assignment.id} className="flex flex-col gap-4 px-5 py-4 lg:flex-row lg:items-center lg:justify-between">
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-sm font-semibold text-ink">{assignment.title}</span>
+                        <span className={`rounded-full border px-2 py-0.5 text-[9px] uppercase tracking-wider ${statusStyle[assignment.status]}`}>
+                          {assignment.status}
+                        </span>
+                        {assignment.sourceType === 'ai' && <Bot className="h-3.5 w-3.5 text-nebula" />}
+                      </div>
+                      <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-slate-500">
+                        <span>{assignment.items.length} {language === 'zh' ? '题' : 'questions'}</span>
+                        <span>{formatDue(assignment.dueAt, language)}</span>
+                        <span className="text-amber-600">
+                          {language === 'zh' ? '尚未选择学生' : 'No students selected'}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex shrink-0 items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => startEditingAssignment(assignment)}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-nebula/50 bg-nebula/10 px-3 py-1.5 text-xs font-semibold text-ink hover:border-nebula"
+                      >
+                        <Pencil className="h-3.5 w-3.5" />
+                        {language === 'zh' ? '编辑并分配' : 'Edit & assign'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => startDuplicatingAssignment(assignment)}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-ink-soft hover:border-line-strong hover:text-ink"
+                      >
+                        <Copy className="h-3.5 w-3.5" />
+                        {language === 'zh' ? '复制' : 'Duplicate'}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {selectedStudent ? (
             <>
