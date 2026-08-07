@@ -179,7 +179,7 @@ textarea::placeholder {
 }
 
 .practice-question-image {
-  width: auto;
+  width: 100%;
   max-width: 720px;
   height: auto;
 }
