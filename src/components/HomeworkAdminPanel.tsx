@@ -7,6 +7,7 @@ import {
   CalendarClock,
   ClipboardList,
   ClipboardPlus,
+  Copy,
   Eye,
   FileEdit,
   Pencil,
@@ -19,7 +20,7 @@ import {
 } from 'lucide-react';
 import { practiceSets } from '../data/practiceSets';
 import { isSupabaseUuid, questionsFromNumbers, resolveHomeworkItem } from '../homework/catalog';
-import type { CreateHomeworkInput, HomeworkAssignment } from '../homework/types';
+import type { CreateHomeworkInput, HomeworkAssignment, HomeworkProfile } from '../homework/types';
 import { useHomeworkData } from '../hooks/useHomeworkData';
 import { useLanguage } from '../LanguageContext';
 import { HomeworkQuestionReview } from './HomeworkQuestionReview';
@@ -160,6 +161,29 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
     setView('create');
   };
 
+  const startDuplicatingAssignment = (assignment: HomeworkAssignment) => {
+    resetEditor();
+    setStudentIds([]);
+    setAssignedToAll(false);
+    setTitle(
+      language === 'zh'
+        ? `${assignment.title}（副本）`
+        : `${assignment.title} (Copy)`,
+    );
+    setDescription(assignment.description);
+    setDueAt(assignment.dueAt ? new Date(assignment.dueAt).toISOString().slice(0, 16) : '');
+    setDraftItems(assignment.items.map((item) => ({ practiceSetId: item.practiceSetId, questionId: item.questionId })));
+    setSelectedSetId(assignment.items[0]?.practiceSetId ?? 'igcse-cie-topic-1-2');
+    setAiInstruction(assignment.aiInstruction ?? '');
+    setSourceType(assignment.sourceType);
+    setFormMessage(
+      language === 'zh'
+        ? '已复制题目列表，请选择要布置给哪些学生，然后发布。'
+        : 'Questions copied. Choose the students to assign, then publish.',
+    );
+    setView('create');
+  };
+
   const addQuestionNumbers = () => {
     const parsed = questionsFromNumbers(selectedSetId, questionNumbers);
     if (!parsed.items.length) {
@@ -262,85 +286,86 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
     }
   };
 
-  const assignmentProgress = useMemo(() => {
-    if (!selectedAssignment) return [];
-    const itemKeys = new Set(
-      selectedAssignment.items.map((item) => `${item.practiceSetId}:${item.questionId}`),
-    );
-    const matchingAttempts = attempts.filter((attempt) =>
-      itemKeys.has(`${attempt.practiceSetId}:${attempt.questionId}`),
-    );
-    const profileMap = new Map(profiles.map((profile) => [profile.userId, profile]));
-    const audienceIds = new Set(
-      selectedAssignment.assignedToAll
-        ? [
-            ...profiles.map((profile) => profile.userId),
-            ...matchingAttempts.map((attempt) => attempt.studentId),
-          ]
-        : selectedAssignment.studentIds,
-    );
-    if (!demoMode) audienceIds.delete(currentStudentId);
-
-    return Array.from(audienceIds).map((studentId) => {
-      const fallbackAttempt = matchingAttempts.find((attempt) => attempt.studentId === studentId);
-      const profile = profileMap.get(studentId) ?? {
-        userId: studentId,
-        email: fallbackAttempt?.studentEmail ?? studentId.slice(0, 8),
-        displayName: fallbackAttempt?.studentEmail?.split('@')[0] ?? studentId.slice(0, 8),
-      };
-      const studentAttempts = attempts.filter(
-        (attempt) =>
-          attempt.studentId === studentId &&
-          itemKeys.has(`${attempt.practiceSetId}:${attempt.questionId}`),
-      );
-      const completed = new Set(
-        studentAttempts.map((attempt) => `${attempt.practiceSetId}:${attempt.questionId}`),
-      ).size;
-      const correct = studentAttempts.filter((attempt) => attempt.isCorrect).length;
-      const latest = studentAttempts
-        .map((attempt) => attempt.updatedAt)
-        .sort()
-        .at(-1);
-      return {
-        profile,
-        completed,
-        correct,
-        total: selectedAssignment.items.length,
-        accuracy: studentAttempts.length ? Math.round((correct / studentAttempts.length) * 100) : 0,
-        latest,
-      };
-    }).sort((left, right) => {
-      if (!left.latest && !right.latest) return left.profile.displayName.localeCompare(right.profile.displayName);
-      if (!left.latest) return 1;
-      if (!right.latest) return -1;
-      return right.latest.localeCompare(left.latest);
+  const students = useMemo(() => {
+    const map = new Map<string, HomeworkProfile>();
+    profiles.forEach((profile) => map.set(profile.userId, profile));
+    if (!demoMode) map.delete(currentStudentId);
+    attempts.forEach((attempt) => {
+      if (!map.has(attempt.studentId) && !(attempt.studentId === currentStudentId && !demoMode)) {
+        map.set(attempt.studentId, {
+          userId: attempt.studentId,
+          email: attempt.studentEmail ?? attempt.studentId.slice(0, 8),
+          displayName: attempt.studentEmail?.split('@')[0] ?? attempt.studentId.slice(0, 8),
+        });
+      }
     });
-  }, [attempts, currentStudentId, demoMode, profiles, selectedAssignment]);
+    assignments.forEach((assignment) => {
+      assignment.studentIds.forEach((studentId) => {
+        if (!map.has(studentId) && !(studentId === currentStudentId && !demoMode)) {
+          map.set(studentId, { userId: studentId, email: studentId.slice(0, 8), displayName: studentId.slice(0, 8) });
+        }
+      });
+    });
+    return Array.from(map.values()).sort((a, b) => a.displayName.localeCompare(b.displayName));
+  }, [assignments, attempts, currentStudentId, demoMode, profiles]);
 
-  const selectedStudentProgress =
-    assignmentProgress.find((row) => row.profile.userId === selectedStudentId) ??
-    assignmentProgress[0] ??
-    null;
-  const selectedStudentAttemptMap = useMemo(() => {
-    if (!selectedAssignment || !selectedStudentProgress) return new Map();
+  const selectedStudent =
+    students.find((student) => student.userId === selectedStudentId) ?? students[0] ?? null;
+
+  const studentAssignments = useMemo(() => {
+    if (!selectedStudent) return [];
+    const studentId = selectedStudent.userId;
+    return assignments.filter(
+      (assignment) => assignment.assignedToAll || assignment.studentIds.includes(studentId),
+    );
+  }, [assignments, selectedStudent]);
+
+  const getStudentAssignmentStats = (assignment: HomeworkAssignment, studentId: string) => {
     const itemKeys = new Set(
-      selectedAssignment.items.map((item) => `${item.practiceSetId}:${item.questionId}`),
+      assignment.items.map((item) => `${item.practiceSetId}:${item.questionId}`),
+    );
+    const studentAttempts = attempts.filter(
+      (attempt) =>
+        attempt.studentId === studentId &&
+        itemKeys.has(`${attempt.practiceSetId}:${attempt.questionId}`),
+    );
+    const completed = new Set(
+      studentAttempts.map((attempt) => `${attempt.practiceSetId}:${attempt.questionId}`),
+    ).size;
+    const correct = studentAttempts.filter((attempt) => attempt.isCorrect).length;
+    const latest = studentAttempts.map((attempt) => attempt.updatedAt).sort().at(-1);
+    return {
+      completed,
+      total: assignment.items.length,
+      accuracy: studentAttempts.length ? Math.round((correct / studentAttempts.length) * 100) : 0,
+      latest,
+    };
+  };
+  const viewingAssignment =
+    selectedAssignment && studentAssignments.some((assignment) => assignment.id === selectedAssignment.id)
+      ? selectedAssignment
+      : null;
+
+  const selectedStudentAttemptMap = useMemo(() => {
+    if (!viewingAssignment || !selectedStudent) return new Map();
+    const itemKeys = new Set(
+      viewingAssignment.items.map((item) => `${item.practiceSetId}:${item.questionId}`),
     );
     return attempts
       .filter(
         (attempt) =>
-          attempt.studentId === selectedStudentProgress.profile.userId &&
+          attempt.studentId === selectedStudent.userId &&
           itemKeys.has(`${attempt.practiceSetId}:${attempt.questionId}`),
       )
       .reduce<Map<string, (typeof attempts)[number]>>((map, attempt) => {
         map.set(`${attempt.practiceSetId}:${attempt.questionId}`, attempt);
         return map;
       }, new Map());
-  }, [attempts, selectedAssignment, selectedStudentProgress]);
+  }, [attempts, selectedStudent, viewingAssignment]);
 
   const reviewItems = useMemo(() => {
-    if (!selectedAssignment) return [];
-    return selectedAssignment.items.map((item, index) => {
+    if (!viewingAssignment) return [];
+    return viewingAssignment.items.map((item, index) => {
       const key = `${item.practiceSetId}:${item.questionId}`;
       return {
         key,
@@ -350,7 +375,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
         attempt: selectedStudentAttemptMap.get(key),
       };
     });
-  }, [selectedAssignment, selectedStudentAttemptMap]);
+  }, [selectedStudentAttemptMap, viewingAssignment]);
   const selectedReviewItem =
     reviewItems.find((entry) => entry.key === selectedReviewQuestionKey) ??
     reviewItems.find((entry) => entry.attempt && !entry.attempt.isCorrect) ??
@@ -362,19 +387,6 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
     (entry) => entry.attempt && !entry.attempt.isCorrect,
   ).length;
   const unansweredReviewCount = reviewItems.filter((entry) => !entry.attempt).length;
-
-  const openStudentReview = (studentId: string) => {
-    setSelectedStudentId(studentId);
-    setSelectedReviewQuestionKey(null);
-    if (typeof window !== 'undefined') {
-      window.requestAnimationFrame(() => {
-        document.getElementById('assignment-answer-review')?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
-      });
-    }
-  };
 
   if (loading) {
     return <div className="glass-panel rounded-xl p-8 text-sm text-ink-soft">{language === 'zh' ? '正在加载作业后台…' : 'Loading homework admin…'}</div>;
@@ -431,201 +443,182 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
       {error && <div className="mb-5 rounded-xl border border-rose-500/25 bg-rose-500/10 p-4 text-sm text-rose-800">{error}</div>}
 
       {view === 'overview' ? (
-        <div className="grid gap-5 xl:grid-cols-[340px_minmax(0,1fr)]">
-          <aside className="glass-panel rounded-xl p-3">
-            <div className="px-3 pb-2 pt-3 text-[10px] uppercase tracking-widest text-slate-500">
-              {language === 'zh' ? `${assignments.length} 份作业` : `${assignments.length} assignments`}
+        <div className="space-y-5">
+          <div className="glass-panel rounded-xl p-4">
+            <div className="flex items-center gap-2 px-1 pb-3 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
+              <UsersRound className="h-3.5 w-3.5" />
+              {language === 'zh' ? `学生（${students.length}）` : `Students (${students.length})`}
             </div>
-            <div className="space-y-2">
-              {assignments.map((assignment) => (
-                <button
-                  key={assignment.id}
-                  type="button"
-                  onClick={() => {
-                    setSelectedAssignmentId(assignment.id);
-                    setSelectedStudentId(null);
-                    setSelectedReviewQuestionKey(null);
-                  }}
-                  className={`w-full rounded-lg border p-4 text-left transition-colors ${
-                    selectedAssignment?.id === assignment.id
-                      ? 'border-nebula/60 bg-nebula/10'
-                      : 'border-line bg-surface-tint hover:border-line-strong'
-                  }`}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <span className="text-sm font-semibold text-ink">{assignment.title}</span>
-                    <span className={`shrink-0 rounded-full border px-2 py-1 text-[9px] uppercase tracking-wider ${statusStyle[assignment.status]}`}>
-                      {assignment.status}
-                    </span>
-                  </div>
-                  <div className="mt-3 flex items-center gap-3 text-[11px] text-slate-500">
-                    <span>{assignment.items.length} {language === 'zh' ? '题' : 'questions'}</span>
-                    <span>{formatDue(assignment.dueAt, language)}</span>
-                    {assignment.sourceType === 'ai' && <Bot className="h-3.5 w-3.5 text-nebula" />}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </aside>
+            {students.length ? (
+              <div className="flex flex-wrap gap-2">
+                {students.map((student) => {
+                  const active = selectedStudent?.userId === student.userId;
+                  return (
+                    <button
+                      key={student.userId}
+                      type="button"
+                      onClick={() => {
+                        setSelectedStudentId(student.userId);
+                        setSelectedAssignmentId(null);
+                        setSelectedReviewQuestionKey(null);
+                      }}
+                      className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
+                        active
+                          ? 'border-nebula/60 bg-nebula/15 text-ink'
+                          : 'border-line bg-surface-tint text-ink-soft hover:border-line-strong hover:text-ink'
+                      }`}
+                    >
+                      {student.displayName}
+                    </button>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="px-1 text-sm text-slate-500">
+                {language === 'zh' ? '暂时没有学生记录。' : 'No students yet.'}
+              </div>
+            )}
+          </div>
 
-          <div className="space-y-5">
-            {selectedAssignment ? (
-              <>
-                <div className="glass-panel rounded-xl p-5 sm:p-6">
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <div className="text-[10px] uppercase tracking-widest text-nebula">
-                        {selectedAssignment.sourceType === 'ai'
-                          ? language === 'zh' ? 'AI 创建' : 'Created by AI'
-                          : language === 'zh' ? '手动创建' : 'Manual'}
-                      </div>
-                      <h3 className="mt-2 font-serif text-2xl text-ink">{selectedAssignment.title}</h3>
-                      <p className="mt-2 max-w-2xl text-sm leading-6 text-ink-soft">{selectedAssignment.description}</p>
-                    </div>
-                    <div className="flex gap-2">
-                      {selectedAssignment.status === 'draft' && (
-                        <button
-                          type="button"
-                          onClick={() => startEditingAssignment(selectedAssignment)}
-                          className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-xs font-semibold text-ink-soft hover:border-line-strong hover:text-ink"
-                        >
-                          <Pencil className="h-3.5 w-3.5" />
-                          {language === 'zh' ? '编辑草稿' : 'Edit draft'}
-                        </button>
-                      )}
-                      {selectedAssignment.status === 'draft' && (
-                        <button
-                          type="button"
-                          onClick={() => void updateAssignmentStatus(selectedAssignment.id, 'published')}
-                          className="inline-flex items-center gap-2 rounded-full bg-nebula px-4 py-2 text-xs font-bold text-on-accent"
-                        >
-                          <Rocket className="h-3.5 w-3.5" />
-                          {language === 'zh' ? '发布' : 'Publish'}
-                        </button>
-                      )}
-                      {selectedAssignment.status === 'published' && (
-                        <button
-                          type="button"
-                          onClick={() => void updateAssignmentStatus(selectedAssignment.id, 'draft')}
-                          className="inline-flex items-center gap-2 rounded-full border border-amber-500/35 bg-amber-500/10 px-4 py-2 text-xs font-semibold text-amber-800"
-                        >
-                          <Undo2 className="h-3.5 w-3.5" />
-                          {language === 'zh' ? '撤回' : 'Withdraw'}
-                        </button>
-                      )}
-                      {selectedAssignment.status !== 'archived' && (
-                        <button
-                          type="button"
-                          onClick={() => void updateAssignmentStatus(selectedAssignment.id, 'archived')}
-                          className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-xs text-ink-soft"
-                        >
-                          <Archive className="h-3.5 w-3.5" />
-                          {language === 'zh' ? '归档' : 'Archive'}
-                        </button>
-                      )}
-                    </div>
+          {selectedStudent ? (
+            <>
+              <div className="glass-panel overflow-hidden rounded-xl">
+                <div className="flex flex-col gap-1 border-b border-line px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-sm font-semibold text-ink">{selectedStudent.displayName}</span>
+                    <span className="text-xs text-slate-500">{selectedStudent.email}</span>
                   </div>
-                  <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                    <div className="rounded-lg border border-line bg-surface-tint p-4">
-                      <div className="text-[10px] uppercase tracking-widest text-slate-500">{language === 'zh' ? '题目' : 'Questions'}</div>
-                      <div className="mt-1 text-2xl font-semibold">{selectedAssignment.items.length}</div>
-                    </div>
-                    <div className="rounded-lg border border-line bg-surface-tint p-4">
-                      <div className="text-[10px] uppercase tracking-widest text-slate-500">{language === 'zh' ? '学生' : 'Students'}</div>
-                      <div className="mt-1 text-2xl font-semibold">{selectedAssignment.assignedToAll ? profiles.length : selectedAssignment.studentIds.length}</div>
-                    </div>
-                    <div className="rounded-lg border border-line bg-surface-tint p-4">
-                      <div className="text-[10px] uppercase tracking-widest text-slate-500">{language === 'zh' ? '截止时间' : 'Due'}</div>
-                      <div className="mt-2 text-sm font-semibold">{formatDue(selectedAssignment.dueAt, language)}</div>
-                    </div>
-                  </div>
+                  <span className="text-xs text-slate-500">
+                    {language === 'zh' ? `${studentAssignments.length} 份作业` : `${studentAssignments.length} assignments`}
+                  </span>
                 </div>
-
-                <div className="glass-panel overflow-hidden rounded-xl">
-                  <div className="border-b border-line px-5 py-4 text-xs font-semibold uppercase tracking-widest text-ink-soft">
-                    <UsersRound className="mr-2 inline h-4 w-4" />
-                    {language === 'zh' ? '学生完成情况' : 'Student progress'}
-                  </div>
-                  <div className="overflow-x-auto">
-                    <table className="w-full min-w-[680px] text-left text-sm">
-                      <thead className="text-[10px] uppercase tracking-widest text-slate-500">
-                        <tr>
-                          <th className="px-5 py-3">{language === 'zh' ? '学生' : 'Student'}</th>
-                          <th className="px-5 py-3">{language === 'zh' ? '完成' : 'Completed'}</th>
-                          <th className="px-5 py-3">{language === 'zh' ? '正确率' : 'Accuracy'}</th>
-                          <th className="px-5 py-3">{language === 'zh' ? '状态' : 'Status'}</th>
-                          <th className="px-5 py-3">{language === 'zh' ? '最近作答' : 'Last activity'}</th>
-                          <th className="px-5 py-3 text-right">{language === 'zh' ? '答题记录' : 'Answers'}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {assignmentProgress.map((row) => {
-                          const percent = row.total ? Math.round((row.completed / row.total) * 100) : 0;
-                          const isSelected = row.profile.userId === selectedStudentProgress?.profile.userId;
-                          return (
-                            <tr
-                              key={row.profile.userId}
-                              className={`border-t border-line transition-colors ${
-                                isSelected ? 'bg-nebula/10' : 'hover:bg-surface-tint-strong'
+                {studentAssignments.length ? (
+                  <div className="divide-y divide-line">
+                    {studentAssignments.map((assignment) => {
+                      const stats = getStudentAssignmentStats(assignment, selectedStudent.userId);
+                      const percent = stats.total ? Math.round((stats.completed / stats.total) * 100) : 0;
+                      const isViewing = viewingAssignment?.id === assignment.id;
+                      return (
+                        <div key={assignment.id} className={`flex flex-col gap-4 px-5 py-4 lg:flex-row lg:items-center lg:justify-between ${isViewing ? 'bg-nebula/5' : ''}`}>
+                          <div className="min-w-0">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <span className="text-sm font-semibold text-ink">{assignment.title}</span>
+                              <span className={`rounded-full border px-2 py-0.5 text-[9px] uppercase tracking-wider ${statusStyle[assignment.status]}`}>
+                                {assignment.status}
+                              </span>
+                              {assignment.sourceType === 'ai' && <Bot className="h-3.5 w-3.5 text-nebula" />}
+                            </div>
+                            <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-slate-500">
+                              <span>{assignment.items.length} {language === 'zh' ? '题' : 'questions'}</span>
+                              <span>{formatDue(assignment.dueAt, language)}</span>
+                              <span>
+                                {language === 'zh' ? '完成' : 'Done'} {stats.completed}/{stats.total}
+                              </span>
+                              <span>{language === 'zh' ? '正确率' : 'Accuracy'} {stats.accuracy}%</span>
+                              <span>{language === 'zh' ? '最近作答' : 'Last'} {stats.latest ? formatDue(stats.latest, language) : '—'}</span>
+                            </div>
+                            <div className="mt-2 h-1.5 w-48 max-w-full overflow-hidden rounded-full bg-surface-tint-strong">
+                              <div className="h-full rounded-full bg-nebula" style={{ width: `${percent}%` }} />
+                            </div>
+                          </div>
+                          <div className="flex shrink-0 items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSelectedAssignmentId(isViewing ? null : assignment.id);
+                                setSelectedReviewQuestionKey(null);
+                                if (!isViewing && typeof window !== 'undefined') {
+                                  window.requestAnimationFrame(() => {
+                                    document.getElementById('assignment-answer-review')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                  });
+                                }
+                              }}
+                              className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold ${
+                                isViewing
+                                  ? 'border-nebula/50 bg-nebula/15 text-ink'
+                                  : 'border-line text-ink-soft hover:border-line-strong hover:text-ink'
                               }`}
                             >
-                              <td className="px-5 py-4">
-                                <div className="font-semibold text-ink">{row.profile.displayName}</div>
-                                <div className="text-xs text-slate-500">{row.profile.email}</div>
-                              </td>
-                              <td className="px-5 py-4">
-                                <div className="flex items-center gap-3">
-                                  <div className="h-1.5 w-28 overflow-hidden rounded-full bg-surface-tint-strong">
-                                    <div className="h-full rounded-full bg-nebula" style={{ width: `${percent}%` }} />
-                                  </div>
-                                  <span>{row.completed}/{row.total}</span>
-                                </div>
-                              </td>
-                              <td className="px-5 py-4">{row.accuracy}%</td>
-                              <td className="px-5 py-4">
-                                <span className={`rounded-full px-2.5 py-1 text-xs ${row.completed === row.total ? 'bg-emerald-500/10 text-emerald-700' : row.completed ? 'bg-amber-500/10 text-amber-700' : 'bg-surface-tint text-slate-500'}`}>
-                                  {row.completed === row.total
-                                    ? language === 'zh' ? '已完成' : 'Complete'
-                                    : row.completed
-                                      ? language === 'zh' ? '进行中' : 'In progress'
-                                      : language === 'zh' ? '未开始' : 'Not started'}
-                                </span>
-                              </td>
-                              <td className="px-5 py-4 text-slate-500">{row.latest ? formatDue(row.latest, language) : '—'}</td>
-                              <td className="px-5 py-4 text-right">
-                                <button
-                                  type="button"
-                                  onClick={() => openStudentReview(row.profile.userId)}
-                                  className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${
-                                    isSelected
-                                      ? 'border-nebula/50 bg-nebula/15 text-ink'
-                                      : 'border-line text-ink-soft hover:border-line-strong hover:text-ink'
-                                  }`}
-                                >
-                                  <Eye className="mr-1.5 inline h-3.5 w-3.5" />
-                                  {language === 'zh' ? '查看' : 'View'}
-                                </button>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                        {!assignmentProgress.length && (
-                          <tr>
-                            <td colSpan={6} className="px-5 py-8 text-center text-sm text-slate-500">
-                              {language === 'zh'
-                                ? '这份作业暂时没有可显示的学生记录。'
-                                : 'No student records are available for this assignment yet.'}
-                            </td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
+                              <Eye className="h-3.5 w-3.5" />
+                              {isViewing
+                                ? language === 'zh' ? '收起' : 'Hide'
+                                : language === 'zh' ? '查看' : 'View'}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => startDuplicatingAssignment(assignment)}
+                              className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-ink-soft hover:border-line-strong hover:text-ink"
+                            >
+                              <Copy className="h-3.5 w-3.5" />
+                              {language === 'zh' ? '复制' : 'Duplicate'}
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
-                </div>
+                ) : (
+                  <div className="px-5 py-10 text-center text-sm text-slate-500">
+                    {language === 'zh'
+                      ? '该学生还没有被分配任何作业。'
+                      : 'This student has no assignments yet.'}
+                  </div>
+                )}
+              </div>
 
-                {selectedStudentProgress && (
-                  <div id="assignment-answer-review" className="scroll-mt-6 space-y-4">
+              {viewingAssignment && (
+                <div id="assignment-answer-review" className="scroll-mt-6 space-y-4">
                     <div className="glass-panel rounded-xl p-4 sm:p-5">
+                      <div className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
+                        <div className="flex items-baseline gap-3">
+                          <span className="text-sm font-semibold text-ink">{viewingAssignment.title}</span>
+                          <span className={`rounded-full border px-2 py-0.5 text-[9px] uppercase tracking-wider ${statusStyle[viewingAssignment.status]}`}>
+                            {viewingAssignment.status}
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {viewingAssignment.status === 'draft' && (
+                            <button
+                              type="button"
+                              onClick={() => startEditingAssignment(viewingAssignment)}
+                              className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-ink-soft hover:border-line-strong hover:text-ink"
+                            >
+                              <Pencil className="h-3.5 w-3.5" />
+                              {language === 'zh' ? '编辑草稿' : 'Edit draft'}
+                            </button>
+                          )}
+                          {viewingAssignment.status === 'draft' && (
+                            <button
+                              type="button"
+                              onClick={() => void updateAssignmentStatus(viewingAssignment.id, 'published')}
+                              className="inline-flex items-center gap-1.5 rounded-full bg-nebula px-3 py-1.5 text-xs font-bold text-on-accent"
+                            >
+                              <Rocket className="h-3.5 w-3.5" />
+                              {language === 'zh' ? '发布' : 'Publish'}
+                            </button>
+                          )}
+                          {viewingAssignment.status === 'published' && (
+                            <button
+                              type="button"
+                              onClick={() => void updateAssignmentStatus(viewingAssignment.id, 'draft')}
+                              className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/35 bg-amber-500/10 px-3 py-1.5 text-xs font-semibold text-amber-800"
+                            >
+                              <Undo2 className="h-3.5 w-3.5" />
+                              {language === 'zh' ? '撤回' : 'Withdraw'}
+                            </button>
+                          )}
+                          {viewingAssignment.status !== 'archived' && (
+                            <button
+                              type="button"
+                              onClick={() => void updateAssignmentStatus(viewingAssignment.id, 'archived')}
+                              className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-xs text-ink-soft"
+                            >
+                              <Archive className="h-3.5 w-3.5" />
+                              {language === 'zh' ? '归档' : 'Archive'}
+                            </button>
+                          )}
+                        </div>
+                      </div>
                       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         <div className="min-w-0">
                           <div className="text-[10px] font-semibold uppercase tracking-widest text-nebula">
@@ -633,9 +626,9 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                           </div>
                           <div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
                             <h3 className="font-serif text-xl text-ink sm:text-2xl">
-                              {selectedStudentProgress.profile.displayName}
+                              {selectedStudent.displayName} · {viewingAssignment.title}
                             </h3>
-                            <span className="text-xs text-slate-500">{selectedStudentProgress.profile.email}</span>
+                            <span className="text-xs text-slate-500">{selectedStudent.email}</span>
                           </div>
                         </div>
                         <div className="grid grid-cols-3 gap-2 text-center">
@@ -709,15 +702,14 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                         </div>
                       )}
                     </div>
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="glass-panel rounded-xl p-10 text-center text-sm text-slate-500">
-                {language === 'zh' ? '还没有作业。点击“添加作业”开始。' : 'No assignments yet. Create the first one.'}
-              </div>
-            )}
-          </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="glass-panel rounded-xl p-10 text-center text-sm text-slate-500">
+              {language === 'zh' ? '还没有学生记录。' : 'No students yet.'}
+            </div>
+          )}
         </div>
       ) : (
         <div className="grid gap-5 xl:grid-cols-[minmax(0,1.2fr)_minmax(340px,0.8fr)]">
