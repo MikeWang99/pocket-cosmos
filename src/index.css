@@ -179,9 +179,9 @@ textarea::placeholder {
 }
 
 .practice-question-image {
-  width: 100%;
+  width: auto;
+  max-width: 720px;
   height: auto;
-  max-height: none;
 }
 
 .practice-question-image--responsive {
@@ -254,8 +254,7 @@ textarea::placeholder {
   }
 
   .practice-question-image {
-    width: 100%;
-    height: auto;
+    max-width: 100%;
   }
 
   .practice-question-image--responsive {
