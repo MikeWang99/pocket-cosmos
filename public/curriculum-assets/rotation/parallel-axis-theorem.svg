@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+  <title id="title">Parallel axis theorem</title>
+  <desc id="desc">A rigid body with a center-of-mass axis and a parallel axis shifted by distance d.</desc>
+  <rect width="900" height="430" fill="#ffffff"/>
+  <path d="M310 120 C 380 60 560 70 620 140 C 680 210 640 330 520 350 C 400 372 250 320 245 230 C 242 170 262 152 310 120 Z"
+        fill="#eef2ff" stroke="#4f46e5" stroke-width="5"/>
+  <line x1="445" y1="40" x2="445" y2="400" stroke="#4f46e5" stroke-width="5" stroke-dasharray="14 10"/>
+  <circle cx="445" cy="225" r="10" fill="#4f46e5"/>
+  <text x="462" y="215" font-family="Arial, sans-serif" font-size="26" fill="#312e81">CM</text>
+  <text x="386" y="32" font-family="Arial, sans-serif" font-size="25" fill="#312e81">axis through CM</text>
+  <line x1="700" y1="40" x2="700" y2="400" stroke="#f59e0b" stroke-width="5" stroke-dasharray="14 10"/>
+  <text x="648" y="32" font-family="Arial, sans-serif" font-size="25" fill="#b45309">new parallel axis</text>
+  <line x1="445" y1="382" x2="700" y2="382" stroke="#0891b2" stroke-width="5"/>
+  <path d="M445 382 l18 -8 v16 Z" fill="#0891b2"/>
+  <path d="M700 382 l-18 -8 v16 Z" fill="#0891b2"/>
+  <text x="555" y="418" font-family="Arial, sans-serif" font-size="27" fill="#0e7490">d</text>
+  <text x="728" y="225" font-family="Arial, sans-serif" font-size="26" fill="#b45309">I′ = I_cm + Md&#178;</text>
+</svg>
