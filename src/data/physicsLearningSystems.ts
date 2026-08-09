@@ -2297,10 +2297,12 @@ const apEnrichment: Record<string, Enrichment> = {
     ]),
     formulas: [
       formula('Rotational kinematics', '转动运动学', '\\omega=\\frac{d\\theta}{dt},\\quad \\alpha=\\frac{d\\omega}{dt}'),
+      formula('Constant angular acceleration', '匀角加速度', '\\omega=\\omega_0+\\alpha t,\\quad \\theta=\\theta_0+\\omega_0t+\\frac12\\alpha t^2'),
       formula('Linear-angular bridge', '线量与角量的联系', 's=r\\Delta\\theta,\\quad v_T=r\\omega,\\quad a_T=r\\alpha'),
       formula('Torque', '力矩', '\\vec\\tau=\\vec r\\times\\vec F'),
       formula('Rotational inertia', '转动惯量', 'I=\\sum m_ir_i^2=\\int r^2\\,dm'),
       formula('Parallel-axis theorem', '平行轴定理', 'I^{\\prime}=I_{cm}+Md^2'),
+      formula('Rotational equilibrium', '转动平衡', '\\sum\\tau=0\\Rightarrow\\omega=\\text{constant}'),
       formula('Rotational dynamics', '转动动力学', '\\sum\\tau=I\\alpha'),
     ],
     diagrams: [
@@ -2316,6 +2318,7 @@ const apEnrichment: Record<string, Enrichment> = {
     ]),
     formulas: [
       formula('Rotational kinetic energy', '转动动能', 'K_{rot}=\\frac12I\\omega^2'),
+      formula('Total rigid-body kinetic energy', '刚体总动能', 'K_{tot}=\\frac12Mv_{cm}^2+\\frac12I_{cm}\\omega^2'),
       formula('Work by torque', '力矩做功', 'W=\\int\\tau\\,d\\theta'),
       formula('Angular momentum', '角动量', '\\vec L=\\vec r\\times\\vec p,\\quad L_{rigid}=I\\omega'),
       formula('Angular impulse', '角冲量', '\\Delta L=\\int\\tau_{ext}\\,dt'),
