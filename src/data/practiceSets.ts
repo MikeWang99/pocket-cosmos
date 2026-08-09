@@ -9,6 +9,10 @@ import {
   apcMechanicsRotationTest5Meta,
   apcMechanicsRotationTest5Steps,
 } from './apcMechanicsHomeworkBanks';
+import {
+  apcMechanicsRotationTest17Meta,
+  apcMechanicsRotationTest17Steps,
+} from './apcMechanicsRotationTest17';
 import { dynamicsMultipleChoiceMeta, dynamicsMultipleChoiceSteps } from './dynamicsMultipleChoice';
 import { practiceSetMeta as frq2025Meta, practiceSteps as frq2025Steps } from './frq2025Mechanics';
 import {
@@ -161,6 +165,17 @@ export const practiceSets: PracticeSet[] = [
     chapterTitle: 'Torque and Rotational Dynamics',
     ...apcMechanicsRotationTest5Meta,
     steps: apcMechanicsRotationTest5Steps,
+  },
+  {
+    id: 'apc-mechanics-rotation-test17',
+    category: 'mechanics',
+    label: 'Rotation II · Test 17',
+    system: 'ap-c-mech',
+    practiceKind: 'mcq',
+    chapter: 6,
+    chapterTitle: 'Energy and Momentum of Rotating Systems',
+    ...apcMechanicsRotationTest17Meta,
+    steps: apcMechanicsRotationTest17Steps,
   },
   {
     id: 'physics-bowl-em-question-bank',

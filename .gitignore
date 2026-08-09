@@ -8,6 +8,8 @@ coverage/
 *.log
 *.tsbuildinfo
 outputs/crackap-apc-mechanics-test16/source-snapshots/
+outputs/crackap-apc-mechanics-test17/source-snapshots/
+outputs/crackap-apc-mechanics-test17/full_explanations.txt
 .env*
 !.env.example
 .vercel

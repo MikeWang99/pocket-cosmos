@@ -1,0 +1,18 @@
+{
+  "bankId": "apc-mechanics-rotation-test17",
+  "sourcePage": "https://www.crackap.com/ap/physics-c-mechanics/test17.html",
+  "rightsStatus": "unknown",
+  "reviewStatus": "approved_by_direct_assignment_request",
+  "questions": [
+    { "questionId": "crackap-apc-mechanics-test17-q01", "sourceQuestion": 163, "answer": "C", "difficulty": 2, "tags": ["Angular momentum conservation", "Rotational inertia", "Relation v=ωr"] },
+    { "questionId": "crackap-apc-mechanics-test17-q02", "sourceQuestion": 164, "answer": "B", "difficulty": 2, "tags": ["Static equilibrium", "Torque balance"] },
+    { "questionId": "crackap-apc-mechanics-test17-q03", "sourceQuestion": 165, "answer": "D", "difficulty": 2, "tags": ["Rotational inertia", "Parallel-axis theorem"] },
+    { "questionId": "crackap-apc-mechanics-test17-q04", "sourceQuestion": 166, "answer": "B", "difficulty": 3, "tags": ["Rolling", "Rotational kinetic energy", "Conservation of energy"] },
+    { "questionId": "crackap-apc-mechanics-test17-q05", "sourceQuestion": 167, "answer": "E", "difficulty": 2, "tags": ["Angular momentum", "Graph interpretation"] },
+    { "questionId": "crackap-apc-mechanics-test17-q06", "sourceQuestion": 168, "answer": "E", "difficulty": 3, "tags": ["Static equilibrium", "Torque balance", "Force balance"] },
+    { "questionId": "crackap-apc-mechanics-test17-q07", "sourceQuestion": 169, "answer": "E", "difficulty": 3, "tags": ["Angular momentum conservation", "Inelastic rotational collision"] },
+    { "questionId": "crackap-apc-mechanics-test17-q08", "sourceQuestion": 170, "answer": "C", "difficulty": 4, "tags": ["Combined rotation and translation", "Centripetal acceleration"] },
+    { "questionId": "crackap-apc-mechanics-test17-q09", "sourceQuestion": 171, "answer": "C", "difficulty": 2, "tags": ["Rotational inertia", "Point-mass systems"] },
+    { "questionId": "crackap-apc-mechanics-test17-q10", "sourceQuestion": 172, "answer": "C", "difficulty": 3, "tags": ["Rolling", "Rotational kinetic energy"] }
+  ]
+}
