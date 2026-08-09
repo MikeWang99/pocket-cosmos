@@ -76,6 +76,14 @@ const parallelAxisDiagram = originalDiagram(
   '平行轴定理在质心轴转动惯量上加 $Md^2$;平行轴中质心轴给出最小值。',
 );
 
+const parallelAxisDerivationDiagram = originalDiagram(
+  'parallel-axis-derivation.svg',
+  'Top view of the center-of-mass axis, a parallel axis at distance d, and a mass element with distance vectors r and r-prime.',
+  '俯视图:质心轴、距离 d 的平行轴,以及带距离矢量 r 与 r′ 的质量元。',
+  'Expand $r^{\\prime2}=r^2-2dx+d^2$ and integrate term by term; the cross term vanishes because the origin is the center of mass.',
+  '展开 $r^{\\prime2}=r^2-2dx+d^2$ 后逐项积分;交叉项因为原点取在质心而消失。',
+);
+
 const equilibriumBeamDiagram = originalDiagram(
   'equilibrium-beam.svg',
   'A beam on two supports carrying a load, with forces drawn at their application points.',
@@ -784,6 +792,28 @@ const inertiaLesson: CurriculumLesson = {
       classroomQuestions: [inertiaCheck],
     },
     {
+      heading: text('Derive the parallel-axis theorem with calculus', '用微积分推导平行轴定理'),
+      images: [parallelAxisDerivationDiagram],
+      paragraphs: [
+        text(
+          'Place the origin at the center of mass and let the new axis be parallel to the center-of-mass axis at distance $d$. For a mass element $dm$ with coordinates $(x,y)$, the squared distance to the center-of-mass axis is $x^2+y^2$, while the squared distance to the new axis is $(x-d)^2+y^2$.',
+          '把坐标原点取在质心,新轴与质心轴平行且相距 $d$。坐标为 $(x,y)$ 的质量元 $dm$ 到质心轴的距离平方是 $x^2+y^2$,到新轴的距离平方是 $(x-d)^2+y^2$。',
+        ),
+      ],
+      formulas: [
+        formula('Expand the distance squared', '展开距离平方', 'r^{\\prime2}=(x-d)^2+y^2=r^2-2dx+d^2'),
+        formula('Integrate term by term', '逐项积分', 'I^{\\prime}=\\int r^{\\prime2}\\,dm=\\int r^2\\,dm-2d\\int x\\,dm+d^2\\int dm'),
+        formula('Center-of-mass condition kills the cross term', '质心条件消去交叉项', '\\int x\\,dm=Mx_{cm}=0'),
+        formula('Mass integral', '质量积分', '\\int dm=M'),
+        formula('Result', '结论', 'I^{\\prime}=I_{cm}+Md^2'),
+      ],
+      bullets: [
+        text('The middle term vanishes precisely because the origin is chosen at the center of mass; that is also why the center-of-mass axis gives the minimum inertia among parallel axes.', '交叉项消失正是因为原点选在质心;这也是质心轴在平行轴中给出最小转动惯量的原因。'),
+        text('The theorem only shifts axes; always start from a known $I_{cm}$ and add $Md^2$—never subtract to shift backward.', '定理只能单向平移转轴:总是从已知 $I_{cm}$ 加上 $Md^2$,不能反向相减。'),
+        text('$d$ is the perpendicular distance between the two parallel axes; non-parallel axes are outside the theorem.', '$d$ 是两条平行轴之间的垂直距离;不平行的轴不适用该定理。'),
+      ],
+    },
+    {
       heading: text('CED calculus boundary', 'CED 微积分边界'),
       bullets: [
         text('Required derivations: uniform or nonuniform thin rods about arbitrary perpendicular axes; thin cylindrical shells, disks, and coaxial ring/shell bodies about central axes.', '要求推导:均匀或非均匀细杆绕任意垂直轴;薄圆柱壳、圆盘以及由同轴圆环或壳组成的物体绕中心轴。'),
@@ -806,6 +836,15 @@ const inertiaLesson: CurriculumLesson = {
           formula('Parallel axis', '平行轴', 'I^{\\prime}=I_{cm}+Md^2'),
         ],
         bullets: [text('State the axis, perpendicular distance, density relation, and limits before integrating.', '积分前说明转轴、垂直距离、密度关系和积分限。')],
+      },
+      {
+        heading: text('Parallel-axis theorem derivation', '平行轴定理推导'),
+        images: [parallelAxisDerivationDiagram],
+        formulas: [
+          formula('Expand and integrate', '展开并积分', 'I^{\\prime}=\\int(r^2-2dx+d^2)\\,dm=I_{cm}-2dMx_{cm}+Md^2'),
+          formula('Result', '结论', 'x_{cm}=0\\Rightarrow I^{\\prime}=I_{cm}+Md^2'),
+        ],
+        bullets: [text('The cross term vanishes because the origin sits at the center of mass.', '交叉项因原点取在质心而消失。')],
       },
       {
         heading: text('Required results', '必会结果'),
