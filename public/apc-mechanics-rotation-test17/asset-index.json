@@ -1,0 +1,28 @@
+{
+  "bankId": "apc-mechanics-rotation-test17",
+  "assets": [
+    { "questionId": "crackap-apc-mechanics-test17-q01", "path": "/apc-mechanics-rotation-test17/source/q01-figure.jpeg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01363.jpeg", "width": 449, "height": 210 },
+    { "questionId": "crackap-apc-mechanics-test17-q02", "path": "/apc-mechanics-rotation-test17/source/q02-figure.jpeg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01366.jpeg", "width": 464, "height": 362 },
+    { "questionId": "crackap-apc-mechanics-test17-q03", "path": "/apc-mechanics-rotation-test17/source/q03-figure.jpeg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01367.jpeg", "width": 450, "height": 413 },
+    { "questionId": "crackap-apc-mechanics-test17-q05", "path": "/apc-mechanics-rotation-test17/source/q05-figure.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/04.jpg", "width": 420, "height": 324 },
+    { "questionId": "crackap-apc-mechanics-test17-q05", "path": "/apc-mechanics-rotation-test17/source/q05-choice-a.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/04a.jpg", "width": 314, "height": 170 },
+    { "questionId": "crackap-apc-mechanics-test17-q05", "path": "/apc-mechanics-rotation-test17/source/q05-choice-b.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/04b.jpg", "width": 320, "height": 168 },
+    { "questionId": "crackap-apc-mechanics-test17-q05", "path": "/apc-mechanics-rotation-test17/source/q05-choice-c.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/04c.jpg", "width": 313, "height": 171 },
+    { "questionId": "crackap-apc-mechanics-test17-q05", "path": "/apc-mechanics-rotation-test17/source/q05-choice-d.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/04d.jpg", "width": 320, "height": 168 },
+    { "questionId": "crackap-apc-mechanics-test17-q05", "path": "/apc-mechanics-rotation-test17/source/q05-choice-e.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/04e.jpg", "width": 324, "height": 170 },
+    { "questionId": "crackap-apc-mechanics-test17-q06", "path": "/apc-mechanics-rotation-test17/source/q06-figure.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/05.jpg", "width": 436, "height": 447 },
+    { "questionId": "crackap-apc-mechanics-test17-q06", "path": "/apc-mechanics-rotation-test17/source/q06-choice-a.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/05a.jpg", "width": 110, "height": 91 },
+    { "questionId": "crackap-apc-mechanics-test17-q06", "path": "/apc-mechanics-rotation-test17/source/q06-choice-b.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/05b.jpg", "width": 96, "height": 91 },
+    { "questionId": "crackap-apc-mechanics-test17-q06", "path": "/apc-mechanics-rotation-test17/source/q06-choice-c.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/05c.jpg", "width": 97, "height": 97 },
+    { "questionId": "crackap-apc-mechanics-test17-q06", "path": "/apc-mechanics-rotation-test17/source/q06-choice-d.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/05d.jpg", "width": 73, "height": 124 },
+    { "questionId": "crackap-apc-mechanics-test17-q06", "path": "/apc-mechanics-rotation-test17/source/q06-choice-e.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/05e.jpg", "width": 50, "height": 122 },
+    { "questionId": "crackap-apc-mechanics-test17-q07", "path": "/apc-mechanics-rotation-test17/source/q07-figure.jpeg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01371.jpeg", "width": 431, "height": 252 },
+    { "questionId": "crackap-apc-mechanics-test17-q08", "path": "/apc-mechanics-rotation-test17/source/q08-figure.jpeg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01376.jpeg", "width": 393, "height": 148 },
+    { "questionId": "crackap-apc-mechanics-test17-q09", "path": "/apc-mechanics-rotation-test17/source/q09-figure.jpeg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01382.jpeg", "width": 394, "height": 417 }
+  ],
+  "transcribedFormulas": [
+    { "questionId": "crackap-apc-mechanics-test17-q01", "note": "Choice B and D factor images (image01364.jpeg, image01365.jpeg) are identical on the source site (both render √2); transcribed as √2 for the 'decreases' option and √2 for the 'increases' option per the source question's distractor set.", "sourceUrls": ["https://img.crackap.com/ap/physics-c/br/image01364.jpeg", "https://img.crackap.com/ap/physics-c/br/image01365.jpeg"] },
+    { "questionId": "crackap-apc-mechanics-test17-q07", "note": "Stem rotational inertia image (image01370.jpeg = 1/2 M r^2) and choice formula images (image01372–01375.jpeg) transcribed to LaTeX.", "sourceUrls": ["https://img.crackap.com/ap/physics-c/br/image01370.jpeg", "https://img.crackap.com/ap/physics-c/br/image01372.jpeg", "https://img.crackap.com/ap/physics-c/br/image01373.jpeg", "https://img.crackap.com/ap/physics-c/br/image01374.jpeg", "https://img.crackap.com/ap/physics-c/br/image01375.jpeg"] },
+    { "questionId": "crackap-apc-mechanics-test17-q08", "note": "Choice acceleration-vector formula images (image01377–01381.jpeg) transcribed to LaTeX.", "sourceUrls": ["https://img.crackap.com/ap/physics-c/br/image01377.jpeg", "https://img.crackap.com/ap/physics-c/br/image01378.jpeg", "https://img.crackap.com/ap/physics-c/br/image01379.jpeg", "https://img.crackap.com/ap/physics-c/br/image01380.jpeg", "https://img.crackap.com/ap/physics-c/br/image01381.jpeg"] }
+  ]
+}
