@@ -6,7 +6,7 @@ const TASK_EN =
   'On paper, draw a free-body diagram for the object(s) named: one arrow per force, starting from the object (or a dot), pointing in the correct direction, and labelled with the force name. Make arrow lengths reflect relative sizes where the situation tells you. Upload a photo of your drawing, then list every force you drew (with its direction) in the answer box.';
 
 const TASK_ZH =
-  '中文任务：在纸上画出指定物体的受力分析图——每个力一个箭头，从物体（或圆点）出发，方向正确并标注力的名称；题目有提示时用箭头长短表示力的大小关系。画完拍照上传，并在答案框中按“力名 + 方向”列出你画的每一个力。';
+  '在纸上画出指定物体的受力分析图——每个力一个箭头，从物体（或圆点）出发，方向正确并标注力的名称；题目有提示时用箭头长短表示力的大小关系。画完拍照上传，并在答案框中按“力名 + 方向”列出你画的每一个力。';
 
 interface ForceDiagramStep {
   id: string;
