@@ -27,6 +27,10 @@ import {
 } from './igcseCieAllFrq';
 import { igcseQuickDiagnosticMeta, igcseQuickDiagnosticSteps } from './igcseQuickDiagnostic';
 import {
+  igcseForceAnalysisMeta,
+  igcseForceAnalysisSteps,
+} from './igcseForceAnalysisTraining';
+import {
   paper5Years,
   paper5YearSteps,
   paper5YearMeta,
@@ -245,6 +249,18 @@ export const practiceSets: PracticeSet[] = [
     ...paper5YearMeta[year],
     steps: paper5YearSteps[year],
   })),
+  // IGCSE Force Analysis Training (free-body diagram drawing tasks)
+  {
+    id: 'igcse-force-analysis-training',
+    category: 'igcse' as const,
+    label: 'Force Analysis',
+    system: 'igcse' as const,
+    practiceKind: 'structured',
+    chapter: 7,
+    chapterTitle: 'Force Analysis Training',
+    ...igcseForceAnalysisMeta,
+    steps: igcseForceAnalysisSteps,
+  },
   // IGCSE Evaluation (diagnostic papers)
   {
     id: 'igcse-eval-quick-diagnostic',

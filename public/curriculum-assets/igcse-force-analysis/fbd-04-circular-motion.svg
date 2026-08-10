@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+  <title id="title">Reference free-body diagram: ball whirled in a horizontal circle on a string</title>
+  <desc id="desc">Side view of a ball on a string moving in a horizontal circle. Tension acts along the string and weight acts down; the resultant force points horizontally towards the centre of the circle.</desc>
+  <defs>
+    <marker id="ar-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#dc2626"/></marker>
+    <marker id="ar-cyan" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#0891b2"/></marker>
+    <marker id="ar-amb" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#f59e0b"/></marker>
+  </defs>
+  <rect width="900" height="430" fill="#ffffff"/>
+  <text x="60" y="30" font-family="Arial, sans-serif" font-size="24" fill="#0f172a" font-weight="bold">Model FBD · uniform horizontal circular motion</text>
+  <line x1="240" y1="70" x2="400" y2="70" stroke="#334155" stroke-width="5"/>
+  <line x1="320" y1="70" x2="240" y2="240" stroke="#0891b2" stroke-width="4"/>
+  <circle cx="240" cy="240" r="22" fill="#e2e8f0" stroke="#334155" stroke-width="3"/>
+  <ellipse cx="320" cy="240" rx="140" ry="30" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 7"/>
+  <circle cx="320" cy="240" r="4" fill="#94a3b8"/>
+  <text x="296" y="300" font-family="Arial, sans-serif" font-size="20" fill="#64748b">centre of circle</text>
+  <line x1="240" y1="218" x2="300" y2="95" stroke="#0891b2" stroke-width="6" marker-end="url(#ar-cyan)"/>
+  <text x="310" y="120" font-family="Arial, sans-serif" font-size="24" fill="#0891b2">T along string</text>
+  <line x1="240" y1="262" x2="240" y2="390" stroke="#dc2626" stroke-width="6" marker-end="url(#ar-red)"/>
+  <text x="255" y="380" font-family="Arial, sans-serif" font-size="24" fill="#dc2626">W</text>
+  <line x1="560" y1="240" x2="680" y2="240" stroke="#f59e0b" stroke-width="6" marker-end="url(#ar-amb)"/>
+  <circle cx="560" cy="240" r="10" fill="#334155"/>
+  <text x="500" y="200" font-family="Arial, sans-serif" font-size="22" fill="#b45309">resultant force =</text>
+  <text x="500" y="280" font-family="Arial, sans-serif" font-size="22" fill="#b45309">horizontal, towards centre</text>
+  <text x="480" y="330" font-family="Arial, sans-serif" font-size="22" fill="#334155">vertical: T·cos θ = W (no vertical acceleration)</text>
+  <text x="480" y="362" font-family="Arial, sans-serif" font-size="22" fill="#334155">horizontal: T·sin θ = centripetal force</text>
+  <text x="480" y="120" font-family="Arial, sans-serif" font-size="22" fill="#0f172a">Only two real forces act:</text>
+  <text x="480" y="148" font-family="Arial, sans-serif" font-size="22" fill="#0f172a">tension and weight. No “outward force”.</text>
+</svg>

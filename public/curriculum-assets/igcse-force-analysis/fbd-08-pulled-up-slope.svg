@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+  <title id="title">Reference free-body diagram: block pulled up a rough slope with acceleration</title>
+  <desc id="desc">A block pulled by a rope parallel to a rough slope, accelerating up the slope. Weight down, normal reaction perpendicular to the slope, tension up the slope, friction down the slope.</desc>
+  <defs>
+    <marker id="ar-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#dc2626"/></marker>
+    <marker id="ar-ind" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#4f46e5"/></marker>
+    <marker id="ar-amb" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#f59e0b"/></marker>
+    <marker id="ar-cyan" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#0891b2"/></marker>
+  </defs>
+  <rect width="900" height="430" fill="#ffffff"/>
+  <text x="60" y="30" font-family="Arial, sans-serif" font-size="24" fill="#0f172a" font-weight="bold">Model FBD · accelerating up a rough slope (unbalanced)</text>
+  <path d="M80 390 L720 390 L720 130 Z" fill="#f1f5f9" stroke="#334155" stroke-width="3"/>
+  <g transform="translate(400,262) rotate(-22)">
+    <rect x="-45" y="-50" width="90" height="50" fill="#e2e8f0" stroke="#334155" stroke-width="3"/>
+  </g>
+  <line x1="445" y1="235" x2="600" y2="173" stroke="#0891b2" stroke-width="4"/>
+  <line x1="400" y1="236" x2="540" y2="180" stroke="#0891b2" stroke-width="6" marker-end="url(#ar-cyan)"/>
+  <text x="470" y="165" font-family="Arial, sans-serif" font-size="24" fill="#0891b2">T up the slope</text>
+  <line x1="400" y1="245" x2="400" y2="390" stroke="#dc2626" stroke-width="6" marker-end="url(#ar-red)"/>
+  <text x="415" y="385" font-family="Arial, sans-serif" font-size="24" fill="#dc2626">W (vertical)</text>
+  <line x1="395" y1="225" x2="448" y2="95" stroke="#4f46e5" stroke-width="6" marker-end="url(#ar-ind)"/>
+  <text x="460" y="115" font-family="Arial, sans-serif" font-size="24" fill="#4f46e5">N ⊥ slope</text>
+  <line x1="365" y1="258" x2="255" y2="302" stroke="#f59e0b" stroke-width="6" marker-end="url(#ar-amb)"/>
+  <text x="150" y="330" font-family="Arial, sans-serif" font-size="22" fill="#b45309">friction down the slope</text>
+  <text x="80" y="55" font-family="Arial, sans-serif" font-size="22" fill="#0f172a">Along slope: T − friction − W·sin θ = ma &gt; 0 (so T is the longest arrow along the slope).</text>
+  <text x="80" y="87" font-family="Arial, sans-serif" font-size="22" fill="#334155">Perpendicular to slope: N = W·cos θ (no motion off the slope).</text>
+</svg>

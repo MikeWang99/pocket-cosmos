@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+  <title id="title">Reference free-body diagram: picture hung by two strings at different angles</title>
+  <desc id="desc">A picture hung at rest by two strings attached to a single hook at different angles. Tension acts along each string and weight acts down from the centre; the three forces are in equilibrium.</desc>
+  <defs>
+    <marker id="ar-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#dc2626"/></marker>
+    <marker id="ar-cyan" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#0891b2"/></marker>
+  </defs>
+  <rect width="900" height="430" fill="#ffffff"/>
+  <text x="60" y="30" font-family="Arial, sans-serif" font-size="24" fill="#0f172a" font-weight="bold">Model FBD · three-force equilibrium (picture at rest)</text>
+  <circle cx="330" cy="90" r="8" fill="#334155"/>
+  <text x="345" y="85" font-family="Arial, sans-serif" font-size="20" fill="#334155">hook</text>
+  <line x1="330" y1="95" x2="250" y2="220" stroke="#0891b2" stroke-width="4"/>
+  <line x1="330" y1="95" x2="420" y2="220" stroke="#0891b2" stroke-width="4"/>
+  <rect x="220" y="220" width="220" height="130" fill="#f1f5f9" stroke="#334155" stroke-width="3"/>
+  <rect x="240" y="240" width="180" height="90" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+  <text x="290" y="292" font-family="Arial, sans-serif" font-size="20" fill="#64748b">picture</text>
+  <circle cx="680" cy="220" r="10" fill="#334155"/>
+  <text x="640" y="170" font-family="Arial, sans-serif" font-size="22" fill="#334155">picture (dot)</text>
+  <line x1="680" y1="220" x2="600" y2="105" stroke="#0891b2" stroke-width="6" marker-end="url(#ar-cyan)"/>
+  <text x="545" y="95" font-family="Arial, sans-serif" font-size="22" fill="#0891b2">T₁ along string 1</text>
+  <line x1="680" y1="220" x2="760" y2="110" stroke="#0891b2" stroke-width="6" marker-end="url(#ar-cyan)"/>
+  <text x="745" y="95" font-family="Arial, sans-serif" font-size="22" fill="#0891b2">T₂ along string 2</text>
+  <line x1="680" y1="220" x2="680" y2="370" stroke="#dc2626" stroke-width="6" marker-end="url(#ar-red)"/>
+  <text x="695" y="360" font-family="Arial, sans-serif" font-size="24" fill="#dc2626">W</text>
+  <text x="60" y="390" font-family="Arial, sans-serif" font-size="22" fill="#334155">Each tension points away from the picture, along its own string. T₁ ≠ T₂ when the angles differ.</text>
+  <text x="60" y="420" font-family="Arial, sans-serif" font-size="22" fill="#334155">Equilibrium: horizontal components of T₁ and T₂ cancel; vertical components add up to W.</text>
+</svg>

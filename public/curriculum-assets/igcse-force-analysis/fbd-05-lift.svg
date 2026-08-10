@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+  <title id="title">Reference free-body diagram: person in a lift accelerating upwards</title>
+  <desc id="desc">A person standing in a lift that accelerates upwards. Weight acts down and the normal reaction from the floor acts up, with the normal reaction longer because the resultant force must point upwards.</desc>
+  <defs>
+    <marker id="ar-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#dc2626"/></marker>
+    <marker id="ar-ind" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#4f46e5"/></marker>
+    <marker id="ar-grn" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#16a34a"/></marker>
+  </defs>
+  <rect width="900" height="430" fill="#ffffff"/>
+  <text x="60" y="30" font-family="Arial, sans-serif" font-size="24" fill="#0f172a" font-weight="bold">Model FBD · lift accelerating upwards (unbalanced)</text>
+  <rect x="120" y="80" width="240" height="290" fill="none" stroke="#334155" stroke-width="4"/>
+  <text x="150" y="115" font-family="Arial, sans-serif" font-size="22" fill="#334155">lift</text>
+  <circle cx="240" cy="180" r="18" fill="#e2e8f0" stroke="#334155" stroke-width="3"/>
+  <line x1="240" y1="198" x2="240" y2="280" stroke="#334155" stroke-width="4"/>
+  <line x1="240" y1="220" x2="205" y2="255" stroke="#334155" stroke-width="4"/>
+  <line x1="240" y1="220" x2="275" y2="255" stroke="#334155" stroke-width="4"/>
+  <line x1="240" y1="280" x2="215" y2="340" stroke="#334155" stroke-width="4"/>
+  <line x1="240" y1="280" x2="265" y2="340" stroke="#334155" stroke-width="4"/>
+  <line x1="300" y1="340" x2="300" y2="150" stroke="#16a34a" stroke-width="5" marker-end="url(#ar-grn)"/>
+  <text x="312" y="200" font-family="Arial, sans-serif" font-size="22" fill="#15803d">a ↑</text>
+  <circle cx="620" cy="230" r="10" fill="#334155"/>
+  <text x="600" y="180" font-family="Arial, sans-serif" font-size="22" fill="#334155">person (dot)</text>
+  <line x1="620" y1="230" x2="620" y2="330" stroke="#dc2626" stroke-width="6" marker-end="url(#ar-red)"/>
+  <text x="635" y="320" font-family="Arial, sans-serif" font-size="24" fill="#dc2626">W = mg</text>
+  <line x1="620" y1="230" x2="620" y2="90" stroke="#4f46e5" stroke-width="6" marker-end="url(#ar-ind)"/>
+  <text x="635" y="110" font-family="Arial, sans-serif" font-size="24" fill="#4f46e5">N from floor (longer!)</text>
+  <text x="480" y="380" font-family="Arial, sans-serif" font-size="22" fill="#334155">N − W = ma &gt; 0, so N &gt; W (apparent weight increases).</text>
+  <text x="480" y="412" font-family="Arial, sans-serif" font-size="22" fill="#334155">Only two forces act; arrow lengths must show N &gt; W.</text>
+</svg>

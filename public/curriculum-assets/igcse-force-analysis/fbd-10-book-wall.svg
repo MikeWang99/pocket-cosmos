@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+  <title id="title">Reference free-body diagram: book pressed against a vertical wall and held at rest</title>
+  <desc id="desc">A book pressed against a rough vertical wall by a horizontal force. Four forces act: the applied force towards the wall, the normal reaction away from the wall, weight down, and friction up the wall.</desc>
+  <defs>
+    <marker id="ar-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#dc2626"/></marker>
+    <marker id="ar-ind" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#4f46e5"/></marker>
+    <marker id="ar-amb" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#f59e0b"/></marker>
+    <marker id="ar-teal" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#0f766e"/></marker>
+  </defs>
+  <rect width="900" height="430" fill="#ffffff"/>
+  <text x="60" y="30" font-family="Arial, sans-serif" font-size="24" fill="#0f172a" font-weight="bold">Model FBD · book held at rest against a rough wall</text>
+  <line x1="240" y1="60" x2="240" y2="400" stroke="#334155" stroke-width="5"/>
+  <line x1="228" y1="90" x2="240" y2="110" stroke="#94a3b8" stroke-width="2"/><line x1="228" y1="170" x2="240" y2="190" stroke="#94a3b8" stroke-width="2"/><line x1="228" y1="250" x2="240" y2="270" stroke="#94a3b8" stroke-width="2"/><line x1="228" y1="330" x2="240" y2="350" stroke="#94a3b8" stroke-width="2"/>
+  <text x="150" y="80" font-family="Arial, sans-serif" font-size="20" fill="#334155">wall</text>
+  <rect x="240" y="170" width="70" height="110" fill="#e2e8f0" stroke="#334155" stroke-width="3"/>
+  <text x="250" y="232" font-family="Arial, sans-serif" font-size="18" fill="#334155">book</text>
+  <line x1="450" y1="225" x2="315" y2="225" stroke="#0f766e" stroke-width="6" marker-end="url(#ar-teal)"/>
+  <text x="360" y="205" font-family="Arial, sans-serif" font-size="22" fill="#0f766e">applied force F</text>
+  <line x1="275" y1="170" x2="275" y2="330" stroke="#dc2626" stroke-width="6" marker-end="url(#ar-red)"/>
+  <text x="290" y="325" font-family="Arial, sans-serif" font-size="22" fill="#dc2626">W</text>
+  <line x1="248" y1="255" x2="248" y2="130" stroke="#f59e0b" stroke-width="6" marker-end="url(#ar-amb)"/>
+  <text x="120" y="150" font-family="Arial, sans-serif" font-size="20" fill="#b45309">friction up</text>
+  <circle cx="660" cy="230" r="10" fill="#334155"/>
+  <text x="620" y="180" font-family="Arial, sans-serif" font-size="22" fill="#334155">book (dot)</text>
+  <line x1="660" y1="230" x2="790" y2="230" stroke="#0f766e" stroke-width="6" marker-end="url(#ar-teal)"/>
+  <text x="730" y="210" font-family="Arial, sans-serif" font-size="20" fill="#0f766e">F</text>
+  <line x1="660" y1="230" x2="530" y2="230" stroke="#4f46e5" stroke-width="6" marker-end="url(#ar-ind)"/>
+  <text x="500" y="210" font-family="Arial, sans-serif" font-size="20" fill="#4f46e5">N from wall</text>
+  <line x1="660" y1="230" x2="660" y2="350" stroke="#dc2626" stroke-width="6" marker-end="url(#ar-red)"/>
+  <text x="675" y="340" font-family="Arial, sans-serif" font-size="20" fill="#dc2626">W</text>
+  <line x1="660" y1="230" x2="660" y2="110" stroke="#f59e0b" stroke-width="6" marker-end="url(#ar-amb)"/>
+  <text x="675" y="120" font-family="Arial, sans-serif" font-size="20" fill="#b45309">friction</text>
+  <text x="480" y="390" font-family="Arial, sans-serif" font-size="22" fill="#334155">Horizontal: N = F.  Vertical: friction = W.</text>
+  <text x="480" y="420" font-family="Arial, sans-serif" font-size="22" fill="#334155">Press harder (bigger F) ⇒ bigger possible friction ⇒ book stays put.</text>
+</svg>

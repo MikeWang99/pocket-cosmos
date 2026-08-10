@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+  <title id="title">Reference free-body diagram: block at rest on a rough slope</title>
+  <desc id="desc">A block at rest on a rough slope with weight vertically down, normal reaction perpendicular to the slope, and friction up the slope.</desc>
+  <defs>
+    <marker id="ar-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#dc2626"/></marker>
+    <marker id="ar-ind" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#4f46e5"/></marker>
+    <marker id="ar-amb" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#f59e0b"/></marker>
+  </defs>
+  <rect width="900" height="430" fill="#ffffff"/>
+  <text x="60" y="30" font-family="Arial, sans-serif" font-size="24" fill="#0f172a" font-weight="bold">Model FBD · block at rest on a rough slope (balanced)</text>
+  <path d="M100 380 L700 380 L700 140 Z" fill="#f1f5f9" stroke="#334155" stroke-width="3"/>
+  <path d="M640 380 A60 60 0 0 0 622 337" fill="none" stroke="#334155" stroke-width="2"/>
+  <text x="596" y="372" font-family="Arial, sans-serif" font-size="22" fill="#334155">θ</text>
+  <g transform="translate(430,250) rotate(-21.8)">
+    <rect x="-45" y="-50" width="90" height="50" fill="#e2e8f0" stroke="#334155" stroke-width="3"/>
+  </g>
+  <line x1="430" y1="225" x2="430" y2="360" stroke="#dc2626" stroke-width="6" marker-end="url(#ar-red)"/>
+  <text x="445" y="350" font-family="Arial, sans-serif" font-size="26" fill="#dc2626">W (vertical)</text>
+  <line x1="430" y1="218" x2="485" y2="85" stroke="#4f46e5" stroke-width="6" marker-end="url(#ar-ind)"/>
+  <text x="500" y="105" font-family="Arial, sans-serif" font-size="24" fill="#4f46e5">N ⊥ slope</text>
+  <line x1="400" y1="208" x2="510" y2="165" stroke="#f59e0b" stroke-width="6" marker-end="url(#ar-amb)"/>
+  <text x="430" y="145" font-family="Arial, sans-serif" font-size="24" fill="#b45309">friction up the slope</text>
+  <text x="60" y="415" font-family="Arial, sans-serif" font-size="22" fill="#334155">Along slope: friction = W·sin θ.  Perpendicular: N = W·cos θ.  W always points straight down.</text>
+</svg>

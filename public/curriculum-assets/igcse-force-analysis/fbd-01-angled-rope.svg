@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+  <title id="title">Reference free-body diagram: box pulled by an angled rope at constant speed</title>
+  <desc id="desc">A box on rough horizontal ground pulled by a rope above the horizontal, moving at constant speed, with four balanced forces drawn.</desc>
+  <defs>
+    <marker id="ar-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#dc2626"/></marker>
+    <marker id="ar-ind" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#4f46e5"/></marker>
+    <marker id="ar-amb" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#f59e0b"/></marker>
+    <marker id="ar-cyan" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#0891b2"/></marker>
+  </defs>
+  <rect width="900" height="430" fill="#ffffff"/>
+  <line x1="60" y1="330" x2="840" y2="330" stroke="#334155" stroke-width="4"/>
+  <line x1="70" y1="342" x2="110" y2="332" stroke="#94a3b8" stroke-width="2"/><line x1="150" y1="342" x2="190" y2="332" stroke="#94a3b8" stroke-width="2"/><line x1="230" y1="342" x2="270" y2="332" stroke="#94a3b8" stroke-width="2"/><line x1="310" y1="342" x2="350" y2="332" stroke="#94a3b8" stroke-width="2"/><line x1="390" y1="342" x2="430" y2="332" stroke="#94a3b8" stroke-width="2"/>
+  <text x="60" y="30" font-family="Arial, sans-serif" font-size="24" fill="#0f172a" font-weight="bold">Model FBD · constant speed (balanced forces)</text>
+  <rect x="240" y="230" width="180" height="100" fill="#e2e8f0" stroke="#334155" stroke-width="3"/>
+  <text x="300" y="290" font-family="Arial, sans-serif" font-size="24" fill="#334155">box</text>
+  <line x1="420" y1="240" x2="640" y2="120" stroke="#0891b2" stroke-width="4"/>
+  <line x1="330" y1="230" x2="330" y2="90" stroke="#4f46e5" stroke-width="6" marker-end="url(#ar-ind)"/>
+  <text x="345" y="120" font-family="Arial, sans-serif" font-size="26" fill="#4f46e5">N</text>
+  <line x1="330" y1="330" x2="330" y2="410" stroke="#dc2626" stroke-width="6" marker-end="url(#ar-red)"/>
+  <text x="345" y="400" font-family="Arial, sans-serif" font-size="26" fill="#dc2626">W</text>
+  <line x1="420" y1="255" x2="560" y2="180" stroke="#0891b2" stroke-width="6" marker-end="url(#ar-cyan)"/>
+  <text x="530" y="155" font-family="Arial, sans-serif" font-size="26" fill="#0891b2">T</text>
+  <line x1="240" y1="300" x2="120" y2="300" stroke="#f59e0b" stroke-width="6" marker-end="url(#ar-amb)"/>
+  <text x="130" y="280" font-family="Arial, sans-serif" font-size="26" fill="#b45309">friction</text>
+  <text x="560" y="290" font-family="Arial, sans-serif" font-size="22" fill="#334155">vertical: N + T·sin θ = W</text>
+  <text x="560" y="322" font-family="Arial, sans-serif" font-size="22" fill="#334155">horizontal: friction = T·cos θ</text>
+  <text x="560" y="354" font-family="Arial, sans-serif" font-size="22" fill="#334155">note: N &lt; W, because T lifts the box</text>
+</svg>

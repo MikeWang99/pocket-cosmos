@@ -1247,6 +1247,18 @@ export const PracticeSection: React.FC = () => {
                         <p className="mt-3 text-sm text-ink-soft leading-relaxed">
                           <MathText>{activeStep.solution ?? ''}</MathText>
                         </p>
+                        {activeStep.solutionImage && (
+                          <div className="mt-3 overflow-hidden rounded-lg border border-line bg-white">
+                            <img
+                              src={activeStep.solutionImage.src}
+                              alt={activeStep.solutionImage.alt}
+                              className="h-auto w-full"
+                            />
+                            {activeStep.solutionImage.caption && (
+                              <p className="px-3 py-2 text-[11px] text-ink-soft">{activeStep.solutionImage.caption}</p>
+                            )}
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
@@ -1289,6 +1301,18 @@ export const PracticeSection: React.FC = () => {
                             <p className="mt-3 text-sm leading-7 text-ink-soft">
                               <MathText>{activeStep.solution}</MathText>
                             </p>
+                            {activeStep.solutionImage && (
+                              <div className="mt-3 overflow-hidden rounded-lg border border-line bg-white">
+                                <img
+                                  src={activeStep.solutionImage.src}
+                                  alt={activeStep.solutionImage.alt}
+                                  className="h-auto w-full"
+                                />
+                                {activeStep.solutionImage.caption && (
+                                  <p className="px-3 py-2 text-[11px] text-ink-soft">{activeStep.solutionImage.caption}</p>
+                                )}
+                              </div>
+                            )}
                           </details>
                         )}
                       </div>

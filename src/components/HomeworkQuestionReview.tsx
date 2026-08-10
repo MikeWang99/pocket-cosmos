@@ -300,6 +300,14 @@ export const HomeworkQuestionReview: React.FC<HomeworkQuestionReviewProps> = ({
                   <MathText>{step.solution}</MathText>
                 </div>
               )}
+              {step.solutionImage && (
+                <div className="mt-2 overflow-hidden rounded-lg border border-line bg-white">
+                  <img src={step.solutionImage.src} alt={step.solutionImage.alt} className="h-auto w-full" />
+                  {step.solutionImage.caption && (
+                    <p className="px-3 py-2 text-[11px] text-slate-500">{step.solutionImage.caption}</p>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>
