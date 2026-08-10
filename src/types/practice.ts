@@ -57,6 +57,12 @@ export interface PracticeStep {
   correctAnswer?: string;
   sampleAnswer?: string;
   solution?: string;
+  /** Reference diagram shown together with the solution (e.g. model free-body diagram). */
+  solutionImage?: {
+    src: string;
+    alt: string;
+    caption?: string;
+  };
 }
 
 export interface EvaluationResult {
