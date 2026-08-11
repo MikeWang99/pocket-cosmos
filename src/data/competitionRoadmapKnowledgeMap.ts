@@ -449,23 +449,10 @@ export const competitionRoadmapCourse: CurriculumCourse = {
       number: 1,
       title: text('Comparing the Three Systems', '三大体系的比较'),
       weighting: 'Lecture · 45 min',
-      topics: [
-        { id: '1', title: text('Three game modes', '三种游戏模式') },
-        { id: '2', title: text('Mystery problems', '神秘题目') },
-        { id: '3', title: text('Achievement ladder', '成果阶梯') },
-        { id: '4', title: text('Student profiles', '学生画像') },
-        { id: '5', title: text('Preparation strategy', '备考策略') },
-        { id: '6', title: text('BPhO Round Two showcase', 'BPhO Round Two 示例') },
-      ],
       summary: text(
         'BPhO, Physics Bowl and F=ma compared side by side: format, style, who each rewards, admissions value, and how to prepare — with three unlabeled problems students can use to feel the difference.',
         'BPhO、物理碗与 F=ma 并排比较：形式、风格、各自奖励什么样的学生、申请价值与备考方法——并配三道无标注题目，让学生亲手"感受"差异。',
       ),
-      focus: [
-        text('Academic value ≠ admissions value: the level of achievement matters more than the name of the competition.', '学术价值 ≠ 申请价值：成果层次比竞赛名字更重要。'),
-        text('Physics Bowl rewards breadth + speed; F=ma rewards deep mechanics; BPhO rewards modeling + written reasoning.', '物理碗奖励广度 + 速度；F=ma 奖励深度力学；BPhO 奖励建模 + 书面论证。'),
-        text('International students should know the F=ma eligibility restrictions before building a plan around it.', '国际学生在围绕 F=ma 制定规划前，必须先了解其参赛资格限制。'),
-      ],
       lessons,
     },
   ],
