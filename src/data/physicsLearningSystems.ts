@@ -15,6 +15,7 @@ import {
   capacitorEnergyAndDielectricLessons,
   electricCurrentToOhmsLawLessons,
 } from './emCapacitorEnergyToOhmsLawKnowledgeMap';
+import { competitionRoadmapCourse } from './competitionRoadmapKnowledgeMap';
 import { igcseUnit1Lessons } from './igcseUnit1KnowledgeMap';
 import { igcseUnit2Lessons } from './igcseUnit2KnowledgeMap';
 import { igcseUnit3Lessons } from './igcseUnit3KnowledgeMap';
@@ -5020,14 +5021,14 @@ export const learningSystems: LearningSystem[] = [
     id: 'competition',
     label: text('Competition & Extension', '竞赛与拓展'),
     description: text(
-      'Physics Bowl, Olympiad foundations, and advanced problem-solving extensions will connect here.',
-      '后续连接物理碗、奥赛基础和高阶解题拓展。',
+      'Physics Bowl, BPhO and F=ma compared side by side, with classroom problems for feeling the difference between the three systems.',
+      '物理碗、BPhO 与 F=ma 三大体系并排比较，配有课堂题目，帮助学生亲手感受三个体系的差异。',
     ),
-    status: text('Framework', '结构规划'),
+    status: text('Roadmap available', '路线图已开放'),
     sourceNote: text(
-      'Competition materials will be organized by contest source, topic, difficulty, and solution strategy.',
-      '竞赛材料后续会按赛事来源、主题、难度和解题策略整理。',
+      'Competition formats, timelines, and eligibility notes are based on official BPhO and AAPT materials; focus notes, classroom problems, Chinese translations, and diagrams are Pocket Cosmos learning materials.',
+      '竞赛形式、时间线与参赛资格说明参考 BPhO 与 AAPT 官方资料；重点整理、课堂题目、中文翻译和示意图由口袋宇宙制作。',
     ),
-    courses: [],
+    courses: [competitionRoadmapCourse],
   },
 ];
