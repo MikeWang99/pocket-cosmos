@@ -336,10 +336,27 @@ const lessons: CurriculumLesson[] = [
   {
     title: text('How to Prepare and When to Start', '如何备考、何时开始'),
     description: text(
-      'The universal three-stage principle, and competition-specific training: Physics Bowl speed, F=ma deep mechanics, BPhO written solutions.',
-      '通用的三阶段备考原则，以及分竞赛的训练方法：物理碗练速度、F=ma 练深度力学、BPhO 练书面解答。',
+      'The timelines of the three systems across one school year, the universal three-stage principle, and competition-specific training: Physics Bowl speed, F=ma deep mechanics, BPhO written solutions.',
+      '三大体系的一学年时间轴、通用的三阶段备考原则，以及分竞赛的训练方法：物理碗练速度、F=ma 练深度力学、BPhO 练书面解答。',
     ),
     sections: [
+      {
+        heading: text('The Three Timelines — When Everything Happens', '三条时间轴——全年节奏一览'),
+        images: [timelineImage],
+        table: {
+          caption: text('One school year across the three systems', '三大体系的一学年节奏'),
+          headers: [text('System', '体系'), text('Nature', '性质'), text('The year at a glance', '全年节奏一览')],
+          rows: [
+            [text('Physics Bowl', '物理碗'), text('One-shot competition', '单轮制竞赛'), text('Sep–Dec registration → Jan–Mar preparation → exam Mar–Apr → results in May', '9–12 月报名 → 1–3 月备赛 → 3–4 月考试 → 5 月出成绩')],
+            [text('US team pathway (F=ma → IPhO)', '美国队路径（F=ma → IPhO）'), text('Selection ladder', '逐级选拔'), text('Register in autumn → F=ma in February → USAPhO in April → camp in May–June → IPhO team in June–July', '秋季报名 → 2 月 F=ma → 4 月 USAPhO → 5–6 月集训营 → 6–7 月 IPhO 国家队')],
+            [text('BPhO', 'BPhO'), text('Multi-round olympiad pathway', '多轮制奥赛路径'), text('Register in Sep → Round 0 (optional qualification) in Oct → Round 1 in November → results in January → Round 2 in Feb–Mar → final results in April', '9 月报名 → 10 月 Round 0（可选资格赛）→ 11 月 Round 1 → 1 月出成绩 → 2–3 月 Round 2 → 4 月最终结果')],
+          ],
+        },
+        takeaway: text(
+          'Three very different rhythms: one shot, one ladder, one multi-round journey. Since their windows barely overlap, you can combine them into one year\'s plan.',
+          '三种截然不同的节奏：一锤定音、逐级闯关、多轮征途。由于时间窗口几乎不重叠，可以把它们组合进同一年的规划。',
+        ),
+      },
       {
         heading: text('Universal principle', '通用原则'),
         bullets: [
