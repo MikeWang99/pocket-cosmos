@@ -87,7 +87,7 @@ export interface CurriculumUnit {
   number: number;
   title: LocalizedText;
   weighting: string;
-  topics: CurriculumTopic[];
+  topics?: CurriculumTopic[];
   summary?: LocalizedText;
   focus?: LocalizedText[];
   formulas?: CurriculumFormula[];

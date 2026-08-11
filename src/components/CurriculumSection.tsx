@@ -97,7 +97,7 @@ const UnitDirectory: React.FC<{
   const base = unitAnchorBase(courseId, unit.number);
   const topLinks = [
     { id: `${base}-focus`, label: copy.focus, count: unit.focus?.length ?? 0 },
-    { id: `${base}-topics`, label: copy.topics, count: unit.topics.length },
+    { id: `${base}-topics`, label: copy.topics, count: unit.topics?.length ?? 0 },
     { id: `${base}-lessons`, label: copy.lessons, count: unit.lessons?.length ?? 0 },
     { id: `${base}-formulas`, label: copy.formulas, count: unit.formulas?.length ?? 0 },
     { id: `${base}-diagrams`, label: copy.diagrams, count: unit.diagrams?.length ?? 0 },
@@ -187,8 +187,9 @@ const CourseRouteMap: React.FC<{
               </span>
               <span className="mt-1 line-clamp-2 block text-sm font-semibold leading-5">{unit.title[language]}</span>
               <span className="mt-2 block text-[10px] leading-4 text-slate-500">
-                {unit.topics.length} {language === 'zh' ? '个 topic' : 'topics'}
-                {unit.lessons?.length ? ` · ${unit.lessons.length} ${language === 'zh' ? '个 lesson' : 'lessons'}` : ''}
+                {[unit.topics?.length ? `${unit.topics.length} ${language === 'zh' ? '个 topic' : 'topics'}` : '', unit.lessons?.length ? `${unit.lessons.length} ${language === 'zh' ? '个 lesson' : 'lessons'}` : '']
+                  .filter(Boolean)
+                  .join(' · ')}
               </span>
             </button>
           );
@@ -671,7 +672,7 @@ export const CurriculumSection: React.FC = () => {
   const [openUnits, setOpenUnits] = useState<Set<number>>(() => new Set([course?.units[0]?.number ?? 1]));
 
   const topicCount = useMemo(
-    () => course?.units.reduce((total, unit) => total + unit.topics.length, 0) ?? 0,
+    () => course?.units.reduce((total, unit) => total + (unit.topics?.length ?? 0), 0) ?? 0,
     [course],
   );
 
@@ -855,6 +856,13 @@ export const CurriculumSection: React.FC = () => {
               const open = openUnits.has(unit.number);
               const panelId = `${course.id}-unit-${unit.number}`;
               const baseId = unitAnchorBase(course.id, unit.number);
+              const focusItems = unit.focus ?? [];
+              const topicItems = unit.topics ?? [];
+              const hasDirectory =
+                focusItems.length > 0 ||
+                topicItems.length > 0 ||
+                (unit.formulas?.length ?? 0) > 0 ||
+                (unit.diagrams?.length ?? 0) > 0;
               return (
                 <article key={unit.number} id={baseId} className="scroll-mt-28">
                   <button
@@ -896,18 +904,22 @@ export const CurriculumSection: React.FC = () => {
                           </p>
                         )}
 
-                        <div className="grid gap-4 lg:grid-cols-[280px_minmax(0,1fr)]">
-                          <UnitDirectory unit={unit} courseId={course.id} language={language} contentMode={contentMode} className="lg:sticky lg:top-6 lg:max-h-[calc(100vh-3rem)] lg:overflow-y-auto" />
+                        <div className={hasDirectory ? 'grid gap-4 lg:grid-cols-[280px_minmax(0,1fr)]' : ''}>
+                          {hasDirectory && (
+                            <UnitDirectory unit={unit} courseId={course.id} language={language} contentMode={contentMode} className="lg:sticky lg:top-6 lg:max-h-[calc(100vh-3rem)] lg:overflow-y-auto" />
+                          )}
 
                           <div className="min-w-0">
-                            <div className="grid gap-4 xl:grid-cols-[1fr_1fr]">
+                            {(focusItems.length > 0 || topicItems.length > 0) && (
+                              <div className={`grid gap-4 ${focusItems.length > 0 && topicItems.length > 0 ? 'xl:grid-cols-[1fr_1fr]' : ''}`}>
+                                {focusItems.length > 0 && (
                               <section id={`${baseId}-focus`} className="scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-4">
                                 <div className="mb-3 flex items-center gap-2 text-nebula">
                                   <ListChecks className="h-4 w-4" />
                                   <h4 className="text-sm font-semibold">{t.curriculum.focusTitle}</h4>
                                 </div>
                                 <ul className="space-y-2">
-                                  {(unit.focus ?? []).map((item) => (
+                                  {focusItems.map((item) => (
                                     <li key={item.en} className="flex gap-2 text-sm leading-6 text-slate-600">
                                       <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-nebula" />
                                       <span><InlineMathText>{item[language]}</InlineMathText></span>
@@ -915,14 +927,16 @@ export const CurriculumSection: React.FC = () => {
                                   ))}
                                 </ul>
                               </section>
+                                )}
 
+                                {topicItems.length > 0 && (
                               <section id={`${baseId}-topics`} className="scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-4">
                                 <div className="mb-3 flex items-center gap-2 text-nebula">
                                   <ListChecks className="h-4 w-4" />
                                   <h4 className="text-sm font-semibold">{t.curriculum.checklistTitle}</h4>
                                 </div>
                                 <div className="grid gap-2 min-[520px]:grid-cols-2">
-                                  {unit.topics.map((item) => (
+                                  {topicItems.map((item) => (
                                     <div key={item.id} className="flex min-h-12 items-start gap-3 rounded-md bg-slate-50 px-3 py-2">
                                       <span className="mt-0.5 shrink-0 font-mono text-xs font-semibold text-nebula">{item.id}</span>
                                       <span className="text-sm leading-5 text-slate-600">{item.title[language]}</span>
@@ -930,7 +944,9 @@ export const CurriculumSection: React.FC = () => {
                                   ))}
                                 </div>
                               </section>
-                            </div>
+                                )}
+                              </div>
+                            )}
 
                             {!!unit.lessons?.length && (
                               <section id={`${baseId}-lessons`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-3 sm:p-4">
