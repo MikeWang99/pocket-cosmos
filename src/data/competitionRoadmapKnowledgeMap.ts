@@ -179,8 +179,8 @@ const lessons: CurriculumLesson[] = [
   {
     title: text('Three Competitions — Three Game Modes', '三大竞赛——三种游戏模式'),
     description: text(
-      'Physics Bowl is a grinding game, F=ma is a boss fight, BPhO is open-world exploration — then the format, style and admissions relevance of each.',
-      '物理碗是刷怪游戏、F=ma 是 Boss 战、BPhO 是开放世界——然后逐一拆解每个竞赛的形式、风格与申请价值。',
+      'Physics Bowl is an FPS game, F=ma is a boss fight, BPhO is open-world exploration — then the format, style and admissions relevance of each.',
+      '物理碗是 FPS 游戏、F=ma 是 Boss 战、BPhO 是开放世界——然后逐一拆解每个竞赛的形式、风格与申请价值。',
     ),
     sections: [
       {
@@ -189,7 +189,7 @@ const lessons: CurriculumLesson[] = [
           caption: text('Three competitions as three game modes', '三大竞赛如同三种游戏模式'),
           headers: [text('Competition', '竞赛'), text('The core idea', '核心理念'), text('Game mode 🎮', '游戏模式 🎮')],
           rows: [
-            [text('Physics Bowl', '物理碗'), text('Broad + Fast', '广度 + 速度'), text('Grinding game', '刷怪游戏')],
+            [text('Physics Bowl', '物理碗'), text('Broad + Fast', '广度 + 速度'), text('FPS game', 'FPS 游戏')],
             [text('F=ma', 'F=ma'), text('Deep Mechanics', '深度力学'), text('Boss fight', 'Boss 战')],
             [text('BPhO', 'BPhO'), text('Olympiad-style written problem solving', '奥赛风格书面解题'), text('Open world exploration', '开放世界探索')],
           ],
