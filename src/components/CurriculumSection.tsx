@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import katex from 'katex';
 import { BookOpenCheck, ChevronDown, ExternalLink, FunctionSquare, GraduationCap, Image as ImageIcon, Layers3, ListChecks, NotebookText, Presentation } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -57,23 +57,19 @@ const unitAnchorBase = (courseId: string, unitNumber: number) => `${courseId}-un
 const directoryCopy = {
   en: {
     courseMap: 'Course route',
-    title: 'Unit directory',
-    focus: 'Learning focus',
-    topics: 'Knowledge checklist',
-    lessons: 'Lesson maps',
-    formulas: 'Key formulas',
-    diagrams: 'Diagrams',
-    sections: 'Sections',
+    title: 'Unit dictionary',
+    formulas: 'Formulas Summarization',
+    allContent: 'Complete Lesson Content',
+    current: 'Current chapter',
+    sections: 'Knowledge points',
   },
   zh: {
     courseMap: '课程路线图',
     title: '单元目录',
-    focus: '学习重点',
-    topics: '知识清单',
-    lessons: '课程地图',
-    formulas: '重点公式',
-    diagrams: '图像与模型',
-    sections: '小节',
+    formulas: '公式汇总',
+    allContent: '完整课程内容',
+    current: '当前章节',
+    sections: '知识点',
   },
 };
 
@@ -86,70 +82,141 @@ const lessonAnchorId = (courseId: string, unitNumber: number, lessonIndex: numbe
 const lessonSectionAnchorId = (courseId: string, unitNumber: number, lessonIndex: number, sectionIndex: number) =>
   `${lessonAnchorId(courseId, unitNumber, lessonIndex)}-section-${sectionIndex + 1}`;
 
+const formulasAnchorId = (courseId: string, unitNumber: number) => `${unitAnchorBase(courseId, unitNumber)}-formulas`;
+
+type UnitContentEntry =
+  | {
+      id: string;
+      kind: 'lesson';
+      topicLabel: string;
+      lessonIndex: number;
+      lesson: CurriculumLessonContent;
+    }
+  | {
+      id: string;
+      kind: 'formulas';
+      topicLabel: string;
+    };
+
+const isOverviewLesson = (lesson: CurriculumLessonContent) => {
+  const titleEn = lesson.title.en.toLowerCase();
+  const titleZh = lesson.title.zh;
+  return titleEn.includes('studio map') || titleEn.includes('route map') || titleZh.includes('学习路线图');
+};
+
+const buildUnitContentEntries = (
+  unit: CurriculumUnit,
+  contentMode: CurriculumContentMode,
+  language: 'en' | 'zh',
+): UnitContentEntry[] => {
+  const allLessons = (unit.lessons ?? []).map((lesson) => lessonContentForMode(lesson, contentMode));
+  const topics = unit.topics ?? [];
+  const filteredLessons = allLessons.filter((lesson) => !isOverviewLesson(lesson));
+  const usableLessons = filteredLessons.length >= topics.length && topics.length > 0 ? filteredLessons : allLessons;
+  const offset = Math.max(0, usableLessons.length - topics.length);
+  const lessonEntries: UnitContentEntry[] = usableLessons.map((lesson, lessonIndex) => {
+    const topicIndex = lessonIndex >= offset ? lessonIndex - offset : -1;
+    const topic = topicIndex >= 0 ? topics[topicIndex] : undefined;
+    const topicLabel = topic
+      ? `${topic.id} ${topic.title[language]}`
+      : `${lessonIndex + 1}. ${lesson.title[language]}`;
+
+    return {
+      id: topic?.id ?? `lesson-${lessonIndex + 1}`,
+      kind: 'lesson',
+      topicLabel,
+      lessonIndex,
+      lesson,
+    };
+  });
+
+  if (unit.formulas?.length) {
+    lessonEntries.push({
+      id: 'formulas',
+      kind: 'formulas',
+      topicLabel: directoryCopy[language].formulas,
+    });
+  }
+
+  return lessonEntries;
+};
+
 const UnitDirectory: React.FC<{
   unit: CurriculumUnit;
   courseId: string;
   language: 'en' | 'zh';
   contentMode: CurriculumContentMode;
+  selectedEntryId: string;
+  activeSectionId?: string | null;
+  onSelectEntry: (entryId: string) => void;
   className?: string;
-}> = ({ unit, courseId, language, contentMode, className = '' }) => {
+}> = ({ unit, courseId, language, contentMode, selectedEntryId, activeSectionId, onSelectEntry, className = '' }) => {
   const copy = directoryCopy[language];
-  const base = unitAnchorBase(courseId, unit.number);
-  const topLinks = [
-    { id: `${base}-focus`, label: copy.focus, count: unit.focus?.length ?? 0 },
-    { id: `${base}-topics`, label: copy.topics, count: unit.topics?.length ?? 0 },
-    { id: `${base}-lessons`, label: copy.lessons, count: unit.lessons?.length ?? 0 },
-    { id: `${base}-formulas`, label: copy.formulas, count: unit.formulas?.length ?? 0 },
-    { id: `${base}-diagrams`, label: copy.diagrams, count: unit.diagrams?.length ?? 0 },
-  ].filter((item) => item.count > 0);
+  const entries = buildUnitContentEntries(unit, contentMode, language);
+  const selectedEntry = entries.find((entry) => entry.id === selectedEntryId) ?? entries[0];
 
   return (
     <nav className={`rounded-lg border border-slate-200 bg-surface p-3 sm:p-4 ${className}`} aria-label={copy.title}>
-      <div className="mb-3 flex items-center gap-2 text-nebula">
+      <div className="mb-4 flex items-center gap-2 text-nebula">
         <ListChecks className="h-4 w-4" />
         <h4 className="text-sm font-semibold">{copy.title}</h4>
       </div>
 
-      <div className="grid gap-2 min-[520px]:grid-cols-2">
-        {topLinks.map((item) => (
-          <a key={item.id} href={`#${item.id}`} className={anchorLinkClass}>
-            <span className="block">{item.label}</span>
-            <span className="mt-0.5 block text-[10px] font-medium text-slate-500">{item.count}</span>
-          </a>
-        ))}
-      </div>
-
-      {!!unit.lessons?.length && (
-        <div className="mt-3 max-h-72 overflow-y-auto rounded-lg border border-slate-200 bg-slate-50 p-2">
-          <div className="mb-2 px-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">{copy.sections}</div>
-          <div className="space-y-2">
-            {unit.lessons.map((lesson: CurriculumLesson, lessonIndex) => {
-              const content = lessonContentForMode(lesson, contentMode);
-              return (
-                <div key={lesson.title.en} className="rounded-md bg-surface p-2">
-                  <a
-                    href={`#${lessonAnchorId(courseId, unit.number, lessonIndex)}`}
-                    className="block text-xs font-semibold leading-5 text-slate-800 hover:text-nebula"
-                  >
-                    {content.title[language]}
-                  </a>
-                  <div className="mt-2 flex flex-wrap gap-1.5">
-                    {content.sections.map((section, sectionIndex) => (
-                      <a
-                        key={section.heading.en}
-                        href={`#${lessonSectionAnchorId(courseId, unit.number, lessonIndex, sectionIndex)}`}
-                        className="rounded-full border border-slate-200 px-2 py-1 text-[10px] font-medium leading-4 text-slate-600 transition-colors hover:border-nebula/50 hover:text-nebula"
-                      >
-                        {section.heading[language]}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+      {selectedEntry && (
+        <div className="mb-3 rounded-lg border border-nebula/20 bg-nebula/5 px-3 py-2">
+          <div className="text-[10px] font-bold uppercase tracking-widest text-nebula/80">{copy.current}</div>
+          <div className="mt-1 text-sm font-semibold text-slate-800">{selectedEntry.topicLabel}</div>
         </div>
       )}
+
+      <div className="space-y-2">
+        {entries.map((entry) => {
+          const isSelected = entry.id === selectedEntryId;
+          const hasSections = entry.kind === 'lesson' && entry.lesson.sections.length > 0;
+
+          return (
+            <div key={entry.id} className="rounded-lg border border-slate-200 bg-slate-50">
+              <button
+                type="button"
+                onClick={() => onSelectEntry(entry.id)}
+                className={`flex w-full items-center justify-between gap-3 rounded-lg px-3 py-3 text-left transition-colors ${
+                  isSelected ? 'bg-nebula/8 text-nebula' : 'text-slate-700 hover:bg-slate-100 hover:text-nebula'
+                }`}
+              >
+                <span className="text-sm font-semibold leading-5">{entry.topicLabel}</span>
+                {hasSections && (
+                  <ChevronDown className={`h-4 w-4 shrink-0 transition-transform ${isSelected ? 'rotate-180' : ''}`} />
+                )}
+              </button>
+
+              {isSelected && entry.kind === 'lesson' && (
+                <div className="border-t border-slate-200 bg-surface px-2 py-2">
+                  <div className="mb-2 px-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">{copy.sections}</div>
+                  <div className="space-y-1">
+                    {entry.lesson.sections.map((section, sectionIndex) => {
+                      const sectionId = lessonSectionAnchorId(courseId, unit.number, entry.lessonIndex, sectionIndex);
+                      const active = activeSectionId === sectionId;
+                      return (
+                        <a
+                          key={sectionId}
+                          href={`#${sectionId}`}
+                          className={`block rounded-md px-3 py-2 text-xs font-medium leading-5 transition-colors ${
+                            active
+                              ? 'bg-nebula text-on-accent'
+                              : 'text-slate-600 hover:bg-nebula/5 hover:text-nebula'
+                          }`}
+                        >
+                          {section.heading[language]}
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </nav>
   );
 };
@@ -670,11 +737,66 @@ export const CurriculumSection: React.FC = () => {
   const [courseId, setCourseId] = useState(selectedSystem.courses[0]?.id ?? '');
   const course = selectedSystem.courses.find((item) => item.id === courseId) ?? selectedSystem.courses[0];
   const [openUnits, setOpenUnits] = useState<Set<number>>(() => new Set([course?.units[0]?.number ?? 1]));
+  const [selectedEntriesByUnit, setSelectedEntriesByUnit] = useState<Record<number, string>>({});
+  const [activeSectionsByUnit, setActiveSectionsByUnit] = useState<Record<number, string | null>>({});
 
   const topicCount = useMemo(
     () => course?.units.reduce((total, unit) => total + (unit.topics?.length ?? 0), 0) ?? 0,
     [course],
   );
+
+  const defaultSelectedEntries = useMemo(() => {
+    if (!course) return {};
+    return Object.fromEntries(
+      course.units.map((unit) => {
+        const firstEntry = buildUnitContentEntries(unit, contentMode, language)[0];
+        return [unit.number, firstEntry?.id ?? 'formulas'];
+      }),
+    ) as Record<number, string>;
+  }, [course, contentMode, language]);
+
+  useEffect(() => {
+    setSelectedEntriesByUnit(defaultSelectedEntries);
+    setActiveSectionsByUnit({});
+  }, [defaultSelectedEntries]);
+
+  useEffect(() => {
+    if (!course) return undefined;
+
+    const observedSections = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-curriculum-section-anchor="true"]'),
+    );
+
+    if (!observedSections.length) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (!visibleEntries.length) return;
+
+        setActiveSectionsByUnit((current) => {
+          const next = { ...current };
+          for (const entry of visibleEntries) {
+            const unitNumber = Number(entry.target.getAttribute('data-unit-number'));
+            if (!Number.isNaN(unitNumber)) {
+              next[unitNumber] = entry.target.id;
+            }
+          }
+          return next;
+        });
+      },
+      {
+        rootMargin: '-20% 0px -55% 0px',
+        threshold: [0.1, 0.35, 0.6],
+      },
+    );
+
+    observedSections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [course, openUnits, selectedEntriesByUnit, contentMode]);
 
   const selectSystem = (id: LearningSystemId) => {
     const nextSystem = learningSystems.find((item) => item.id === id) ?? learningSystems[0];
@@ -682,12 +804,16 @@ export const CurriculumSection: React.FC = () => {
     setSystemId(id);
     setCourseId(nextCourse?.id ?? '');
     setOpenUnits(new Set(nextCourse?.units[0] ? [nextCourse.units[0].number] : []));
+    setSelectedEntriesByUnit({});
+    setActiveSectionsByUnit({});
   };
 
   const selectCourse = (id: string) => {
     const nextCourse = selectedSystem.courses.find((item) => item.id === id);
     setCourseId(id);
     setOpenUnits(new Set(nextCourse?.units[0] ? [nextCourse.units[0].number] : []));
+    setSelectedEntriesByUnit({});
+    setActiveSectionsByUnit({});
   };
 
   const toggleUnit = (number: number) => {
@@ -856,13 +982,10 @@ export const CurriculumSection: React.FC = () => {
               const open = openUnits.has(unit.number);
               const panelId = `${course.id}-unit-${unit.number}`;
               const baseId = unitAnchorBase(course.id, unit.number);
-              const focusItems = unit.focus ?? [];
-              const topicItems = unit.topics ?? [];
-              const hasDirectory =
-                focusItems.length > 0 ||
-                topicItems.length > 0 ||
-                (unit.formulas?.length ?? 0) > 0 ||
-                (unit.diagrams?.length ?? 0) > 0;
+              const unitEntries = buildUnitContentEntries(unit, contentMode, language);
+              const selectedEntryId = selectedEntriesByUnit[unit.number] ?? unitEntries[0]?.id;
+              const selectedEntry = unitEntries.find((entry) => entry.id === selectedEntryId) ?? unitEntries[0];
+              const activeSectionId = activeSectionsByUnit[unit.number];
               return (
                 <article key={unit.number} id={baseId} className="scroll-mt-28">
                   <button
@@ -904,83 +1027,68 @@ export const CurriculumSection: React.FC = () => {
                           </p>
                         )}
 
-                        <div className={hasDirectory ? 'grid gap-4 lg:grid-cols-[280px_minmax(0,1fr)]' : ''}>
-                          {hasDirectory && (
-                            <UnitDirectory unit={unit} courseId={course.id} language={language} contentMode={contentMode} className="lg:sticky lg:top-6 lg:max-h-[calc(100vh-3rem)] lg:overflow-y-auto" />
-                          )}
+                        <div className="grid gap-4 lg:grid-cols-[280px_minmax(0,1fr)] xl:grid-cols-[300px_minmax(0,1fr)]">
+                          <UnitDirectory
+                            unit={unit}
+                            courseId={course.id}
+                            language={language}
+                            contentMode={contentMode}
+                            selectedEntryId={selectedEntry?.id ?? 'formulas'}
+                            activeSectionId={activeSectionId}
+                            onSelectEntry={(entryId) => {
+                              setSelectedEntriesByUnit((current) => ({ ...current, [unit.number]: entryId }));
+                              window.requestAnimationFrame(() => {
+                                const targetId =
+                                  entryId === 'formulas'
+                                    ? formulasAnchorId(course.id, unit.number)
+                                    : lessonAnchorId(
+                                        course.id,
+                                        unit.number,
+                                        (unitEntries.find((entry) => entry.id === entryId && entry.kind === 'lesson') as Extract<UnitContentEntry, { kind: 'lesson' }> | undefined)?.lessonIndex ?? 0,
+                                      );
+                                document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                              });
+                            }}
+                            className="lg:sticky lg:top-6"
+                          />
 
                           <div className="min-w-0">
-                            {(focusItems.length > 0 || topicItems.length > 0) && (
-                              <div className={`grid gap-4 ${focusItems.length > 0 && topicItems.length > 0 ? 'xl:grid-cols-[1fr_1fr]' : ''}`}>
-                                {focusItems.length > 0 && (
-                              <section id={`${baseId}-focus`} className="scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-4">
-                                <div className="mb-3 flex items-center gap-2 text-nebula">
-                                  <ListChecks className="h-4 w-4" />
-                                  <h4 className="text-sm font-semibold">{t.curriculum.focusTitle}</h4>
-                                </div>
-                                <ul className="space-y-2">
-                                  {focusItems.map((item) => (
-                                    <li key={item.en} className="flex gap-2 text-sm leading-6 text-slate-600">
-                                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-nebula" />
-                                      <span><InlineMathText>{item[language]}</InlineMathText></span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </section>
-                                )}
-
-                                {topicItems.length > 0 && (
-                              <section id={`${baseId}-topics`} className="scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-4">
-                                <div className="mb-3 flex items-center gap-2 text-nebula">
-                                  <ListChecks className="h-4 w-4" />
-                                  <h4 className="text-sm font-semibold">{t.curriculum.checklistTitle}</h4>
-                                </div>
-                                <div className="grid gap-2 min-[520px]:grid-cols-2">
-                                  {topicItems.map((item) => (
-                                    <div key={item.id} className="flex min-h-12 items-start gap-3 rounded-md bg-slate-50 px-3 py-2">
-                                      <span className="mt-0.5 shrink-0 font-mono text-xs font-semibold text-nebula">{item.id}</span>
-                                      <span className="text-sm leading-5 text-slate-600">{item.title[language]}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                              </section>
-                                )}
-                              </div>
-                            )}
-
-                            {!!unit.lessons?.length && (
-                              <section id={`${baseId}-lessons`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-3 sm:p-4">
+                            {selectedEntry?.kind === 'lesson' && (
+                              <section
+                                id={lessonAnchorId(course.id, unit.number, selectedEntry.lessonIndex)}
+                                className="scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-3 sm:p-4"
+                              >
                                 <div className="mb-3 flex items-center gap-2 text-nebula">
                                   <NotebookText className="h-4 w-4" />
-                                  <h4 className="text-sm font-semibold">{t.curriculum.lessonsTitle}</h4>
+                                  <h4 className="text-sm font-semibold">{directoryCopy[language].allContent}</h4>
                                 </div>
-                                <div className="space-y-4">
-                                  {unit.lessons.map((lesson, lessonIndex) => {
-                                    const content = lessonContentForMode(lesson, contentMode);
-                                    return (
-                                      <article
-                                        key={lesson.title.en}
-                                        id={lessonAnchorId(course.id, unit.number, lessonIndex)}
-                                        className="scroll-mt-24 rounded-lg border border-slate-200 bg-slate-50 p-4"
-                                      >
-                                        <h5 className="text-base font-semibold text-slate-900">{content.title[language]}</h5>
-                                        <p className="mt-2 text-sm leading-6 text-slate-600">
-                                          <InlineMathText>{content.description[language]}</InlineMathText>
-                                        </p>
 
-                                        <div className="mt-4 space-y-2">
-                                          {content.sections.map((section, index) => (
-                                      <details
+                                <article className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+                                  <div className="text-xs font-bold uppercase tracking-widest text-nebula">{selectedEntry.topicLabel}</div>
+                                  <h5 className="mt-2 text-xl font-semibold text-slate-900">{selectedEntry.lesson.title[language]}</h5>
+                                  <p className="mt-3 text-sm leading-7 text-slate-600">
+                                    <InlineMathText>{selectedEntry.lesson.description[language]}</InlineMathText>
+                                  </p>
+
+                                  {!!unit.diagrams?.[selectedEntry.lessonIndex] && (
+                                    <div className="mt-4">
+                                      <ConceptDiagram diagram={unit.diagrams[selectedEntry.lessonIndex]} language={language} />
+                                    </div>
+                                  )}
+
+                                  <div className="mt-4 space-y-4">
+                                    {selectedEntry.lesson.sections.map((section, index) => (
+                                      <section
                                         key={section.heading.en}
-                                        id={lessonSectionAnchorId(course.id, unit.number, lessonIndex, index)}
-                                        open={lessonIndex === 0 && index === 0}
-                                        className="group scroll-mt-24 rounded-lg border border-slate-200 bg-surface px-3 py-2"
+                                        id={lessonSectionAnchorId(course.id, unit.number, selectedEntry.lessonIndex, index)}
+                                        data-curriculum-section-anchor="true"
+                                        data-unit-number={unit.number}
+                                        className="scroll-mt-24 rounded-lg border border-slate-200 bg-surface px-4 py-4"
                                       >
-                                        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-1 text-sm font-semibold text-slate-800">
-                                          <span>{section.heading[language]}</span>
-                                          <ChevronDown className="h-4 w-4 shrink-0 text-ink-soft transition-transform group-open:rotate-180" />
-                                        </summary>
-                                        <div className="space-y-3 pb-2 pt-3">
+                                        <div className="mb-3 text-sm font-semibold text-slate-800">
+                                          {section.heading[language]}
+                                        </div>
+                                        <div className="space-y-3">
                                           {section.videos?.map((video) => (
                                             <LessonVideo key={video.sourceUrl} video={video} language={language} />
                                           ))}
@@ -999,7 +1107,7 @@ export const CurriculumSection: React.FC = () => {
                                           {section.table && (
                                             <figure className="overflow-x-auto rounded-lg border border-slate-200 bg-surface">
                                               <table className="w-full text-sm">
-                                                <caption className="px-3 pt-2 pb-1 text-left text-xs font-semibold text-slate-500">
+                                                <caption className="px-3 pb-1 pt-2 text-left text-xs font-semibold text-slate-500">
                                                   {section.table.caption[language]}
                                                 </caption>
                                                 <thead>
@@ -1054,45 +1162,28 @@ export const CurriculumSection: React.FC = () => {
                                             </div>
                                           )}
                                         </div>
-                                      </details>
-                                          ))}
-                                        </div>
-                                      </article>
-                                    );
-                                  })}
-                                </div>
+                                      </section>
+                                    ))}
+                                  </div>
+                                </article>
                               </section>
                             )}
 
-                            {!!unit.formulas?.length && (
-                              <section id={`${baseId}-formulas`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-3 sm:p-4">
-                            <div className="mb-3 flex items-center gap-2 text-nebula">
-                              <FunctionSquare className="h-4 w-4" />
-                              <h4 className="text-sm font-semibold">{t.curriculum.formulasTitle}</h4>
-                            </div>
-                            <div className="grid gap-3 lg:grid-cols-2">
-                              {unit.formulas.map((item) => (
-                                <div key={`${item.label.en}-${item.expression}`} className="rounded-lg border border-slate-200 bg-slate-50 p-3">
-                                  <p className="text-xs font-semibold text-slate-600">{item.label[language]}</p>
-                                  <MathBlock value={item.expression} />
-                                  {item.note && <p className="mt-2 text-xs leading-5 text-slate-500">{item.note[language]}</p>}
+                            {selectedEntry?.kind === 'formulas' && !!unit.formulas?.length && (
+                              <section id={formulasAnchorId(course.id, unit.number)} className="scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-3 sm:p-4">
+                                <div className="mb-3 flex items-center gap-2 text-nebula">
+                                  <FunctionSquare className="h-4 w-4" />
+                                  <h4 className="text-sm font-semibold">{directoryCopy[language].formulas}</h4>
                                 </div>
-                              ))}
-                            </div>
-                              </section>
-                            )}
-
-                            {!!unit.diagrams?.length && (
-                              <section id={`${baseId}-diagrams`} className="mt-4 scroll-mt-24 rounded-lg border border-slate-200 bg-surface p-3 sm:p-4">
-                            <div className="mb-3 flex items-center gap-2 text-nebula">
-                              <ImageIcon className="h-4 w-4" />
-                              <h4 className="text-sm font-semibold">{t.curriculum.diagramsTitle}</h4>
-                            </div>
-                            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                              {unit.diagrams.map((item) => (
-                                <ConceptDiagram key={`${item.kind}-${item.title.en}`} diagram={item} language={language} />
-                              ))}
-                            </div>
+                                <div className="grid gap-3 lg:grid-cols-2">
+                                  {unit.formulas.map((item) => (
+                                    <div key={`${item.label.en}-${item.expression}`} className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                                      <p className="text-xs font-semibold text-slate-600">{item.label[language]}</p>
+                                      <MathBlock value={item.expression} />
+                                      {item.note && <p className="mt-2 text-xs leading-5 text-slate-500">{item.note[language]}</p>}
+                                    </div>
+                                  ))}
+                                </div>
                               </section>
                             )}
                           </div>
