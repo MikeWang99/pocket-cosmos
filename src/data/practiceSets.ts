@@ -40,6 +40,7 @@ import { linearMomentumLabDesignMeta, linearMomentumLabDesignSteps } from './lin
 import { physicsBowlEmMeta, physicsBowlEmSteps } from './physicsBowlEmQuestionBank';
 import { apcEmFrq1Meta, apcEmFrq1Steps } from './apcEmFrqTest1';
 import { apcEmFrq2Meta, apcEmFrq2Steps } from './apcEmFrqTest2';
+import { apcEmRcTest16Meta, apcEmRcTest16Steps } from './apcEmRcTest16';
 import { workEnergyMultipleChoiceMeta, workEnergyMultipleChoiceSteps } from './workEnergyMultipleChoice';
 import type { PracticeStep } from '../types/practice';
 
@@ -210,6 +211,17 @@ export const practiceSets: PracticeSet[] = [
     chapterTitle: 'Electric Potential and Capacitance',
     ...apcEmFrq2Meta,
     steps: apcEmFrq2Steps,
+  },
+  {
+    id: 'apc-em-rc-test16',
+    category: 'electromagnetism',
+    label: 'RC Circuits · Test 16',
+    system: 'ap-c-em',
+    practiceKind: 'mcq',
+    chapter: 3,
+    chapterTitle: 'Electric Circuits',
+    ...apcEmRcTest16Meta,
+    steps: apcEmRcTest16Steps,
   },
   // IGCSE per-topic MCQ sets (all chapters)
   ...igcseAllTopics.map((topic): PracticeSet => ({
