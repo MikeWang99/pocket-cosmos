@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "bankId": "crackap-apc-em-rc-test16",
+  "title": "AP Physics C: Electricity and Magnetism Practice Test 16: RC Circuits",
+  "sourcePage": "https://www.crackap.com/ap/physics-c-electricity-and-magnetism/test16.html",
+  "rightsStatus": "unknown",
+  "reviewStatus": "approved_by_user_request",
+  "assets": [
+    { "file": "image01994.jpeg", "downloadUrl": "/apc-em-rc-test16/source/image01994.jpeg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01994.jpeg", "role": "shared_stem_diagram" },
+    { "file": "12a.jpg", "downloadUrl": "/apc-em-rc-test16/source/12a.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/12a.jpg", "role": "graph_choice" },
+    { "file": "12b.jpg", "downloadUrl": "/apc-em-rc-test16/source/12b.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/12b.jpg", "role": "graph_choice" },
+    { "file": "12c.jpg", "downloadUrl": "/apc-em-rc-test16/source/12c.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/12c.jpg", "role": "graph_choice" },
+    { "file": "12d.jpg", "downloadUrl": "/apc-em-rc-test16/source/12d.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/12d.jpg", "role": "graph_choice" },
+    { "file": "12e.jpg", "downloadUrl": "/apc-em-rc-test16/source/12e.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/12e.jpg", "role": "graph_choice" },
+    { "file": "13a.jpg", "downloadUrl": "/apc-em-rc-test16/source/13a.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/13a.jpg", "role": "graph_choice" },
+    { "file": "13b.jpg", "downloadUrl": "/apc-em-rc-test16/source/13b.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/13b.jpg", "role": "graph_choice" },
+    { "file": "13c.jpg", "downloadUrl": "/apc-em-rc-test16/source/13c.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/13c.jpg", "role": "graph_choice" },
+    { "file": "13d.jpg", "downloadUrl": "/apc-em-rc-test16/source/13d.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/13d.jpg", "role": "graph_choice" },
+    { "file": "13e.jpg", "downloadUrl": "/apc-em-rc-test16/source/13e.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/13e.jpg", "role": "graph_choice" },
+    { "file": "image01997.jpeg", "downloadUrl": "/apc-em-rc-test16/source/image01997.jpeg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01997.jpeg", "role": "shared_stem_diagram" },
+    { "file": "image01998.jpeg", "downloadUrl": "/apc-em-rc-test16/source/image01998.jpeg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01998.jpeg", "role": "formula_choice" },
+    { "file": "image01999.jpeg", "downloadUrl": "/apc-em-rc-test16/source/image01999.jpeg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/image01999.jpeg", "role": "formula_choice" },
+    { "file": "14a.jpg", "downloadUrl": "/apc-em-rc-test16/source/14a.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/14a.jpg", "role": "graph_choice" },
+    { "file": "14b.jpg", "downloadUrl": "/apc-em-rc-test16/source/14b.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/14b.jpg", "role": "graph_choice" },
+    { "file": "14c.jpg", "downloadUrl": "/apc-em-rc-test16/source/14c.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/14c.jpg", "role": "graph_choice" },
+    { "file": "14d.jpg", "downloadUrl": "/apc-em-rc-test16/source/14d.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/14d.jpg", "role": "graph_choice" },
+    { "file": "14e.jpg", "downloadUrl": "/apc-em-rc-test16/source/14e.jpg", "sourceUrl": "https://img.crackap.com/ap/physics-c/br/14e.jpg", "role": "graph_choice" }
+  ]
+}

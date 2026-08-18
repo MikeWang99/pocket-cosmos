@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "bankId": "crackap-apc-em-rc-test16",
+  "title": "AP Physics C: Electricity and Magnetism Practice Test 16: RC Circuits",
+  "sourcePage": "https://www.crackap.com/ap/physics-c-electricity-and-magnetism/test16.html",
+  "rightsStatus": "unknown",
+  "reviewStatus": "approved_by_user_request",
+  "questions": [
+    {
+      "number": 1,
+      "sourceQuestionId": 148,
+      "answer": "A",
+      "difficulty": 3,
+      "knowledgeTags": ["RC circuits", "Current-time graphs", "Capacitor redistribution", "Exponential decay"],
+      "trainingFocus": "Use initial and final behavior in an RC redistribution circuit."
+    },
+    {
+      "number": 2,
+      "sourceQuestionId": 149,
+      "answer": "C",
+      "difficulty": 2,
+      "knowledgeTags": ["RC circuits", "Capacitor charging", "Charge-time graphs"],
+      "trainingFocus": "Identify the charging behavior of the initially uncharged capacitor."
+    },
+    {
+      "number": 3,
+      "sourceQuestionId": 150,
+      "answer": "B",
+      "difficulty": 2,
+      "knowledgeTags": ["RC circuits", "Capacitor discharge", "Final equilibrium state"],
+      "trainingFocus": "Track how the initially charged capacitor loses some, but not all, of its charge."
+    },
+    {
+      "number": 4,
+      "sourceQuestionId": 151,
+      "answer": "D",
+      "difficulty": 4,
+      "knowledgeTags": ["Kirchhoff loop rule", "Capacitors", "Potential difference sign convention", "RC circuits"],
+      "trainingFocus": "Use sign conventions across capacitors and resistors in a loop."
+    },
+    {
+      "number": 5,
+      "sourceQuestionId": 152,
+      "answer": "B",
+      "difficulty": 3,
+      "knowledgeTags": ["RC circuits", "Current decay", "Capacitor energy", "Charge-time functions"],
+      "trainingFocus": "Compare transient forms during charging versus discharging."
+    },
+    {
+      "number": 6,
+      "sourceQuestionId": 153,
+      "answer": "C",
+      "difficulty": 4,
+      "knowledgeTags": ["RC circuits", "Current-time graphs", "Charging vs discharging", "Time constant"],
+      "trainingFocus": "Use current sign and time constant differences for charging versus rapid discharge."
+    },
+    {
+      "number": 7,
+      "sourceQuestionId": 154,
+      "answer": "D",
+      "difficulty": 4,
+      "knowledgeTags": ["RC circuits", "Time constant", "Equivalent resistance", "Equivalent capacitance"],
+      "trainingFocus": "Compute how equivalent resistance and equivalent capacitance change in series and parallel combinations."
+    },
+    {
+      "number": 8,
+      "sourceQuestionId": 155,
+      "answer": "E",
+      "difficulty": 5,
+      "knowledgeTags": ["RC circuits", "Energy dissipation", "Parallel branches", "Infinite-time reasoning"],
+      "trainingFocus": "Notice that one branch contains a resistor carrying current forever, so total dissipation over infinite time is not finite."
+    },
+    {
+      "number": 9,
+      "sourceQuestionId": 156,
+      "answer": "E",
+      "difficulty": 5,
+      "knowledgeTags": ["RC circuits", "Battery current", "Parallel branches", "Current superposition"],
+      "trainingFocus": "Add the constant current through the 2R branch to the decaying current through the RC branch."
+    }
+  ]
+}
