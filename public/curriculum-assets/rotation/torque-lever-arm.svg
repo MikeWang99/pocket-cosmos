@@ -2,15 +2,15 @@
   <title id="title">Torque, force angle, and lever arm</title>
   <desc id="desc">A wrench with position vector, applied force, perpendicular component, and lever arm.</desc>
   <rect width="900" height="420" fill="#ffffff"/>
-  <circle cx="145" cy="280" r="34" fill="#eef2ff" stroke="#4f46e5" stroke-width="6"/>
-  <circle cx="145" cy="280" r="8" fill="#4f46e5"/>
+  <circle cx="145" cy="280" r="34" fill="#EDF8FB" stroke="#155E75" stroke-width="6"/>
+  <circle cx="145" cy="280" r="8" fill="#155E75"/>
   <line x1="145" y1="280" x2="650" y2="210" stroke="#64748b" stroke-width="24" stroke-linecap="round"/>
-  <line x1="145" y1="280" x2="650" y2="210" stroke="#4f46e5" stroke-width="4"/>
+  <line x1="145" y1="280" x2="650" y2="210" stroke="#155E75" stroke-width="4"/>
   <path d="M650 210 L770 70" stroke="#0891b2" stroke-width="8" fill="none"/>
   <path d="M770 70 l-8 26 l-20-18" fill="#0891b2"/>
   <line x1="650" y1="210" x2="678" y2="410" stroke="#cbd5e1" stroke-width="4" stroke-dasharray="10 9"/>
   <line x1="145" y1="280" x2="678" y2="410" stroke="#f59e0b" stroke-width="5" stroke-dasharray="12 8"/>
-  <path d="M226 269 A82 82 0 0 0 219 223" fill="none" stroke="#4f46e5" stroke-width="4"/>
+  <path d="M226 269 A82 82 0 0 0 219 223" fill="none" stroke="#155E75" stroke-width="4"/>
   <text x="350" y="230" font-family="Arial, sans-serif" font-size="28" fill="#312e81">r</text>
   <text x="764" y="60" font-family="Arial, sans-serif" font-size="28" fill="#0e7490">F</text>
   <text x="207" y="236" font-family="Arial, sans-serif" font-size="28" fill="#312e81">φ</text>

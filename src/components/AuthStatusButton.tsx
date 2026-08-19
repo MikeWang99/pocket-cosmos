@@ -4,7 +4,11 @@ import { useAuth } from '../auth/AuthContext';
 import { useLanguage } from '../LanguageContext';
 import { AuthModal } from './AuthModal';
 
-export const AuthStatusButton: FC = () => {
+interface AuthStatusButtonProps {
+  compact?: boolean;
+}
+
+export const AuthStatusButton: FC<AuthStatusButtonProps> = ({ compact = false }) => {
   const { t } = useLanguage();
   const { authEnabled, configured, loading, emailJustConfirmed, clearEmailJustConfirmed, passwordRecovery, passwordSetupRequired, user, signOut } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -18,7 +22,7 @@ export const AuthStatusButton: FC = () => {
   if (!configured) {
     return (
       <div
-        className="inline-flex h-10 items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 text-xs font-semibold text-amber-700"
+        className={`${compact ? 'inline-flex min-h-10 w-full items-center justify-center rounded-2xl px-3 py-2 text-center leading-tight' : 'inline-flex h-10 rounded-full px-4'} gap-2 border border-amber-500/30 bg-amber-500/10 text-xs font-semibold text-amber-700`}
         title={t.auth.previewConfigTitle}
       >
         <ShieldAlert className="h-4 w-4" />
@@ -29,7 +33,7 @@ export const AuthStatusButton: FC = () => {
 
   if (loading) {
     return (
-      <div className="inline-flex h-10 items-center rounded-full border border-[rgba(15,23,42,0.1)] bg-[rgba(79,70,229,0.06)] px-4 text-xs font-semibold text-slate-500">
+      <div className={`${compact ? 'inline-flex min-h-10 w-full items-center justify-center rounded-2xl px-3 py-2 text-center leading-tight' : 'inline-flex h-10 rounded-full px-4'} border border-[rgba(15,23,42,0.1)] bg-[rgba(21,94,117,0.06)] text-xs font-semibold text-slate-500`}>
         {t.auth.loading}
       </div>
     );
@@ -51,31 +55,48 @@ export const AuthStatusButton: FC = () => {
             </button>
           </div>
         )}
-        <div className="flex max-w-full flex-wrap items-center gap-2">
-          <div className="inline-flex h-10 min-w-0 items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-4 text-xs font-semibold text-emerald-700">
-            <UserCircle2 className="h-4 w-4 shrink-0" />
-            <span className="truncate max-w-[210px]">{user.email ?? t.auth.signedIn}</span>
+        {compact ? (
+          <div className="flex w-full flex-col gap-2">
+            <div className="inline-flex min-h-10 w-full min-w-0 items-center justify-center gap-2 rounded-2xl border border-emerald-500/25 bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-700">
+              <UserCircle2 className="h-4 w-4 shrink-0" />
+              <span className="truncate">{user.email ?? t.auth.signedIn}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => void signOut()}
+              className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-2xl border border-[rgba(15,23,42,0.1)] bg-surface px-3 py-2 text-xs font-semibold text-slate-500 transition-colors hover:border-nebula/50 hover:text-nebula"
+            >
+              <LogOut className="h-4 w-4" />
+              {t.auth.signOut}
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={() => void signOut()}
-            className="inline-flex h-10 items-center gap-2 rounded-full border border-[rgba(15,23,42,0.1)] px-4 text-xs font-semibold text-slate-500 transition-colors hover:border-nebula/50 hover:text-nebula"
-          >
-            <LogOut className="h-4 w-4" />
-            {t.auth.signOut}
-          </button>
-        </div>
+        ) : (
+          <div className="flex max-w-full flex-wrap items-center gap-2">
+            <div className="inline-flex h-10 min-w-0 items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-4 text-xs font-semibold text-emerald-700">
+              <UserCircle2 className="h-4 w-4 shrink-0" />
+              <span className="truncate max-w-[210px]">{user.email ?? t.auth.signedIn}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => void signOut()}
+              className="inline-flex h-10 items-center gap-2 rounded-full border border-[rgba(15,23,42,0.1)] px-4 text-xs font-semibold text-slate-500 transition-colors hover:border-nebula/50 hover:text-nebula"
+            >
+              <LogOut className="h-4 w-4" />
+              {t.auth.signOut}
+            </button>
+          </div>
+        )}
         <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
       </>
     );
   }
 
   return (
-    <div className="flex flex-col items-start gap-2 md:items-end">
+    <div className={`flex ${compact ? 'w-full' : 'flex-col items-start gap-2 md:items-end'}`}>
       <button
         type="button"
         onClick={() => setAuthModalOpen(true)}
-        className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-nebula/25 bg-surface px-4 text-sm font-semibold text-nebula shadow-sm transition-colors hover:border-nebula/45 hover:bg-nebula hover:text-on-accent"
+        className={`${compact ? 'min-h-10 w-full rounded-2xl px-3 py-2 text-xs' : 'h-10 rounded-full px-4 text-sm'} inline-flex items-center justify-center gap-2 border border-nebula/25 bg-surface font-semibold text-nebula shadow-sm transition-colors hover:border-nebula/45 hover:bg-nebula hover:text-on-accent`}
       >
         <LogIn className="h-4 w-4" />
         {t.auth.openAuth}

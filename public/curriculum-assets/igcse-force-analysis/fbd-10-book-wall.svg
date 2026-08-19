@@ -3,7 +3,7 @@
   <desc id="desc">A book pressed against a rough vertical wall by a horizontal force. Four forces act: the applied force towards the wall, the normal reaction away from the wall, weight down, and friction up the wall.</desc>
   <defs>
     <marker id="ar-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#dc2626"/></marker>
-    <marker id="ar-ind" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#4f46e5"/></marker>
+    <marker id="ar-ind" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#155E75"/></marker>
     <marker id="ar-amb" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#f59e0b"/></marker>
     <marker id="ar-teal" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#0f766e"/></marker>
   </defs>
@@ -24,8 +24,8 @@
   <text x="620" y="180" font-family="Arial, sans-serif" font-size="22" fill="#334155">book (dot)</text>
   <line x1="660" y1="230" x2="790" y2="230" stroke="#0f766e" stroke-width="6" marker-end="url(#ar-teal)"/>
   <text x="730" y="210" font-family="Arial, sans-serif" font-size="20" fill="#0f766e">F</text>
-  <line x1="660" y1="230" x2="530" y2="230" stroke="#4f46e5" stroke-width="6" marker-end="url(#ar-ind)"/>
-  <text x="500" y="210" font-family="Arial, sans-serif" font-size="20" fill="#4f46e5">N from wall</text>
+  <line x1="660" y1="230" x2="530" y2="230" stroke="#155E75" stroke-width="6" marker-end="url(#ar-ind)"/>
+  <text x="500" y="210" font-family="Arial, sans-serif" font-size="20" fill="#155E75">N from wall</text>
   <line x1="660" y1="230" x2="660" y2="350" stroke="#dc2626" stroke-width="6" marker-end="url(#ar-red)"/>
   <text x="675" y="340" font-family="Arial, sans-serif" font-size="20" fill="#dc2626">W</text>
   <line x1="660" y1="230" x2="660" y2="110" stroke="#f59e0b" stroke-width="6" marker-end="url(#ar-amb)"/>

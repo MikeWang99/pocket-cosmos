@@ -7,11 +7,11 @@
   --font-display: Georgia, "Times New Roman", "Noto Serif", serif;
   
   --color-space-950: #f8fafc;
-  --color-space-900: #eef2ff;
+  --color-space-900: #EDF8FB;
   --color-space-800: #e2e8f0;
   --color-starlight: #0f172a;
-  --color-nebula: #4f46e5; /* indigo-600 */
-  --color-quantum: #2563eb; /* blue-600 */
+  --color-nebula: #155E75; /* logo blue */
+  --color-quantum: #155E75; /* unified logo blue */
 
   /*
    * Light-theme color contract. Components use these role-based tokens instead
@@ -24,8 +24,8 @@
   --color-on-accent: #ffffff;
   --color-surface: #ffffff;
   --color-surface-muted: #f8fafc;
-  --color-surface-tint: #f3f4ff;
-  --color-surface-tint-strong: #e8eaff;
+  --color-surface-tint: #EDF8FB;
+  --color-surface-tint-strong: #DCEFF5;
   --color-line: #dbe3ef;
   --color-line-strong: #cbd5e1;
 }
@@ -94,7 +94,7 @@ a {
 }
 
 .accent-gradient {
-  background: linear-gradient(135deg, #eef2ff 0%, #ffffff 58%, #ecfeff 100%);
+  background: linear-gradient(135deg, #EDF8FB 0%, #ffffff 58%, #ecfeff 100%);
 }
 
 .serif {

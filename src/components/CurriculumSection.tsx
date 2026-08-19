@@ -285,7 +285,7 @@ const LessonVideo: React.FC<{ video: CurriculumVideo; language: 'en' | 'zh' }> =
         href={video.sourceUrl}
         target="_blank"
         rel="noreferrer"
-        className="inline-flex items-center gap-1 font-semibold text-nebula hover:text-nebula-dark"
+        className="inline-flex items-center gap-1 font-semibold text-nebula hover:text-nebula"
       >
         {video.sourceLabel[language]}
         <ExternalLink className="h-3.5 w-3.5" />
@@ -484,9 +484,9 @@ const ClassroomQuestionCard: React.FC<{ question: CurriculumClassroomQuestion; l
 };
 
 const ConceptDiagram: React.FC<{ diagram: CurriculumDiagram; language: 'en' | 'zh' }> = ({ diagram, language }) => {
-  const stroke = '#4f46e5';
+  const stroke = '#155E75';
   const muted = '#94a3b8';
-  const fill = '#eef2ff';
+  const fill = '#EDF8FB';
   const accent = '#0891b2';
 
   const content = (() => {

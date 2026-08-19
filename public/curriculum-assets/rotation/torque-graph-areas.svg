@@ -4,8 +4,8 @@
   <rect width="900" height="430" fill="#ffffff"/>
   <line x1="70" y1="330" x2="410" y2="330" stroke="#64748b" stroke-width="3"/>
   <line x1="70" y1="330" x2="70" y2="70" stroke="#64748b" stroke-width="3"/>
-  <path d="M70 330 L70 170 L200 170 L330 240 L330 330 Z" fill="#a5b4fc" opacity="0.55"/>
-  <polyline points="70,170 200,170 330,240" fill="none" stroke="#4f46e5" stroke-width="5"/>
+  <path d="M70 330 L70 170 L200 170 L330 240 L330 330 Z" fill="#DCEFF5" opacity="0.55"/>
+  <polyline points="70,170 200,170 330,240" fill="none" stroke="#155E75" stroke-width="5"/>
   <text x="150" y="270" font-family="Arial, sans-serif" font-size="24" fill="#312e81">area = W</text>
   <text x="96" y="60" font-family="Arial, sans-serif" font-size="24" fill="#312e81">τ</text>
   <text x="392" y="364" font-family="Arial, sans-serif" font-size="24" fill="#312e81">θ</text>
