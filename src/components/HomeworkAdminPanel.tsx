@@ -890,7 +890,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                 <h3 className="font-serif text-lg text-ink">{language === 'zh' ? '发布对象' : 'Audience'}</h3>
               </div>
               <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-line p-3">
-                <input type="checkbox" checked={assignedToAll} onChange={(event) => setAssignedToAll(event.target.checked)} className="h-4 w-4 accent-violet-500" />
+                <input type="checkbox" checked={assignedToAll} onChange={(event) => setAssignedToAll(event.target.checked)} className="h-4 w-4 accent-[var(--color-nebula)]" />
                 <span className="text-sm text-ink-soft">{language === 'zh' ? '发布给全部学生' : 'Assign to all students'}</span>
               </label>
               {!assignedToAll && (
@@ -907,7 +907,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                               : current.filter((studentId) => studentId !== profile.userId),
                           )
                         }
-                        className="h-4 w-4 accent-violet-500"
+                        className="h-4 w-4 accent-[var(--color-nebula)]"
                       />
                       <span className="text-sm text-ink-soft">{profile.displayName}</span>
                       <span className="ml-auto text-xs text-slate-600">{profile.email}</span>

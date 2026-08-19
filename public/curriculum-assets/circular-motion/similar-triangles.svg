@@ -5,7 +5,7 @@
   <text x="180" y="72" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#0f172a">Position vectors</text>
   <text x="755" y="72" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#0f172a">Velocity vectors</text>
   <g transform="translate(80 105)">
-    <path d="M260 455 L260 65 L470 125 Z" fill="#eef2ff" stroke="#4f46e5" stroke-width="12" stroke-linejoin="round"/>
+    <path d="M260 455 L260 65 L470 125 Z" fill="#EDF8FB" stroke="#155E75" stroke-width="12" stroke-linejoin="round"/>
     <path d="M260 455 A88 88 0 0 1 284 372" fill="none" stroke="#f97316" stroke-width="8"/>
     <text x="282" y="398" font-family="Arial, sans-serif" font-size="42" fill="#c2410c">Δθ</text>
     <text x="210" y="270" font-family="Arial, sans-serif" font-size="42" fill="#3730a3">r</text>
