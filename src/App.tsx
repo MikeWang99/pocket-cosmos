@@ -18,10 +18,12 @@ import { useAuth } from './auth/AuthContext';
 
 const validTabs = new Set(['curriculum', 'practice', 'homework', 'admin']);
 
+const normalizeRequestedTab = (tab: string | null | undefined) =>
+  tab && validTabs.has(tab) ? tab : 'curriculum';
+
 const readTabFromUrl = () => {
   if (typeof window === 'undefined') return 'curriculum';
-  const tab = new URLSearchParams(window.location.search).get('tab');
-  return tab && validTabs.has(tab) ? tab : 'curriculum';
+  return normalizeRequestedTab(new URLSearchParams(window.location.search).get('tab'));
 };
 
 const normalizeUrlForTab = (tab: string, mode: 'push' | 'replace' = 'push') => {
@@ -53,8 +55,8 @@ const normalizeUrlForTab = (tab: string, mode: 'push' | 'replace' = 'push') => {
   }
 };
 
-export default function App() {
-  const [activeTab, setActiveTab] = useState('curriculum');
+export default function App({ initialTab = 'curriculum' }: { initialTab?: string }) {
+  const [activeTab, setActiveTab] = useState(() => normalizeRequestedTab(initialTab));
   const { t, language } = useLanguage();
   const { isAdmin, loading: authLoading } = useAuth();
 
