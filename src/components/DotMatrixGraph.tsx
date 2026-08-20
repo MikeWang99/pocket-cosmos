@@ -23,11 +23,9 @@ export function DotMatrixGraph() {
   return (
     <div
       aria-label="Dot matrix graph"
-      className="relative mx-auto w-full max-w-[320px] rounded-[28px] bg-white p-6 shadow-[0_10px_35px_rgba(0,0,0,0.10)]"
+      className="relative mx-auto w-full max-w-[320px]"
     >
-      <div
-        className="relative aspect-square w-full bg-white p-[10.8108%]"
-      >
+      <div className="relative aspect-square w-full bg-white p-[10.8108%]">
         <div aria-hidden="true" className="relative h-full w-full bg-white">
           <div className="absolute left-0 top-0 h-[18.9189%] w-[18.9189%] rounded-[8%] bg-black before:absolute before:inset-[14.2857%] before:rounded-[5%] before:bg-white before:content-[''] after:absolute after:inset-[28.5714%] after:rounded-[4%] after:bg-black after:content-['']" />
           <div className="absolute right-0 top-0 h-[18.9189%] w-[18.9189%] rounded-[8%] bg-black before:absolute before:inset-[14.2857%] before:rounded-[5%] before:bg-white before:content-[''] after:absolute after:inset-[28.5714%] after:rounded-[4%] after:bg-black after:content-['']" />
