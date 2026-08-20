@@ -1,16 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import katex from 'katex';
-import { BookOpenCheck, ChevronDown, ExternalLink, FunctionSquare, GraduationCap, Image as ImageIcon, Layers3, ListChecks, NotebookText, Presentation } from 'lucide-react';
+import { BookOpenCheck, ChevronDown, ExternalLink, FunctionSquare, Image as ImageIcon, Layers3, ListChecks, NotebookText } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useLanguage } from '../LanguageContext';
-import { useAuth } from '../auth/AuthContext';
 import { learningSystems, type LearningSystemId } from '../data/physicsLearningSystems';
 import type { CurriculumClassroomQuestion, CurriculumDiagram, CurriculumImage, CurriculumLesson, CurriculumLessonContent, CurriculumUnit, CurriculumVideo } from '../data/apPhysicsCurriculum';
 
-type CurriculumContentMode = 'teacher' | 'student';
+type CurriculumContentMode = 'teacher';
 
 const lessonContentForMode = (lesson: CurriculumLesson, mode: CurriculumContentMode): CurriculumLessonContent =>
-  mode === 'student' && lesson.studentVersion ? lesson.studentVersion : lesson;
+  lesson;
 
 const renderMath = (value: string, displayMode = true) =>
   katex.renderToString(value, {
@@ -304,10 +303,9 @@ const LessonImage: React.FC<{ image: CurriculumImage; language: 'en' | 'zh' }> =
         className="max-h-[32rem] w-full object-contain"
       />
     </div>
-    {(image.caption || image.sourceLabel) && (
-      <figcaption className="flex flex-col gap-1 border-t border-slate-200 px-3 py-2 text-xs leading-5 text-slate-500 sm:flex-row sm:items-start sm:justify-between">
+    {image.caption && (
+      <figcaption className="border-t border-slate-200 px-3 py-2 text-xs leading-5 text-slate-500">
         {image.caption && <span>{image.caption[language]}</span>}
-        {image.sourceLabel && <span className="shrink-0 font-semibold text-slate-600">{image.sourceLabel[language]}</span>}
       </figcaption>
     )}
   </figure>
@@ -729,9 +727,7 @@ const ConceptDiagram: React.FC<{ diagram: CurriculumDiagram; language: 'en' | 'z
 
 export const CurriculumSection: React.FC = () => {
   const { language, t } = useLanguage();
-  const { isAdmin } = useAuth();
-  const [adminContentMode, setAdminContentMode] = useState<CurriculumContentMode>('teacher');
-  const contentMode: CurriculumContentMode = isAdmin ? adminContentMode : 'student';
+  const contentMode: CurriculumContentMode = 'teacher';
   const [systemId, setSystemId] = useState<LearningSystemId>('ap');
   const selectedSystem = learningSystems.find((item) => item.id === systemId) ?? learningSystems[0];
   const [courseId, setCourseId] = useState(selectedSystem.courses[0]?.id ?? '');
@@ -855,40 +851,6 @@ export const CurriculumSection: React.FC = () => {
           <h2 className="text-balance text-3xl font-light md:text-4xl">{t.curriculum.title}</h2>
           <p className="mt-4 text-sm leading-7 text-slate-600 md:text-base">{t.curriculum.description}</p>
         </div>
-        {isAdmin && (
-          <div
-            role="group"
-            aria-label={t.curriculum.contentMode}
-            className="grid shrink-0 grid-cols-2 gap-1 self-start rounded-lg border border-slate-200 bg-surface p-1"
-          >
-            <button
-              type="button"
-              onClick={() => setAdminContentMode('teacher')}
-              aria-pressed={contentMode === 'teacher'}
-              className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-md px-3 text-xs font-semibold transition-colors ${
-                contentMode === 'teacher'
-                  ? 'bg-nebula text-on-accent'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-nebula'
-              }`}
-            >
-              <Presentation className="h-4 w-4" />
-              {t.curriculum.teacherMode}
-            </button>
-            <button
-              type="button"
-              onClick={() => setAdminContentMode('student')}
-              aria-pressed={contentMode === 'student'}
-              className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-md px-3 text-xs font-semibold transition-colors ${
-                contentMode === 'student'
-                  ? 'bg-nebula text-on-accent'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-nebula'
-              }`}
-            >
-              <GraduationCap className="h-4 w-4" />
-              {t.curriculum.studentMode}
-            </button>
-          </div>
-        )}
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4" role="tablist" aria-label={t.curriculum.systemSelector}>

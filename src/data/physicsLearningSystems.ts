@@ -2498,10 +2498,7 @@ const cambridgeIgcse0625: CurriculumCourse = {
         formula('Specific heat capacity', '比热容', 'c=\\frac{\\Delta E}{m\\Delta\\theta}'),
         formula('Gas pressure and volume', '气体压强与体积', 'p_1V_1=p_2V_2\\quad (\\text{constant } T)'),
       ],
-      diagrams: [
-        ...diagrams.thermal,
-        diagram('greenhouse', 'Greenhouse Effect', '温室效应', 'Thermal radiation balance explains atmospheric warming.', '热辐射平衡解释大气升温。'),
-      ],
+      diagrams: [],
       lessons: [
         {
           title: text('The Particle Model and Thermal Energy', '粒子模型与热能'),

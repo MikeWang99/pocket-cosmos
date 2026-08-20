@@ -12,13 +12,13 @@ export function ProfileContactPanel({ compact = false }: ProfileContactPanelProp
 
   const content = language === 'zh'
     ? {
-        title: 'Mike Wang',
+        title: '创始人 Mike 老师',
         intro:
           '专注于国际初高中物理教学及国际物理竞赛教学。',
         contactTitle: '联系方式',
       }
     : {
-        title: 'Mike Wang',
+        title: 'Founder Mike',
         intro:
           'Focused on international middle and high school physics teaching, as well as international physics competition training.',
         contactTitle: 'Contact',
@@ -30,7 +30,7 @@ export function ProfileContactPanel({ compact = false }: ProfileContactPanelProp
         <img
           src="/assets/mike-wang-portrait.jpg"
           alt="Mike Wang portrait"
-          className={`${compact ? 'h-20 w-20' : 'h-24 w-24'} rounded-2xl border border-line object-cover object-center`}
+          className={`${compact ? 'h-20 w-20' : 'h-32 w-32'} rounded-2xl border border-line object-cover object-center`}
         />
         <div>
           <div className="text-lg font-semibold text-nebula">{content.title}</div>
@@ -44,11 +44,13 @@ export function ProfileContactPanel({ compact = false }: ProfileContactPanelProp
           <QrCode className="h-4 w-4 text-nebula" />
           {content.contactTitle}
         </div>
-        <img
-          src="/assets/mike-wang-wechat-qr.jpg"
-          alt="Mike Wang WeChat QR code"
-          className="mx-auto mt-4 aspect-square w-full max-w-[230px] rounded-2xl border border-line bg-white object-contain"
-        />
+        <div className="relative mx-auto mt-4 aspect-square w-full max-w-[230px] overflow-hidden rounded-2xl border border-line bg-white">
+          <img
+            src="/assets/mike-wang-wechat-qr-display.jpg"
+            alt="Mike Wang WeChat QR code"
+            className="h-full w-full object-contain"
+          />
+        </div>
       </div>
     </aside>
   );
