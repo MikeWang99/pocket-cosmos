@@ -1,7 +1,8 @@
 'use client';
 
-import { QrCode } from 'lucide-react';
+import { QrCode as SectionIcon } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
+import { DotMatrixGraph } from './DotMatrixGraph';
 
 interface ProfileContactPanelProps {
   compact?: boolean;
@@ -41,15 +42,11 @@ export function ProfileContactPanel({ compact = false }: ProfileContactPanelProp
 
       <div className="mt-4 rounded-2xl border border-line bg-surface p-4">
         <div className="flex items-center gap-2 text-sm font-semibold text-ink">
-          <QrCode className="h-4 w-4 text-nebula" />
+          <SectionIcon className="h-4 w-4 text-nebula" />
           {content.contactTitle}
         </div>
-        <div className="relative mx-auto mt-4 aspect-square w-full max-w-[230px] overflow-hidden rounded-2xl border border-line bg-white">
-          <img
-            src="/assets/mike-wang-wechat-qr-display.jpg"
-            alt="Mike Wang WeChat QR code"
-            className="h-full w-full object-contain"
-          />
+        <div className="mt-4">
+          <DotMatrixGraph />
         </div>
       </div>
     </aside>
