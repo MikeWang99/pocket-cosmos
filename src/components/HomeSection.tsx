@@ -2,7 +2,7 @@
 
 import { ArrowRight, BookOpenCheck, ClipboardCheck, ListChecks, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
-import { ProfileContactPanel } from './ProfileContactPanel';
+import { ProfileInfoPanel } from './ProfileInfoPanel';
 
 const appLinks = [
   { id: 'curriculum', icon: BookOpenCheck },
@@ -140,7 +140,7 @@ export function HomeSection() {
       </div>
 
       <div className="xl:sticky xl:top-8 xl:self-start">
-        <ProfileContactPanel />
+        <ProfileInfoPanel />
       </div>
     </section>
   );
