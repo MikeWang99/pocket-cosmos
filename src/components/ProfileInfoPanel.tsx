@@ -15,11 +15,19 @@ export function ProfileInfoPanel({ compact = false }: ProfileInfoPanelProps) {
         title: '创始人 Mike 老师',
         intro:
           '专注于国际初高中物理教学及国际物理竞赛教学。',
+        credentials: [
+          '慕尼黑工业大学机器人学硕士',
+          '同济大学机械电子学士',
+        ],
       }
     : {
         title: 'Founder Mike',
         intro:
           'Focused on international middle and high school physics teaching, as well as international physics competition training.',
+        credentials: [
+          "Master's in Robotics, Technical University of Munich",
+          "Bachelor's in Mechatronic Engineering, Tongji University",
+        ],
       };
 
   return (
@@ -36,6 +44,12 @@ export function ProfileInfoPanel({ compact = false }: ProfileInfoPanelProps) {
       </div>
 
       <p className="mt-4 text-sm leading-7 text-ink-soft">{content.intro}</p>
+
+      <div className="mt-4 space-y-2 text-sm leading-6 text-ink-soft">
+        {content.credentials.map((item) => (
+          <div key={item}>{item}</div>
+        ))}
+      </div>
 
       <div className="mt-4">
         <DotMatrixGraph />
