@@ -136,8 +136,8 @@ const kineticParticleModelLesson: CurriculumLesson = {
         {
           src: '/curriculum-assets/igcse-0625/unit-2/state-change-triangle.svg',
           alt: text(
-            'Triangle diagram showing state changes between solid, liquid, and gas, including melting, freezing, vaporization, and condensation.',
-            '展示 solid、liquid 和 gas 之间状态变化的三角图，包括 melting、freezing、vaporization 和 condensation。',
+            'Triangle diagram showing state changes between solid, liquid, and gas, including melting, freezing or solidification, vaporization, and condensation.',
+            '展示 solid、liquid 和 gas 之间状态变化的三角图，包括 melting、freezing/solidification、vaporization 和 condensation。',
           ),
           caption: text(
             'State changes between solid, liquid, and gas.',
