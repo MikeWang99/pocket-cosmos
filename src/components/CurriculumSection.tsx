@@ -1055,7 +1055,7 @@ export const CurriculumSection: React.FC = () => {
                                             <LessonVideo key={video.sourceUrl} video={video} language={language} />
                                           ))}
                                           {!!section.images?.length && (
-                                            <div className={section.images.length > 1 ? 'grid gap-3 sm:grid-cols-2' : ''}>
+                                            <div className="space-y-3">
                                               {section.images.map((image) => (
                                                 <LessonImage key={image.src} image={image} language={language} />
                                               ))}
