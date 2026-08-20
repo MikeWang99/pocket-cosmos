@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-labelledby="title desc">
+  <title id="title">Specific latent heat of vaporization setup</title>
+  <desc id="desc">A beaker of boiling water with an immersion heater on a balance. The change in mass is measured while electrical energy is supplied.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1,1 L11,6 L1,11 Z" fill="#566b78"/>
+    </marker>
+  </defs>
+  <rect width="900" height="620" rx="32" fill="#f6fbfd"/>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <rect x="295" y="195" width="310" height="220" rx="24" fill="#dff8ff" stroke="#123444" stroke-width="6"/>
+    <ellipse cx="450" cy="195" rx="155" ry="24" fill="#effcff" stroke="#123444" stroke-width="6"/>
+    <path d="M310 250 C360 226 400 270 450 245 C500 220 545 260 590 240" fill="none" stroke="#4aa0b5" stroke-width="7"/>
+    <g fill="none" stroke="#7ca3ad" stroke-width="4">
+      <path d="M360 162 C330 130 375 104 345 72"/>
+      <path d="M452 160 C420 126 470 104 440 70"/>
+      <path d="M540 162 C510 130 558 105 530 72"/>
+    </g>
+    <rect x="432" y="175" width="50" height="210" rx="20" fill="#f6c55c" stroke="#123444" stroke-width="5"/>
+    <path d="M457 175 L457 105 L735 105" fill="none" stroke="#123444" stroke-width="7"/>
+    <path d="M480 175 L480 142 L735 142" fill="none" stroke="#123444" stroke-width="7"/>
+    <circle cx="750" cy="105" r="11" fill="#fff" stroke="#123444" stroke-width="5"/>
+    <circle cx="750" cy="142" r="11" fill="#fff" stroke="#123444" stroke-width="5"/>
+    <rect x="235" y="430" width="430" height="95" rx="18" fill="#162a38"/>
+    <rect x="285" y="453" width="330" height="45" rx="10" fill="#0f6f86"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif">
+    <text x="450" y="58" text-anchor="middle" font-size="31" font-weight="800" fill="#123444">Specific latent heat of vaporization</text>
+    <text x="450" y="486" text-anchor="middle" font-size="36" font-weight="800" fill="#e7fff7">balance reading</text>
+    <text x="595" y="94" font-size="23" font-weight="700" fill="#123444">power supply</text>
+    <text x="617" y="295" font-size="25" font-weight="700" fill="#123444">boiling water</text>
+    <text x="110" y="319" font-size="25" font-weight="700" fill="#123444">heater</text>
+    <text x="70" y="405" font-size="25" font-weight="700" fill="#123444">mass decreases</text>
+  </g>
+  <g stroke="#566b78" stroke-width="4" fill="none" marker-end="url(#arrow)">
+    <path d="M600 285 L520 255"/>
+    <path d="M210 315 L425 310"/>
+    <path d="M250 398 L332 455"/>
+  </g>
+</svg>

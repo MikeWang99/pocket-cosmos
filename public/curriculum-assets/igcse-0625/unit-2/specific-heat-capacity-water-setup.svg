@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-labelledby="title desc">
+  <title id="title">Specific heat capacity of water setup</title>
+  <desc id="desc">A beaker of water with insulation, thermometer, and immersion heater connected to a power supply.</desc>
+  <defs>
+    <marker id="label-arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1,1 L11,6 L1,11 Z" fill="#566b78"/>
+    </marker>
+    <linearGradient id="water-fill" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#dff8ff"/>
+      <stop offset="100%" stop-color="#a9dff1"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="620" rx="32" fill="#f6fbfd"/>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <rect x="280" y="185" width="340" height="290" rx="26" fill="#f9e9ad" stroke="#c79b36" stroke-width="5"/>
+    <rect x="315" y="230" width="270" height="210" rx="22" fill="url(#water-fill)" stroke="#78b9cd" stroke-width="5"/>
+    <ellipse cx="450" cy="230" rx="135" ry="25" fill="#e8fbff" stroke="#78b9cd" stroke-width="5"/>
+    <path d="M374 95 L374 405" stroke="#162a38" stroke-width="8"/>
+    <path d="M374 132 L374 396" stroke="#ffffff" stroke-width="4"/>
+    <circle cx="374" cy="420" r="16" fill="#dc2626" stroke="#162a38" stroke-width="4"/>
+    <rect x="496" y="160" width="42" height="260" rx="18" fill="#f6c55c" stroke="#162a38" stroke-width="5"/>
+    <path d="M517 160 L517 92 L720 92" fill="none" stroke="#162a38" stroke-width="7"/>
+    <path d="M537 160 L537 128 L720 128" fill="none" stroke="#162a38" stroke-width="7"/>
+    <circle cx="735" cy="92" r="11" fill="#ffffff" stroke="#162a38" stroke-width="5"/>
+    <circle cx="735" cy="128" r="11" fill="#ffffff" stroke="#162a38" stroke-width="5"/>
+  </g>
+  <g stroke="#566b78" stroke-width="4" fill="none" marker-end="url(#label-arrow)">
+    <path d="M210 125 L350 150"/>
+    <path d="M710 300 L548 285"/>
+    <path d="M690 400 L582 382"/>
+    <path d="M665 520 L585 465"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" fill="#123444">
+    <text x="450" y="58" text-anchor="middle" font-size="31" font-weight="800">Measuring specific heat capacity</text>
+    <text x="75" y="121" font-size="25" font-weight="700">thermometer</text>
+    <text x="595" y="300" font-size="25" font-weight="700">electric heater</text>
+    <text x="625" y="400" font-size="25" font-weight="700">water</text>
+    <text x="610" y="523" font-size="25" font-weight="700">insulation</text>
+    <text x="586" y="80" font-size="23" font-weight="700">power supply</text>
+  </g>
+</svg>

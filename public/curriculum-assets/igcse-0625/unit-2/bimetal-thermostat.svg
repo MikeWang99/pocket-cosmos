@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-labelledby="title desc">
+  <title id="title">Bimetal strip thermostat</title>
+  <desc id="desc">A bimetal strip made from brass and invar bends when heated, opening an electrical contact in a thermostat.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M1,1 L11,6 L1,11 Z" fill="#566b78"/>
+    </marker>
+  </defs>
+  <rect width="900" height="620" rx="32" fill="#f6fbfd"/>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <rect x="230" y="165" width="120" height="305" rx="14" fill="#e8eef2" stroke="#123444" stroke-width="6"/>
+    <path d="M345 190 C440 230 420 395 358 475" fill="none" stroke="#f6c55c" stroke-width="24"/>
+    <path d="M378 190 C474 230 455 395 392 475" fill="none" stroke="#8fa5ad" stroke-width="24"/>
+    <path d="M363 190 C458 230 438 395 375 475" fill="none" stroke="#123444" stroke-width="3"/>
+    <circle cx="525" cy="475" r="14" fill="#123444"/>
+    <circle cx="592" cy="475" r="14" fill="#123444"/>
+    <path d="M525 475 H430" fill="none" stroke="#123444" stroke-width="7"/>
+    <path d="M592 475 H715" fill="none" stroke="#123444" stroke-width="7"/>
+    <path d="M250 105 H390 M510 105 H650" fill="none" stroke="#123444" stroke-width="7"/>
+    <path d="M320 105 V165 M585 105 V475" fill="none" stroke="#123444" stroke-width="7"/>
+    <circle cx="198" cy="317" r="54" fill="#d8e3e8" stroke="#123444" stroke-width="6"/>
+    <path d="M197 263 V371 M151 317 H245" stroke="#8fa5ad" stroke-width="8"/>
+  </g>
+  <g stroke="#566b78" stroke-width="4" fill="none" marker-end="url(#arrow)">
+    <path d="M666 244 L426 246"/>
+    <path d="M658 300 L450 303"/>
+    <path d="M662 476 L596 476"/>
+    <path d="M92 390 L175 346"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" fill="#123444">
+    <text x="450" y="58" text-anchor="middle" font-size="31" font-weight="800">Bimetal strip thermostat</text>
+    <text x="235" y="87" font-size="22" font-weight="700">current in</text>
+    <text x="520" y="87" font-size="22" font-weight="700">current to heater</text>
+    <text x="680" y="252" font-size="25" font-weight="700">brass</text>
+    <text x="680" y="308" font-size="25" font-weight="700">invar</text>
+    <text x="675" y="482" font-size="25" font-weight="700">contacts</text>
+    <text x="48" y="424" font-size="25" font-weight="700">control knob</text>
+    <text x="355" y="553" text-anchor="middle" font-size="22" fill="#526879">different expansion makes the strip bend</text>
+  </g>
+</svg>

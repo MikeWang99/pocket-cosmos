@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-labelledby="title desc">
+  <title id="title">Convection current in water</title>
+  <desc id="desc">A beaker of water is heated from below on the right. Warmer water rises, cooler water sinks, producing a circulating convection current.</desc>
+  <defs>
+    <marker id="arrow-hot" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M2,2 L12,7 L2,12 Z" fill="#0f6f86"/>
+    </marker>
+    <marker id="arrow-cool" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M2,2 L12,7 L2,12 Z" fill="#6b7f8c"/>
+    </marker>
+    <linearGradient id="water" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#dff8ff"/>
+      <stop offset="100%" stop-color="#bdeefa"/>
+    </linearGradient>
+    <radialGradient id="hotSpot" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ff6b4a"/>
+      <stop offset="100%" stop-color="#f4c7bd"/>
+    </radialGradient>
+  </defs>
+  <rect width="900" height="620" rx="32" fill="#f6fbfd"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M245 95 L245 468 Q245 518 295 518 L605 518 Q655 518 655 468 L655 95" stroke="#123444" stroke-width="12"/>
+    <path d="M270 180 L270 460 Q270 490 300 490 L600 490 Q630 490 630 460 L630 180 Z" fill="url(#water)" stroke="#8bc7d5" stroke-width="4"/>
+    <ellipse cx="450" cy="180" rx="180" ry="28" fill="#e8fbff" stroke="#8bc7d5" stroke-width="4"/>
+    <path d="M615 485 L650 552 L580 552 Z" fill="#0f6f86" stroke="#0f6f86" stroke-width="4"/>
+    <path d="M603 552 Q618 584 633 552 Q648 584 663 552" stroke="#f59e0b" stroke-width="9"/>
+    <circle cx="615" cy="442" r="52" fill="url(#hotSpot)" opacity="0.75"/>
+  </g>
+  <g fill="none" stroke-linecap="round">
+    <path d="M595 422 C610 330 588 235 510 210" stroke="#0f6f86" stroke-width="14" marker-end="url(#arrow-hot)"/>
+    <path d="M500 210 C410 178 320 225 303 320" stroke="#0f6f86" stroke-width="14" marker-end="url(#arrow-hot)"/>
+    <path d="M302 325 C286 410 335 474 430 474" stroke="#6b7f8c" stroke-width="12" marker-end="url(#arrow-cool)"/>
+    <path d="M430 474 C510 475 570 455 595 422" stroke="#6b7f8c" stroke-width="12" marker-end="url(#arrow-cool)"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" fill="#123444">
+    <text x="450" y="64" text-anchor="middle" font-size="31" font-weight="800">Convection current</text>
+    <text x="690" y="298" font-size="25" font-weight="700" fill="#0f6f86">warm water rises</text>
+    <text x="72" y="360" font-size="25" font-weight="700" fill="#6b7f8c">cool water sinks</text>
+    <text x="548" y="589" font-size="24" font-weight="700">heat source</text>
+    <text x="334" y="555" font-size="23" font-weight="700">water</text>
+  </g>
+</svg>
