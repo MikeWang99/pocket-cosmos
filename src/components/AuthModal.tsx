@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'motion/react';
-import { KeyRound, Lock, LogIn, Mail, UserPlus, X } from 'lucide-react';
+import { CheckCircle2, KeyRound, Lock, LogIn, LogOut, Mail, UserCircle2, UserPlus, X } from 'lucide-react';
 import { useAuth } from '../auth/AuthContext';
 import { useLanguage } from '../LanguageContext';
 
@@ -206,12 +206,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <div className="flex items-start justify-between">
                 <div>
                   <h2 id="auth-modal-title" className="text-xl font-bold text-[#111827] sm:text-2xl">
-                    {mode === 'reset-password' ? t.auth.resetPasswordTitle : mode === 'signup' ? t.auth.signupTab : t.auth.loginTab}
+                    {user && !passwordRecovery
+                      ? t.auth.accountAccess
+                      : mode === 'reset-password'
+                        ? t.auth.resetPasswordTitle
+                        : mode === 'signup'
+                          ? t.auth.signupTab
+                          : t.auth.loginTab}
                   </h2>
                   <p className="mt-1 text-sm text-[#6b7280]">
-                    {mode === 'login' && t.auth.loginSubtitle}
-                    {mode === 'signup' && t.auth.signupSubtitle}
-                    {mode === 'reset-request' && t.auth.resetRequestSubtitle}
+                    {user && !passwordRecovery && (user.email ?? t.auth.signedIn)}
+                    {!user && mode === 'login' && t.auth.loginSubtitle}
+                    {!user && mode === 'signup' && t.auth.signupSubtitle}
+                    {!user && mode === 'reset-request' && t.auth.resetRequestSubtitle}
                     {mode === 'reset-password' && t.auth.resetPasswordSubtitle}
                   </p>
                 </div>
@@ -231,6 +238,44 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               {!authEnabled || !configured ? (
                 <div className="rounded-lg border border-amber-500/20 bg-amber-50 p-4 text-sm text-amber-800">
                   {t.auth.previewConfig}
+                </div>
+              ) : user && !passwordRecovery ? (
+                <div className="space-y-4">
+                  <div className="rounded-2xl border border-emerald-200 bg-emerald-50/80 p-4">
+                    <div className="flex items-start gap-3">
+                      <div className="mt-0.5 rounded-full bg-emerald-100 p-2 text-emerald-700">
+                        <CheckCircle2 className="h-5 w-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-sm font-semibold text-emerald-900">{t.auth.signedIn}</div>
+                        <div className="mt-1 flex items-center gap-2 text-sm text-emerald-800">
+                          <UserCircle2 className="h-4 w-4 shrink-0" />
+                          <span className="truncate">{user.email ?? t.auth.accountAccess}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <button
+                      type="button"
+                      onClick={() => closeModal()}
+                      className="inline-flex h-11 items-center justify-center rounded-lg border border-line bg-surface px-4 text-sm font-semibold text-ink transition-colors hover:border-nebula/35 hover:text-nebula"
+                    >
+                      {t.auth.close}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        await signOut();
+                        closeModal({ keepSession: true });
+                      }}
+                      className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-[rgba(15,23,42,0.1)] bg-surface px-4 text-sm font-semibold text-slate-600 transition-colors hover:border-nebula/50 hover:text-nebula"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      {t.auth.signOut}
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <>
