@@ -1,6 +1,6 @@
 'use client';
 
-import { MapPin, QrCode } from 'lucide-react';
+import { QrCode } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 
 interface ProfileContactPanelProps {
@@ -13,25 +13,15 @@ export function ProfileContactPanel({ compact = false }: ProfileContactPanelProp
   const content = language === 'zh'
     ? {
         title: 'Mike Wang',
-        role: 'Physics Tutor',
-        location: 'Haidian, Beijing',
         intro:
-          '专注于 AP Physics、Physics C 与竞赛方向的物理教学。欢迎通过右侧二维码联系交流。',
-        focusTitle: '教学方向',
-        focuses: ['AP Physics 1', 'AP Physics C: Mechanics', 'AP Physics C: E&M', 'Physics Competition'],
+          '专注于国际初高中物理教学及国际物理竞赛教学。',
         contactTitle: '联系方式',
-        qrHint: '微信扫码即可联系',
       }
     : {
         title: 'Mike Wang',
-        role: 'Physics Tutor',
-        location: 'Haidian, Beijing',
         intro:
-          'Focused on AP Physics, Physics C, and competition-oriented physics teaching. Feel free to connect through the WeChat QR code below.',
-        focusTitle: 'Teaching Focus',
-        focuses: ['AP Physics 1', 'AP Physics C: Mechanics', 'AP Physics C: E&M', 'Physics Competition'],
+          'Focused on international middle and high school physics teaching, as well as international physics competition training.',
         contactTitle: 'Contact',
-        qrHint: 'Scan the QR code to connect on WeChat',
       };
 
   return (
@@ -44,29 +34,10 @@ export function ProfileContactPanel({ compact = false }: ProfileContactPanelProp
         />
         <div>
           <div className="text-lg font-semibold text-nebula">{content.title}</div>
-          <div className="mt-1 text-sm font-medium text-ink">{content.role}</div>
-          <div className="mt-2 inline-flex items-center gap-1.5 text-xs text-ink-muted">
-            <MapPin className="h-3.5 w-3.5" />
-            {content.location}
-          </div>
         </div>
       </div>
 
       <p className="mt-4 text-sm leading-7 text-ink-soft">{content.intro}</p>
-
-      <div className="mt-4 rounded-2xl border border-line bg-surface p-4">
-        <div className="text-sm font-semibold text-ink">{content.focusTitle}</div>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {content.focuses.map((item) => (
-            <span
-              key={item}
-              className="rounded-full border border-line bg-surface-muted px-3 py-1.5 text-xs font-medium text-ink-soft"
-            >
-              {item}
-            </span>
-          ))}
-        </div>
-      </div>
 
       <div className="mt-4 rounded-2xl border border-line bg-surface p-4">
         <div className="flex items-center gap-2 text-sm font-semibold text-ink">
@@ -78,7 +49,6 @@ export function ProfileContactPanel({ compact = false }: ProfileContactPanelProp
           alt="Mike Wang WeChat QR code"
           className="mx-auto mt-4 aspect-square w-full max-w-[230px] rounded-2xl border border-line bg-white object-contain"
         />
-        <div className="mt-3 text-center text-xs leading-6 text-ink-muted">{content.qrHint}</div>
       </div>
     </aside>
   );

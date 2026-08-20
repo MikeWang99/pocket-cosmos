@@ -15,13 +15,10 @@ export function HomeSection() {
 
   const content = language === 'zh'
     ? {
-        badge: 'Pocket Cosmos · Physics Learning Platform',
-        headline: '系统化的物理学习平台，服务于课程学习、能力诊断与长期提升。',
-        subtitle:
-          'Pocket Cosmos 面向 AP Physics、IGCSE Physics 以及竞赛方向的学生与家长，提供知识地图、习题训练、作业管理与持续沉淀的学习资料。',
-        introTitle: '平台定位',
-        introBody:
-          '这个网站不是单纯的资料展示页，也不是临时的联系中转页。它的核心目标，是把物理学习中最重要的几件事情——知识梳理、做题训练、作业跟进与学习反馈——放到同一个清晰的体系里。',
+      badge: 'Pocket Cosmos · Physics Learning Platform',
+      headline: '系统化的物理学习平台，服务于课程学习、能力诊断与长期提升。',
+      subtitle:
+          'Pocket Cosmos 面向 AP 体系、IG 体系、A Level 体系、IB 体系以及竞赛方向，提供知识地图、习题训练、作业管理与持续沉淀的学习资料。',
         modulesTitle: '核心模块',
         modules: [
           {
@@ -40,12 +37,6 @@ export function HomeSection() {
             body: '用于承接每次课后的完整作业安排，减少学生来回找题的成本，也方便后续跟踪完成情况。',
           },
         ],
-        audienceTitle: '适合谁使用',
-        audience: [
-          '正在学习 AP Physics 1、AP Physics C、IGCSE Physics 等课程的学生',
-          '希望系统整理教学资料、题库与作业流程的老师',
-          '想快速了解学习路径、判断当前阶段重点的家长',
-        ],
         nextTitle: '进入平台',
         nextBody:
           '你可以从知识地图开始了解课程结构，也可以直接进入练习题库查看当前已有的内容。',
@@ -54,13 +45,10 @@ export function HomeSection() {
         openLabel: '打开',
       }
     : {
-        badge: 'Pocket Cosmos · Physics Learning Platform',
-        headline: 'A structured physics platform for course learning, diagnostics, and long-term progress.',
-        subtitle:
-          'Pocket Cosmos supports AP Physics, IGCSE Physics, and competition-focused learners with knowledge maps, targeted practice, homework workflows, and steadily expanding learning materials.',
-        introTitle: 'Platform Overview',
-        introBody:
-          'This is not just a materials page, and it is not a temporary contact bridge. Its purpose is to bring the most important parts of physics learning—concept structure, question training, homework follow-up, and study support—into one clear system.',
+      badge: 'Pocket Cosmos · Physics Learning Platform',
+      headline: 'A structured physics platform for course learning, diagnostics, and long-term progress.',
+      subtitle:
+          'Pocket Cosmos supports AP, IG, A Level, IB, and competition-focused learners with knowledge maps, targeted practice, homework workflows, and steadily expanding learning materials.',
         modulesTitle: 'Core Modules',
         modules: [
           {
@@ -78,12 +66,6 @@ export function HomeSection() {
             title: 'Homework Module',
             body: 'A cleaner way to assign and review full homework sets without making students jump across different sections to find questions.',
           },
-        ],
-        audienceTitle: 'Who This Is For',
-        audience: [
-          'Students studying AP Physics 1, AP Physics C, IGCSE Physics, and related courses',
-          'Teachers who want a cleaner way to organize materials, question banks, and homework',
-          'Parents who want a faster view of the learning structure and current priorities',
         ],
         nextTitle: 'Start Exploring',
         nextBody:
@@ -107,27 +89,6 @@ export function HomeSection() {
             {content.subtitle}
           </p>
         </div>
-
-        <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-          <div className="glass-panel rounded-[28px] p-6">
-            <h3 className="font-serif text-2xl tracking-tight text-ink">{content.introTitle}</h3>
-            <p className="mt-4 text-sm leading-7 text-ink-soft sm:text-base">
-              {content.introBody}
-            </p>
-          </div>
-
-          <div className="glass-panel rounded-[28px] p-6">
-            <h3 className="font-serif text-2xl tracking-tight text-ink">{content.audienceTitle}</h3>
-            <ul className="mt-4 grid gap-3 text-sm leading-7 text-ink-soft sm:text-base">
-              {content.audience.map((item) => (
-                <li key={item} className="rounded-2xl border border-line bg-surface px-4 py-3">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
         <div className="mt-6 glass-panel rounded-[28px] p-6 sm:p-8">
           <div className="mb-5 flex items-center gap-2">
             <ShieldCheck className="h-5 w-5 text-nebula" />

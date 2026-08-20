@@ -26,8 +26,8 @@
   --color-surface-muted: #f8fafc;
   --color-surface-tint: #EDF8FB;
   --color-surface-tint-strong: #DCEFF5;
-  --color-line: #dbe3ef;
-  --color-line-strong: #cbd5e1;
+  --color-line: #cfd9e6;
+  --color-line-strong: #b8c7da;
 }
 
 body {
@@ -81,16 +81,21 @@ a {
 }
 
 .glass-panel {
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.72) inset,
+    0 18px 45px rgba(15, 23, 42, 0.07);
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.84);
   backdrop-filter: blur(10px);
-  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.05);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.68) inset,
+    0 18px 45px rgba(15, 23, 42, 0.06);
 }
 
 .accent-gradient {
@@ -111,15 +116,16 @@ textarea::placeholder {
 
 .practice-equations,
 .practice-media {
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(255, 255, 255, 0.84);
   border-radius: 8px;
   padding: 16px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.68) inset;
 }
 
 .practice-equation {
   overflow-x: auto;
-  border: 1px solid rgba(79, 70, 229, 0.18);
+  border: 1px solid rgba(21, 94, 117, 0.22);
   background: #f8fafc;
   border-radius: 8px;
   padding: 14px 16px;
@@ -164,7 +170,7 @@ textarea::placeholder {
   max-height: min(420px, 62vh);
   object-fit: contain;
   border-radius: 8px;
-  border: 1px solid rgba(15, 23, 42, 0.1);
+  border: 1px solid rgba(15, 23, 42, 0.12);
   background: #ffffff;
 }
 
@@ -220,7 +226,7 @@ textarea::placeholder {
 .curriculum-formula {
   margin-top: 8px;
   overflow-x: auto;
-  border: 1px solid rgba(79, 70, 229, 0.14);
+  border: 1px solid rgba(21, 94, 117, 0.18);
   background: #ffffff;
   border-radius: 8px;
   padding: 12px 14px;

@@ -24,9 +24,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, showA
 
   return (
     <aside className="fixed inset-x-0 bottom-0 z-50 border-t border-line glass md:inset-x-auto md:left-0 md:top-0 md:h-full md:w-[88px] md:border-r md:border-t-0">
-      <div className="hidden w-full flex-col items-center gap-8 py-6 md:flex">
+      <div className="hidden w-full flex-col items-center gap-3 py-6 md:flex">
+        <img
+          src="/assets/poco-mark.svg"
+          alt={t.site.logoAlt}
+          className="h-12 w-12 object-contain"
+        />
         <div
-          className="text-[10px] font-bold tracking-widest opacity-40 uppercase"
+          className="min-h-[92px] text-[10px] font-bold tracking-widest opacity-40 uppercase"
           style={{
             writingMode: 'vertical-rl',
             transform: language === 'zh' ? 'none' : 'rotate(180deg)',
@@ -34,11 +39,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, showA
         >
           {t.site.established}
         </div>
-        <img
-          src="/assets/poco-mark.svg"
-          alt={t.site.logoAlt}
-          className="h-12 w-12 object-contain"
-        />
       </div>
 
       <nav className={`mx-auto grid max-w-md items-center gap-1 py-2 pl-3 pr-14 md:absolute md:inset-y-0 md:left-0 md:mx-0 md:flex md:w-full md:max-w-none md:flex-col md:justify-center md:gap-3 md:px-2 md:py-0 ${mobileGridClass}`}>
@@ -66,15 +66,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, showA
         })}
       </nav>
 
-      <div className="absolute bottom-5 left-0 hidden w-full flex-col items-center gap-2 px-2 md:flex">
-        <button
-          onClick={toggleLanguage}
-          className="inline-flex min-h-10 w-full items-center justify-center rounded-2xl border border-line bg-surface-tint px-3 py-2 text-center text-[10px] font-semibold text-nebula transition-colors hover:border-nebula/35 hover:text-quantum"
-          title={t.nav.language}
-        >
-          {t.nav.language}
-        </button>
-        <AuthStatusButton compact />
+      <div className="absolute bottom-4 left-0 hidden w-full px-2 md:flex">
+        <div className="w-full rounded-[22px] border border-line bg-white/88 p-2 shadow-[0_10px_24px_rgba(15,23,42,0.06)] backdrop-blur-sm">
+          <div className="flex w-full flex-col items-center gap-2">
+            <button
+              onClick={toggleLanguage}
+              className="inline-flex min-h-11 w-full flex-col items-center justify-center rounded-2xl border border-line bg-surface-tint px-2 py-2 text-center text-[10px] font-semibold text-nebula transition-colors hover:border-nebula/35 hover:bg-surface-tint-strong hover:text-quantum"
+              title={t.nav.language}
+            >
+              <Languages className="h-4 w-4" />
+              <span className="leading-none">{t.nav.language}</span>
+            </button>
+            <AuthStatusButton compact />
+          </div>
+        </div>
       </div>
 
       <button

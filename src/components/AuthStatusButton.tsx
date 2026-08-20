@@ -22,19 +22,19 @@ export const AuthStatusButton: FC<AuthStatusButtonProps> = ({ compact = false })
   if (!configured) {
     return (
       <div
-        className={`${compact ? 'inline-flex min-h-10 w-full items-center justify-center rounded-2xl px-3 py-2 text-center leading-tight' : 'inline-flex h-10 rounded-full px-4'} gap-2 border border-amber-500/30 bg-amber-500/10 text-xs font-semibold text-amber-700`}
+        className={`${compact ? 'inline-flex min-h-11 w-full flex-col items-center justify-center rounded-2xl px-2 py-2 text-center leading-tight' : 'inline-flex h-10 rounded-full px-4'} gap-1.5 border border-amber-500/30 bg-amber-500/10 text-xs font-semibold text-amber-700`}
         title={t.auth.previewConfigTitle}
       >
         <ShieldAlert className="h-4 w-4" />
-        {t.auth.previewConfig}
+        <span className={compact ? 'text-[10px]' : ''}>{compact ? 'Setup' : t.auth.previewConfig}</span>
       </div>
     );
   }
 
   if (loading) {
     return (
-      <div className={`${compact ? 'inline-flex min-h-10 w-full items-center justify-center rounded-2xl px-3 py-2 text-center leading-tight' : 'inline-flex h-10 rounded-full px-4'} border border-[rgba(15,23,42,0.1)] bg-[rgba(21,94,117,0.06)] text-xs font-semibold text-slate-500`}>
-        {t.auth.loading}
+      <div className={`${compact ? 'inline-flex min-h-11 w-full flex-col items-center justify-center rounded-2xl px-2 py-2 text-center leading-tight' : 'inline-flex h-10 rounded-full px-4'} border border-[rgba(15,23,42,0.1)] bg-[rgba(21,94,117,0.06)] text-xs font-semibold text-slate-500`}>
+        {compact ? '...' : t.auth.loading}
       </div>
     );
   }
@@ -57,17 +57,22 @@ export const AuthStatusButton: FC<AuthStatusButtonProps> = ({ compact = false })
         )}
         {compact ? (
           <div className="flex w-full flex-col gap-2">
-            <div className="inline-flex min-h-10 w-full min-w-0 items-center justify-center gap-2 rounded-2xl border border-emerald-500/25 bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-700">
+            <button
+              type="button"
+              onClick={() => setAuthModalOpen(true)}
+              className="inline-flex min-h-11 w-full flex-col items-center justify-center gap-1 rounded-2xl border border-emerald-500/25 bg-emerald-500/10 px-2 py-2 text-[10px] font-semibold text-emerald-700 transition-colors hover:border-emerald-500/40 hover:bg-emerald-500/14"
+              title={user.email ?? t.auth.signedIn}
+            >
               <UserCircle2 className="h-4 w-4 shrink-0" />
-              <span className="truncate">{user.email ?? t.auth.signedIn}</span>
-            </div>
+              <span className="leading-none">{t.auth.accountAccess}</span>
+            </button>
             <button
               type="button"
               onClick={() => void signOut()}
-              className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-2xl border border-[rgba(15,23,42,0.1)] bg-surface px-3 py-2 text-xs font-semibold text-slate-500 transition-colors hover:border-nebula/50 hover:text-nebula"
+              className="inline-flex min-h-11 w-full flex-col items-center justify-center gap-1 rounded-2xl border border-[rgba(15,23,42,0.1)] bg-surface px-2 py-2 text-[10px] font-semibold text-slate-500 transition-colors hover:border-nebula/50 hover:text-nebula"
             >
               <LogOut className="h-4 w-4" />
-              {t.auth.signOut}
+              <span className="leading-none">{t.auth.signOut}</span>
             </button>
           </div>
         ) : (
@@ -96,10 +101,10 @@ export const AuthStatusButton: FC<AuthStatusButtonProps> = ({ compact = false })
       <button
         type="button"
         onClick={() => setAuthModalOpen(true)}
-        className={`${compact ? 'min-h-10 w-full rounded-2xl px-3 py-2 text-xs' : 'h-10 rounded-full px-4 text-sm'} inline-flex items-center justify-center gap-2 border border-nebula/25 bg-surface font-semibold text-nebula shadow-sm transition-colors hover:border-nebula/45 hover:bg-nebula hover:text-on-accent`}
+        className={`${compact ? 'min-h-11 w-full flex-col rounded-2xl px-2 py-2 text-[10px]' : 'h-10 rounded-full px-4 text-sm'} inline-flex items-center justify-center gap-1.5 border border-nebula/25 bg-surface font-semibold text-nebula shadow-sm transition-colors hover:border-nebula/45 hover:bg-nebula hover:text-on-accent`}
       >
         <LogIn className="h-4 w-4" />
-        {t.auth.openAuth}
+        <span className="leading-none">{compact ? t.auth.loginTab : t.auth.openAuth}</span>
       </button>
       <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
     </div>
