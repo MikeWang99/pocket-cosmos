@@ -84,6 +84,9 @@ const statusStyle: Record<HomeworkAssignment['status'], string> = {
   archived: 'border-line bg-surface-tint text-ink-soft',
 };
 
+const isAutoGradedHomeworkItem = (item: { resolved?: ReturnType<typeof resolveHomeworkItem> }) =>
+  Boolean(item.resolved?.step.choices?.length && item.resolved.step.correctAnswer);
+
 export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = false }) => {
   const { language } = useLanguage();
   const {
@@ -338,12 +341,18 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
     const completed = new Set(
       studentAttempts.map((attempt) => `${attempt.practiceSetId}:${attempt.questionId}`),
     ).size;
-    const correct = studentAttempts.filter((attempt) => attempt.isCorrect).length;
+    const gradedAttempts = studentAttempts.filter((attempt) => {
+      const item = assignment.items.find(
+        (candidate) => candidate.practiceSetId === attempt.practiceSetId && candidate.questionId === attempt.questionId,
+      );
+      return item ? isAutoGradedHomeworkItem({ resolved: resolveHomeworkItem(item) }) : false;
+    });
+    const correct = gradedAttempts.filter((attempt) => attempt.isCorrect).length;
     const latest = studentAttempts.map((attempt) => attempt.updatedAt).sort().at(-1);
     return {
       completed,
       total: assignment.items.length,
-      accuracy: studentAttempts.length ? Math.round((correct / studentAttempts.length) * 100) : 0,
+      accuracy: gradedAttempts.length ? Math.round((correct / gradedAttempts.length) * 100) : 0,
       latest,
     };
   };
@@ -386,13 +395,16 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
   }, [selectedStudentAttemptMap, viewingAssignment]);
   const selectedReviewItem =
     reviewItems.find((entry) => entry.key === selectedReviewQuestionKey) ??
-    reviewItems.find((entry) => entry.attempt && !entry.attempt.isCorrect) ??
+    reviewItems.find((entry) => isAutoGradedHomeworkItem(entry) && entry.attempt && !entry.attempt.isCorrect) ??
     reviewItems.find((entry) => entry.attempt) ??
     reviewItems[0] ??
     null;
-  const correctReviewCount = reviewItems.filter((entry) => entry.attempt?.isCorrect).length;
+  const correctReviewCount = reviewItems.filter((entry) => isAutoGradedHomeworkItem(entry) && entry.attempt?.isCorrect).length;
   const incorrectReviewCount = reviewItems.filter(
-    (entry) => entry.attempt && !entry.attempt.isCorrect,
+    (entry) => isAutoGradedHomeworkItem(entry) && entry.attempt && !entry.attempt.isCorrect,
+  ).length;
+  const submittedReviewCount = reviewItems.filter(
+    (entry) => Boolean(entry.attempt) && !isAutoGradedHomeworkItem(entry),
   ).length;
   const unansweredReviewCount = reviewItems.filter((entry) => !entry.attempt).length;
 
@@ -695,7 +707,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                             <span className="text-xs text-slate-500">{selectedStudent.email}</span>
                           </div>
                         </div>
-                        <div className="grid grid-cols-3 gap-2 text-center">
+                        <div className="grid grid-cols-2 gap-2 text-center sm:grid-cols-4">
                           <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/[0.06] px-3 py-2">
                             <div className="text-[9px] uppercase tracking-widest text-emerald-700">{language === 'zh' ? '正确' : 'Correct'}</div>
                             <div className="mt-0.5 text-lg font-semibold text-emerald-700">{correctReviewCount}</div>
@@ -703,6 +715,10 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                           <div className="rounded-lg border border-rose-500/20 bg-rose-500/[0.06] px-3 py-2">
                             <div className="text-[9px] uppercase tracking-widest text-rose-700">{language === 'zh' ? '错误' : 'Wrong'}</div>
                             <div className="mt-0.5 text-lg font-semibold text-rose-700">{incorrectReviewCount}</div>
+                          </div>
+                          <div className="rounded-lg border border-sky-500/20 bg-sky-500/[0.06] px-3 py-2">
+                            <div className="text-[9px] uppercase tracking-widest text-sky-700">{language === 'zh' ? '已提交' : 'Submitted'}</div>
+                            <div className="mt-0.5 text-lg font-semibold text-sky-700">{submittedReviewCount}</div>
                           </div>
                           <div className="rounded-lg border border-line bg-surface-tint px-3 py-2">
                             <div className="text-[9px] uppercase tracking-widest text-slate-500">{language === 'zh' ? '未答' : 'Open'}</div>
@@ -730,10 +746,12 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                                 className={`grid h-9 w-9 place-items-center rounded-md border text-xs font-semibold transition-colors ${
                                   selected
                                     ? 'border-nebula/80 bg-nebula/20 text-ink ring-1 ring-nebula/30'
-                                    : entry.attempt?.isCorrect
-                                      ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700 hover:border-emerald-400'
+                                    : entry.attempt && isAutoGradedHomeworkItem(entry)
+                                      ? entry.attempt.isCorrect
+                                        ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700 hover:border-emerald-400'
+                                        : 'border-rose-500/35 bg-rose-500/10 text-rose-700 hover:border-rose-400'
                                       : entry.attempt
-                                        ? 'border-rose-500/35 bg-rose-500/10 text-rose-700 hover:border-rose-400'
+                                        ? 'border-sky-500/35 bg-sky-500/10 text-sky-700 hover:border-sky-400'
                                         : 'border-line bg-surface-tint text-slate-600 hover:border-line-strong'
                                 }`}
                               >
@@ -745,6 +763,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                         <div className="mt-1 space-y-1 border-t border-line px-2 pt-3 text-[10px] text-slate-500">
                           <div><span className="mr-2 inline-block h-2 w-2 rounded-full bg-rose-400" />{language === 'zh' ? '错误，建议优先讲解' : 'Incorrect — review first'}</div>
                           <div><span className="mr-2 inline-block h-2 w-2 rounded-full bg-emerald-400" />{language === 'zh' ? '回答正确' : 'Correct'}</div>
+                          <div><span className="mr-2 inline-block h-2 w-2 rounded-full bg-sky-400" />{language === 'zh' ? '已提交，待查看' : 'Submitted — awaiting review'}</div>
                           <div><span className="mr-2 inline-block h-2 w-2 rounded-full bg-slate-700" />{language === 'zh' ? '尚未作答' : 'Not answered'}</div>
                         </div>
                       </aside>
