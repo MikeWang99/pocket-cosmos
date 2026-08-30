@@ -4968,7 +4968,7 @@ export const learningSystems: LearningSystem[] = [
     status: text('Available', '已开放'),
     sourceNote: text(
       'AP unit structure, topic names, and exam weightings are based on official College Board Course and Exam Descriptions. Focus notes, formulas, Chinese translations, and diagrams are Pocket Cosmos learning materials.',
-      'AP 单元结构、知识点名称和考试占比参考 College Board 官方课程与考试说明。重点整理、公式、中文翻译和示意图由口袋宇宙制作。',
+      'AP 单元结构、知识点名称和考试占比参考 College Board 官方课程与考试说明。重点整理、公式、中文翻译和示意图由口袋寰宇制作。',
     ),
     courses: enrichApCourses(),
   },
@@ -4996,7 +4996,7 @@ export const learningSystems: LearningSystem[] = [
     status: text('Available', '已开放'),
     sourceNote: text(
       'The A-Level map follows the Cambridge International AS & A Level Physics 9702 syllabus for 2025-2027. Assessment: Paper 1 (MC, 31% AS), Paper 2 (Structured, 46% AS), Paper 3 (Practical, 23% AS), Paper 4 (A2 Structured, 38% AL), Paper 5 (Planning, 11% AL). Chinese translations, formulas, and diagrams are Pocket Cosmos learning materials.',
-      'A-Level 地图参考 Cambridge International AS & A Level Physics 9702 2025-2027 官方大纲。考试结构：Paper 1（选择，31% AS）、Paper 2（结构题，46% AS）、Paper 3（实验，23% AS）、Paper 4（A2 结构题，38% AL）、Paper 5（规划，11% AL）。中文翻译、公式和示意图由口袋宇宙制作。',
+      'A-Level 地图参考 Cambridge International AS & A Level Physics 9702 2025-2027 官方大纲。考试结构：Paper 1（选择，31% AS）、Paper 2（结构题，46% AS）、Paper 3（实验，23% AS）、Paper 4（A2 结构题，38% AL）、Paper 5（规划，11% AL）。中文翻译、公式和示意图由口袋寰宇制作。',
     ),
     courses: [cambridge9702],
   },
@@ -5010,7 +5010,7 @@ export const learningSystems: LearningSystem[] = [
     status: text('Available', '已开放'),
     sourceNote: text(
       'The IB map follows the International Baccalaureate Diploma Programme Physics subject structure for first assessment 2025. Assessment: Paper 1A (MC) + Paper 1B (Data-based) + Paper 2 (Structured). SL total 55+50 marks; HL total 75+90 marks. IA (scientific investigation) 20%. Topics marked (HL) are higher level only. Focus notes, formulas, translations, and diagrams are Pocket Cosmos learning materials.',
-      'IB 地图参考 International Baccalaureate Diploma Programme Physics 2025 首考课程结构。考试：Paper 1A（选择）+ Paper 1B（数据题）+ Paper 2（结构题）。SL 总计 55+50 分；HL 总计 75+90 分。IA（科学探究）占 20%。标注（HL）的主题仅为高级课程内容。重点整理、公式、翻译和示意图由口袋宇宙制作。',
+      'IB 地图参考 International Baccalaureate Diploma Programme Physics 2025 首考课程结构。考试：Paper 1A（选择）+ Paper 1B（数据题）+ Paper 2（结构题）。SL 总计 55+50 分；HL 总计 75+90 分。IA（科学探究）占 20%。标注（HL）的主题仅为高级课程内容。重点整理、公式、翻译和示意图由口袋寰宇制作。',
     ),
     courses: [ibPhysics],
   },
@@ -5024,7 +5024,7 @@ export const learningSystems: LearningSystem[] = [
     status: text('Roadmap available', '路线图已开放'),
     sourceNote: text(
       'Competition formats, timelines, and eligibility notes are based on official BPhO and AAPT materials; focus notes, classroom problems, Chinese translations, and diagrams are Pocket Cosmos learning materials.',
-      '竞赛形式、时间线与参赛资格说明参考 BPhO 与 AAPT 官方资料；重点整理、课堂题目、中文翻译和示意图由口袋宇宙制作。',
+      '竞赛形式、时间线与参赛资格说明参考 BPhO 与 AAPT 官方资料；重点整理、课堂题目、中文翻译和示意图由口袋寰宇制作。',
     ),
     courses: [competitionRoadmapCourse],
   },

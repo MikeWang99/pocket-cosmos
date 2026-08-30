@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     'physics learning material',
     'physics self study',
     'Pocket Cosmos',
-    '口袋宇宙',
+    '口袋寰宇',
     '物理学习',
   ],
   alternates: {

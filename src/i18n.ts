@@ -392,12 +392,12 @@ export const i18n = {
       language: '中文',
     },
     site: {
-      title: '口袋宇宙',
+      title: '口袋寰宇',
       subtitle: '一站式物理学习',
-      footerBrand: '口袋宇宙',
+      footerBrand: '口袋寰宇',
       footerLocation: '',
-      established: '口袋宇宙',
-      logoAlt: '口袋宇宙标志',
+      established: '口袋寰宇',
+      logoAlt: '口袋寰宇标志',
     },
     auth: {
       loading: '正在检查登录状态',
@@ -469,7 +469,7 @@ export const i18n = {
       },
     },
     hero: {
-      title: '口袋宇宙',
+      title: '口袋寰宇',
       subtitle: '从极微观到极宏观，洞悉世界运行的底层逻辑。',
       startJourney: '开启旅程',
     },
@@ -551,7 +551,7 @@ export const i18n = {
       contentMode: '知识地图内容模式',
       teacherMode: '老师模式',
       studentMode: '学生模式',
-      sourceNote: '知识点名称、单元结构与考试占比均参考美国大学理事会官方课程与考试说明；中文名称由口袋宇宙翻译整理，仅供学习参考。',
+      sourceNote: '知识点名称、单元结构与考试占比均参考美国大学理事会官方课程与考试说明；中文名称由口袋寰宇翻译整理，仅供学习参考。',
     },
     practice: {
       progress: '进度',
