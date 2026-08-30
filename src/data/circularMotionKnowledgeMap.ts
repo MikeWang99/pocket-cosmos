@@ -24,7 +24,7 @@ const originalDiagram = (filename: string, altEn: string, altZh: string, caption
   src: `/curriculum-assets/circular-motion/${filename}`,
   alt: text(altEn, altZh),
   caption: text(captionEn, captionZh),
-  sourceLabel: text('Original Pocket Cosmos diagram', '口袋宇宙原创示意图'),
+  sourceLabel: text('Original Pocket Cosmos diagram', '口袋寰宇原创示意图'),
 });
 
 const racetrackImage = originalDiagram(

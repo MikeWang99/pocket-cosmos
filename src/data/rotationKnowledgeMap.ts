@@ -32,7 +32,7 @@ const originalDiagram = (
   src: '/curriculum-assets/rotation/' + filename,
   alt: text(altEn, altZh),
   caption: text(captionEn, captionZh),
-  sourceLabel: text('Original Pocket Cosmos diagram', '口袋宇宙原创示意图'),
+  sourceLabel: text('Original Pocket Cosmos diagram', '口袋寰宇原创示意图'),
 });
 
 const angularKinematicsDiagram = originalDiagram(

@@ -15,10 +15,10 @@ export function HomeSection() {
 
   const content = language === 'zh'
     ? {
-      badge: 'Pocket Cosmos · Physics Learning Platform',
+      badge: '口袋寰宇 · Physics Learning Platform',
       headline: '系统化的物理学习平台，服务于课程学习、能力诊断与长期提升。',
       subtitle:
-          'Pocket Cosmos 面向 AP 体系、IG 体系、A Level 体系、IB 体系以及竞赛方向，提供知识地图、习题训练、作业管理与持续沉淀的学习资料。',
+          '口袋寰宇面向 AP 体系、IG 体系、A Level 体系、IB 体系以及竞赛方向，提供知识地图、习题训练、作业管理与持续沉淀的学习资料。',
         modulesTitle: '核心模块',
         modules: [
           {

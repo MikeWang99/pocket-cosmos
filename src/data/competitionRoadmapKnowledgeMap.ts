@@ -12,7 +12,7 @@ const asset = (filename: string, altEn: string, altZh: string, captionEn: string
   src: `/curriculum-assets/competition-roadmap/${filename}`,
   alt: text(altEn, altZh),
   caption: text(captionEn, captionZh),
-  sourceLabel: text('Original Pocket Cosmos graphic', '口袋宇宙原创图'),
+  sourceLabel: text('Original Pocket Cosmos graphic', '口袋寰宇原创图'),
 });
 
 const timelineImage = asset(
