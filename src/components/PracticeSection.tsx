@@ -4,6 +4,7 @@ import katex from 'katex';
 import {
   ArrowLeft,
   ArrowRight,
+  CheckCircle2,
   ClipboardCheck,
   Cloud,
   CloudOff,
@@ -766,10 +767,11 @@ export const PracticeSection: React.FC = () => {
 
   const submitFreeResponse = () => {
     if (!currentAnswerImage) return;
-    // No auto-grading for image submissions; teacher reviews manually
+    // Free-response work is never auto-graded. A zero-point result represents
+    // a submitted response awaiting teacher review, not an incorrect answer.
     const result: EvaluationResult = {
       score: 0,
-      maxScore: activeStep.maxScore ?? 10,
+      maxScore: 0,
       hits: [],
       misses: [],
       suggestions: [],
@@ -1047,7 +1049,8 @@ export const PracticeSection: React.FC = () => {
             {practiceSteps.map((step, index) => {
               const result = results[step.id];
               const isActive = index === activeIndex;
-              const isCorrect = result && result.score >= result.maxScore;
+              const isAutoGraded = isMultipleChoiceStep(step);
+              const isCorrect = isAutoGraded && result && result.score >= result.maxScore;
               return (
                 <Fragment key={step.id}>
                   {/* #9: Group separator every 10 questions */}
@@ -1062,7 +1065,9 @@ export const PracticeSection: React.FC = () => {
                         : result
                           ? isCorrect
                             ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700 hover:border-emerald-500/55'
-                            : 'border-rose-500/35 bg-rose-500/10 text-rose-700 hover:border-rose-500/55'
+                            : isAutoGraded
+                              ? 'border-rose-500/35 bg-rose-500/10 text-rose-700 hover:border-rose-500/55'
+                              : 'border-sky-500/35 bg-sky-500/10 text-sky-700 hover:border-sky-500/55'
                           : 'border-line bg-surface-tint text-slate-500 hover:border-line-strong hover:text-nebula'
                     }`}
                     title={`${t.practice.questionPath} ${index + 1}`}
@@ -1071,7 +1076,7 @@ export const PracticeSection: React.FC = () => {
                     {result && (
                       <span
                         className={`absolute right-1 top-1 h-1.5 w-1.5 rounded-full ${
-                          isCorrect ? 'bg-emerald-500' : 'bg-rose-500'
+                          isCorrect ? 'bg-emerald-500' : isAutoGraded ? 'bg-rose-500' : 'bg-sky-500'
                         }`}
                       />
                     )}
@@ -1296,7 +1301,9 @@ export const PracticeSection: React.FC = () => {
                         {activeStep.solution && (
                           <details className="group rounded-lg border border-line bg-surface-tint p-3">
                             <summary className="cursor-pointer list-none text-xs font-bold uppercase tracking-widest text-nebula">
-                              {language === 'zh' ? '解析' : 'Explanation'}
+                              {activeStep.solutionImage
+                                ? language === 'zh' ? '查看答案' : 'View answer'
+                                : language === 'zh' ? '解析' : 'Explanation'}
                             </summary>
                             <p className="mt-3 text-sm leading-7 text-ink-soft">
                               <MathText>{activeStep.solution}</MathText>
@@ -1315,6 +1322,12 @@ export const PracticeSection: React.FC = () => {
                             )}
                           </details>
                         )}
+                      </div>
+                    )}
+                    {currentResult && (
+                      <div className="mt-4 flex items-center gap-2 rounded-lg border border-sky-500/25 bg-sky-500/10 p-3 text-sm text-sky-800">
+                        <CheckCircle2 className="h-4 w-4 shrink-0" />
+                        {language === 'zh' ? '答案已提交，等待人工查看' : 'Response submitted — awaiting review'}
                       </div>
                     )}
                   </>

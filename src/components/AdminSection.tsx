@@ -88,6 +88,14 @@ const splitPromptParts = (prompt: string) => {
   return parts.length > 1 ? parts : [prompt];
 };
 
+const isAutoGradedStep = (step: PracticeStep | undefined) =>
+  Boolean(step?.choices?.length && step.correctAnswer);
+
+const isAutoGradedAttempt = (attempt: PracticeAttemptRow) => {
+  const set = practiceSets.find((candidate) => candidate.id === attempt.practice_set_id);
+  return isAutoGradedStep(set?.steps.find((step) => step.id === attempt.question_id));
+};
+
 const normalizeResult = (row: PracticeAttemptRow): EvaluationResult => {
   const savedResult = row.result as Partial<EvaluationResult> | null;
   const score = Number(savedResult?.score ?? row.score ?? 0);
@@ -191,7 +199,8 @@ export const AdminSection: React.FC = () => {
     return Array.from(grouped.entries())
       .map(([studentId, studentAttempts]) => {
         const completed = studentAttempts.length;
-        const correct = studentAttempts.filter((attempt) => attempt.is_correct).length;
+        const gradedAttempts = studentAttempts.filter(isAutoGradedAttempt);
+        const correct = gradedAttempts.filter((attempt) => attempt.is_correct).length;
         const latestAt = studentAttempts.reduce(
           (latest, attempt) => (new Date(attempt.updated_at) > new Date(latest) ? attempt.updated_at : latest),
           studentAttempts[0]?.updated_at ?? new Date(0).toISOString(),
@@ -203,7 +212,7 @@ export const AdminSection: React.FC = () => {
           attempts: studentAttempts,
           completed,
           correct,
-          accuracy: completed ? Math.round((correct / completed) * 100) : 0,
+          accuracy: gradedAttempts.length ? Math.round((correct / gradedAttempts.length) * 100) : 0,
           latestAt,
         };
       })
@@ -253,7 +262,8 @@ export const AdminSection: React.FC = () => {
     selectedSet.steps[0];
   const selectedAttempt = selectedStep ? selectedSetAttempts.get(selectedStep.id) : undefined;
   const selectedResult = selectedAttempt ? normalizeResult(selectedAttempt) : null;
-  const selectedAccuracy = selectedStudent?.completed ? Math.round((selectedStudent.correct / selectedStudent.completed) * 100) : 0;
+  const selectedGradedCount = selectedStudent?.attempts.filter(isAutoGradedAttempt).length ?? 0;
+  const selectedAccuracy = selectedGradedCount ? Math.round((selectedStudent!.correct / selectedGradedCount) * 100) : 0;
 
   if (!authEnabled) return null;
 
@@ -315,7 +325,10 @@ export const AdminSection: React.FC = () => {
           <div className="glass-panel rounded-lg p-3 sm:p-4">
             <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.accuracy}</div>
             <div className="mt-1 text-xl font-semibold sm:text-2xl">
-              {attempts.length ? Math.round((attempts.filter((attempt) => attempt.is_correct).length / attempts.length) * 100) : 0}%
+              {(() => {
+                const graded = attempts.filter(isAutoGradedAttempt);
+                return graded.length ? Math.round((graded.filter((attempt) => attempt.is_correct).length / graded.length) * 100) : 0;
+              })()}%
             </div>
           </div>
         </div>
@@ -463,9 +476,11 @@ export const AdminSection: React.FC = () => {
                             isSelected
                               ? 'border-nebula/70 bg-nebula/12 text-nebula'
                               : attempt
-                                ? attempt.is_correct
-                                  ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700 hover:border-emerald-500/55'
-                                  : 'border-rose-500/35 bg-rose-500/10 text-rose-700 hover:border-rose-500/55'
+                                ? !isAutoGradedStep(step)
+                                  ? 'border-sky-500/35 bg-sky-500/10 text-sky-700 hover:border-sky-500/55'
+                                  : attempt.is_correct
+                                    ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700 hover:border-emerald-500/55'
+                                    : 'border-rose-500/35 bg-rose-500/10 text-rose-700 hover:border-rose-500/55'
                                 : 'border-line bg-surface-tint text-slate-600 opacity-50'
                           }`}
                         >
@@ -495,12 +510,16 @@ export const AdminSection: React.FC = () => {
                         </div>
                         <div
                           className={`rounded-full border px-4 py-2 text-sm font-semibold ${
-                            selectedAttempt?.is_correct
-                              ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-700'
-                              : 'border-rose-500/30 bg-rose-500/10 text-rose-700'
+                            !isAutoGradedStep(selectedStep)
+                              ? 'border-sky-500/30 bg-sky-500/10 text-sky-700'
+                              : selectedAttempt?.is_correct
+                                ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-700'
+                                : 'border-rose-500/30 bg-rose-500/10 text-rose-700'
                           }`}
                         >
-                          {selectedAttempt?.is_correct ? t.admin.correct : t.admin.incorrect}
+                          {!isAutoGradedStep(selectedStep)
+                            ? language === 'zh' ? '已提交' : 'Submitted'
+                            : selectedAttempt?.is_correct ? t.admin.correct : t.admin.incorrect}
                         </div>
                       </div>
 

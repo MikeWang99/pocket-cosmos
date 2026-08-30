@@ -28,7 +28,6 @@ import type { HomeworkAssignment, ResolvedHomeworkItem } from '../homework/types
 import { useHomeworkData } from '../hooks/useHomeworkData';
 import { useLanguage } from '../LanguageContext';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
-import { evaluateLocally } from '../utils/rubricScoring';
 import { HomeworkAdminPanel } from './HomeworkAdminPanel';
 import { QuestionPrompt } from './QuestionPrompt';
 
@@ -80,7 +79,17 @@ const responseKey = (practiceSetId: string, questionId: string) =>
   `${practiceSetId}:${questionId}`;
 
 const buildResult = (step: PracticeStep, answer: string, language: 'en' | 'zh'): EvaluationResult => {
-  if (!isMultipleChoice(step)) return evaluateLocally(step, answer);
+  // Written responses cannot be judged reliably in the browser. Keep them as
+  // submitted-only records so a student's work is never presented as wrong.
+  if (!isMultipleChoice(step)) {
+    return {
+      score: 0,
+      maxScore: 0,
+      hits: [],
+      misses: [],
+      suggestions: [],
+    };
+  }
   const selected = answer.split(',').filter(Boolean).sort();
   const correct = (step.correctAnswer ?? '').split(',').filter(Boolean).sort();
   const matches = selected.join(',') === correct.join(',');
@@ -243,17 +252,17 @@ const QuestionCard: React.FC<{
         )}
 
         {result && (
-          <div className={`mt-5 rounded-xl border p-4 ${result.score >= result.maxScore && result.maxScore > 0 ? 'border-emerald-500/25 bg-emerald-500/10' : 'border-amber-500/25 bg-amber-500/10'}`}>
+          <div className={`mt-5 rounded-xl border p-4 ${!multipleChoice ? 'border-sky-500/25 bg-sky-500/10' : result.score >= result.maxScore && result.maxScore > 0 ? 'border-emerald-500/25 bg-emerald-500/10' : 'border-amber-500/25 bg-amber-500/10'}`}>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2 text-sm font-semibold text-ink">
-                {result.score >= result.maxScore && result.maxScore > 0 ? <CheckCircle2 className="h-5 w-5 text-emerald-700" /> : <CircleAlert className="h-5 w-5 text-amber-700" />}
+                {!multipleChoice ? <CheckCircle2 className="h-5 w-5 text-sky-700" /> : result.score >= result.maxScore && result.maxScore > 0 ? <CheckCircle2 className="h-5 w-5 text-emerald-700" /> : <CircleAlert className="h-5 w-5 text-amber-700" />}
                 {multipleChoice
                   ? result.score
                     ? language === 'zh' ? '回答正确，进度已同步' : 'Correct — progress synced'
                     : language === 'zh' ? '已记录，建议查看解析' : 'Recorded — review the solution'
                   : language === 'zh' ? '答案已提交，进度已同步' : 'Response submitted — progress synced'}
               </div>
-              {!result.score && (
+              {multipleChoice && !result.score && (
                 <button type="button" onClick={onRetry} className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-xs text-ink-soft">
                   <RotateCcw className="h-3.5 w-3.5" />
                   {language === 'zh' ? '重试' : 'Retry'}
@@ -264,6 +273,12 @@ const QuestionCard: React.FC<{
               <details className="mt-3">
                 <summary className="cursor-pointer text-xs font-semibold text-nebula">{language === 'zh' ? '查看答案与解析' : 'View answer and explanation'}</summary>
                 <p className="mt-3 text-sm leading-7 text-ink-soft"><MathText>{step.solution}</MathText></p>
+                {step.solutionImage && (
+                  <div className="mt-3 overflow-hidden rounded-lg border border-line bg-white">
+                    <img src={step.solutionImage.src} alt={step.solutionImage.alt} className="h-auto w-full" />
+                    {step.solutionImage.caption && <p className="px-3 py-2 text-[11px] text-ink-soft">{step.solutionImage.caption}</p>}
+                  </div>
+                )}
               </details>
             )}
           </div>
@@ -509,9 +524,11 @@ export const HomeworkSection: React.FC = () => {
                       selected
                         ? 'border-nebula/70 bg-nebula/15 text-nebula'
                         : attempt
-                          ? attempt.isCorrect
-                            ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700'
-                            : 'border-amber-500/35 bg-amber-500/10 text-amber-700'
+                          ? isMultipleChoice(item.step)
+                            ? attempt.isCorrect
+                              ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700'
+                              : 'border-amber-500/35 bg-amber-500/10 text-amber-700'
+                            : 'border-sky-500/35 bg-sky-500/10 text-sky-700'
                           : 'border-line bg-surface-tint text-slate-500'
                     }`}
                   >

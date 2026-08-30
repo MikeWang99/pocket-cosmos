@@ -70,6 +70,13 @@ const toPracticeStep = (record: FrqRecord): PracticeStep => ({
   solution: record.answerImage
     ? 'See the mark scheme image below for the official answer.'
     : 'See the official mark scheme for the answer.',
+  solutionImage: record.answerImage
+    ? {
+        src: record.answerImage,
+        alt: `Official mark scheme for ${record.topicId} Q${record.questionNumber}`,
+        caption: 'Official mark scheme',
+      }
+    : undefined,
 });
 
 /** Topic metadata for FRQ sets */

@@ -64,6 +64,7 @@ export const HomeworkQuestionReview: React.FC<HomeworkQuestionReviewProps> = ({
   const selectedAnswers = new Set((attempt?.answer ?? '').split(',').filter(Boolean));
   const correctAnswers = new Set((step.correctAnswer ?? '').split(',').filter(Boolean));
   const multipleChoice = Boolean(step.choices?.length);
+  const autoGraded = multipleChoice && Boolean(step.correctAnswer);
   // Full question images already contain the stem and labels. OCR remains useful
   // for indexing, but rendering it here duplicates the question and exposes noise.
   const hideDuplicatePrompt = step.image?.role === 'question';
@@ -106,19 +107,25 @@ export const HomeworkQuestionReview: React.FC<HomeworkQuestionReviewProps> = ({
           <div className="flex shrink-0 items-center gap-2">
             <span
               className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold ${
-                attempt.isCorrect
+                autoGraded && attempt.isCorrect
                   ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-700'
-                  : 'border-rose-500/30 bg-rose-500/10 text-rose-700'
+                  : autoGraded
+                    ? 'border-rose-500/30 bg-rose-500/10 text-rose-700'
+                    : 'border-sky-500/30 bg-sky-500/10 text-sky-700'
               }`}
             >
-              {attempt.isCorrect ? <CheckCircle2 className="h-3.5 w-3.5" /> : <CircleAlert className="h-3.5 w-3.5" />}
-              {attempt.isCorrect
-                ? language === 'zh' ? '正确' : 'Correct'
-                : language === 'zh' ? '错误' : 'Incorrect'}
+              {!autoGraded ? <CheckCircle2 className="h-3.5 w-3.5" /> : attempt.isCorrect ? <CheckCircle2 className="h-3.5 w-3.5" /> : <CircleAlert className="h-3.5 w-3.5" />}
+              {!autoGraded
+                ? language === 'zh' ? '已提交' : 'Submitted'
+                : attempt.isCorrect
+                  ? language === 'zh' ? '正确' : 'Correct'
+                  : language === 'zh' ? '错误' : 'Incorrect'}
             </span>
-            <span className="rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-ink-soft">
-              {attempt.score}/{attempt.maxScore}
-            </span>
+            {autoGraded && (
+              <span className="rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-ink-soft">
+                {attempt.score}/{attempt.maxScore}
+              </span>
+            )}
           </div>
         ) : (
           <span className="w-fit shrink-0 rounded-full border border-line px-3 py-1.5 text-xs text-slate-500">
@@ -267,7 +274,7 @@ export const HomeworkQuestionReview: React.FC<HomeworkQuestionReviewProps> = ({
             </div>
           </div>
 
-          {attempt && !attempt.isCorrect && feedback.length > 0 && (
+          {autoGraded && attempt && !attempt.isCorrect && feedback.length > 0 && (
             <div className="mt-3 rounded-lg border border-amber-400/20 bg-amber-400/[0.06] p-3">
               <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-widest text-amber-700">
                 <CircleAlert className="h-3.5 w-3.5" />
