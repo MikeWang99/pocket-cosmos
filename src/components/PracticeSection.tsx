@@ -433,6 +433,14 @@ export const PracticeSection: React.FC = () => {
   };
 
   const activeStep = practiceSteps[activeIndex] ?? practiceSteps[0];
+  // The question path is the learner-facing sequence after filters are
+  // applied. Keep the heading in lockstep with that sequence; source-paper
+  // numbering is intentionally hidden from the practice UI.
+  const activeDisplayTitle = activeStep
+    ? activeSet.system === 'competition'
+      ? `Question ${activeIndex + 1}`
+      : activeStep.title
+    : '';
   const isActiveMultipleChoice = activeStep ? isMultipleChoiceStep(activeStep) : false;
   const hasCompleteQuestionImage = activeStep?.image?.role === 'question';
   const shouldShowPrompt =
@@ -1200,7 +1208,7 @@ export const PracticeSection: React.FC = () => {
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div className="min-w-0">
                     <div className="text-xs uppercase tracking-widest text-nebula mb-3">{activeStep.source}</div>
-                    <h2 className="text-balance font-serif text-2xl text-ink md:text-3xl">{activeStep.title}</h2>
+                    <h2 className="text-balance font-serif text-2xl text-ink md:text-3xl">{activeDisplayTitle}</h2>
                     {activeSet.system !== 'competition' && !!activeStep.tags?.length && (
                       <div className="mt-3 flex flex-wrap gap-2">
                         {activeStep.tags.slice(0, 4).map((tag) => (
