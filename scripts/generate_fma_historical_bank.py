@@ -125,8 +125,14 @@ def clean_question_text(page_text, number):
 def render_crop(page, top, bottom, out_path):
     pix = page.get_pixmap(matrix=fitz.Matrix(2, 2), alpha=False)
     image = pix.pil_image()
-    left = max(0, int(44 * 2)); right = min(image.width, int(568 * 2))
-    y0 = max(0, int((top - 12) * 2)); y1 = min(image.height, int((bottom + 4) * 2))
+    # Keep the original question number and the full option column. Some
+    # source pages place the leading digit just left of x=44 pt; cropping at
+    # that coordinate silently turns “16.” into “6.”. Use a conservative
+    # margin while still excluding the page edge.
+    left = max(0, int(20 * 2)); right = min(image.width, int(592 * 2))
+    # Stop before the next question's text block; the previous +4 pt bleed
+    # included the following question number in several crops.
+    y0 = max(0, int((top - 12) * 2)); y1 = min(image.height, int((bottom - 8) * 2))
     crop = image.crop((left, y0, right, y1))
     crop.save(out_path, optimize=True)
 
