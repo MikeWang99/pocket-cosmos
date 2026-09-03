@@ -206,7 +206,7 @@ const getInitialExpandedNodes = (setId: string) => {
   if (set.system === 'igcse') {
     nodes.add(getIgcseCourseNodeId(inferPracticeKind(set)));
     nodes.add(getIgcseChapterNodeId(set));
-  } else if (set.system === 'ap-c-mech') {
+  } else {
     nodes.add(getCourseNodeId(set));
     nodes.add(getChapterNodeId(set));
   }
@@ -521,6 +521,31 @@ export const PracticeSection: React.FC = () => {
       });
     }
 
+    // F=ma competition archive, organized into topic chapters.
+    const competitionSets = practiceSets.filter((s) => s.system === 'competition');
+    if (competitionSets.length) {
+      const chapterMap = new Map<number, { title: string; sets: PracticeSet[] }>();
+      competitionSets.forEach((set) => {
+        const chapter = set.chapter ?? 0;
+        if (!chapterMap.has(chapter)) chapterMap.set(chapter, { title: set.chapterTitle ?? `Topic ${chapter}`, sets: [] });
+        chapterMap.get(chapter)!.sets.push(set);
+      });
+      systems.push({
+        id: 'competition',
+        label: t.practice.tree.competition,
+        courses: [{
+          id: 'competition-course-mcq',
+          label: language === 'zh' ? '选择题 MCQ' : 'Multiple Choice',
+          description: language === 'zh' ? '按知识点整理的 FMA 竞赛题。' : 'F=ma questions organized by knowledge point.',
+          chapters: [...chapterMap.entries()].sort(([a], [b]) => a - b).map(([chapter, entry]) => ({
+            id: `competition-mcq-ch${chapter}`,
+            label: entry.title,
+            sets: entry.sets,
+          })),
+        }],
+      });
+    }
+
     // CIE IGCSE Physics
     const igcseSets = practiceSets.filter((s) => s.system === 'igcse');
     if (igcseSets.length) {
@@ -808,6 +833,9 @@ export const PracticeSection: React.FC = () => {
       if (nextSet.system === 'igcse') {
         next.add(getIgcseCourseNodeId(inferPracticeKind(nextSet)));
         next.add(getIgcseChapterNodeId(nextSet));
+      } else {
+        next.add(getCourseNodeId(nextSet));
+        next.add(getChapterNodeId(nextSet));
       }
       return next;
     });

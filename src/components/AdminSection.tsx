@@ -708,10 +708,11 @@ interface PermissionRow {
   system: string;
 }
 
-const SYSTEM_LABELS_KEY: Record<string, 'systemApCMech' | 'systemApCEm' | 'systemIgcse'> = {
+const SYSTEM_LABELS_KEY: Record<string, 'systemApCMech' | 'systemApCEm' | 'systemIgcse' | 'systemCompetition'> = {
   'ap-c-mech': 'systemApCMech',
   'ap-c-em': 'systemApCEm',
   igcse: 'systemIgcse',
+  competition: 'systemCompetition',
 };
 
 const PermissionManager: React.FC = () => {

@@ -42,6 +42,7 @@ import { apcEmFrq1Meta, apcEmFrq1Steps } from './apcEmFrqTest1';
 import { apcEmFrq2Meta, apcEmFrq2Steps } from './apcEmFrqTest2';
 import { apcEmRcTest16Meta, apcEmRcTest16Steps } from './apcEmRcTest16';
 import { workEnergyMultipleChoiceMeta, workEnergyMultipleChoiceSteps } from './workEnergyMultipleChoice';
+import { fma2008CompetitionSets } from './fma2008Competition';
 import type { PracticeStep } from '../types/practice';
 
 export interface PracticeSet {
@@ -62,7 +63,7 @@ export interface PracticeSet {
   /** Practice type grouping used by the exercise navigation */
   practiceKind?: 'mcq' | 'structured' | 'paper5' | 'evaluation';
   /** Hierarchy: curriculum system */
-  system: 'ap-c-mech' | 'ap-c-em' | 'igcse';
+  system: 'ap-c-mech' | 'ap-c-em' | 'igcse' | 'competition';
   /** Hierarchy: chapter or unit grouping */
   chapter?: number;
   chapterTitle?: string;
@@ -223,6 +224,8 @@ export const practiceSets: PracticeSet[] = [
     ...apcEmRcTest16Meta,
     steps: apcEmRcTest16Steps,
   },
+  // F=ma competition bank: topic-organized slices of the 2008 historical exam.
+  ...fma2008CompetitionSets,
   // IGCSE per-topic MCQ sets (all chapters)
   ...igcseAllTopics.map((topic): PracticeSet => ({
     id: `igcse-cie-topic-${topic.topicId.replace('.', '-')}`,
