@@ -1200,9 +1200,7 @@ export const PracticeSection: React.FC = () => {
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div className="min-w-0">
                     <div className="text-xs uppercase tracking-widest text-nebula mb-3">{activeStep.source}</div>
-                    <h2 className="text-balance font-serif text-2xl text-ink md:text-3xl">
-                      {activeSet.system === 'competition' ? `${language === 'zh' ? '第 ' : 'Question '}${activeIndex + 1}${language === 'zh' ? ' 题' : ''}` : activeStep.title}
-                    </h2>
+                    <h2 className="text-balance font-serif text-2xl text-ink md:text-3xl">{activeStep.title}</h2>
                     {activeSet.system !== 'competition' && !!activeStep.tags?.length && (
                       <div className="mt-3 flex flex-wrap gap-2">
                         {activeStep.tags.slice(0, 4).map((tag) => (
