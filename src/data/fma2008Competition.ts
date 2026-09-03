@@ -278,7 +278,8 @@ const steps: PracticeStep[] = questions.map((question) => ({
   source: `${sourceLabel} · Question ${question.number}`,
   answerNudge: question.topic,
   criteria: [],
-  choices: question.choices.map((text, index) => ({ label: String.fromCharCode(65 + index), text })),
+  // The complete source image already contains the choices; the UI only needs A–E selectors.
+  choices: question.choices.map((_, index) => ({ label: String.fromCharCode(65 + index), text: '' })),
   correctAnswer: question.answer,
   solution: question.solution,
 }));
