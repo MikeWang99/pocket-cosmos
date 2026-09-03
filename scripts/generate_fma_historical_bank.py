@@ -4,7 +4,7 @@ import json
 import os
 import re
 import shutil
-from PIL import Image, ImageDraw
+from PIL import Image, ImageChops, ImageDraw
 from pathlib import Path
 
 SOURCE_ROOT = Path('/Users/mikewang/Desktop/FMA_historical_exams')
@@ -75,6 +75,45 @@ def question_blocks(page):
             if 1 <= number <= 25:
                 blocks.append((number, y0, text))
     return blocks
+
+def setup_applies_to_number(text, number):
+    """Return whether a shared-information heading covers this question."""
+    lower = text.lower()
+    if not re.search(r'questions?', lower):
+        return False
+    # Ranges such as “Questions 1 to 3” or “Questions 2–4”.
+    for match in re.finditer(r'questions?\s+(\d{1,2})\s*(?:to|[-–—])\s*(\d{1,2})', lower):
+        if int(match.group(1)) <= number <= int(match.group(2)):
+            return True
+    # Explicit lists such as “questions 2 and 3”.
+    tail = re.split(r'questions?', lower, maxsplit=1)[-1]
+    listed = [int(value) for value in re.findall(r'\b\d{1,2}\b', tail)]
+    return number in listed
+
+def setup_question_numbers(text):
+    """Expand a shared-context heading into every covered question number."""
+    lower = text.lower()
+    if not re.search(r'questions?', lower):
+        return []
+    numbers = set()
+    # Include every member of ranges, not only the endpoints.
+    for match in re.finditer(r'questions?\s+(\d{1,2})\s*(?:to|[-–—])\s*(\d{1,2})', lower):
+        start, end = int(match.group(1)), int(match.group(2))
+        numbers.update(range(min(start, end), max(start, end) + 1))
+    # Also include explicit list forms such as “questions 2 and 4”.
+    tail = re.split(r'questions?', lower, maxsplit=1)[-1]
+    numbers.update(int(value) for value in re.findall(r'\b\d{1,2}\b', tail))
+    return sorted(number for number in numbers if 1 <= number <= 25)
+
+def shared_heading_top(page, block, default):
+    """Find the first printed line of a shared-context heading inside a PDF block."""
+    bx0, by0, bx1, by1, _ = block[:5]
+    candidates = []
+    for word in page.get_text('words'):
+        x0, y0, x1, y1, token = word[:5]
+        if bx0 - 1 <= x0 <= bx1 + 1 and by0 - 1 <= y0 <= by1 + 1 and token.strip().lower().startswith('questions'):
+            candidates.append(y0)
+    return min(candidates) if candidates else default
 
 def classify(text):
     lower = text.lower()
@@ -163,7 +202,68 @@ def render_crop(page, top, bottom, out_path, question_number, number_top, segmen
         for band in bands:
             crop.paste(band, (0, offset))
             offset += band.height + gap
+    # The source PDF page is wider than the printed question. Trim only the
+    # outer white page margins (with a generous safety pad) so the browser can
+    # render the same content at a larger, more readable scale.
+    nonwhite = ImageChops.difference(crop, Image.new('RGB', crop.size, 'white')).getbbox()
+    if nonwhite:
+        pad = 20
+        x0 = max(0, nonwhite[0] - pad)
+        x1 = min(crop.width, nonwhite[2] + pad)
+        crop = crop.crop((x0, 0, x1, crop.height))
     crop.save(out_path, optimize=True)
+
+def render_page_segment(page, top, bottom, question_number=None, number_top=None):
+    """Render one page band for a cross-page shared setup repair."""
+    pix = page.get_pixmap(matrix=fitz.Matrix(2, 2), alpha=False)
+    image = pix.pil_image()
+    if question_number is not None and number_top is not None:
+        draw = ImageDraw.Draw(image)
+        for word in page.get_text('words'):
+            x0, y0, x1, y1, token = word[:5]
+            if token.strip() in {f'{question_number}.', str(question_number)} and number_top - 10 <= y0 <= number_top + 20:
+                draw.rectangle(
+                    (max(0, int((x0 - 1) * 2)), max(0, int((y0 - 1) * 2)),
+                     min(image.width, int((x1 + 1) * 2)), min(image.height, int((y1 + 1) * 2))),
+                    fill='white',
+                )
+                break
+    left, right = 20 * 2, min(image.width, 592 * 2)
+    y0, y1 = max(0, int((top - 12) * 2)), min(image.height, int((bottom - 2) * 2))
+    return image.crop((left, y0, right, y1))
+
+def save_cross_page_segments(segments, out_path):
+    gap = 18
+    crop = Image.new('RGB', (max(part.width for part in segments), sum(part.height for part in segments) + gap * (len(segments) - 1)), 'white')
+    offset = 0
+    for part in segments:
+        crop.paste(part, (0, offset))
+        offset += part.height + gap
+    nonwhite = ImageChops.difference(crop, Image.new('RGB', crop.size, 'white')).getbbox()
+    if nonwhite:
+        pad = 20
+        crop = crop.crop((max(0, nonwhite[0] - pad), 0, min(crop.width, nonwhite[2] + pad), crop.height))
+    crop.save(out_path, optimize=True)
+
+def repair_cross_page_assets():
+    """Add shared setup that begins on the preceding PDF page."""
+    repairs = [
+        # 2015 Q13 uses the pendulum setup printed at the bottom of page 6.
+        ('2015_Fma_exam.pdf', 5, (386.2, 444.4), 6, (67.0, 491.5), 13, 'fma-2015-main-q13.png'),
+        # 2016 Q6 uses the box/particle setup printed on page 4.
+        ('2016_Fma_exam.pdf', 3, (57.1, 263.3), 4, (67.0, 364.2), 6, 'fma-2016-main-q06.png'),
+    ]
+    for filename, setup_page_index, setup_range, question_page_index, question_range, number, asset_name in repairs:
+        doc = fitz.open(SOURCE_ROOT / 'papers' / filename)
+        setup = render_page_segment(doc[setup_page_index], *setup_range)
+        question = render_page_segment(doc[question_page_index], question_range[0] + 12, question_range[1], number, question_range[0])
+        save_cross_page_segments([setup, question], ASSET_ROOT / asset_name)
+        doc.close()
+    # The legacy 2008 asset for Q9 was originally cropped together with the
+    # next experiment's shared setup. Keep only Q9 and its five choices.
+    legacy_q9 = REPO_ROOT / 'public' / 'fma-2008-assets' / 'q09.png'
+    legacy_image = Image.open(legacy_q9).convert('RGB')
+    legacy_image.crop((0, 0, legacy_image.width, 640)).save(legacy_q9, optimize=True)
 
 def main():
     all_records = []
@@ -211,26 +311,27 @@ def main():
                     # long stem). Include it whenever its heading explicitly
                     # names the current question, rather than relying only on
                     # a fixed vertical-distance heuristic.
-                    named_setup = re.compile(
-                        rf'questions?\s+[^\n]*\b{number}\b', re.I
-                    )
+                    named_setup = lambda text: setup_applies_to_number(text, number)
                     setup_band = None
                     for raw in preceding:
                         px0, py0, px1, py1, ptext = raw[:5]
                         if py1 <= y0 and (
-                            named_setup.search(ptext)
+                            named_setup(ptext)
                             or (py1 > y0 - 145 and re.search(r'questions?\s+\d', ptext, re.I))
                         ):
                             y0 = min(y0, py0)
-                            setup_numbers = [int(n) for n in re.findall(r'\b(\d{1,2})\b', ptext)]
-                            group_numbers = [n for n in setup_numbers if 1 <= n <= 25]
+                            group_numbers = setup_question_numbers(ptext)
                             if number in group_numbers:
                                 first_number = min(group_numbers)
                                 first_group_y = next(
                                     (block_y for block_number, block_y, _ in blocks if block_number == first_number),
                                     number_top,
                                 )
-                                setup_band = (py0, first_group_y)
+                                # Leave a small white gap before the first
+                                # question so stray source line fragments at
+                                # the boundary cannot enter the setup band.
+                                heading_top = shared_heading_top(page, raw, py0)
+                                setup_band = (heading_top, max(heading_top, first_group_y - 8))
                     qid = f'fma-{year}-{suffix.lower()}-q{number:02d}'
                     asset_name = f'{qid}.png'
                     # When a grouped setup is included, start at the setup's
@@ -242,7 +343,7 @@ def main():
                         # The normal renderer adds a 12 pt top margin. Offset
                         # the setup band's start so that margin does not pull
                         # in the previous question's final option.
-                        segments = [(setup_band[0] + 12, setup_band[1]), (number_top, next_y)]
+                        segments = [(setup_band[0] + 12, setup_band[1]), (number_top + 12, next_y)]
                     render_crop(page, render_top, next_y, ASSET_ROOT / asset_name, number, number_top, segments)
                     question_text = clean_question_text(block_text, number)
                     specialty = classify(question_text)
@@ -286,6 +387,7 @@ def main():
         ],
     }
     (ASSET_ROOT / 'source-inventory.json').write_text(json.dumps(manifest, indent=2) + '\n')
+    repair_cross_page_assets()
     print('generated', len(all_records), 'questions', 'assets', len(list(ASSET_ROOT.glob('*.png'))))
 
 if __name__ == '__main__':
