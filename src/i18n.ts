@@ -223,10 +223,15 @@ export const i18n = {
         igcse: 'CIE IGCSE Physics',
       },
       tree: {
+        apPhysics1: 'AP Physics 1',
+        apPhysics2: 'AP Physics 2',
         apCMech: 'AP Physics C: Mechanics',
         apCEm: 'AP Physics C: E&M',
         igcse: 'CIE IGCSE Physics 0625',
         competition: 'FMA Competition',
+        bpho: 'BPhO Competition',
+        aLevel: 'A Level',
+        physicsBowl: 'Physics Bowl',
       },
       difficultyFilter: {
         label: 'Difficulty',
@@ -382,6 +387,11 @@ export const i18n = {
       systemApCEm: 'AP Physics C: E&M',
         systemIgcse: 'CIE IGCSE Physics',
         systemCompetition: 'FMA Competition',
+        systemApPhysics1: 'AP Physics 1',
+        systemApPhysics2: 'AP Physics 2',
+        systemBpho: 'BPhO Competition',
+        systemALevel: 'A Level',
+        systemPhysicsBowl: 'Physics Bowl',
     },
   },
   zh: {
@@ -606,10 +616,15 @@ export const i18n = {
         igcse: 'CIE IGCSE 物理',
       },
       tree: {
+        apPhysics1: 'AP Physics 1',
+        apPhysics2: 'AP Physics 2',
         apCMech: 'AP Physics C：力学',
         apCEm: 'AP Physics C：电磁学',
         igcse: 'CIE IGCSE 物理 0625',
         competition: 'FMA 竞赛',
+        bpho: 'BPhO 竞赛',
+        aLevel: 'A Level',
+        physicsBowl: 'Physics Bowl（物理碗）',
       },
       difficultyFilter: {
         label: '难度',
@@ -765,6 +780,11 @@ export const i18n = {
       systemApCEm: 'AP Physics C：电磁学',
         systemIgcse: 'CIE IGCSE 物理',
         systemCompetition: 'FMA 竞赛',
+        systemApPhysics1: 'AP Physics 1',
+        systemApPhysics2: 'AP Physics 2',
+        systemBpho: 'BPhO 竞赛',
+        systemALevel: 'A Level',
+        systemPhysicsBowl: 'Physics Bowl（物理碗）',
     },
   }
 };

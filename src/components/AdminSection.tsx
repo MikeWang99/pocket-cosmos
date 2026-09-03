@@ -21,6 +21,7 @@ import { useLanguage } from '../LanguageContext';
 import { getSupabaseClient } from '../lib/supabaseClient';
 import { ALL_SYSTEMS } from '../hooks/usePracticePermissions';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
+import { repairLatexExpression } from '../utils/latexRepair';
 
 interface PracticeAttemptRow {
   id: string;
@@ -52,7 +53,7 @@ interface StudentSummary {
 }
 
 const renderMath = (value: string) =>
-  katex.renderToString(value, {
+  katex.renderToString(repairLatexExpression(value), {
     throwOnError: false,
     strict: false,
   });
@@ -708,11 +709,16 @@ interface PermissionRow {
   system: string;
 }
 
-const SYSTEM_LABELS_KEY: Record<string, 'systemApCMech' | 'systemApCEm' | 'systemIgcse' | 'systemCompetition'> = {
+const SYSTEM_LABELS_KEY: Record<string, 'systemApPhysics1' | 'systemApPhysics2' | 'systemApCMech' | 'systemApCEm' | 'systemIgcse' | 'systemCompetition' | 'systemBpho' | 'systemALevel' | 'systemPhysicsBowl'> = {
+  'ap-physics-1': 'systemApPhysics1',
+  'ap-physics-2': 'systemApPhysics2',
   'ap-c-mech': 'systemApCMech',
   'ap-c-em': 'systemApCEm',
   igcse: 'systemIgcse',
   competition: 'systemCompetition',
+  bpho: 'systemBpho',
+  'a-level': 'systemALevel',
+  'physics-bowl': 'systemPhysicsBowl',
 };
 
 const PermissionManager: React.FC = () => {

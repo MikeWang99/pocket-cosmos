@@ -1,8 +1,9 @@
 import React from 'react';
 import katex from 'katex';
+import { repairLatexExpression } from '../utils/latexRepair';
 
 const renderMath = (value: string) =>
-  katex.renderToString(value, { throwOnError: false, strict: false });
+  katex.renderToString(repairLatexExpression(value), { throwOnError: false, strict: false });
 
 const MathText: React.FC<{ children: string }> = ({ children }) => {
   const parts = children.split(/(\$[^$]+\$|\\\([^)]+\\\))/g).filter(Boolean);

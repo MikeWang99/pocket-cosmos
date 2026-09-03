@@ -27,6 +27,7 @@ import { usePracticeProgress, type SavedPracticeAttempt } from '../hooks/usePrac
 import { usePracticePermissions } from '../hooks/usePracticePermissions';
 import { StudentWorkUpload } from './StudentWorkUpload';
 import { QuestionPrompt } from './QuestionPrompt';
+import { repairLatexExpression } from '../utils/latexRepair';
 
 type SpeechRecognitionConstructor = new () => SpeechRecognition;
 
@@ -130,7 +131,7 @@ const RichText: React.FC<{ children: string; className?: string }> = ({ children
 );
 
 const renderMath = (value: string) =>
-  katex.renderToString(value, {
+  katex.renderToString(repairLatexExpression(value), {
     throwOnError: false,
     strict: false,
   });
@@ -460,6 +461,30 @@ export const PracticeSection: React.FC = () => {
       label: string;
       courses: PracticeTreeCourse[];
     }> = [];
+
+    // Reserved curriculum areas. They are intentionally empty until their
+    // question banks are imported, but remain visible as permission-gated
+    // destinations so the catalog can grow without changing its structure.
+    [
+      { id: 'ap-physics-1', label: t.practice.tree.apPhysics1 },
+      { id: 'ap-physics-2', label: t.practice.tree.apPhysics2 },
+      { id: 'bpho', label: t.practice.tree.bpho },
+      { id: 'a-level', label: t.practice.tree.aLevel },
+      { id: 'physics-bowl', label: t.practice.tree.physicsBowl },
+    ].forEach(({ id, label }) => {
+      const sets = practiceSets.filter((set) => set.system === id);
+      systems.push({
+        id,
+        label,
+        courses: sets.length
+          ? [{
+              id: `${id}-all`,
+              label: '',
+              chapters: [{ id: `${id}-all`, label: '', sets }],
+            }]
+          : [],
+      });
+    });
 
     // AP Physics C: Mechanics
     const apMechSets = practiceSets.filter((s) => s.system === 'ap-c-mech');
@@ -900,7 +925,7 @@ export const PracticeSection: React.FC = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="max-w-6xl"
+      className="max-w-[90rem]"
     >
       <div className="mb-8 flex flex-col gap-6 lg:mb-10 lg:flex-row lg:items-end lg:justify-between">
         <div className="min-w-0">
@@ -945,19 +970,25 @@ export const PracticeSection: React.FC = () => {
           <div className="mt-5 space-y-1">
             {practiceTree.map((system) => {
               const sysExpanded = expandedNodes.has(system.id);
+              const systemAccessible = hasAccess(system.id);
+              const hasSystemContent = system.courses.some((course) => course.chapters.some((chapter) => chapter.sets.length > 0));
+              const canExpandSystem = systemAccessible && hasSystemContent;
               return (
                 <div key={system.id}>
                   {/* System header */}
                   <button
-                    onClick={() => toggleNode(system.id)}
-                    className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-xs font-bold uppercase tracking-wider text-ink-soft transition-colors hover:bg-surface-tint-strong"
+                    onClick={() => canExpandSystem && toggleNode(system.id)}
+                    disabled={!canExpandSystem}
+                    aria-disabled={!canExpandSystem}
+                    className="flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-xs font-bold uppercase tracking-wider text-ink-soft transition-colors hover:bg-surface-tint-strong disabled:cursor-default disabled:hover:bg-transparent"
                   >
-                    <span className={`inline-block h-3 w-3 text-[10px] leading-3 transition-transform ${sysExpanded ? 'rotate-90' : ''}`}>▶</span>
+                    {canExpandSystem && <span className={`inline-block h-3 w-3 text-[10px] leading-3 transition-transform ${sysExpanded ? 'rotate-90' : ''}`}>▶</span>}
+                    {!canExpandSystem && !systemAccessible && <Lock className="h-3 w-3 text-slate-500" />}
                     {system.label}
-                    {!hasAccess(system.id) && <Lock className="ml-auto h-3 w-3 text-slate-500" />}
+                    {!systemAccessible && <span className="ml-auto text-[10px] font-semibold normal-case tracking-normal text-slate-500">{t.practice.locked}</span>}
                   </button>
                   {/* Question types / chapters / sets */}
-                  {sysExpanded && (
+                  {sysExpanded && systemAccessible && (
                     <div className="ml-3 border-l border-line pl-3 space-y-1">
                       {system.courses.map((course) => {
                         const hasCourseLabel = course.label !== '';
@@ -1072,10 +1103,10 @@ export const PracticeSection: React.FC = () => {
           <p className="text-sm text-ink-soft max-w-md">{t.practice.lockedMessage}</p>
         </div>
       ) : (
-      <div className="grid gap-5 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-6 xl:grid-cols-[260px_minmax(0,1fr)]">
+      <div className="grid gap-4 lg:grid-cols-[185px_minmax(0,1fr)] lg:gap-5 xl:grid-cols-[200px_minmax(0,1fr)]">
         <aside className="glass-panel h-fit rounded-lg p-3 lg:sticky lg:top-6">
           <div className="px-3 py-2 text-[10px] uppercase tracking-widest text-slate-500">{t.practice.questionPath}</div>
-          <div className="grid auto-cols-[44px] grid-flow-col gap-2 overflow-x-auto pb-1 lg:max-h-[calc(100vh-9rem)] lg:grid-flow-row lg:grid-cols-5 lg:overflow-y-auto xl:grid-cols-6">
+          <div className="grid grid-cols-5 gap-1.5 pb-1">
             {practiceSteps.map((step, index) => {
               const result = results[step.id];
               const isActive = index === activeIndex;
@@ -1089,7 +1120,7 @@ export const PracticeSection: React.FC = () => {
                   )}
                   <button
                     onClick={() => goToStep(index)}
-                    className={`relative grid h-11 w-11 shrink-0 place-items-center rounded-lg border text-sm font-semibold transition-colors ${
+                    className={`relative grid h-8 w-8 shrink-0 place-items-center rounded-md border text-[11px] font-semibold transition-colors ${
                       isActive
                         ? 'border-nebula/70 bg-nebula/12 text-nebula'
                         : result
@@ -1174,7 +1205,7 @@ export const PracticeSection: React.FC = () => {
                 {shouldShowPrompt && (
                 <div className="mt-6">
                   <div className="rounded-lg border border-line bg-surface-tint p-4 sm:p-5 md:p-6">
-                    <div className="text-base leading-relaxed text-ink md:text-lg">
+                    <div className="text-lg leading-relaxed text-ink md:text-xl">
                       <QuestionPrompt prompt={activeStep.prompt} />
                     </div>
                   </div>
@@ -1194,7 +1225,7 @@ export const PracticeSection: React.FC = () => {
               <div className="p-4 sm:p-6 md:p-8">
                 {isActiveMultipleChoice ? (
                   <div>
-                    <div className={activeStep.choiceLayout === 'grid' ? 'grid gap-3 md:grid-cols-2' : 'grid gap-2.5'} role="group" aria-label={t.practice.chooseAnswer}>
+                    <div className="grid grid-cols-5 gap-1.5 sm:gap-2" role="group" aria-label={t.practice.chooseAnswer}>
                       {activeStep.choices?.map((choice) => {
                         const selectedLabels = currentAnswer.split(',').filter(Boolean);
                         const correctLabels = (activeStep.correctAnswer ?? '').split(',').filter(Boolean);
@@ -1216,7 +1247,7 @@ export const PracticeSection: React.FC = () => {
                               updateAnswer(next.sort().join(','));
                             }}
                             aria-pressed={isSelected}
-                            className={`grid grid-cols-[34px_minmax(0,1fr)] items-center gap-3 rounded-lg border text-left transition-colors sm:grid-cols-[40px_minmax(0,1fr)] ${choice.image ? 'p-3 sm:p-4' : 'min-h-14 px-3 py-2.5 sm:px-4'} ${
+                            className={`flex min-h-12 min-w-0 items-center justify-center gap-1.5 rounded-lg border px-1.5 py-2 text-center transition-colors sm:gap-2 sm:px-2.5 ${choice.image ? 'sm:py-3' : ''} ${
                               isCorrectChoice
                                 ? 'border-emerald-500/50 bg-emerald-500/10'
                                 : isWrongChoice
@@ -1226,12 +1257,12 @@ export const PracticeSection: React.FC = () => {
                                     : 'border-line bg-surface-tint hover:border-nebula/50'
                             }`}
                           >
-                            <span className={`grid h-8 w-8 place-items-center rounded-md text-xs font-bold transition-colors ${
+                            <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-md text-[11px] font-bold transition-colors sm:h-8 sm:w-8 ${
                               isSelected ? 'bg-nebula text-on-accent' : 'bg-slate-900 text-on-accent'
                             }`}>
                               {isSelected ? '✓' : choice.label}
                             </span>
-                            <span className="min-w-0 self-center text-sm md:text-base text-ink leading-relaxed">
+                            <span className="min-w-0 flex-1 self-center text-xs leading-tight text-ink sm:text-sm">
                               {choice.image ? (
                                 <>
                                   <img
@@ -1241,9 +1272,9 @@ export const PracticeSection: React.FC = () => {
                                   />
                                   <span className="sr-only">{choice.text}</span>
                                 </>
-                              ) : (
+                              ) : choice.text ? (
                                 <MathText>{choice.text}</MathText>
-                              )}
+                              ) : null}
                             </span>
                           </button>
                         );

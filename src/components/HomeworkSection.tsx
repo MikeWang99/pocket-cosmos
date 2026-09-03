@@ -30,11 +30,12 @@ import { useLanguage } from '../LanguageContext';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
 import { HomeworkAdminPanel } from './HomeworkAdminPanel';
 import { QuestionPrompt } from './QuestionPrompt';
+import { repairLatexExpression } from '../utils/latexRepair';
 
 type HomeworkView = 'student' | 'teacher';
 
 const renderMath = (value: string) =>
-  katex.renderToString(value, { throwOnError: false, strict: false });
+  katex.renderToString(repairLatexExpression(value), { throwOnError: false, strict: false });
 
 const MathText: React.FC<{ children: string }> = ({ children }) => {
   const parts = children.split(/(\$[^$]+\$|\\\([^)]+\\\))/g).filter(Boolean);

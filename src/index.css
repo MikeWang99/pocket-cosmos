@@ -186,7 +186,7 @@ textarea::placeholder {
 
 .practice-question-image {
   width: 100%;
-  max-width: 720px;
+  max-width: 1104px;
   max-height: none;
   height: auto;
   object-fit: contain;
