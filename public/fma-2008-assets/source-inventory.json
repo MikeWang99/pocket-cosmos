@@ -1,7 +1,7 @@
 {
   "collection": "F=ma 2008 Historical Exam",
-  "examPdf": "/Users/mikewang/Desktop/FMA_historical_exams/papers/2008_Fma_exam.pdf",
-  "solutionPdf": "/Users/mikewang/Desktop/FMA_historical_exams/solutions/2008_Fma_solutions.pdf",
+  "examPdf": "FMA_historical_exams/papers/2008_Fma_exam.pdf",
+  "solutionPdf": "FMA_historical_exams/solutions/2008_Fma_solutions.pdf",
   "questionCount": 25,
   "scope": "All 25 multiple-choice questions from the 2008 paper; answers matched to the 2008 solution sheet.",
   "rightsStatus": "User-provided source; verify redistribution rights before public commercial use.",
