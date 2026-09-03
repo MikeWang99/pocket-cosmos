@@ -4,6 +4,7 @@ import json
 import os
 import re
 import shutil
+from PIL import Image, ImageDraw
 from pathlib import Path
 
 SOURCE_ROOT = Path('/Users/mikewang/Desktop/FMA_historical_exams')
@@ -122,18 +123,46 @@ def clean_question_text(page_text, number):
     match = re.search(rf'\b{number}\.\s+(.*)', text)
     return match.group(1) if match else text
 
-def render_crop(page, top, bottom, out_path):
+def render_crop(page, top, bottom, out_path, question_number, number_top, segments=None):
     pix = page.get_pixmap(matrix=fitz.Matrix(2, 2), alpha=False)
     image = pix.pil_image()
-    # Keep the original question number and the full option column. Some
-    # source pages place the leading digit just left of x=44 pt; cropping at
-    # that coordinate silently turns “16.” into “6.”. Use a conservative
-    # margin while still excluding the page edge.
-    left = max(0, int(20 * 2)); right = min(image.width, int(592 * 2))
-    # Stop before the next question's text block; the previous +4 pt bleed
-    # included the following question number in several crops.
-    y0 = max(0, int((top - 12) * 2)); y1 = min(image.height, int((bottom - 8) * 2))
-    crop = image.crop((left, y0, right, y1))
+    # Omit the source-paper serial number while retaining the complete stem.
+    # Its x-position varies between source forms, so locate the standalone
+    # number token in the PDF word layer and mask only that token. This avoids
+    # both a clipped leading digit and accidental removal of the first word.
+    left_pt, right_pt = 20, 592
+    for word in page.get_text('words'):
+        x0, y0, x1, y1, token = word[:5]
+        if token.strip() in {f'{question_number}.', str(question_number)} and number_top - 10 <= y0 <= number_top + 20:
+            image_draw = ImageDraw.Draw(image)
+            image_draw.rectangle(
+                (max(0, int((x0 - 1) * 2)), max(0, int((y0 - 1) * 2)), min(image.width, int((x1 + 1) * 2)), min(image.height, int((y1 + 1) * 2))),
+                fill='white',
+            )
+            break
+    left = max(0, int(left_pt * 2)); right = min(image.width, int(right_pt * 2))
+    # Stop just before the next question's text block; a small 2 pt margin
+    # preserves the final option while keeping the next number out. For a
+    # grouped stem (e.g. questions 2 and 3), compose the shared setup band
+    # with only the current question band so neighbouring questions are not
+    # duplicated in the asset.
+    if segments is None:
+        segments = [(top, bottom)]
+    bands = []
+    for seg_top, seg_bottom in segments:
+        y0 = max(0, int((seg_top - 12) * 2))
+        y1 = min(image.height, int((seg_bottom - 2) * 2))
+        if y1 > y0:
+            bands.append(image.crop((left, y0, right, y1)))
+    if len(bands) == 1:
+        crop = bands[0]
+    else:
+        gap = 18
+        crop = Image.new('RGB', (right - left, sum(b.height for b in bands) + gap * (len(bands) - 1)), 'white')
+        offset = 0
+        for band in bands:
+            crop.paste(band, (0, offset))
+            offset += band.height + gap
     crop.save(out_path, optimize=True)
 
 def main():
@@ -160,16 +189,61 @@ def main():
                 if not blocks:
                     continue
                 for position, (number, y0, block_text) in enumerate(blocks):
+                    number_top = y0
                     next_y = blocks[position + 1][1] if position + 1 < len(blocks) else 742
+                    # If a shared setup paragraph belongs to the next group,
+                    # end the current crop before that paragraph. Otherwise
+                    # the preceding question would contain unrelated text
+                    # (for example Q1 accidentally containing the Q2–Q3 setup).
+                    for raw in page.get_text('blocks'):
+                        px0, py0, px1, py1, ptext = raw[:5]
+                        if y0 < py0 < next_y and 'copyright' in ptext.lower():
+                            next_y = min(next_y, py0)
+                        if y0 < py0 < next_y and re.search(r'questions?\s+\d', ptext, re.I):
+                            # render_crop applies an additional 2 pt safety
+                            # margin; keep a small gap below the setup so the
+                            # current question's final option remains.
+                            next_y = min(next_y, py0 + 2)
                     # Include the shared setup paragraph for grouped questions.
                     preceding = page.get_text('blocks')
+                    # A shared setup block can sit well above the second
+                    # question (especially when the first question has a
+                    # long stem). Include it whenever its heading explicitly
+                    # names the current question, rather than relying only on
+                    # a fixed vertical-distance heuristic.
+                    named_setup = re.compile(
+                        rf'questions?\s+[^\n]*\b{number}\b', re.I
+                    )
+                    setup_band = None
                     for raw in preceding:
                         px0, py0, px1, py1, ptext = raw[:5]
-                        if py1 <= y0 and py1 > y0 - 145 and re.search(r'questions?\s+\d', ptext, re.I):
+                        if py1 <= y0 and (
+                            named_setup.search(ptext)
+                            or (py1 > y0 - 145 and re.search(r'questions?\s+\d', ptext, re.I))
+                        ):
                             y0 = min(y0, py0)
+                            setup_numbers = [int(n) for n in re.findall(r'\b(\d{1,2})\b', ptext)]
+                            group_numbers = [n for n in setup_numbers if 1 <= n <= 25]
+                            if number in group_numbers:
+                                first_number = min(group_numbers)
+                                first_group_y = next(
+                                    (block_y for block_number, block_y, _ in blocks if block_number == first_number),
+                                    number_top,
+                                )
+                                setup_band = (py0, first_group_y)
                     qid = f'fma-{year}-{suffix.lower()}-q{number:02d}'
                     asset_name = f'{qid}.png'
-                    render_crop(page, y0, next_y, ASSET_ROOT / asset_name)
+                    # When a grouped setup is included, start at the setup's
+                    # first line rather than carrying the preceding question's
+                    # final option into the image.
+                    render_top = y0 + 12 if y0 < number_top else y0
+                    segments = None
+                    if setup_band is not None:
+                        # The normal renderer adds a 12 pt top margin. Offset
+                        # the setup band's start so that margin does not pull
+                        # in the previous question's final option.
+                        segments = [(setup_band[0] + 12, setup_band[1]), (number_top, next_y)]
+                    render_crop(page, render_top, next_y, ASSET_ROOT / asset_name, number, number_top, segments)
                     question_text = clean_question_text(block_text, number)
                     specialty = classify(question_text)
                     answer = answers.get(number)
