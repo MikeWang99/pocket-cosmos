@@ -1140,7 +1140,7 @@ export const PracticeSection: React.FC = () => {
                   <div className="min-w-0">
                     <div className="text-xs uppercase tracking-widest text-nebula mb-3">{activeStep.source}</div>
                     <h2 className="text-balance font-serif text-2xl text-ink md:text-3xl">{activeStep.title}</h2>
-                    {!!activeStep.tags?.length && (
+                    {activeSet.system !== 'competition' && !!activeStep.tags?.length && (
                       <div className="mt-3 flex flex-wrap gap-2">
                         {activeStep.tags.slice(0, 4).map((tag) => (
                           <span
