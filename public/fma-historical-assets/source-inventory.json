@@ -1,0 +1,3431 @@
+{
+  "schemaVersion": 1,
+  "title": "FMA Competition historical question index",
+  "collection": "F=ma historical exams 2009\u20132020",
+  "papers": [
+    "2009_Fma_exam.pdf",
+    "2010_Fma_exam.pdf",
+    "2011_Fma_exam.pdf",
+    "2012_Fma_exam.pdf",
+    "2013_Fma_exam.pdf",
+    "2014_Fma_exam.pdf",
+    "2015_Fma_exam.pdf",
+    "2016_Fma_exam.pdf",
+    "2017_Fma_exam.pdf",
+    "2018_Fma_exam_A.pdf",
+    "2018_Fma_exam_B.pdf",
+    "2019_Fma_exam_A.pdf",
+    "2019_Fma_exam_B.pdf",
+    "2020_Fma_exam_A.pdf",
+    "2020_Fma_exam_B.pdf"
+  ],
+  "solutions": [
+    "2009_Fma_solutions.pdf",
+    "2010_Fma_solutions.pdf",
+    "2011_Fma_solutions.pdf",
+    "2012_Fma_solutions.pdf",
+    "exam1-2013-1-6-answers.pdf",
+    "2014_Fma_solutions.pdf",
+    "2015_Fma_solutions.pdf",
+    "2016_Fma_solutions.pdf",
+    "2017_Fma_answers.pdf",
+    "2018_Fma_solutions_A.pdf",
+    "2018_Fma_solutions_B.pdf",
+    "2019_Fma_solutions_A.pdf",
+    "2019_Fma_solutions_B.pdf",
+    "2020_Fma_solutions_A.pdf",
+    "2020_Fma_solutions_B.pdf"
+  ],
+  "questionCount": 375,
+  "years": [
+    2009,
+    2010,
+    2011,
+    2012,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020
+  ],
+  "questions": [
+    {
+      "id": "fma-2009-main-q01",
+      "year": 2009,
+      "paper": "",
+      "number": 1,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2009-main-q01.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2009-main-q02",
+      "year": 2009,
+      "paper": "",
+      "number": 2,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2009-main-q02.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2009-main-q03",
+      "year": 2009,
+      "paper": "",
+      "number": 3,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2009-main-q03.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2009-main-q04",
+      "year": 2009,
+      "paper": "",
+      "number": 4,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2009-main-q04.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2009-main-q05",
+      "year": 2009,
+      "paper": "",
+      "number": 5,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2009-main-q05.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2009-main-q06",
+      "year": 2009,
+      "paper": "",
+      "number": 6,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2009-main-q06.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2009-main-q07",
+      "year": 2009,
+      "paper": "",
+      "number": 7,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2009-main-q07.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2009-main-q08",
+      "year": 2009,
+      "paper": "",
+      "number": 8,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2009-main-q08.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2009-main-q09",
+      "year": 2009,
+      "paper": "",
+      "number": 9,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2009-main-q09.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2009-main-q10",
+      "year": 2009,
+      "paper": "",
+      "number": 10,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2009-main-q10.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2009-main-q11",
+      "year": 2009,
+      "paper": "",
+      "number": 11,
+      "specialty": "Work, energy & power",
+      "image": "/fma-historical-assets/fma-2009-main-q11.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2009-main-q12",
+      "year": 2009,
+      "paper": "",
+      "number": 12,
+      "specialty": "Work, energy & power",
+      "image": "/fma-historical-assets/fma-2009-main-q12.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2009-main-q13",
+      "year": 2009,
+      "paper": "",
+      "number": 13,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2009-main-q13.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2009-main-q14",
+      "year": 2009,
+      "paper": "",
+      "number": 14,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2009-main-q14.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2009-main-q15",
+      "year": 2009,
+      "paper": "",
+      "number": 15,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2009-main-q15.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2009-main-q16",
+      "year": 2009,
+      "paper": "",
+      "number": 16,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2009-main-q16.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2009-main-q17",
+      "year": 2009,
+      "paper": "",
+      "number": 17,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2009-main-q17.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2009-main-q18",
+      "year": 2009,
+      "paper": "",
+      "number": 18,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2009-main-q18.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2009-main-q19",
+      "year": 2009,
+      "paper": "",
+      "number": 19,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2009-main-q19.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2009-main-q20",
+      "year": 2009,
+      "paper": "",
+      "number": 20,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2009-main-q20.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2009-main-q21",
+      "year": 2009,
+      "paper": "",
+      "number": 21,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2009-main-q21.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2009-main-q22",
+      "year": 2009,
+      "paper": "",
+      "number": 22,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2009-main-q22.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2009-main-q23",
+      "year": 2009,
+      "paper": "",
+      "number": 23,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2009-main-q23.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2009-main-q24",
+      "year": 2009,
+      "paper": "",
+      "number": 24,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2009-main-q24.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2009-main-q25",
+      "year": 2009,
+      "paper": "",
+      "number": 25,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2009-main-q25.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2010-main-q01",
+      "year": 2010,
+      "paper": "",
+      "number": 1,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2010-main-q01.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2010-main-q02",
+      "year": 2010,
+      "paper": "",
+      "number": 2,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2010-main-q02.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2010-main-q03",
+      "year": 2010,
+      "paper": "",
+      "number": 3,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2010-main-q03.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2010-main-q04",
+      "year": 2010,
+      "paper": "",
+      "number": 4,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2010-main-q04.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2010-main-q05",
+      "year": 2010,
+      "paper": "",
+      "number": 5,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2010-main-q05.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2010-main-q06",
+      "year": 2010,
+      "paper": "",
+      "number": 6,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2010-main-q06.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2010-main-q07",
+      "year": 2010,
+      "paper": "",
+      "number": 7,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2010-main-q07.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2010-main-q08",
+      "year": 2010,
+      "paper": "",
+      "number": 8,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2010-main-q08.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2010-main-q09",
+      "year": 2010,
+      "paper": "",
+      "number": 9,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2010-main-q09.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2010-main-q10",
+      "year": 2010,
+      "paper": "",
+      "number": 10,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2010-main-q10.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2010-main-q11",
+      "year": 2010,
+      "paper": "",
+      "number": 11,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2010-main-q11.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2010-main-q12",
+      "year": 2010,
+      "paper": "",
+      "number": 12,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2010-main-q12.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2010-main-q13",
+      "year": 2010,
+      "paper": "",
+      "number": 13,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2010-main-q13.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2010-main-q14",
+      "year": 2010,
+      "paper": "",
+      "number": 14,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2010-main-q14.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2010-main-q15",
+      "year": 2010,
+      "paper": "",
+      "number": 15,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2010-main-q15.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2010-main-q16",
+      "year": 2010,
+      "paper": "",
+      "number": 16,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2010-main-q16.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2010-main-q17",
+      "year": 2010,
+      "paper": "",
+      "number": 17,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2010-main-q17.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2010-main-q18",
+      "year": 2010,
+      "paper": "",
+      "number": 18,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2010-main-q18.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2010-main-q19",
+      "year": 2010,
+      "paper": "",
+      "number": 19,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2010-main-q19.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2010-main-q20",
+      "year": 2010,
+      "paper": "",
+      "number": 20,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2010-main-q20.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2010-main-q21",
+      "year": 2010,
+      "paper": "",
+      "number": 21,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2010-main-q21.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2010-main-q22",
+      "year": 2010,
+      "paper": "",
+      "number": 22,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2010-main-q22.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2010-main-q23",
+      "year": 2010,
+      "paper": "",
+      "number": 23,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2010-main-q23.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2010-main-q24",
+      "year": 2010,
+      "paper": "",
+      "number": 24,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2010-main-q24.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2010-main-q25",
+      "year": 2010,
+      "paper": "",
+      "number": 25,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2010-main-q25.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2011-main-q01",
+      "year": 2011,
+      "paper": "",
+      "number": 1,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2011-main-q01.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2011-main-q02",
+      "year": 2011,
+      "paper": "",
+      "number": 2,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2011-main-q02.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2011-main-q03",
+      "year": 2011,
+      "paper": "",
+      "number": 3,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2011-main-q03.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2011-main-q04",
+      "year": 2011,
+      "paper": "",
+      "number": 4,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2011-main-q04.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2011-main-q05",
+      "year": 2011,
+      "paper": "",
+      "number": 5,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2011-main-q05.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2011-main-q06",
+      "year": 2011,
+      "paper": "",
+      "number": 6,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2011-main-q06.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2011-main-q07",
+      "year": 2011,
+      "paper": "",
+      "number": 7,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2011-main-q07.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2011-main-q08",
+      "year": 2011,
+      "paper": "",
+      "number": 8,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2011-main-q08.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2011-main-q09",
+      "year": 2011,
+      "paper": "",
+      "number": 9,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2011-main-q09.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2011-main-q10",
+      "year": 2011,
+      "paper": "",
+      "number": 10,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2011-main-q10.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2011-main-q11",
+      "year": 2011,
+      "paper": "",
+      "number": 11,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2011-main-q11.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2011-main-q12",
+      "year": 2011,
+      "paper": "",
+      "number": 12,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2011-main-q12.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2011-main-q13",
+      "year": 2011,
+      "paper": "",
+      "number": 13,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2011-main-q13.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2011-main-q14",
+      "year": 2011,
+      "paper": "",
+      "number": 14,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2011-main-q14.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2011-main-q15",
+      "year": 2011,
+      "paper": "",
+      "number": 15,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2011-main-q15.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2011-main-q16",
+      "year": 2011,
+      "paper": "",
+      "number": 16,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2011-main-q16.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2011-main-q17",
+      "year": 2011,
+      "paper": "",
+      "number": 17,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2011-main-q17.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2011-main-q18",
+      "year": 2011,
+      "paper": "",
+      "number": 18,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2011-main-q18.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2011-main-q19",
+      "year": 2011,
+      "paper": "",
+      "number": 19,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2011-main-q19.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2011-main-q20",
+      "year": 2011,
+      "paper": "",
+      "number": 20,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2011-main-q20.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2011-main-q21",
+      "year": 2011,
+      "paper": "",
+      "number": 21,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2011-main-q21.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2011-main-q22",
+      "year": 2011,
+      "paper": "",
+      "number": 22,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2011-main-q22.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2011-main-q23",
+      "year": 2011,
+      "paper": "",
+      "number": 23,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2011-main-q23.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2011-main-q24",
+      "year": 2011,
+      "paper": "",
+      "number": 24,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2011-main-q24.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2011-main-q25",
+      "year": 2011,
+      "paper": "",
+      "number": 25,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2011-main-q25.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2012-main-q01",
+      "year": 2012,
+      "paper": "",
+      "number": 1,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2012-main-q01.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2012-main-q02",
+      "year": 2012,
+      "paper": "",
+      "number": 2,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2012-main-q02.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2012-main-q03",
+      "year": 2012,
+      "paper": "",
+      "number": 3,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2012-main-q03.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2012-main-q04",
+      "year": 2012,
+      "paper": "",
+      "number": 4,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2012-main-q04.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2012-main-q05",
+      "year": 2012,
+      "paper": "",
+      "number": 5,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2012-main-q05.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2012-main-q06",
+      "year": 2012,
+      "paper": "",
+      "number": 6,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2012-main-q06.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2012-main-q07",
+      "year": 2012,
+      "paper": "",
+      "number": 7,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2012-main-q07.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2012-main-q08",
+      "year": 2012,
+      "paper": "",
+      "number": 8,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2012-main-q08.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2012-main-q09",
+      "year": 2012,
+      "paper": "",
+      "number": 9,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2012-main-q09.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2012-main-q10",
+      "year": 2012,
+      "paper": "",
+      "number": 10,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2012-main-q10.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2012-main-q11",
+      "year": 2012,
+      "paper": "",
+      "number": 11,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2012-main-q11.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2012-main-q12",
+      "year": 2012,
+      "paper": "",
+      "number": 12,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2012-main-q12.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2012-main-q13",
+      "year": 2012,
+      "paper": "",
+      "number": 13,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2012-main-q13.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2012-main-q14",
+      "year": 2012,
+      "paper": "",
+      "number": 14,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2012-main-q14.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2012-main-q15",
+      "year": 2012,
+      "paper": "",
+      "number": 15,
+      "specialty": "Work, energy & power",
+      "image": "/fma-historical-assets/fma-2012-main-q15.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2012-main-q16",
+      "year": 2012,
+      "paper": "",
+      "number": 16,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2012-main-q16.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2012-main-q17",
+      "year": 2012,
+      "paper": "",
+      "number": 17,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2012-main-q17.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2012-main-q18",
+      "year": 2012,
+      "paper": "",
+      "number": 18,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2012-main-q18.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2012-main-q19",
+      "year": 2012,
+      "paper": "",
+      "number": 19,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2012-main-q19.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2012-main-q20",
+      "year": 2012,
+      "paper": "",
+      "number": 20,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2012-main-q20.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2012-main-q21",
+      "year": 2012,
+      "paper": "",
+      "number": 21,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2012-main-q21.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2012-main-q22",
+      "year": 2012,
+      "paper": "",
+      "number": 22,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2012-main-q22.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2012-main-q23",
+      "year": 2012,
+      "paper": "",
+      "number": 23,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2012-main-q23.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2012-main-q24",
+      "year": 2012,
+      "paper": "",
+      "number": 24,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2012-main-q24.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2012-main-q25",
+      "year": 2012,
+      "paper": "",
+      "number": 25,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2012-main-q25.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2013-main-q01",
+      "year": 2013,
+      "paper": "",
+      "number": 1,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2013-main-q01.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2013-main-q02",
+      "year": 2013,
+      "paper": "",
+      "number": 2,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2013-main-q02.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2013-main-q03",
+      "year": 2013,
+      "paper": "",
+      "number": 3,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2013-main-q03.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2013-main-q04",
+      "year": 2013,
+      "paper": "",
+      "number": 4,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2013-main-q04.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2013-main-q05",
+      "year": 2013,
+      "paper": "",
+      "number": 5,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2013-main-q05.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2013-main-q06",
+      "year": 2013,
+      "paper": "",
+      "number": 6,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2013-main-q06.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2013-main-q07",
+      "year": 2013,
+      "paper": "",
+      "number": 7,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2013-main-q07.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2013-main-q08",
+      "year": 2013,
+      "paper": "",
+      "number": 8,
+      "specialty": "Work, energy & power",
+      "image": "/fma-historical-assets/fma-2013-main-q08.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2013-main-q09",
+      "year": 2013,
+      "paper": "",
+      "number": 9,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2013-main-q09.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2013-main-q10",
+      "year": 2013,
+      "paper": "",
+      "number": 10,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2013-main-q10.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2013-main-q11",
+      "year": 2013,
+      "paper": "",
+      "number": 11,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2013-main-q11.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2013-main-q12",
+      "year": 2013,
+      "paper": "",
+      "number": 12,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2013-main-q12.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2013-main-q13",
+      "year": 2013,
+      "paper": "",
+      "number": 13,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2013-main-q13.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2013-main-q14",
+      "year": 2013,
+      "paper": "",
+      "number": 14,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2013-main-q14.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2013-main-q15",
+      "year": 2013,
+      "paper": "",
+      "number": 15,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2013-main-q15.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2013-main-q16",
+      "year": 2013,
+      "paper": "",
+      "number": 16,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2013-main-q16.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2013-main-q17",
+      "year": 2013,
+      "paper": "",
+      "number": 17,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2013-main-q17.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2013-main-q18",
+      "year": 2013,
+      "paper": "",
+      "number": 18,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2013-main-q18.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2013-main-q19",
+      "year": 2013,
+      "paper": "",
+      "number": 19,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2013-main-q19.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2013-main-q20",
+      "year": 2013,
+      "paper": "",
+      "number": 20,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2013-main-q20.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2013-main-q21",
+      "year": 2013,
+      "paper": "",
+      "number": 21,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2013-main-q21.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2013-main-q22",
+      "year": 2013,
+      "paper": "",
+      "number": 22,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2013-main-q22.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2013-main-q23",
+      "year": 2013,
+      "paper": "",
+      "number": 23,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2013-main-q23.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2013-main-q24",
+      "year": 2013,
+      "paper": "",
+      "number": 24,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2013-main-q24.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2013-main-q25",
+      "year": 2013,
+      "paper": "",
+      "number": 25,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2013-main-q25.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2014-main-q01",
+      "year": 2014,
+      "paper": "",
+      "number": 1,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2014-main-q01.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2014-main-q02",
+      "year": 2014,
+      "paper": "",
+      "number": 2,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2014-main-q02.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2014-main-q03",
+      "year": 2014,
+      "paper": "",
+      "number": 3,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2014-main-q03.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2014-main-q04",
+      "year": 2014,
+      "paper": "",
+      "number": 4,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2014-main-q04.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2014-main-q05",
+      "year": 2014,
+      "paper": "",
+      "number": 5,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2014-main-q05.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2014-main-q06",
+      "year": 2014,
+      "paper": "",
+      "number": 6,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2014-main-q06.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2014-main-q07",
+      "year": 2014,
+      "paper": "",
+      "number": 7,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2014-main-q07.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2014-main-q08",
+      "year": 2014,
+      "paper": "",
+      "number": 8,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2014-main-q08.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2014-main-q09",
+      "year": 2014,
+      "paper": "",
+      "number": 9,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2014-main-q09.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2014-main-q10",
+      "year": 2014,
+      "paper": "",
+      "number": 10,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2014-main-q10.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2014-main-q11",
+      "year": 2014,
+      "paper": "",
+      "number": 11,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2014-main-q11.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2014-main-q12",
+      "year": 2014,
+      "paper": "",
+      "number": 12,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2014-main-q12.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2014-main-q13",
+      "year": 2014,
+      "paper": "",
+      "number": 13,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2014-main-q13.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2014-main-q14",
+      "year": 2014,
+      "paper": "",
+      "number": 14,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2014-main-q14.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2014-main-q15",
+      "year": 2014,
+      "paper": "",
+      "number": 15,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2014-main-q15.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2014-main-q16",
+      "year": 2014,
+      "paper": "",
+      "number": 16,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2014-main-q16.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2014-main-q17",
+      "year": 2014,
+      "paper": "",
+      "number": 17,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2014-main-q17.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2014-main-q18",
+      "year": 2014,
+      "paper": "",
+      "number": 18,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2014-main-q18.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2014-main-q19",
+      "year": 2014,
+      "paper": "",
+      "number": 19,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2014-main-q19.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2014-main-q20",
+      "year": 2014,
+      "paper": "",
+      "number": 20,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2014-main-q20.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2014-main-q21",
+      "year": 2014,
+      "paper": "",
+      "number": 21,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2014-main-q21.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2014-main-q22",
+      "year": 2014,
+      "paper": "",
+      "number": 22,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2014-main-q22.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2014-main-q23",
+      "year": 2014,
+      "paper": "",
+      "number": 23,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2014-main-q23.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2014-main-q24",
+      "year": 2014,
+      "paper": "",
+      "number": 24,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2014-main-q24.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2014-main-q25",
+      "year": 2014,
+      "paper": "",
+      "number": 25,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2014-main-q25.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2015-main-q01",
+      "year": 2015,
+      "paper": "",
+      "number": 1,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2015-main-q01.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2015-main-q02",
+      "year": 2015,
+      "paper": "",
+      "number": 2,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2015-main-q02.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2015-main-q03",
+      "year": 2015,
+      "paper": "",
+      "number": 3,
+      "specialty": "Work, energy & power",
+      "image": "/fma-historical-assets/fma-2015-main-q03.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2015-main-q04",
+      "year": 2015,
+      "paper": "",
+      "number": 4,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2015-main-q04.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2015-main-q05",
+      "year": 2015,
+      "paper": "",
+      "number": 5,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2015-main-q05.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2015-main-q06",
+      "year": 2015,
+      "paper": "",
+      "number": 6,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2015-main-q06.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2015-main-q07",
+      "year": 2015,
+      "paper": "",
+      "number": 7,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2015-main-q07.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2015-main-q08",
+      "year": 2015,
+      "paper": "",
+      "number": 8,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2015-main-q08.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2015-main-q09",
+      "year": 2015,
+      "paper": "",
+      "number": 9,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2015-main-q09.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2015-main-q10",
+      "year": 2015,
+      "paper": "",
+      "number": 10,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2015-main-q10.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2015-main-q11",
+      "year": 2015,
+      "paper": "",
+      "number": 11,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2015-main-q11.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2015-main-q12",
+      "year": 2015,
+      "paper": "",
+      "number": 12,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2015-main-q12.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2015-main-q13",
+      "year": 2015,
+      "paper": "",
+      "number": 13,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2015-main-q13.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2015-main-q14",
+      "year": 2015,
+      "paper": "",
+      "number": 14,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2015-main-q14.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2015-main-q15",
+      "year": 2015,
+      "paper": "",
+      "number": 15,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2015-main-q15.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2015-main-q16",
+      "year": 2015,
+      "paper": "",
+      "number": 16,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2015-main-q16.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2015-main-q17",
+      "year": 2015,
+      "paper": "",
+      "number": 17,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2015-main-q17.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2015-main-q18",
+      "year": 2015,
+      "paper": "",
+      "number": 18,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2015-main-q18.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2015-main-q19",
+      "year": 2015,
+      "paper": "",
+      "number": 19,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2015-main-q19.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2015-main-q20",
+      "year": 2015,
+      "paper": "",
+      "number": 20,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2015-main-q20.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2015-main-q21",
+      "year": 2015,
+      "paper": "",
+      "number": 21,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2015-main-q21.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2015-main-q22",
+      "year": 2015,
+      "paper": "",
+      "number": 22,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2015-main-q22.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2015-main-q23",
+      "year": 2015,
+      "paper": "",
+      "number": 23,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2015-main-q23.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2015-main-q24",
+      "year": 2015,
+      "paper": "",
+      "number": 24,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2015-main-q24.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2015-main-q25",
+      "year": 2015,
+      "paper": "",
+      "number": 25,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2015-main-q25.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2016-main-q01",
+      "year": 2016,
+      "paper": "",
+      "number": 1,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2016-main-q01.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2016-main-q02",
+      "year": 2016,
+      "paper": "",
+      "number": 2,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2016-main-q02.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2016-main-q03",
+      "year": 2016,
+      "paper": "",
+      "number": 3,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2016-main-q03.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2016-main-q04",
+      "year": 2016,
+      "paper": "",
+      "number": 4,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2016-main-q04.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2016-main-q05",
+      "year": 2016,
+      "paper": "",
+      "number": 5,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2016-main-q05.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2016-main-q06",
+      "year": 2016,
+      "paper": "",
+      "number": 6,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2016-main-q06.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2016-main-q07",
+      "year": 2016,
+      "paper": "",
+      "number": 7,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2016-main-q07.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2016-main-q08",
+      "year": 2016,
+      "paper": "",
+      "number": 8,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2016-main-q08.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2016-main-q09",
+      "year": 2016,
+      "paper": "",
+      "number": 9,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2016-main-q09.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2016-main-q10",
+      "year": 2016,
+      "paper": "",
+      "number": 10,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2016-main-q10.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2016-main-q11",
+      "year": 2016,
+      "paper": "",
+      "number": 11,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2016-main-q11.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2016-main-q12",
+      "year": 2016,
+      "paper": "",
+      "number": 12,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2016-main-q12.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2016-main-q13",
+      "year": 2016,
+      "paper": "",
+      "number": 13,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2016-main-q13.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2016-main-q14",
+      "year": 2016,
+      "paper": "",
+      "number": 14,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2016-main-q14.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2016-main-q15",
+      "year": 2016,
+      "paper": "",
+      "number": 15,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2016-main-q15.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2016-main-q16",
+      "year": 2016,
+      "paper": "",
+      "number": 16,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2016-main-q16.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2016-main-q17",
+      "year": 2016,
+      "paper": "",
+      "number": 17,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2016-main-q17.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2016-main-q18",
+      "year": 2016,
+      "paper": "",
+      "number": 18,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2016-main-q18.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2016-main-q19",
+      "year": 2016,
+      "paper": "",
+      "number": 19,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2016-main-q19.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2016-main-q20",
+      "year": 2016,
+      "paper": "",
+      "number": 20,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2016-main-q20.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2016-main-q21",
+      "year": 2016,
+      "paper": "",
+      "number": 21,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2016-main-q21.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2016-main-q22",
+      "year": 2016,
+      "paper": "",
+      "number": 22,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2016-main-q22.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2016-main-q23",
+      "year": 2016,
+      "paper": "",
+      "number": 23,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2016-main-q23.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2016-main-q24",
+      "year": 2016,
+      "paper": "",
+      "number": 24,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2016-main-q24.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2016-main-q25",
+      "year": 2016,
+      "paper": "",
+      "number": 25,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2016-main-q25.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2017-main-q01",
+      "year": 2017,
+      "paper": "",
+      "number": 1,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2017-main-q01.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2017-main-q02",
+      "year": 2017,
+      "paper": "",
+      "number": 2,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2017-main-q02.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2017-main-q03",
+      "year": 2017,
+      "paper": "",
+      "number": 3,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2017-main-q03.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2017-main-q04",
+      "year": 2017,
+      "paper": "",
+      "number": 4,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2017-main-q04.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2017-main-q05",
+      "year": 2017,
+      "paper": "",
+      "number": 5,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2017-main-q05.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2017-main-q06",
+      "year": 2017,
+      "paper": "",
+      "number": 6,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2017-main-q06.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2017-main-q07",
+      "year": 2017,
+      "paper": "",
+      "number": 7,
+      "specialty": "Work, energy & power",
+      "image": "/fma-historical-assets/fma-2017-main-q07.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2017-main-q08",
+      "year": 2017,
+      "paper": "",
+      "number": 8,
+      "specialty": "Work, energy & power",
+      "image": "/fma-historical-assets/fma-2017-main-q08.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2017-main-q09",
+      "year": 2017,
+      "paper": "",
+      "number": 9,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2017-main-q09.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2017-main-q10",
+      "year": 2017,
+      "paper": "",
+      "number": 10,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2017-main-q10.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2017-main-q11",
+      "year": 2017,
+      "paper": "",
+      "number": 11,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2017-main-q11.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2017-main-q12",
+      "year": 2017,
+      "paper": "",
+      "number": 12,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2017-main-q12.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2017-main-q13",
+      "year": 2017,
+      "paper": "",
+      "number": 13,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2017-main-q13.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2017-main-q14",
+      "year": 2017,
+      "paper": "",
+      "number": 14,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2017-main-q14.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2017-main-q15",
+      "year": 2017,
+      "paper": "",
+      "number": 15,
+      "specialty": "Center of mass & systems",
+      "image": "/fma-historical-assets/fma-2017-main-q15.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2017-main-q16",
+      "year": 2017,
+      "paper": "",
+      "number": 16,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2017-main-q16.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2017-main-q17",
+      "year": 2017,
+      "paper": "",
+      "number": 17,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2017-main-q17.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2017-main-q18",
+      "year": 2017,
+      "paper": "",
+      "number": 18,
+      "specialty": "Center of mass & systems",
+      "image": "/fma-historical-assets/fma-2017-main-q18.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2017-main-q19",
+      "year": 2017,
+      "paper": "",
+      "number": 19,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2017-main-q19.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2017-main-q20",
+      "year": 2017,
+      "paper": "",
+      "number": 20,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2017-main-q20.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2017-main-q21",
+      "year": 2017,
+      "paper": "",
+      "number": 21,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2017-main-q21.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2017-main-q22",
+      "year": 2017,
+      "paper": "",
+      "number": 22,
+      "specialty": "Work, energy & power",
+      "image": "/fma-historical-assets/fma-2017-main-q22.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2017-main-q23",
+      "year": 2017,
+      "paper": "",
+      "number": 23,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2017-main-q23.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2017-main-q24",
+      "year": 2017,
+      "paper": "",
+      "number": 24,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2017-main-q24.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2017-main-q25",
+      "year": 2017,
+      "paper": "",
+      "number": 25,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2017-main-q25.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2018-a-q01",
+      "year": 2018,
+      "paper": "A",
+      "number": 1,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2018-a-q01.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2018-a-q02",
+      "year": 2018,
+      "paper": "A",
+      "number": 2,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2018-a-q02.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2018-a-q03",
+      "year": 2018,
+      "paper": "A",
+      "number": 3,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2018-a-q03.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2018-a-q04",
+      "year": 2018,
+      "paper": "A",
+      "number": 4,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2018-a-q04.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2018-a-q05",
+      "year": 2018,
+      "paper": "A",
+      "number": 5,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2018-a-q05.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2018-a-q06",
+      "year": 2018,
+      "paper": "A",
+      "number": 6,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2018-a-q06.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2018-a-q07",
+      "year": 2018,
+      "paper": "A",
+      "number": 7,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2018-a-q07.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2018-a-q08",
+      "year": 2018,
+      "paper": "A",
+      "number": 8,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2018-a-q08.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2018-a-q09",
+      "year": 2018,
+      "paper": "A",
+      "number": 9,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2018-a-q09.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2018-a-q10",
+      "year": 2018,
+      "paper": "A",
+      "number": 10,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2018-a-q10.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2018-a-q11",
+      "year": 2018,
+      "paper": "A",
+      "number": 11,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2018-a-q11.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2018-a-q12",
+      "year": 2018,
+      "paper": "A",
+      "number": 12,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2018-a-q12.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2018-a-q13",
+      "year": 2018,
+      "paper": "A",
+      "number": 13,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2018-a-q13.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2018-a-q14",
+      "year": 2018,
+      "paper": "A",
+      "number": 14,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2018-a-q14.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2018-a-q15",
+      "year": 2018,
+      "paper": "A",
+      "number": 15,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2018-a-q15.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2018-a-q16",
+      "year": 2018,
+      "paper": "A",
+      "number": 16,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2018-a-q16.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2018-a-q17",
+      "year": 2018,
+      "paper": "A",
+      "number": 17,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2018-a-q17.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2018-a-q18",
+      "year": 2018,
+      "paper": "A",
+      "number": 18,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2018-a-q18.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2018-a-q19",
+      "year": 2018,
+      "paper": "A",
+      "number": 19,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2018-a-q19.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2018-a-q20",
+      "year": 2018,
+      "paper": "A",
+      "number": 20,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2018-a-q20.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2018-a-q21",
+      "year": 2018,
+      "paper": "A",
+      "number": 21,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2018-a-q21.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2018-a-q22",
+      "year": 2018,
+      "paper": "A",
+      "number": 22,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2018-a-q22.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2018-a-q23",
+      "year": 2018,
+      "paper": "A",
+      "number": 23,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2018-a-q23.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2018-a-q24",
+      "year": 2018,
+      "paper": "A",
+      "number": 24,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2018-a-q24.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2018-a-q25",
+      "year": 2018,
+      "paper": "A",
+      "number": 25,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2018-a-q25.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2018-b-q01",
+      "year": 2018,
+      "paper": "B",
+      "number": 1,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2018-b-q01.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2018-b-q02",
+      "year": 2018,
+      "paper": "B",
+      "number": 2,
+      "specialty": "Work, energy & power",
+      "image": "/fma-historical-assets/fma-2018-b-q02.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2018-b-q03",
+      "year": 2018,
+      "paper": "B",
+      "number": 3,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2018-b-q03.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2018-b-q04",
+      "year": 2018,
+      "paper": "B",
+      "number": 4,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2018-b-q04.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2018-b-q05",
+      "year": 2018,
+      "paper": "B",
+      "number": 5,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2018-b-q05.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2018-b-q06",
+      "year": 2018,
+      "paper": "B",
+      "number": 6,
+      "specialty": "Materials & elasticity",
+      "image": "/fma-historical-assets/fma-2018-b-q06.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2018-b-q07",
+      "year": 2018,
+      "paper": "B",
+      "number": 7,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2018-b-q07.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2018-b-q08",
+      "year": 2018,
+      "paper": "B",
+      "number": 8,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2018-b-q08.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2018-b-q09",
+      "year": 2018,
+      "paper": "B",
+      "number": 9,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2018-b-q09.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2018-b-q10",
+      "year": 2018,
+      "paper": "B",
+      "number": 10,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2018-b-q10.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2018-b-q11",
+      "year": 2018,
+      "paper": "B",
+      "number": 11,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2018-b-q11.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2018-b-q12",
+      "year": 2018,
+      "paper": "B",
+      "number": 12,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2018-b-q12.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2018-b-q13",
+      "year": 2018,
+      "paper": "B",
+      "number": 13,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2018-b-q13.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2018-b-q14",
+      "year": 2018,
+      "paper": "B",
+      "number": 14,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2018-b-q14.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2018-b-q15",
+      "year": 2018,
+      "paper": "B",
+      "number": 15,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2018-b-q15.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2018-b-q16",
+      "year": 2018,
+      "paper": "B",
+      "number": 16,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2018-b-q16.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2018-b-q17",
+      "year": 2018,
+      "paper": "B",
+      "number": 17,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2018-b-q17.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2018-b-q18",
+      "year": 2018,
+      "paper": "B",
+      "number": 18,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2018-b-q18.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2018-b-q19",
+      "year": 2018,
+      "paper": "B",
+      "number": 19,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2018-b-q19.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2018-b-q20",
+      "year": 2018,
+      "paper": "B",
+      "number": 20,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2018-b-q20.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2018-b-q21",
+      "year": 2018,
+      "paper": "B",
+      "number": 21,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2018-b-q21.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2018-b-q22",
+      "year": 2018,
+      "paper": "B",
+      "number": 22,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2018-b-q22.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2018-b-q23",
+      "year": 2018,
+      "paper": "B",
+      "number": 23,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2018-b-q23.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2018-b-q24",
+      "year": 2018,
+      "paper": "B",
+      "number": 24,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2018-b-q24.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2018-b-q25",
+      "year": 2018,
+      "paper": "B",
+      "number": 25,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2018-b-q25.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2019-a-q01",
+      "year": 2019,
+      "paper": "A",
+      "number": 1,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2019-a-q01.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2019-a-q02",
+      "year": 2019,
+      "paper": "A",
+      "number": 2,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2019-a-q02.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2019-a-q03",
+      "year": 2019,
+      "paper": "A",
+      "number": 3,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2019-a-q03.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2019-a-q04",
+      "year": 2019,
+      "paper": "A",
+      "number": 4,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2019-a-q04.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2019-a-q05",
+      "year": 2019,
+      "paper": "A",
+      "number": 5,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2019-a-q05.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2019-a-q06",
+      "year": 2019,
+      "paper": "A",
+      "number": 6,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2019-a-q06.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2019-a-q07",
+      "year": 2019,
+      "paper": "A",
+      "number": 7,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2019-a-q07.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2019-a-q08",
+      "year": 2019,
+      "paper": "A",
+      "number": 8,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2019-a-q08.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2019-a-q09",
+      "year": 2019,
+      "paper": "A",
+      "number": 9,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2019-a-q09.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2019-a-q10",
+      "year": 2019,
+      "paper": "A",
+      "number": 10,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2019-a-q10.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2019-a-q11",
+      "year": 2019,
+      "paper": "A",
+      "number": 11,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2019-a-q11.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2019-a-q12",
+      "year": 2019,
+      "paper": "A",
+      "number": 12,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2019-a-q12.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2019-a-q13",
+      "year": 2019,
+      "paper": "A",
+      "number": 13,
+      "specialty": "Work, energy & power",
+      "image": "/fma-historical-assets/fma-2019-a-q13.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2019-a-q14",
+      "year": 2019,
+      "paper": "A",
+      "number": 14,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2019-a-q14.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2019-a-q15",
+      "year": 2019,
+      "paper": "A",
+      "number": 15,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2019-a-q15.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2019-a-q16",
+      "year": 2019,
+      "paper": "A",
+      "number": 16,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2019-a-q16.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2019-a-q17",
+      "year": 2019,
+      "paper": "A",
+      "number": 17,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2019-a-q17.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2019-a-q18",
+      "year": 2019,
+      "paper": "A",
+      "number": 18,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2019-a-q18.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2019-a-q19",
+      "year": 2019,
+      "paper": "A",
+      "number": 19,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2019-a-q19.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2019-a-q20",
+      "year": 2019,
+      "paper": "A",
+      "number": 20,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2019-a-q20.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2019-a-q21",
+      "year": 2019,
+      "paper": "A",
+      "number": 21,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2019-a-q21.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2019-a-q22",
+      "year": 2019,
+      "paper": "A",
+      "number": 22,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2019-a-q22.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2019-a-q23",
+      "year": 2019,
+      "paper": "A",
+      "number": 23,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2019-a-q23.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2019-a-q24",
+      "year": 2019,
+      "paper": "A",
+      "number": 24,
+      "specialty": "Work, energy & power",
+      "image": "/fma-historical-assets/fma-2019-a-q24.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2019-a-q25",
+      "year": 2019,
+      "paper": "A",
+      "number": 25,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2019-a-q25.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2019-b-q01",
+      "year": 2019,
+      "paper": "B",
+      "number": 1,
+      "specialty": "Work, energy & power",
+      "image": "/fma-historical-assets/fma-2019-b-q01.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2019-b-q02",
+      "year": 2019,
+      "paper": "B",
+      "number": 2,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2019-b-q02.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2019-b-q03",
+      "year": 2019,
+      "paper": "B",
+      "number": 3,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2019-b-q03.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2019-b-q04",
+      "year": 2019,
+      "paper": "B",
+      "number": 4,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2019-b-q04.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2019-b-q05",
+      "year": 2019,
+      "paper": "B",
+      "number": 5,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2019-b-q05.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2019-b-q06",
+      "year": 2019,
+      "paper": "B",
+      "number": 6,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2019-b-q06.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2019-b-q07",
+      "year": 2019,
+      "paper": "B",
+      "number": 7,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2019-b-q07.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2019-b-q08",
+      "year": 2019,
+      "paper": "B",
+      "number": 8,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2019-b-q08.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2019-b-q09",
+      "year": 2019,
+      "paper": "B",
+      "number": 9,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2019-b-q09.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2019-b-q10",
+      "year": 2019,
+      "paper": "B",
+      "number": 10,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2019-b-q10.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2019-b-q11",
+      "year": 2019,
+      "paper": "B",
+      "number": 11,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2019-b-q11.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2019-b-q12",
+      "year": 2019,
+      "paper": "B",
+      "number": 12,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2019-b-q12.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2019-b-q13",
+      "year": 2019,
+      "paper": "B",
+      "number": 13,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2019-b-q13.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2019-b-q14",
+      "year": 2019,
+      "paper": "B",
+      "number": 14,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2019-b-q14.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2019-b-q15",
+      "year": 2019,
+      "paper": "B",
+      "number": 15,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2019-b-q15.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2019-b-q16",
+      "year": 2019,
+      "paper": "B",
+      "number": 16,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2019-b-q16.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2019-b-q17",
+      "year": 2019,
+      "paper": "B",
+      "number": 17,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2019-b-q17.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2019-b-q18",
+      "year": 2019,
+      "paper": "B",
+      "number": 18,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2019-b-q18.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2019-b-q19",
+      "year": 2019,
+      "paper": "B",
+      "number": 19,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2019-b-q19.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2019-b-q20",
+      "year": 2019,
+      "paper": "B",
+      "number": 20,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2019-b-q20.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2019-b-q21",
+      "year": 2019,
+      "paper": "B",
+      "number": 21,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2019-b-q21.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2019-b-q22",
+      "year": 2019,
+      "paper": "B",
+      "number": 22,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2019-b-q22.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2019-b-q23",
+      "year": 2019,
+      "paper": "B",
+      "number": 23,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2019-b-q23.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2019-b-q24",
+      "year": 2019,
+      "paper": "B",
+      "number": 24,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2019-b-q24.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2019-b-q25",
+      "year": 2019,
+      "paper": "B",
+      "number": 25,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2019-b-q25.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2020-a-q01",
+      "year": 2020,
+      "paper": "A",
+      "number": 1,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2020-a-q01.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2020-a-q02",
+      "year": 2020,
+      "paper": "A",
+      "number": 2,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2020-a-q02.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2020-a-q03",
+      "year": 2020,
+      "paper": "A",
+      "number": 3,
+      "specialty": "Work, energy & power",
+      "image": "/fma-historical-assets/fma-2020-a-q03.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2020-a-q04",
+      "year": 2020,
+      "paper": "A",
+      "number": 4,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2020-a-q04.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2020-a-q05",
+      "year": 2020,
+      "paper": "A",
+      "number": 5,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2020-a-q05.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2020-a-q06",
+      "year": 2020,
+      "paper": "A",
+      "number": 6,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2020-a-q06.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2020-a-q07",
+      "year": 2020,
+      "paper": "A",
+      "number": 7,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2020-a-q07.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2020-a-q08",
+      "year": 2020,
+      "paper": "A",
+      "number": 8,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2020-a-q08.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2020-a-q09",
+      "year": 2020,
+      "paper": "A",
+      "number": 9,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2020-a-q09.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2020-a-q10",
+      "year": 2020,
+      "paper": "A",
+      "number": 10,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2020-a-q10.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2020-a-q11",
+      "year": 2020,
+      "paper": "A",
+      "number": 11,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2020-a-q11.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2020-a-q12",
+      "year": 2020,
+      "paper": "A",
+      "number": 12,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2020-a-q12.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2020-a-q13",
+      "year": 2020,
+      "paper": "A",
+      "number": 13,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2020-a-q13.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2020-a-q14",
+      "year": 2020,
+      "paper": "A",
+      "number": 14,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2020-a-q14.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2020-a-q15",
+      "year": 2020,
+      "paper": "A",
+      "number": 15,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2020-a-q15.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2020-a-q16",
+      "year": 2020,
+      "paper": "A",
+      "number": 16,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2020-a-q16.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2020-a-q17",
+      "year": 2020,
+      "paper": "A",
+      "number": 17,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2020-a-q17.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2020-a-q18",
+      "year": 2020,
+      "paper": "A",
+      "number": 18,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2020-a-q18.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2020-a-q19",
+      "year": 2020,
+      "paper": "A",
+      "number": 19,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2020-a-q19.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2020-a-q20",
+      "year": 2020,
+      "paper": "A",
+      "number": 20,
+      "specialty": "Work, energy & power",
+      "image": "/fma-historical-assets/fma-2020-a-q20.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2020-a-q21",
+      "year": 2020,
+      "paper": "A",
+      "number": 21,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2020-a-q21.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2020-a-q22",
+      "year": 2020,
+      "paper": "A",
+      "number": 22,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2020-a-q22.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2020-a-q23",
+      "year": 2020,
+      "paper": "A",
+      "number": 23,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2020-a-q23.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2020-a-q24",
+      "year": 2020,
+      "paper": "A",
+      "number": 24,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2020-a-q24.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2020-a-q25",
+      "year": 2020,
+      "paper": "A",
+      "number": 25,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2020-a-q25.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2020-b-q01",
+      "year": 2020,
+      "paper": "B",
+      "number": 1,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2020-b-q01.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2020-b-q02",
+      "year": 2020,
+      "paper": "B",
+      "number": 2,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2020-b-q02.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2020-b-q03",
+      "year": 2020,
+      "paper": "B",
+      "number": 3,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2020-b-q03.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2020-b-q04",
+      "year": 2020,
+      "paper": "B",
+      "number": 4,
+      "specialty": "Projectile motion & components",
+      "image": "/fma-historical-assets/fma-2020-b-q04.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2020-b-q05",
+      "year": 2020,
+      "paper": "B",
+      "number": 5,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2020-b-q05.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2020-b-q06",
+      "year": 2020,
+      "paper": "B",
+      "number": 6,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2020-b-q06.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2020-b-q07",
+      "year": 2020,
+      "paper": "B",
+      "number": 7,
+      "specialty": "Gravitation & orbital motion",
+      "image": "/fma-historical-assets/fma-2020-b-q07.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2020-b-q08",
+      "year": 2020,
+      "paper": "B",
+      "number": 8,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2020-b-q08.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2020-b-q09",
+      "year": 2020,
+      "paper": "B",
+      "number": 9,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2020-b-q09.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2020-b-q10",
+      "year": 2020,
+      "paper": "B",
+      "number": 10,
+      "specialty": "Oscillations & waves",
+      "image": "/fma-historical-assets/fma-2020-b-q10.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2020-b-q11",
+      "year": 2020,
+      "paper": "B",
+      "number": 11,
+      "specialty": "Work, energy & power",
+      "image": "/fma-historical-assets/fma-2020-b-q11.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2020-b-q12",
+      "year": 2020,
+      "paper": "B",
+      "number": 12,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2020-b-q12.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2020-b-q13",
+      "year": 2020,
+      "paper": "B",
+      "number": 13,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2020-b-q13.png",
+      "answer": "B"
+    },
+    {
+      "id": "fma-2020-b-q14",
+      "year": 2020,
+      "paper": "B",
+      "number": 14,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2020-b-q14.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2020-b-q15",
+      "year": 2020,
+      "paper": "B",
+      "number": 15,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2020-b-q15.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2020-b-q16",
+      "year": 2020,
+      "paper": "B",
+      "number": 16,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2020-b-q16.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2020-b-q17",
+      "year": 2020,
+      "paper": "B",
+      "number": 17,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2020-b-q17.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2020-b-q18",
+      "year": 2020,
+      "paper": "B",
+      "number": 18,
+      "specialty": "Newton's laws & friction",
+      "image": "/fma-historical-assets/fma-2020-b-q18.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2020-b-q19",
+      "year": 2020,
+      "paper": "B",
+      "number": 19,
+      "specialty": "Rotation, torque & rolling",
+      "image": "/fma-historical-assets/fma-2020-b-q19.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2020-b-q20",
+      "year": 2020,
+      "paper": "B",
+      "number": 20,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2020-b-q20.png",
+      "answer": "E"
+    },
+    {
+      "id": "fma-2020-b-q21",
+      "year": 2020,
+      "paper": "B",
+      "number": 21,
+      "specialty": "Center of mass & systems",
+      "image": "/fma-historical-assets/fma-2020-b-q21.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2020-b-q22",
+      "year": 2020,
+      "paper": "B",
+      "number": 22,
+      "specialty": "Kinematics & motion graphs",
+      "image": "/fma-historical-assets/fma-2020-b-q22.png",
+      "answer": "A"
+    },
+    {
+      "id": "fma-2020-b-q23",
+      "year": 2020,
+      "paper": "B",
+      "number": 23,
+      "specialty": "Fluids, pressure & buoyancy",
+      "image": "/fma-historical-assets/fma-2020-b-q23.png",
+      "answer": "C"
+    },
+    {
+      "id": "fma-2020-b-q24",
+      "year": 2020,
+      "paper": "B",
+      "number": 24,
+      "specialty": "Momentum & collisions",
+      "image": "/fma-historical-assets/fma-2020-b-q24.png",
+      "answer": "D"
+    },
+    {
+      "id": "fma-2020-b-q25",
+      "year": 2020,
+      "paper": "B",
+      "number": 25,
+      "specialty": "Data, measurement & dimensional analysis",
+      "image": "/fma-historical-assets/fma-2020-b-q25.png",
+      "answer": "D"
+    }
+  ]
+}

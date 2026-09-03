@@ -355,6 +355,7 @@ export const PracticeSection: React.FC = () => {
   const [isListening, setIsListening] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
   const [difficultyFilter, setDifficultyFilter] = useState<'all' | 'easy' | 'medium' | 'hard'>('all');
+  const [specialtyFilter, setSpecialtyFilter] = useState<'all' | string>('all');
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const { resetSavedAttempts, savedAttempts, saveAttempt, syncError, syncState } = usePracticeProgress(activeSetId);
 
@@ -390,11 +391,18 @@ export const PracticeSection: React.FC = () => {
   const supportsDifficultyFilter =
     activePracticeKind === 'mcq' &&
     activeSet.steps.some((step) => Number.isFinite(step.difficulty) || step.tags?.some((tag) => tag.startsWith('Difficulty ')));
+  const supportsSpecialtyFilter = activeSet.system === 'competition' && activeSet.steps.some((step) => (step.specialtyTags?.length ?? 0) > 0);
+  const specialtyOptions = useMemo(() => {
+    const labels = new Set<string>();
+    activeSet.steps.forEach((step) => step.specialtyTags?.forEach((label) => labels.add(label)));
+    return [...labels].sort((a, b) => a.localeCompare(b));
+  }, [activeSet.steps]);
 
   // Filter any indexed MCQ bank by its normalized 1–5 difficulty value.
   const practiceSteps = useMemo(() => {
-    if (!supportsDifficultyFilter || difficultyFilter === 'all') return activeSet.steps;
     return activeSet.steps.filter((step) => {
+      if (supportsSpecialtyFilter && specialtyFilter !== 'all' && !step.specialtyTags?.includes(specialtyFilter)) return false;
+      if (!supportsDifficultyFilter || difficultyFilter === 'all') return true;
       const diffTag = step.tags?.find((tag) => tag.startsWith('Difficulty '));
       const taggedLevel = diffTag
         ? parseInt(diffTag.replace('Difficulty ', ''), 10)
@@ -406,7 +414,7 @@ export const PracticeSection: React.FC = () => {
       if (difficultyFilter === 'hard') return level >= 4;
       return true;
     });
-  }, [activeSet.steps, supportsDifficultyFilter, difficultyFilter]);
+  }, [activeSet.steps, supportsDifficultyFilter, difficultyFilter, supportsSpecialtyFilter, specialtyFilter]);
 
   // Map "Difficulty N" tag to display label
   const formatTag = (tag: string): string => {
@@ -434,8 +442,8 @@ export const PracticeSection: React.FC = () => {
   const currentAnswer = activeStep ? (answers[activeStep.id] ?? '') : '';
   const currentAnswerImage = activeStep ? (answerImages[activeStep.id] ?? null) : null;
   const currentResult = activeStep ? results[activeStep.id] : undefined;
-  const completedCount = Object.keys(results).length;
-  const resultList: EvaluationResult[] = Object.keys(results).map((key) => results[key]);
+  const completedCount = practiceSteps.filter((step) => Boolean(results[step.id])).length;
+  const resultList: EvaluationResult[] = practiceSteps.flatMap((step) => results[step.id] ? [results[step.id]] : []);
 
   const totalScore = useMemo(
     () => resultList.reduce((sum, result) => sum + result.score, 0),
@@ -546,29 +554,20 @@ export const PracticeSection: React.FC = () => {
       });
     }
 
-    // F=ma competition archive, organized into topic chapters.
+    // F=ma is one consolidated bank; the model-specialty chips below provide
+    // the focused views without repeating year labels in the directory.
     const competitionSets = practiceSets.filter((s) => s.system === 'competition');
     if (competitionSets.length) {
-      const chapterMap = new Map<number, { title: string; sets: PracticeSet[] }>();
-      competitionSets.forEach((set) => {
-        const chapter = set.chapter ?? 0;
-        if (!chapterMap.has(chapter)) chapterMap.set(chapter, { title: set.chapterTitle ?? `Topic ${chapter}`, sets: [] });
-        chapterMap.get(chapter)!.sets.push(set);
-      });
       systems.push({
         id: 'competition',
         label: t.practice.tree.competition,
         courses: [{
           id: 'competition-course-mcq',
           // FMA is an all-MCQ archive, so do not add a redundant question-type
-          // level. The visible path is simply FMA Competition → topic chapter.
+          // level or year-specific chapters.
           label: '',
           description: '',
-          chapters: [...chapterMap.entries()].sort(([a], [b]) => a - b).map(([chapter, entry]) => ({
-            id: `competition-mcq-ch${chapter}`,
-            label: entry.title,
-            sets: entry.sets,
-          })),
+          chapters: [{ id: 'competition-all', label: '', sets: competitionSets }],
         }],
       });
     }
@@ -847,6 +846,7 @@ export const PracticeSection: React.FC = () => {
     setIsListening(false);
     setShareCopied(false);
     setDifficultyFilter('all');
+    setSpecialtyFilter('all');
     const nextSet = practiceSets.find((set) => set.id === setId) ?? practiceSets[0];
     setActiveSetId(setId);
     setAnswers({});
@@ -876,12 +876,18 @@ export const PracticeSection: React.FC = () => {
     setActiveIndex(0);
     setShareCopied(false);
     setDifficultyFilter('all');
+    setSpecialtyFilter('all');
     updatePracticeUrl(activeSet.id, practiceSteps[0].id, 'replace');
     resetSavedAttempts();
   };
 
   const changeDifficultyFilter = (filter: 'all' | 'easy' | 'medium' | 'hard') => {
     setDifficultyFilter(filter);
+    setActiveIndex(0);
+  };
+
+  const changeSpecialtyFilter = (filter: 'all' | string) => {
+    setSpecialtyFilter(filter);
     setActiveIndex(0);
   };
 
@@ -1071,6 +1077,28 @@ export const PracticeSection: React.FC = () => {
                       }`}
                     >
                       {t.practice.difficultyFilter[level]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {supportsSpecialtyFilter && (
+              <div className="mt-3">
+                <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
+                  {language === 'zh' ? '题型专项' : 'Specialty models'}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {(['all', ...specialtyOptions] as string[]).map((specialty) => (
+                    <button
+                      key={specialty}
+                      onClick={() => changeSpecialtyFilter(specialty)}
+                      className={`min-h-9 shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+                        specialtyFilter === specialty
+                          ? 'border-quantum/70 bg-quantum/15 text-ink'
+                          : 'border-line bg-surface-tint text-ink-soft hover:border-line-strong hover:text-ink'
+                      }`}
+                    >
+                      {specialty === 'all' ? (language === 'zh' ? '全部' : 'All') : specialty}
                     </button>
                   ))}
                 </div>

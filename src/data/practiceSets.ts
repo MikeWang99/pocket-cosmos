@@ -42,7 +42,7 @@ import { apcEmFrq1Meta, apcEmFrq1Steps } from './apcEmFrqTest1';
 import { apcEmFrq2Meta, apcEmFrq2Steps } from './apcEmFrqTest2';
 import { apcEmRcTest16Meta, apcEmRcTest16Steps } from './apcEmRcTest16';
 import { workEnergyMultipleChoiceMeta, workEnergyMultipleChoiceSteps } from './workEnergyMultipleChoice';
-import { fma2008CompetitionSets } from './fma2008Competition';
+import { fmaCompetitionSet } from './fmaHistoricalCompetition';
 import type { PracticeStep } from '../types/practice';
 
 export interface PracticeSet {
@@ -227,8 +227,9 @@ export const practiceSets: PracticeSet[] = [
     ...apcEmRcTest16Meta,
     steps: apcEmRcTest16Steps,
   },
-  // F=ma competition bank: topic-organized slices of the 2008 historical exam.
-  ...fma2008CompetitionSets,
+  // Consolidated F=ma competition bank. Model-based specialties are filtered
+  // inside the set so progress stays shared between “All” and each specialty.
+  fmaCompetitionSet,
   // IGCSE per-topic MCQ sets (all chapters)
   ...igcseAllTopics.map((topic): PracticeSet => ({
     id: `igcse-cie-topic-${topic.topicId.replace('.', '-')}`,

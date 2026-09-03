@@ -27,6 +27,10 @@ export interface PracticeStep {
   context: string;
   equations?: string[];
   tags?: string[];
+  /** Hidden model-based specialty filters used by consolidated competition banks. */
+  specialtyTags?: string[];
+  /** Source year is retained for indexing and provenance, not student-facing labels. */
+  sourceYear?: number;
   image?: {
     src: string;
     alt: string;
