@@ -226,6 +226,7 @@ export const i18n = {
         apCMech: 'AP Physics C: Mechanics',
         apCEm: 'AP Physics C: E&M',
         igcse: 'CIE IGCSE Physics 0625',
+        competition: 'FMA Competition',
       },
       difficultyFilter: {
         label: 'Difficulty',
@@ -339,7 +340,7 @@ export const i18n = {
         },
       },
     },
-    admin: {
+      admin: {
       eyebrow: 'Teacher Dashboard',
       title: 'Practice Records',
       description: 'Review student practice progress by account, chapter, question, answer, score, and knowledge point.',
@@ -379,7 +380,8 @@ export const i18n = {
       noUsers: 'No registered users yet.',
       systemApCMech: 'AP Physics C: Mechanics',
       systemApCEm: 'AP Physics C: E&M',
-      systemIgcse: 'CIE IGCSE Physics',
+        systemIgcse: 'CIE IGCSE Physics',
+        systemCompetition: 'FMA Competition',
     },
   },
   zh: {
@@ -607,6 +609,7 @@ export const i18n = {
         apCMech: 'AP Physics C：力学',
         apCEm: 'AP Physics C：电磁学',
         igcse: 'CIE IGCSE 物理 0625',
+        competition: 'FMA 竞赛',
       },
       difficultyFilter: {
         label: '难度',
@@ -720,7 +723,7 @@ export const i18n = {
         },
       },
     },
-    admin: {
+      admin: {
       eyebrow: '教师后台',
       title: '答题记录',
       description: '按账号、章节、题目、答案、得分和知识点查看学生练习情况。',
@@ -760,7 +763,8 @@ export const i18n = {
       noUsers: '暂无注册用户。',
       systemApCMech: 'AP Physics C：力学',
       systemApCEm: 'AP Physics C：电磁学',
-      systemIgcse: 'CIE IGCSE 物理',
+        systemIgcse: 'CIE IGCSE 物理',
+        systemCompetition: 'FMA 竞赛',
     },
   }
 };

@@ -1,0 +1,11 @@
+{
+  "collection": "F=ma 2008 Historical Exam",
+  "examPdf": "/Users/mikewang/Desktop/FMA_historical_exams/papers/2008_Fma_exam.pdf",
+  "solutionPdf": "/Users/mikewang/Desktop/FMA_historical_exams/solutions/2008_Fma_solutions.pdf",
+  "questionCount": 25,
+  "scope": "All 25 multiple-choice questions from the 2008 paper; answers matched to the 2008 solution sheet.",
+  "rightsStatus": "User-provided source; verify redistribution rights before public commercial use.",
+  "answerKey": {
+    "1":"D","2":"C","3":"A","4":"D","5":"C","6":"A","7":"A","8":"C","9":"B","10":"B","11":"A","12":"D","13":"B","14":"B","15":"D","16":"E","17":"E","18":"C","19":"B","20":"D","21":"B","22":"E","23":"C","24":"A","25":"E"
+  }
+}
