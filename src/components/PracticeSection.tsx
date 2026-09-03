@@ -535,8 +535,10 @@ export const PracticeSection: React.FC = () => {
         label: t.practice.tree.competition,
         courses: [{
           id: 'competition-course-mcq',
-          label: language === 'zh' ? '选择题 MCQ' : 'Multiple Choice',
-          description: language === 'zh' ? '按知识点整理的 FMA 竞赛题。' : 'F=ma questions organized by knowledge point.',
+          // FMA is an all-MCQ archive, so do not add a redundant question-type
+          // level. The visible path is simply FMA Competition → topic chapter.
+          label: '',
+          description: '',
           chapters: [...chapterMap.entries()].sort(([a], [b]) => a - b).map(([chapter, entry]) => ({
             id: `competition-mcq-ch${chapter}`,
             label: entry.title,
