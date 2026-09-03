@@ -63,7 +63,7 @@ export interface PracticeSet {
   /** Practice type grouping used by the exercise navigation */
   practiceKind?: 'mcq' | 'structured' | 'paper5' | 'evaluation';
   /** Hierarchy: curriculum system */
-  system: 'ap-c-mech' | 'ap-c-em' | 'igcse' | 'competition';
+  system: 'ap-physics-1' | 'ap-physics-2' | 'ap-c-mech' | 'ap-c-em' | 'igcse' | 'competition' | 'bpho' | 'a-level' | 'physics-bowl';
   /** Hierarchy: chapter or unit grouping */
   chapter?: number;
   chapterTitle?: string;
@@ -187,7 +187,10 @@ export const practiceSets: PracticeSet[] = [
     id: 'physics-bowl-em-question-bank',
     category: 'electromagnetism',
     label: 'Physics Bowl 物理碗精选题库',
-    system: 'ap-c-em',
+    system: 'physics-bowl',
+    practiceKind: 'mcq',
+    chapter: 1,
+    chapterTitle: 'Electricity and Magnetism',
     ...physicsBowlEmMeta,
     steps: physicsBowlEmSteps,
   },

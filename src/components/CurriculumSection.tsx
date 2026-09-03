@@ -3,6 +3,7 @@ import katex from 'katex';
 import { BookOpenCheck, ChevronDown, ExternalLink, FunctionSquare, Image as ImageIcon, Layers3, ListChecks, NotebookText } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useLanguage } from '../LanguageContext';
+import { repairLatexExpression } from '../utils/latexRepair';
 import { learningSystems, type LearningSystemId } from '../data/physicsLearningSystems';
 import type { CurriculumClassroomQuestion, CurriculumDiagram, CurriculumImage, CurriculumLesson, CurriculumLessonContent, CurriculumUnit, CurriculumVideo } from '../data/apPhysicsCurriculum';
 
@@ -12,7 +13,7 @@ const lessonContentForMode = (lesson: CurriculumLesson, mode: CurriculumContentM
   lesson;
 
 const renderMath = (value: string, displayMode = true) =>
-  katex.renderToString(value, {
+  katex.renderToString(repairLatexExpression(value), {
     throwOnError: false,
     strict: false,
     displayMode,

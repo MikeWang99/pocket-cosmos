@@ -2,7 +2,17 @@ import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../auth/AuthContext';
 import { getSupabaseClient } from '../lib/supabaseClient';
 
-export const ALL_SYSTEMS = ['ap-c-mech', 'ap-c-em', 'igcse', 'competition'] as const;
+export const ALL_SYSTEMS = [
+  'ap-physics-1',
+  'ap-physics-2',
+  'ap-c-mech',
+  'ap-c-em',
+  'igcse',
+  'competition',
+  'bpho',
+  'a-level',
+  'physics-bowl',
+] as const;
 export type PracticeSystem = (typeof ALL_SYSTEMS)[number];
 
 interface PermissionRow {
