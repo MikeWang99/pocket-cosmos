@@ -493,6 +493,38 @@ export const PracticeSection: React.FC = () => {
       { id: 'physics-bowl', label: t.practice.tree.physicsBowl },
     ].forEach(({ id, label }) => {
       const sets = practiceSets.filter((set) => set.system === id);
+      // AP Physics 1 follows the same explicit question-type → unit
+      // hierarchy as the other curriculum systems.  Keep the reserved
+      // systems empty when no bank has been imported yet.
+      if (id === 'ap-physics-1' && sets.length) {
+        const mcqSets = sets.filter((set) => inferPracticeKind(set) === 'mcq');
+        const structuredSets = sets.filter((set) => inferPracticeKind(set) === 'structured');
+        const makeCourse = (kind: PracticeKind, kindSets: PracticeSet[]): PracticeTreeCourse => {
+          const chapterMap = new Map<number, { title: string; sets: PracticeSet[] }>();
+          kindSets.forEach((set) => {
+            const unit = set.chapter ?? 0;
+            if (!chapterMap.has(unit)) chapterMap.set(unit, { title: set.chapterTitle ?? `Unit ${unit}`, sets: [] });
+            chapterMap.get(unit)!.sets.push(set);
+          });
+          return {
+            id: `${id}-course-${kind}`,
+            label: kind === 'mcq'
+              ? (language === 'zh' ? '选择题' : 'Multiple Choice')
+              : (language === 'zh' ? '问答题' : 'Free Response'),
+            chapters: [...chapterMap.entries()].sort(([a], [b]) => a - b).map(([unit, entry]) => ({
+              id: `${id}-${kind}-ch${unit}`,
+              label: entry.title,
+              sets: entry.sets,
+            })),
+          };
+        };
+        const courses = [
+          ...(mcqSets.length ? [makeCourse('mcq', mcqSets)] : []),
+          ...(structuredSets.length ? [makeCourse('structured', structuredSets)] : []),
+        ];
+        systems.push({ id, label, courses });
+        return;
+      }
       systems.push({
         id,
         label,
