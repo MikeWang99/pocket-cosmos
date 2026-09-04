@@ -43,6 +43,7 @@ import { apcEmFrq2Meta, apcEmFrq2Steps } from './apcEmFrqTest2';
 import { apcEmRcTest16Meta, apcEmRcTest16Steps } from './apcEmRcTest16';
 import { workEnergyMultipleChoiceMeta, workEnergyMultipleChoiceSteps } from './workEnergyMultipleChoice';
 import { fmaCompetitionSet } from './fmaHistoricalCompetition';
+import { fmaApPhysics1KinematicsMeta, fmaApPhysics1KinematicsSteps } from './fmaApPhysics1Kinematics';
 import type { PracticeStep } from '../types/practice';
 
 export interface PracticeSet {
@@ -230,6 +231,17 @@ export const practiceSets: PracticeSet[] = [
   // Consolidated F=ma competition bank. Model-based specialties are filtered
   // inside the set so progress stays shared between “All” and each specialty.
   fmaCompetitionSet,
+  {
+    id: 'fma-ap-physics1-kinematics-2026',
+    category: 'mechanics',
+    label: 'Unit One Kinematics',
+    system: 'competition',
+    practiceKind: 'mcq',
+    chapter: 1,
+    chapterTitle: 'Multiple Choice',
+    ...fmaApPhysics1KinematicsMeta,
+    steps: fmaApPhysics1KinematicsSteps,
+  },
   // IGCSE per-topic MCQ sets (all chapters)
   ...igcseAllTopics.map((topic): PracticeSet => ({
     id: `igcse-cie-topic-${topic.topicId.replace('.', '-')}`,
