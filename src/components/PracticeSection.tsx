@@ -204,6 +204,10 @@ const getInitialExpandedNodes = (setId: string) => {
   if (!set) return nodes;
 
   nodes.add(set.system);
+  if (set.system === 'competition' && set.id === 'fma-ap-physics1-kinematics-2026') {
+    nodes.add('competition-fma-ap1-kinematics');
+    nodes.add('competition-fma-ap1-kinematics-mcq');
+  }
   if (set.system === 'igcse') {
     nodes.add(getIgcseCourseNodeId(inferPracticeKind(set)));
     nodes.add(getIgcseChapterNodeId(set));
@@ -562,22 +566,39 @@ export const PracticeSection: React.FC = () => {
       });
     }
 
-    // F=ma is one consolidated bank; the model-specialty chips below provide
-    // the focused views without repeating year labels in the directory.
+    // FMA competition banks: keep the legacy consolidated archive compact,
+    // while giving course-specific imports an explicit FMA → course → type →
+    // unit path so the catalog remains unambiguous.
     const competitionSets = practiceSets.filter((s) => s.system === 'competition');
     if (competitionSets.length) {
-      systems.push({
-        id: 'competition',
-        label: t.practice.tree.competition,
-        courses: [{
-          id: 'competition-course-mcq',
-          // FMA is an all-MCQ archive, so do not add a redundant question-type
-          // level or year-specific chapters.
+      const legacySets = competitionSets.filter((s) => s.id === 'fma-competition-bank');
+      const ap1KinematicsSets = competitionSets.filter((s) => s.id === 'fma-ap-physics1-kinematics-2026');
+      const competitionCourses: PracticeTreeCourse[] = [];
+      if (legacySets.length) {
+        competitionCourses.push({
+          id: 'competition-course-fma-archive',
+          label: 'FMA Competition',
+          description: 'The consolidated F=ma multiple-choice archive.',
+          chapters: [{ id: 'competition-fma-all', label: '', sets: legacySets }],
+        });
+      }
+      if (ap1KinematicsSets.length) {
+        competitionCourses.push({
+          id: 'competition-fma-ap1-kinematics',
+          label: 'FMA AP Physics 1: Kinematics',
+          description: 'AP Physics 1 Unit One Kinematics.',
+          chapters: [{ id: 'competition-fma-ap1-kinematics-mcq', label: 'Multiple Choice', sets: ap1KinematicsSets }],
+        });
+      }
+      const uncategorized = competitionSets.filter((s) => !legacySets.includes(s) && !ap1KinematicsSets.includes(s));
+      if (uncategorized.length) {
+        competitionCourses.push({
+          id: 'competition-course-other',
           label: '',
-          description: '',
-          chapters: [{ id: 'competition-all', label: '', sets: competitionSets }],
-        }],
-      });
+          chapters: [{ id: 'competition-other', label: '', sets: uncategorized }],
+        });
+      }
+      systems.push({ id: 'competition', label: t.practice.tree.competition, courses: competitionCourses });
     }
 
     // CIE IGCSE Physics
