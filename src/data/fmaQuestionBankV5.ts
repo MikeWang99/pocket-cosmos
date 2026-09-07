@@ -77,7 +77,7 @@ export const fmaQuestionBankV5Steps: PracticeStep[] = (bank as RebuildQuestion[]
     supportingImages: figures,
     assets,
     maxScore: 1,
-    source: 'F=ma Competition · New Question',
+    source: 'F=ma Competition',
     answerNudge: question.metadata.topic,
     criteria: [],
     choices: source.options.map((option) => {
@@ -97,21 +97,52 @@ export const fmaQuestionBankV5Steps: PracticeStep[] = (bank as RebuildQuestion[]
   };
 });
 
-export const fmaQuestionBankV5Set: PracticeSet = {
-  id: 'fma-competition-new-question',
-  category: 'mechanics',
-  label: 'New Question',
-  title: 'New Question',
-  subtitle: `${fmaQuestionBankV5Steps.length} rebuilt F=ma questions from 2008–2011`,
-  eyebrow: 'F=ma Competition · New Question',
-  description: 'A rebuilt question set with separated stems, supporting figures, and image-based answer choices for review.',
-  steps: fmaQuestionBankV5Steps,
+const baseSetFields = {
+  category: 'mechanics' as const,
+  subtitle: 'Rebuilt F=ma questions from 2008–2011',
+  eyebrow: 'F=ma Competition',
+  description: 'Questions organized by problem model, with complete stems, figures, and image-based answer choices.',
   sources: [
     { label: 'F=ma Question Bank v5 Rebuild', url: '/fma-v5-assets/shared-source-provenance.json' },
     { label: 'Image QA report', url: '/fma-v5-assets/image-asset-qa.json' },
   ],
-  practiceKind: 'mcq',
-  system: 'competition',
-  chapter: 2,
-  chapterTitle: 'New Question',
+  practiceKind: 'mcq' as const,
+  system: 'competition' as const,
+};
+
+/**
+ * The rebuilt bank is exposed as one FMA Competition course with model-based
+ * chapters. There is intentionally no student-facing “All questions” or
+ * “New Question” level: selecting a chapter opens only that chapter's steps.
+ */
+export const fmaQuestionBankV5Sets: PracticeSet[] = Array.from(
+  fmaQuestionBankV5Steps.reduce((groups, step) => {
+    const topic = step.specialtyTags?.[0] ?? "Newton's laws & friction";
+    const current = groups.get(topic) ?? [];
+    current.push(step);
+    groups.set(topic, current);
+    return groups;
+  }, new Map<string, PracticeStep[]>()),
+)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([specialty, steps], index) => ({
+    id: `fma-competition-${specialty.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+    label: specialty,
+    title: 'F=ma Competition',
+    chapter: index + 1,
+    chapterTitle: specialty,
+    steps,
+    ...baseSetFields,
+  }));
+
+// Kept as a compatibility export for any older imports; the Practice area
+// uses the chapter-specific array above and does not expose this aggregate.
+export const fmaQuestionBankV5Set: PracticeSet = {
+  id: 'fma-competition-new-question',
+  label: 'F=ma Competition',
+  title: 'F=ma Competition',
+  chapter: 0,
+  chapterTitle: 'F=ma Competition',
+  steps: fmaQuestionBankV5Steps,
+  ...baseSetFields,
 };

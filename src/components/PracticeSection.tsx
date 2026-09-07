@@ -204,6 +204,10 @@ const getInitialExpandedNodes = (setId: string) => {
   if (!set) return nodes;
 
   nodes.add(set.system);
+  if (set.system === 'competition' && set.id !== 'fma-ap-physics1-kinematics-2026') {
+    nodes.add('competition-course-fma');
+    nodes.add(`competition-fma-${set.id}`);
+  }
   if (set.system === 'competition' && set.id === 'fma-ap-physics1-kinematics-2026') {
     nodes.add('competition-fma-ap1-kinematics');
     nodes.add('competition-fma-ap1-kinematics-mcq');
@@ -622,22 +626,26 @@ export const PracticeSection: React.FC = () => {
       });
     }
 
-    // FMA competition banks: keep the legacy consolidated archive compact,
-    // while giving course-specific imports an explicit FMA → course → type →
-    // unit path so the catalog remains unambiguous.
+    // FMA Competition: expose the rebuilt bank directly as model-based
+    // chapters. The old aggregate archive and the temporary New Question
+    // level are intentionally not shown in the learner-facing tree.
     const competitionSets = practiceSets.filter((s) => s.system === 'competition');
     if (competitionSets.length) {
-      const legacySets = competitionSets.filter((s) => s.id === 'fma-competition-bank');
-      const newQuestionSets = competitionSets.filter((s) => s.id === 'fma-competition-new-question');
-      const archiveSets = [...legacySets, ...newQuestionSets];
       const ap1KinematicsSets = competitionSets.filter((s) => s.id === 'fma-ap-physics1-kinematics-2026');
+      const fmaChapterSets = competitionSets.filter((s) => s.id !== 'fma-ap-physics1-kinematics-2026');
       const competitionCourses: PracticeTreeCourse[] = [];
-      if (archiveSets.length) {
+      if (fmaChapterSets.length) {
         competitionCourses.push({
-          id: 'competition-course-fma-archive',
+          id: 'competition-course-fma',
           label: 'FMA Competition',
-          description: 'The consolidated F=ma multiple-choice archive and rebuilt question set.',
-          chapters: [{ id: 'competition-fma-all', label: '', sets: archiveSets }],
+          description: 'F=ma questions organized by problem model.',
+          chapters: fmaChapterSets
+            .sort((a, b) => (a.chapter ?? 0) - (b.chapter ?? 0))
+            .map((set) => ({
+              id: `competition-fma-${set.id}`,
+              label: set.chapterTitle ?? set.label,
+              sets: [set],
+            })),
         });
       }
       if (ap1KinematicsSets.length) {
@@ -646,14 +654,6 @@ export const PracticeSection: React.FC = () => {
           label: 'FMA AP Physics 1: Kinematics',
           description: 'AP Physics 1 Unit One Kinematics.',
           chapters: [{ id: 'competition-fma-ap1-kinematics-mcq', label: 'Multiple Choice', sets: ap1KinematicsSets }],
-        });
-      }
-      const uncategorized = competitionSets.filter((s) => !archiveSets.includes(s) && !ap1KinematicsSets.includes(s));
-      if (uncategorized.length) {
-        competitionCourses.push({
-          id: 'competition-course-other',
-          label: '',
-          chapters: [{ id: 'competition-other', label: '', sets: uncategorized }],
         });
       }
       systems.push({ id: 'competition', label: t.practice.tree.competition, courses: competitionCourses });
@@ -1102,19 +1102,29 @@ export const PracticeSection: React.FC = () => {
                               <div className={hasCourseLabel ? 'ml-3 border-l border-line pl-3' : ''}>
                                 {course.chapters.map((chapter) => {
                                   const hasChapterLabel = chapter.label !== '';
+                                  const isDirectFmaChapter = course.id === 'competition-course-fma' && chapter.sets.length === 1;
                                   const chExpanded = !hasChapterLabel || expandedNodes.has(chapter.id);
                                   return (
                                     <div key={chapter.id} className="space-y-1">
                                       {hasChapterLabel && (
-                                        <button
-                                          onClick={() => toggleNode(chapter.id)}
-                                          className="flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-left text-[11px] font-semibold text-ink-soft transition-colors hover:bg-surface-tint-strong hover:text-ink"
-                                        >
-                                          <span className={`inline-block h-2.5 w-2.5 text-[8px] leading-[10px] transition-transform ${chExpanded ? 'rotate-90' : ''}`}>▶</span>
-                                          {chapter.label}
-                                        </button>
+                                        isDirectFmaChapter ? (
+                                          <button
+                                            onClick={() => selectPracticeSet(chapter.sets[0].id)}
+                                            className={`flex w-full items-center rounded-md px-2 py-1.5 text-left text-[11px] font-semibold transition-colors hover:bg-surface-tint-strong hover:text-ink ${chapter.sets[0].id === activeSetId ? 'bg-surface-tint-strong text-ink' : 'text-ink-soft'}`}
+                                          >
+                                            {chapter.label}
+                                          </button>
+                                        ) : (
+                                          <button
+                                            onClick={() => toggleNode(chapter.id)}
+                                            className="flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-left text-[11px] font-semibold text-ink-soft transition-colors hover:bg-surface-tint-strong hover:text-ink"
+                                          >
+                                            <span className={`inline-block h-2.5 w-2.5 text-[8px] leading-[10px] transition-transform ${chExpanded ? 'rotate-90' : ''}`}>▶</span>
+                                            {chapter.label}
+                                          </button>
+                                        )
                                       )}
-                                      {chExpanded && (
+                                      {chExpanded && !isDirectFmaChapter && (
                                         <div className={`flex flex-wrap gap-1.5 ${hasChapterLabel ? 'ml-4' : ''} ${hasChapterLabel ? 'pb-2' : 'py-1'}`}>
                                           {chapter.sets.map((set) => {
                                             const isActive = set.id === activeSetId;
