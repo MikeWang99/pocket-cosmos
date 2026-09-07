@@ -43,6 +43,7 @@ import { apcEmFrq2Meta, apcEmFrq2Steps } from './apcEmFrqTest2';
 import { apcEmRcTest16Meta, apcEmRcTest16Steps } from './apcEmRcTest16';
 import { workEnergyMultipleChoiceMeta, workEnergyMultipleChoiceSteps } from './workEnergyMultipleChoice';
 import { fmaCompetitionSet } from './fmaHistoricalCompetition';
+import { fmaQuestionBankV5Set } from './fmaQuestionBankV5';
 import { fmaApPhysics1KinematicsMeta, fmaApPhysics1KinematicsSteps } from './fmaApPhysics1Kinematics';
 import type { PracticeStep } from '../types/practice';
 
@@ -231,6 +232,7 @@ export const practiceSets: PracticeSet[] = [
   // Consolidated F=ma competition bank. Model-based specialties are filtered
   // inside the set so progress stays shared between “All” and each specialty.
   fmaCompetitionSet,
+  fmaQuestionBankV5Set,
   {
     id: 'fma-ap-physics1-kinematics-2026',
     category: 'mechanics',

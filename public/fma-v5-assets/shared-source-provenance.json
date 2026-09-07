@@ -1,0 +1,123 @@
+[
+  {
+    "source_file": "2008_Fma_exam.pdf",
+    "questions": [
+      "FMA2008_Q004",
+      "FMA2008_Q005"
+    ],
+    "shared_source_kind": [
+      "context",
+      "figure"
+    ]
+  },
+  {
+    "source_file": "2008_Fma_exam.pdf",
+    "questions": [
+      "FMA2008_Q010",
+      "FMA2008_Q011"
+    ],
+    "shared_source_kind": [
+      "context"
+    ]
+  },
+  {
+    "source_file": "2009_Fma_exam.pdf",
+    "questions": [
+      "FMA2009_Q002",
+      "FMA2009_Q003"
+    ],
+    "shared_source_kind": [
+      "context",
+      "figure"
+    ]
+  },
+  {
+    "source_file": "2009_Fma_exam.pdf",
+    "questions": [
+      "FMA2009_Q008",
+      "FMA2009_Q009"
+    ],
+    "shared_source_kind": [
+      "context",
+      "figure"
+    ]
+  },
+  {
+    "source_file": "2009_Fma_exam.pdf",
+    "questions": [
+      "FMA2009_Q021",
+      "FMA2009_Q022"
+    ],
+    "shared_source_kind": [
+      "context",
+      "figure"
+    ]
+  },
+  {
+    "source_file": "2010_Fma_exam.pdf",
+    "questions": [
+      "FMA2010_Q001",
+      "FMA2010_Q002",
+      "FMA2010_Q003"
+    ],
+    "shared_source_kind": [
+      "context",
+      "figure"
+    ]
+  },
+  {
+    "source_file": "2010_Fma_exam.pdf",
+    "questions": [
+      "FMA2010_Q015",
+      "FMA2010_Q016"
+    ],
+    "shared_source_kind": [
+      "context",
+      "figure"
+    ]
+  },
+  {
+    "source_file": "2010_Fma_exam.pdf",
+    "questions": [
+      "FMA2010_Q018",
+      "FMA2010_Q019",
+      "FMA2010_Q020"
+    ],
+    "shared_source_kind": [
+      "figure"
+    ]
+  },
+  {
+    "source_file": "2011_Fma_exam.pdf",
+    "questions": [
+      "FMA2011_Q002",
+      "FMA2011_Q003",
+      "FMA2011_Q004"
+    ],
+    "shared_source_kind": [
+      "context",
+      "figure"
+    ]
+  },
+  {
+    "source_file": "2011_Fma_exam.pdf",
+    "questions": [
+      "FMA2011_Q016",
+      "FMA2011_Q017"
+    ],
+    "shared_source_kind": [
+      "context",
+      "figure"
+    ]
+  },
+  {
+    "source_file": "2011_Fma_exam.pdf",
+    "questions": [
+      "FMA2011_Q019",
+      "FMA2011_Q020"
+    ],
+    "shared_source_kind": [
+      "context"
+    ]
+  }
+]

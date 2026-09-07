@@ -41,6 +41,15 @@ export interface PracticeStep {
     downloadName?: string;
     responsive?: boolean;
   };
+  /** Additional source figures that belong to the same question stem. */
+  supportingImages?: Array<{
+    src: string;
+    alt: string;
+    caption?: string;
+    width?: number;
+    height?: number;
+    downloadName?: string;
+  }>;
   assets?: PracticeAsset[];
   choiceLayout?: 'stacked' | 'grid';
   maxScore: number;
