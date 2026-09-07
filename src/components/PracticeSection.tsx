@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import katex from 'katex';
 import {
   ArrowLeft,
   ArrowRight,
@@ -27,7 +26,7 @@ import { usePracticeProgress, type SavedPracticeAttempt } from '../hooks/usePrac
 import { usePracticePermissions } from '../hooks/usePracticePermissions';
 import { StudentWorkUpload } from './StudentWorkUpload';
 import { QuestionPrompt } from './QuestionPrompt';
-import { repairLatexExpression } from '../utils/latexRepair';
+import { isLongChoice, MathText } from './MathText';
 
 type SpeechRecognitionConstructor = new () => SpeechRecognition;
 
@@ -129,38 +128,6 @@ const prettifyMath = (value: string) =>
 const RichText: React.FC<{ children: string; className?: string }> = ({ children, className }) => (
   <span className={className}>{prettifyMath(children)}</span>
 );
-
-const renderMath = (value: string) =>
-  katex.renderToString(repairLatexExpression(value), {
-    throwOnError: false,
-    strict: false,
-  });
-
-const MathText: React.FC<{ children: string; className?: string }> = ({ children, className }) => {
-  const parts = children.split(/(\$[^$]+\$|\\\([^)]+\\\))/g).filter(Boolean);
-
-  return (
-    <span className={className}>
-      {parts.map((part, index) => {
-        const isDollarMath = part.startsWith('$') && part.endsWith('$');
-        const isParenMath = part.startsWith('\\(') && part.endsWith('\\)');
-
-        if (!isDollarMath && !isParenMath) {
-          return <React.Fragment key={`${part}-${index}`}>{part}</React.Fragment>;
-        }
-
-        const expression = isDollarMath ? part.slice(1, -1) : part.slice(2, -2);
-        return (
-          <span
-            key={`${part}-${index}`}
-            className="math-inline"
-            dangerouslySetInnerHTML={{ __html: renderMath(expression) }}
-          />
-        );
-      })}
-    </span>
-  );
-};
 
 const isMultipleChoiceStep = (step: PracticeStep) =>
   step.mode === 'multiple_choice' && Boolean(step.choices?.length && step.correctAnswer);
@@ -474,6 +441,8 @@ export const PracticeSection: React.FC = () => {
       : activeStep.title
     : '';
   const isActiveMultipleChoice = activeStep ? isMultipleChoiceStep(activeStep) : false;
+  const choiceList = activeStep?.choices ?? [];
+  const useStackedChoices = choiceList.some((choice) => !choice.image && isLongChoice(choice.text));
   const hasCompleteQuestionImage = activeStep?.image?.role === 'question';
   const shouldShowPrompt =
     activeStep &&
@@ -1351,7 +1320,7 @@ export const PracticeSection: React.FC = () => {
               <div className="p-4 sm:p-6 md:p-8">
                 {isActiveMultipleChoice ? (
                   <div>
-                    <div className="grid grid-cols-5 gap-1.5 sm:gap-2" role="group" aria-label={t.practice.chooseAnswer}>
+                    <div className={useStackedChoices ? 'grid grid-cols-1 gap-2' : 'grid grid-cols-5 gap-1.5 sm:gap-2'} role="group" aria-label={t.practice.chooseAnswer}>
                       {activeStep.choices?.map((choice) => {
                         const selectedLabels = currentAnswer.split(',').filter(Boolean);
                         const correctLabels = (activeStep.correctAnswer ?? '').split(',').filter(Boolean);
@@ -1373,7 +1342,7 @@ export const PracticeSection: React.FC = () => {
                               updateAnswer(next.sort().join(','));
                             }}
                             aria-pressed={isSelected}
-                            className={`flex min-h-12 min-w-0 items-center justify-center gap-1.5 rounded-lg border px-1.5 py-2 text-center transition-colors sm:gap-2 sm:px-2.5 ${choice.image ? 'sm:py-3' : ''} ${
+                            className={`flex min-h-12 min-w-0 items-center gap-2 rounded-lg border px-2.5 py-2.5 transition-colors sm:px-3 ${useStackedChoices ? 'justify-start text-left' : 'justify-center text-center'} ${choice.image ? 'sm:py-3' : ''} ${
                               isCorrectChoice
                                 ? 'border-emerald-500/50 bg-emerald-500/10'
                                 : isWrongChoice
@@ -1388,7 +1357,7 @@ export const PracticeSection: React.FC = () => {
                             }`}>
                               {isSelected ? '✓' : choice.label}
                             </span>
-                            <span className="min-w-0 flex-1 self-center text-xs leading-tight text-ink sm:text-sm">
+                            <span className={`min-w-0 flex-1 self-center text-xs leading-relaxed text-ink sm:text-sm ${useStackedChoices ? 'whitespace-normal' : 'leading-tight'}`}>
                               {choice.image ? (
                                 <>
                                   <img

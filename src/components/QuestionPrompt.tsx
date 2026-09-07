@@ -1,30 +1,5 @@
 import React from 'react';
-import katex from 'katex';
-import { repairLatexExpression } from '../utils/latexRepair';
-
-const renderMath = (value: string) =>
-  katex.renderToString(repairLatexExpression(value), { throwOnError: false, strict: false });
-
-const MathText: React.FC<{ children: string }> = ({ children }) => {
-  const parts = children.split(/(\$[^$]+\$|\\\([^)]+\\\))/g).filter(Boolean);
-  return (
-    <>
-      {parts.map((part, index) => {
-        const dollar = part.startsWith('$') && part.endsWith('$');
-        const paren = part.startsWith('\\(') && part.endsWith('\\)');
-        if (!dollar && !paren) return <React.Fragment key={`${part}-${index}`}>{part}</React.Fragment>;
-        const expression = dollar ? part.slice(1, -1) : part.slice(2, -2);
-        return (
-          <span
-            key={`${part}-${index}`}
-            className="math-inline"
-            dangerouslySetInnerHTML={{ __html: renderMath(expression) }}
-          />
-        );
-      })}
-    </>
-  );
-};
+import { MathText } from './MathText';
 
 // 行首的分问标记："(a)"、"(ii)"、"a."、"1." 等
 const SUBPART_MARKER = /^\s*(\((?:[a-j]|[ivx]{1,4})\)|[a-j]\.|\d{1,2}\.)\s+/;
