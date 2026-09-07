@@ -310,6 +310,30 @@ const QuestionMedia: React.FC<{ step: PracticeStep; label: string; questionLabel
   );
 };
 
+const SupportingQuestionImages: React.FC<{ step: PracticeStep; label: string }> = ({ step, label }) => {
+  if (!step.supportingImages?.length) return null;
+
+  return (
+    <div className="grid gap-4">
+      {step.supportingImages.map((figure, index) => (
+        <figure key={`${figure.src}-${index}`} className="practice-media practice-media--question">
+          {index === 0 && (
+            <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-3">{label}</div>
+          )}
+          <div className="practice-question-image-scroll">
+            <img
+              src={figure.src}
+              alt={figure.alt}
+              className="practice-media-image practice-question-image practice-question-image--responsive"
+            />
+          </div>
+          {figure.caption && <figcaption>{figure.caption}</figcaption>}
+        </figure>
+      ))}
+    </div>
+  );
+};
+
 const QuestionAssetDownloads: React.FC<{ step: PracticeStep; language: 'en' | 'zh' }> = ({
   step,
   language,
@@ -604,14 +628,16 @@ export const PracticeSection: React.FC = () => {
     const competitionSets = practiceSets.filter((s) => s.system === 'competition');
     if (competitionSets.length) {
       const legacySets = competitionSets.filter((s) => s.id === 'fma-competition-bank');
+      const newQuestionSets = competitionSets.filter((s) => s.id === 'fma-competition-new-question');
+      const archiveSets = [...legacySets, ...newQuestionSets];
       const ap1KinematicsSets = competitionSets.filter((s) => s.id === 'fma-ap-physics1-kinematics-2026');
       const competitionCourses: PracticeTreeCourse[] = [];
-      if (legacySets.length) {
+      if (archiveSets.length) {
         competitionCourses.push({
           id: 'competition-course-fma-archive',
           label: 'FMA Competition',
-          description: 'The consolidated F=ma multiple-choice archive.',
-          chapters: [{ id: 'competition-fma-all', label: '', sets: legacySets }],
+          description: 'The consolidated F=ma multiple-choice archive and rebuilt question set.',
+          chapters: [{ id: 'competition-fma-all', label: '', sets: archiveSets }],
         });
       }
       if (ap1KinematicsSets.length) {
@@ -622,7 +648,7 @@ export const PracticeSection: React.FC = () => {
           chapters: [{ id: 'competition-fma-ap1-kinematics-mcq', label: 'Multiple Choice', sets: ap1KinematicsSets }],
         });
       }
-      const uncategorized = competitionSets.filter((s) => !legacySets.includes(s) && !ap1KinematicsSets.includes(s));
+      const uncategorized = competitionSets.filter((s) => !archiveSets.includes(s) && !ap1KinematicsSets.includes(s));
       if (uncategorized.length) {
         competitionCourses.push({
           id: 'competition-course-other',
@@ -1307,6 +1333,7 @@ export const PracticeSection: React.FC = () => {
                     label={t.practice.diagram}
                     questionLabel={t.practice.questionImage}
                   />
+                  <SupportingQuestionImages step={activeStep} label={t.practice.diagram} />
                   <QuestionAssetDownloads step={activeStep} language={language} />
                 </div>
               </div>

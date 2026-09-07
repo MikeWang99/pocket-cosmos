@@ -1,0 +1,2620 @@
+[
+  {
+    "asset_file": "FMA2008_Q003_fig01.png",
+    "question_id": "FMA2008_Q003",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 2,
+    "expected_visual_anchors": [
+      "position-time graph",
+      "straight descending line",
+      "Position (m)",
+      "Time (s)"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          80,
+          385,
+          355,
+          535
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          55,
+          385,
+          355,
+          535
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2008_Q004_fig01.png",
+    "question_id": "FMA2008_Q004",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 3,
+    "expected_visual_anchors": [
+      "velocity-time graph",
+      "toy car",
+      "Velocity (m/s)",
+      "Time (s)"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          72,
+          95,
+          285,
+          220
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          70,
+          108,
+          285,
+          210
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2008_Q005_fig01.png",
+    "question_id": "FMA2008_Q005",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 3,
+    "expected_visual_anchors": [
+      "velocity-time graph",
+      "toy car",
+      "Velocity (m/s)",
+      "Time (s)"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          72,
+          95,
+          285,
+          220
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          70,
+          108,
+          285,
+          210
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2008_Q005_option_A.png",
+    "question_id": "FMA2008_Q005",
+    "asset_type": "option_image",
+    "option_label": "A",
+    "source_page": 3,
+    "expected_visual_anchors": [
+      "acceleration-time graph",
+      "piecewise constant",
+      "Time (s)"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          70,
+          345,
+          228,
+          435
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          70,
+          365,
+          230,
+          430
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2008_Q005_option_B.png",
+    "question_id": "FMA2008_Q005",
+    "asset_type": "option_image",
+    "option_label": "B",
+    "source_page": 3,
+    "expected_visual_anchors": [
+      "acceleration-time graph",
+      "piecewise constant",
+      "Time (s)"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          226,
+          345,
+          390,
+          450
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          226,
+          365,
+          390,
+          432
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2008_Q005_option_C.png",
+    "question_id": "FMA2008_Q005",
+    "asset_type": "option_image",
+    "option_label": "C",
+    "source_page": 3,
+    "expected_visual_anchors": [
+      "acceleration-time graph",
+      "piecewise constant",
+      "Time (s)"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          70,
+          460,
+          228,
+          555
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          70,
+          480,
+          230,
+          546
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2008_Q005_option_D.png",
+    "question_id": "FMA2008_Q005",
+    "asset_type": "option_image",
+    "option_label": "D",
+    "source_page": 3,
+    "expected_visual_anchors": [
+      "acceleration-time graph",
+      "piecewise constant",
+      "Time (s)"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          226,
+          455,
+          390,
+          555
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          226,
+          465,
+          390,
+          546
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2008_Q005_option_E.png",
+    "question_id": "FMA2008_Q005",
+    "asset_type": "option_image",
+    "option_label": "E",
+    "source_page": 3,
+    "expected_visual_anchors": [
+      "acceleration-time graph",
+      "piecewise constant",
+      "Time (s)"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          70,
+          558,
+          228,
+          645
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          70,
+          565,
+          230,
+          632
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2008_Q015_fig01.png",
+    "question_id": "FMA2008_Q015",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 7,
+    "expected_visual_anchors": [
+      "round tabletop",
+      "carpenter at edge",
+      "3.0 m",
+      "4.0 m",
+      "1.0 m"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          60,
+          125,
+          265,
+          280
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          60,
+          132,
+          265,
+          280
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2008_Q017_fig01.png",
+    "question_id": "FMA2008_Q017",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 8,
+    "expected_visual_anchors": [
+      "box",
+      "vertical spring",
+      "hanging mass"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          65,
+          95,
+          230,
+          285
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          65,
+          103,
+          230,
+          277
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2009_Q002_fig01.png",
+    "question_id": "FMA2009_Q002",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 2,
+    "expected_visual_anchors": [
+      "three identical blocks",
+      "left and right blocks moving inward",
+      "center block at rest"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          95,
+          255,
+          515,
+          310
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          95,
+          263,
+          515,
+          305
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2009_Q003_fig01.png",
+    "question_id": "FMA2009_Q003",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 2,
+    "expected_visual_anchors": [
+      "three identical blocks",
+      "left and right blocks moving inward",
+      "center block at rest"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          95,
+          255,
+          515,
+          310
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          95,
+          263,
+          515,
+          305
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2009_Q005_fig01.png",
+    "question_id": "FMA2009_Q005",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 3,
+    "expected_visual_anchors": [
+      "planet",
+      "three satellite orbits",
+      "A",
+      "B",
+      "C"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          215,
+          105,
+          405,
+          290
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          215,
+          120,
+          405,
+          285
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2009_Q008_fig01.png",
+    "question_id": "FMA2009_Q008",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 4,
+    "expected_visual_anchors": [
+      "angular velocity-time graph",
+      "Angular Velocity (rad/s)",
+      "Time (s)"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          185,
+          110,
+          465,
+          280
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          150,
+          110,
+          465,
+          280
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2009_Q009_fig01.png",
+    "question_id": "FMA2009_Q009",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 4,
+    "expected_visual_anchors": [
+      "angular velocity-time graph",
+      "Angular Velocity (rad/s)",
+      "Time (s)"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          185,
+          110,
+          465,
+          280
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          150,
+          110,
+          465,
+          280
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2009_Q011_fig01.png",
+    "question_id": "FMA2009_Q011",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 5,
+    "expected_visual_anchors": [
+      "acceleration versus position graph",
+      "Acceleration (m/s/s)",
+      "Position (m)"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          125,
+          90,
+          510,
+          220
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          105,
+          90,
+          510,
+          220
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2009_Q014_fig01.png",
+    "question_id": "FMA2009_Q014",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 6,
+    "expected_visual_anchors": [
+      "peg",
+      "hanging wooden block",
+      "incoming bullet"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          245,
+          120,
+          370,
+          235
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          245,
+          120,
+          370,
+          220
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2009_Q018_fig01.png",
+    "question_id": "FMA2009_Q018",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 7,
+    "expected_visual_anchors": [
+      "pendulum",
+      "fixed pivot point",
+      "small peg",
+      "point object"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          220,
+          115,
+          325,
+          290
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          205,
+          135,
+          415,
+          290
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2009_Q021_fig01.png",
+    "question_id": "FMA2009_Q021",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 8,
+    "expected_visual_anchors": [
+      "two stars",
+      "common center of mass",
+      "3M",
+      "M",
+      "distance d"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          195,
+          95,
+          415,
+          265
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          195,
+          115,
+          415,
+          265
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2009_Q022_fig01.png",
+    "question_id": "FMA2009_Q022",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 8,
+    "expected_visual_anchors": [
+      "two stars",
+      "common center of mass",
+      "3M",
+      "M",
+      "distance d"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          195,
+          95,
+          415,
+          265
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          195,
+          115,
+          415,
+          265
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2009_Q024_fig01.png",
+    "question_id": "FMA2009_Q024",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 9,
+    "expected_visual_anchors": [
+      "rectangular block",
+      "incline",
+      "a",
+      "b",
+      "theta"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          230,
+          115,
+          380,
+          235
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          230,
+          140,
+          380,
+          235
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2009_Q025_fig01.png",
+    "question_id": "FMA2009_Q025",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 9,
+    "expected_visual_anchors": [
+      "two discs",
+      "vertical axles",
+      "r1",
+      "r2"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          200,
+          390,
+          420,
+          510
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q001_fig01.png",
+    "question_id": "FMA2010_Q001",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 2,
+    "expected_visual_anchors": [
+      "piecewise linear graph",
+      "A B C D E",
+      "time"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          185,
+          75,
+          415,
+          215
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          185,
+          90,
+          415,
+          215
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q002_fig01.png",
+    "question_id": "FMA2010_Q002",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 2,
+    "expected_visual_anchors": [
+      "piecewise linear graph",
+      "A B C D E",
+      "time"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          185,
+          75,
+          415,
+          215
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          185,
+          90,
+          415,
+          215
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q003_fig01.png",
+    "question_id": "FMA2010_Q003",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 2,
+    "expected_visual_anchors": [
+      "piecewise linear graph",
+      "A B C D E",
+      "time"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          185,
+          75,
+          415,
+          215
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          185,
+          90,
+          415,
+          215
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q005_fig01.png",
+    "question_id": "FMA2010_Q005",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 3,
+    "expected_visual_anchors": [
+      "two projectile paths",
+      "37 degrees",
+      "35 m",
+      "Projectile 1",
+      "Projectile 2"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          180,
+          95,
+          445,
+          215
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          180,
+          105,
+          445,
+          205
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q009_fig01.png",
+    "question_id": "FMA2010_Q009",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 4,
+    "expected_visual_anchors": [
+      "pendulum in accelerating car",
+      "angle theta",
+      "length L"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          205,
+          90,
+          410,
+          205
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q010_fig01.png",
+    "question_id": "FMA2010_Q010",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 4,
+    "expected_visual_anchors": [
+      "two stacked blocks",
+      "m1",
+      "m2",
+      "horizontal force F"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          230,
+          325,
+          405,
+          410
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          230,
+          325,
+          405,
+          397
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q011_fig01.png",
+    "question_id": "FMA2010_Q011",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 4,
+    "expected_visual_anchors": [
+      "three equal masses",
+      "pulleys",
+      "a",
+      "b"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          220,
+          525,
+          405,
+          640
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q013_fig01.png",
+    "question_id": "FMA2010_Q013",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 5,
+    "expected_visual_anchors": [
+      "rolling ball",
+      "ramp",
+      "height h",
+      "vertical launch"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          215,
+          230,
+          390,
+          350
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          215,
+          245,
+          390,
+          345
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q015_fig01.png",
+    "question_id": "FMA2010_Q015",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 6,
+    "expected_visual_anchors": [
+      "inclined wall",
+      "small block of mass m",
+      "speed v",
+      "angle theta"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          225,
+          60,
+          410,
+          155
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          225,
+          70,
+          410,
+          155
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q016_fig01.png",
+    "question_id": "FMA2010_Q016",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 6,
+    "expected_visual_anchors": [
+      "inclined wall",
+      "small block of mass m",
+      "speed v",
+      "angle theta"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          225,
+          60,
+          410,
+          155
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          225,
+          70,
+          410,
+          155
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q018_fig01.png",
+    "question_id": "FMA2010_Q018",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 7,
+    "expected_visual_anchors": [
+      "potential energy graph",
+      "U (J)",
+      "x (m)",
+      "V-shaped well"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          185,
+          70,
+          445,
+          235
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q019_fig01.png",
+    "question_id": "FMA2010_Q019",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 7,
+    "expected_visual_anchors": [
+      "potential energy graph",
+      "U (J)",
+      "x (m)",
+      "V-shaped well"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          185,
+          70,
+          445,
+          235
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q020_fig01.png",
+    "question_id": "FMA2010_Q020",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 7,
+    "expected_visual_anchors": [
+      "potential energy graph",
+      "U (J)",
+      "x (m)",
+      "V-shaped well"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          185,
+          70,
+          445,
+          235
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q018_option_A.png",
+    "question_id": "FMA2010_Q018",
+    "asset_type": "option_image",
+    "option_label": "A",
+    "source_page": 7,
+    "expected_visual_anchors": [
+      "force vs position graph",
+      "F (N)",
+      "x (m)",
+      "step function"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          105,
+          270,
+          325,
+          405
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          105,
+          270,
+          325,
+          392
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q018_option_B.png",
+    "question_id": "FMA2010_Q018",
+    "asset_type": "option_image",
+    "option_label": "B",
+    "source_page": 7,
+    "expected_visual_anchors": [
+      "force vs position graph",
+      "F (N)",
+      "x (m)",
+      "step function"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          325,
+          270,
+          545,
+          405
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          325,
+          270,
+          545,
+          392
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q018_option_C.png",
+    "question_id": "FMA2010_Q018",
+    "asset_type": "option_image",
+    "option_label": "C",
+    "source_page": 7,
+    "expected_visual_anchors": [
+      "force vs position graph",
+      "F (N)",
+      "x (m)",
+      "step function"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          105,
+          410,
+          325,
+          535
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          105,
+          410,
+          325,
+          525
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q018_option_D.png",
+    "question_id": "FMA2010_Q018",
+    "asset_type": "option_image",
+    "option_label": "D",
+    "source_page": 7,
+    "expected_visual_anchors": [
+      "force vs position graph",
+      "F (N)",
+      "x (m)",
+      "step function"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          325,
+          410,
+          545,
+          535
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          325,
+          410,
+          545,
+          525
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q018_option_E.png",
+    "question_id": "FMA2010_Q018",
+    "asset_type": "option_image",
+    "option_label": "E",
+    "source_page": 7,
+    "expected_visual_anchors": [
+      "force vs position graph",
+      "F (N)",
+      "x (m)",
+      "step function"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          105,
+          535,
+          325,
+          665
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          105,
+          545,
+          325,
+          650
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q019_fig02.png",
+    "question_id": "FMA2010_Q019",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 8,
+    "expected_visual_anchors": [
+      "three position-time graphs",
+      "I",
+      "II",
+      "III",
+      "x (m)",
+      "t (s)"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          55,
+          70,
+          555,
+          220
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          55,
+          82,
+          555,
+          202
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q020_fig02.png",
+    "question_id": "FMA2010_Q020",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 8,
+    "expected_visual_anchors": [
+      "position-time graph",
+      "sinusoidal motion",
+      "x (m)",
+      "t (s)"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          195,
+          315,
+          455,
+          520
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          195,
+          340,
+          455,
+          505
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "minor-boundary-adjustment-after-visual-review"
+        ]
+      },
+      {
+        "attempt": 3,
+        "crop_box": [
+          195,
+          340,
+          455,
+          515
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q022_fig01.png",
+    "question_id": "FMA2010_Q022",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 9,
+    "expected_visual_anchors": [
+      "car circular motion",
+      "balloon direction diagram",
+      "A B C D"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          195,
+          70,
+          420,
+          245
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          235,
+          210,
+          400,
+          370
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "minor-boundary-adjustment-after-visual-review"
+        ]
+      },
+      {
+        "attempt": 3,
+        "crop_box": [
+          235,
+          222,
+          400,
+          370
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q023_fig01.png",
+    "question_id": "FMA2010_Q023",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 9,
+    "expected_visual_anchors": [
+      "two U-shaped tubes",
+      "water flow arrows",
+      "areas A and A-prime"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          195,
+          320,
+          430,
+          485
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          220,
+          505,
+          405,
+          590
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "minor-boundary-adjustment-after-visual-review"
+        ]
+      },
+      {
+        "attempt": 3,
+        "crop_box": [
+          220,
+          530,
+          405,
+          590
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q024_fig01.png",
+    "question_id": "FMA2010_Q024",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 10,
+    "expected_visual_anchors": [
+      "disk with circular hole",
+      "R",
+      "R/2",
+      "axis of rotation"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          180,
+          80,
+          450,
+          255
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          180,
+          115,
+          450,
+          215
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2010_Q025_fig01.png",
+    "question_id": "FMA2010_Q025",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 10,
+    "expected_visual_anchors": [
+      "elliptical orbit",
+      "planet",
+      "R",
+      "2R"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          180,
+          325,
+          450,
+          510
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          180,
+          340,
+          450,
+          510
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q002_fig01.png",
+    "question_id": "FMA2011_Q002",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 2,
+    "expected_visual_anchors": [
+      "three velocity-time graphs",
+      "Object I",
+      "Object II",
+      "Object III"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          75,
+          100,
+          545,
+          250
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          75,
+          205,
+          545,
+          320
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "minor-boundary-adjustment-after-visual-review"
+        ]
+      },
+      {
+        "attempt": 3,
+        "crop_box": [
+          75,
+          205,
+          545,
+          340
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q003_fig01.png",
+    "question_id": "FMA2011_Q003",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 2,
+    "expected_visual_anchors": [
+      "three velocity-time graphs",
+      "Object I",
+      "Object II",
+      "Object III"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          75,
+          100,
+          545,
+          250
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          75,
+          205,
+          545,
+          320
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "minor-boundary-adjustment-after-visual-review"
+        ]
+      },
+      {
+        "attempt": 3,
+        "crop_box": [
+          75,
+          205,
+          545,
+          340
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q004_fig01.png",
+    "question_id": "FMA2011_Q004",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 2,
+    "expected_visual_anchors": [
+      "three velocity-time graphs",
+      "Object I",
+      "Object II",
+      "Object III"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          75,
+          100,
+          545,
+          250
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          75,
+          205,
+          545,
+          320
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "minor-boundary-adjustment-after-visual-review"
+        ]
+      },
+      {
+        "attempt": 3,
+        "crop_box": [
+          75,
+          205,
+          545,
+          340
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q011_option_A.png",
+    "question_id": "FMA2011_Q011",
+    "asset_type": "option_image",
+    "option_label": "A",
+    "source_page": 4,
+    "expected_visual_anchors": [
+      "water level vs time graph",
+      "water level",
+      "time"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          75,
+          205,
+          225,
+          330
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          80,
+          210,
+          225,
+          320
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q011_option_B.png",
+    "question_id": "FMA2011_Q011",
+    "asset_type": "option_image",
+    "option_label": "B",
+    "source_page": 4,
+    "expected_visual_anchors": [
+      "water level vs time graph",
+      "water level",
+      "time"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          230,
+          205,
+          380,
+          330
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          235,
+          210,
+          380,
+          320
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q011_option_C.png",
+    "question_id": "FMA2011_Q011",
+    "asset_type": "option_image",
+    "option_label": "C",
+    "source_page": 4,
+    "expected_visual_anchors": [
+      "water level vs time graph",
+      "water level",
+      "time"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          385,
+          205,
+          540,
+          330
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          390,
+          210,
+          540,
+          320
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q011_option_D.png",
+    "question_id": "FMA2011_Q011",
+    "asset_type": "option_image",
+    "option_label": "D",
+    "source_page": 4,
+    "expected_visual_anchors": [
+      "water level vs time graph",
+      "water level",
+      "time"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          75,
+          335,
+          225,
+          465
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          80,
+          355,
+          225,
+          462
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "minor-boundary-adjustment-after-visual-review"
+        ]
+      },
+      {
+        "attempt": 3,
+        "crop_box": [
+          80,
+          355,
+          225,
+          470
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q011_option_E.png",
+    "question_id": "FMA2011_Q011",
+    "asset_type": "option_image",
+    "option_label": "E",
+    "source_page": 4,
+    "expected_visual_anchors": [
+      "water level vs time graph",
+      "water level",
+      "time"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          230,
+          335,
+          380,
+          465
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          235,
+          355,
+          380,
+          462
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "minor-boundary-adjustment-after-visual-review"
+        ]
+      },
+      {
+        "attempt": 3,
+        "crop_box": [
+          235,
+          355,
+          380,
+          470
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q012_fig01.png",
+    "question_id": "FMA2011_Q012",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 5,
+    "expected_visual_anchors": [
+      "two-ball rod configuration",
+      "three-ball triangular configuration"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          180,
+          100,
+          430,
+          250
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          180,
+          120,
+          430,
+          245
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q013_fig01.png",
+    "question_id": "FMA2011_Q013",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 5,
+    "expected_visual_anchors": [
+      "spool/yo-yo apparatus",
+      "thread",
+      "angle theta",
+      "rolling direction arrows"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          115,
+          375,
+          375,
+          550
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          115,
+          395,
+          375,
+          540
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q014_option_A.png",
+    "question_id": "FMA2011_Q014",
+    "asset_type": "option_image",
+    "option_label": "A",
+    "source_page": 6,
+    "expected_visual_anchors": [
+      "vertical string",
+      "ceiling-to-floor scale ticks",
+      "multiple weights"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          100,
+          105,
+          142,
+          430
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q014_option_B.png",
+    "question_id": "FMA2011_Q014",
+    "asset_type": "option_image",
+    "option_label": "B",
+    "source_page": 6,
+    "expected_visual_anchors": [
+      "vertical string",
+      "ceiling-to-floor scale ticks",
+      "multiple weights"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          190,
+          105,
+          234,
+          430
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q014_option_C.png",
+    "question_id": "FMA2011_Q014",
+    "asset_type": "option_image",
+    "option_label": "C",
+    "source_page": 6,
+    "expected_visual_anchors": [
+      "vertical string",
+      "ceiling-to-floor scale ticks",
+      "multiple weights"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          282,
+          105,
+          326,
+          430
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q014_option_D.png",
+    "question_id": "FMA2011_Q014",
+    "asset_type": "option_image",
+    "option_label": "D",
+    "source_page": 6,
+    "expected_visual_anchors": [
+      "vertical string",
+      "ceiling-to-floor scale ticks",
+      "multiple weights"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          374,
+          105,
+          418,
+          430
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q014_option_E.png",
+    "question_id": "FMA2011_Q014",
+    "asset_type": "option_image",
+    "option_label": "E",
+    "source_page": 6,
+    "expected_visual_anchors": [
+      "vertical string",
+      "ceiling-to-floor scale ticks",
+      "multiple weights"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          466,
+          105,
+          510,
+          430
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q016_fig01.png",
+    "question_id": "FMA2011_Q016",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 7,
+    "expected_visual_anchors": [
+      "Jonathan",
+      "fixed hard railing",
+      "rope",
+      "Becky in box",
+      "floor"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          335,
+          60,
+          535,
+          235
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          345,
+          65,
+          525,
+          218
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q017_fig01.png",
+    "question_id": "FMA2011_Q017",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 7,
+    "expected_visual_anchors": [
+      "Jonathan",
+      "fixed hard railing",
+      "rope",
+      "Becky in box",
+      "floor"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          335,
+          60,
+          535,
+          235
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          345,
+          65,
+          525,
+          218
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q022_fig01.png",
+    "question_id": "FMA2011_Q022",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 9,
+    "expected_visual_anchors": [
+      "engine output torque graph",
+      "Output Torque (Nm)",
+      "Engine Revolutions per Minute",
+      "I II III"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          225,
+          75,
+          415,
+          225
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          205,
+          95,
+          415,
+          220
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "minor-boundary-adjustment-after-visual-review"
+        ]
+      },
+      {
+        "attempt": 3,
+        "crop_box": [
+          205,
+          95,
+          415,
+          230
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  },
+  {
+    "asset_file": "FMA2011_Q024_fig01.png",
+    "question_id": "FMA2011_Q024",
+    "asset_type": "question_figure",
+    "option_label": null,
+    "source_page": 10,
+    "expected_visual_anchors": [
+      "Teflon ring bearing",
+      "R",
+      "delta"
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "crop_box": [
+          205,
+          115,
+          390,
+          300
+        ],
+        "status": "FAIL",
+        "reasons": [
+          "boundary-or-contamination-detected-in-visual-review"
+        ]
+      },
+      {
+        "attempt": 2,
+        "crop_box": [
+          210,
+          130,
+          390,
+          290
+        ],
+        "status": "PASS",
+        "reasons": []
+      }
+    ],
+    "final_visual_qa_status": "PASS",
+    "visual_review_note": "Final crop visually checked against source-page render and expected anchors; no semantic mismatch, clipping, or adjacent-content contamination observed."
+  }
+]
