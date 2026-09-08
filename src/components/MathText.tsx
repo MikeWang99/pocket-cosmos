@@ -2,8 +2,12 @@ import React from 'react';
 import katex from 'katex';
 import { repairLatexExpression } from '../utils/latexRepair';
 
+const normalizeFormulaExpression = (value: string) => repairLatexExpression(value)
+  .replace(/\b([A-Za-z])(\d)\b/g, '$1_{$2}')
+  .replace(/(^|[^A-Za-z])([0-9]+)\s*\/\s*([0-9]+)(?=[^A-Za-z]|$)/g, '$1\\frac{$2}{$3}');
+
 const renderMath = (value: string) =>
-  katex.renderToString(repairLatexExpression(value), {
+  katex.renderToString(normalizeFormulaExpression(value), {
     throwOnError: false,
     strict: false,
   });
