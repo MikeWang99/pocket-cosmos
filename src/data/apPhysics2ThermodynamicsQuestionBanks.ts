@@ -4,6 +4,15 @@ import type { PracticeStep } from '../types/practice';
 
 const cedSourceUrl = 'https://apcentral.collegeboard.org/media/pdf/ap-physics-2-course-and-exam-description.pdf';
 
+// The extracted SVGs are figure-only crops that belong to a question stem.
+// They are not full-page question screenshots, so the OCR prompt must remain visible.
+const normalizeThermodynamicsSteps = (steps: PracticeStep[]): PracticeStep[] =>
+  steps.map((step) =>
+    step.image
+      ? { ...step, image: { ...step.image, role: 'diagram' } }
+      : step,
+  );
+
 export const apPhysics2ThermodynamicsSets: PracticeSet[] = Object.entries(bank.sets)
   .filter(([, steps]) => steps.length > 0)
   .map(([cedCode, steps]) => {
@@ -18,7 +27,7 @@ export const apPhysics2ThermodynamicsSets: PracticeSet[] = Object.entries(bank.s
       subtitle: `${typedSteps.length} sourced questions from the two Thermodynamics extraction waves.`,
       eyebrow: 'AP Physics 2 · CED Unit 9 · Thermodynamics',
       description: `Questions are grouped under official CED topic ${cedCode}: ${topic.title}. Each question keeps its source wave, answer tracking, knowledge tags, and scalable source figures where available.`,
-      steps: typedSteps,
+      steps: normalizeThermodynamicsSteps(typedSteps),
       sources: [
         { label: 'AP Physics 2 Course and Exam Description', url: cedSourceUrl },
         { label: 'Live bank index', url: '/ap-physics2-thermodynamics-question-index.json' },
