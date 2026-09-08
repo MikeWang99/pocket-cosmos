@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 430" role="img" aria-label="Blank force diagram grid with a central dot">
+  <rect width="480" height="430" fill="white"/>
+  <g stroke="#333" stroke-width="1.5">
+    <path d="M70 30 H410 M70 70 H410 M70 110 H410 M70 150 H410 M70 190 H410 M70 230 H410 M70 270 H410 M70 310 H410 M70 350 H410 M70 390 H410"/>
+    <path d="M70 30 V390 M110 30 V390 M150 30 V390 M190 30 V390 M230 30 V390 M270 30 V390 M310 30 V390 M350 30 V390 M390 30 V390 M410 30 V390"/>
+  </g>
+  <circle cx="250" cy="210" r="10" fill="#222"/>
+</svg>

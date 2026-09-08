@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 430" role="img" aria-label="Cylinder containing a movable piston with radius r indicated">
+  <rect width="460" height="430" fill="white"/>
+  <g stroke="#111" fill="none" stroke-width="3">
+    <ellipse cx="230" cy="75" rx="120" ry="32"/>
+    <path d="M110 75 V330 M350 75 V330"/>
+    <path d="M110 330 C135 365 325 365 350 330"/>
+    <ellipse cx="230" cy="190" rx="120" ry="32" fill="#ddd"/>
+    <path d="M110 190 V230 M350 190 V230"/>
+    <path d="M110 230 C135 265 325 265 350 230"/>
+    <line x1="230" y1="75" x2="335" y2="75"/>
+    <path d="M335 75 l-12 -7 m12 7 l-12 7"/>
+  </g>
+  <text x="275" y="63" fill="#111" font-family="Arial, Helvetica, sans-serif" font-size="28">r</text>
+</svg>

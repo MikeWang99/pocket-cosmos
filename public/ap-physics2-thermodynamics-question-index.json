@@ -1,0 +1,2521 @@
+{
+  "schema_version": "AP2_CED_UNIT9_LIVE_BANK_INDEX_V1",
+  "generated_at": "2026-09-08",
+  "title": "AP Physics 2 · Unit 9 · Thermodynamics",
+  "ced_topics": [
+    {
+      "code": "9.1",
+      "title": "Kinetic Theory of Temperature and Pressure",
+      "chineseTitle": "温度与压强的分子运动论",
+      "questionCount": 47
+    },
+    {
+      "code": "9.2",
+      "title": "The Ideal Gas Law",
+      "chineseTitle": "理想气体定律",
+      "questionCount": 15
+    },
+    {
+      "code": "9.3",
+      "title": "Thermal Energy Transfer and Equilibrium",
+      "chineseTitle": "热能传递与热平衡",
+      "questionCount": 4
+    },
+    {
+      "code": "9.4",
+      "title": "The First Law of Thermodynamics",
+      "chineseTitle": "热力学第一定律",
+      "questionCount": 59
+    },
+    {
+      "code": "9.5",
+      "title": "Specific Heat and Thermal Conductivity",
+      "chineseTitle": "比热容与热导率",
+      "questionCount": 1
+    },
+    {
+      "code": "9.6",
+      "title": "Entropy and the Second Law of Thermodynamics",
+      "chineseTitle": "熵与热力学第二定律",
+      "questionCount": 1
+    }
+  ],
+  "questions": [
+    {
+      "id": "ap2-thermo-wave2-q001",
+      "title": "Wave 2 · Q001",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q001 · source page(s) 1",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q003",
+      "title": "Wave 2 · Q003",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q003 · source page(s) 1, 2",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q005",
+      "title": "Wave 2 · Q005",
+      "topic": "9.1",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q005 · source page(s) 3, 4, 5",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q008",
+      "title": "Wave 2 · Q008",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q008 · source page(s) 8, 9",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q009",
+      "title": "Wave 2 · Q009",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q009 · source page(s) 9, 10",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q011",
+      "title": "Wave 2 · Q011",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q011 · source page(s) 11",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q012",
+      "title": "Wave 2 · Q012",
+      "topic": "9.1",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q012 · source page(s) 11, 12",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q013",
+      "title": "Wave 2 · Q013",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q013 · source page(s) 12, 13",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q019",
+      "title": "Wave 2 · Q019",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q019 · source page(s) 22, 23",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q020",
+      "title": "Wave 2 · Q020",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q020 · source page(s) 23",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q021",
+      "title": "Wave 2 · Q021",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q021 · source page(s) 23, 24",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q022",
+      "title": "Wave 2 · Q022",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q022 · source page(s) 24",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q024",
+      "title": "Wave 2 · Q024",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q024 · source page(s) 24, 25",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Isochoric processes",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q026",
+      "title": "Wave 2 · Q026",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q026 · source page(s) 25",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q027",
+      "title": "Wave 2 · Q027",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q027 · source page(s) 25, 26",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q028",
+      "title": "Wave 2 · Q028",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q028 · source page(s) 26",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q029",
+      "title": "Wave 2 · Q029",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q029 · source page(s) 26, 27",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q030",
+      "title": "Wave 2 · Q030",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q030 · source page(s) 27, 28",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q032",
+      "title": "Wave 2 · Q032",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q032 · source page(s) 32",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q033",
+      "title": "Wave 2 · Q033",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q033 · source page(s) 32, 33",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q039",
+      "title": "Wave 2 · Q039",
+      "topic": "9.1",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q039 · source page(s) 36, 37",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q041",
+      "title": "Wave 2 · Q041",
+      "topic": "9.1",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q041 · source page(s) 37",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q044",
+      "title": "Wave 2 · Q044",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q044 · source page(s) 43, 44",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q045",
+      "title": "Wave 2 · Q045",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q045 · source page(s) 44, 45",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Isochoric processes",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q046",
+      "title": "Wave 2 · Q046",
+      "topic": "9.1",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q046 · source page(s) 45, 46, 47, 48, 49",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "FRQ",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Piston equilibrium and pressure forces",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q047",
+      "title": "Wave 2 · Q047",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q047 · source page(s) 49, 50",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Isothermal processes",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q048",
+      "title": "Wave 2 · Q048",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q048 · source page(s) 50",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q049",
+      "title": "Wave 2 · Q049",
+      "topic": "9.1",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q049 · source page(s) 50, 51",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q050",
+      "title": "Wave 2 · Q050",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q050 · source page(s) 51",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q051",
+      "title": "Wave 2 · Q051",
+      "topic": "9.1",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q051 · source page(s) 51, 52",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q053",
+      "title": "Wave 2 · Q053",
+      "topic": "9.1",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q053 · source page(s) 53, 54",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q054",
+      "title": "Wave 2 · Q054",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q054 · source page(s) 54, 55",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q055",
+      "title": "Wave 2 · Q055",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q055 · source page(s) 55",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q058",
+      "title": "Wave 2 · Q058",
+      "topic": "9.1",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q058 · source page(s) 57, 58, 59, 60, 61, 62",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "FRQ",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Piston equilibrium and pressure forces",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q062",
+      "title": "Wave 2 · Q062",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q062 · source page(s) 64",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q063",
+      "title": "Wave 2 · Q063",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q063 · source page(s) 64, 65",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Piston equilibrium and pressure forces",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q065",
+      "title": "Wave 2 · Q065",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q065 · source page(s) 66",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q066",
+      "title": "Wave 2 · Q066",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q066 · source page(s) 66, 67, 68",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Molecular motion and temperature",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q070",
+      "title": "Wave 2 · Q070",
+      "topic": "9.1",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q070 · source page(s) 77, 78, 79, 80, 81",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Piston equilibrium and pressure forces",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q071",
+      "title": "Wave 2 · Q071",
+      "topic": "9.1",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q071 · source page(s) 81, 82, 83, 84, 85, 86",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "FRQ",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Piston equilibrium and pressure forces",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q073",
+      "title": "Wave 2 · Q073",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q073 · source page(s) 86, 87",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q074",
+      "title": "Wave 2 · Q074",
+      "topic": "9.1",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q074 · source page(s) 87, 88",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Piston equilibrium and pressure forces",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q077",
+      "title": "Wave 2 · Q077",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q077 · source page(s) 89",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q091",
+      "title": "Wave 2 · Q091",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q091 · source page(s) 111",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q101",
+      "title": "Wave 2 · Q101",
+      "topic": "9.1",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q101 · source page(s) 130, 131",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q104",
+      "title": "Wave 2 · Q104",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q104 · source page(s) 132, 133",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Piston equilibrium and pressure forces",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q111",
+      "title": "Wave 2 · Q111",
+      "topic": "9.1",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q111 · source page(s) 137, 138",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Piston equilibrium and pressure forces",
+        "CED 9.1",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave1-q002",
+      "title": "Wave 1 · Q002",
+      "topic": "9.2",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 1 · user-supplied source image · Q002 · source page(s) 1",
+      "tags": [
+        "ideal-gas",
+        "monatomic",
+        "isochoric",
+        "isobaric",
+        "first-law",
+        "Ideal-gas processes",
+        "Temperature ranking; isochoric and isobaric processes",
+        "CED 9.2",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 1"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q043",
+      "title": "Wave 2 · Q043",
+      "topic": "9.2",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q043 · source page(s) 39, 40, 41, 42, 43",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "FRQ",
+        "visual-source",
+        "Experimental analysis of gases",
+        "Isothermal processes",
+        "CED 9.2",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q060",
+      "title": "Wave 2 · Q060",
+      "topic": "9.2",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q060 · source page(s) 63",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Experimental analysis of gases",
+        "Experimental design and data analysis",
+        "CED 9.2",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q072",
+      "title": "Wave 2 · Q072",
+      "topic": "9.2",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q072 · source page(s) 86",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Experimental analysis of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.2",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q076",
+      "title": "Wave 2 · Q076",
+      "topic": "9.2",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q076 · source page(s) 88, 89",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Experimental analysis of gases",
+        "Experimental design and data analysis",
+        "CED 9.2",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q083",
+      "title": "Wave 2 · Q083",
+      "topic": "9.2",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q083 · source page(s) 99, 100",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Experimental analysis of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.2",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q084",
+      "title": "Wave 2 · Q084",
+      "topic": "9.2",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q084 · source page(s) 100, 101, 102, 103, 104, 105",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Experimental analysis of gases",
+        "Isothermal processes",
+        "CED 9.2",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q087",
+      "title": "Wave 2 · Q087",
+      "topic": "9.2",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q087 · source page(s) 108, 109",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Experimental analysis of gases",
+        "Experimental design and data analysis",
+        "CED 9.2",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q089",
+      "title": "Wave 2 · Q089",
+      "topic": "9.2",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q089 · source page(s) 110",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Experimental analysis of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.2",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q090",
+      "title": "Wave 2 · Q090",
+      "topic": "9.2",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q090 · source page(s) 110, 111",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Experimental analysis of gases",
+        "Experimental design and data analysis",
+        "CED 9.2",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q113",
+      "title": "Wave 2 · Q113",
+      "topic": "9.2",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q113 · source page(s) 139",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Experimental analysis of gases",
+        "Experimental design and data analysis",
+        "CED 9.2",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q115",
+      "title": "Wave 2 · Q115",
+      "topic": "9.2",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q115 · source page(s) 140, 141",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Experimental analysis of gases",
+        "Experimental design and data analysis",
+        "CED 9.2",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q118",
+      "title": "Wave 2 · Q118",
+      "topic": "9.2",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q118 · source page(s) 148, 149, 150, 151",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "FRQ",
+        "visual-source",
+        "Experimental analysis of gases",
+        "Piston equilibrium and pressure forces",
+        "CED 9.2",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q120",
+      "title": "Wave 2 · Q120",
+      "topic": "9.2",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q120 · source page(s) 154, 155, 156, 157",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "FRQ",
+        "visual-source",
+        "Experimental analysis of gases",
+        "Piston equilibrium and pressure forces",
+        "CED 9.2",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q122",
+      "title": "Wave 2 · Q122",
+      "topic": "9.2",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q122 · source page(s) 159",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Experimental analysis of gases",
+        "Isochoric processes",
+        "CED 9.2",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q016",
+      "title": "Wave 2 · Q016",
+      "topic": "9.3",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q016 · source page(s) 14, 15, 16, 17, 18",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "FRQ",
+        "visual-source",
+        "Experimental analysis of gases",
+        "Isothermal processes",
+        "CED 9.3",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q056",
+      "title": "Wave 2 · Q056",
+      "topic": "9.3",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q056 · source page(s) 55, 56",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Experimental analysis of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.3",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q082",
+      "title": "Wave 2 · Q082",
+      "topic": "9.3",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q082 · source page(s) 95, 96, 97, 98, 99",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Experimental analysis of gases",
+        "Piston equilibrium and pressure forces",
+        "CED 9.3",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q116",
+      "title": "Wave 2 · Q116",
+      "topic": "9.3",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q116 · source page(s) 141, 142, 143, 144, 145, 146, 147",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Experimental analysis of gases",
+        "Piston equilibrium and pressure forces",
+        "CED 9.3",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave1-q001",
+      "title": "Wave 1 · Q001",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 1 · user-supplied source image · Q001 · source page(s) 1",
+      "tags": [
+        "ideal-gas",
+        "thermodynamics",
+        "PV-diagram",
+        "work-on-gas",
+        "first-law",
+        "First law of thermodynamics",
+        "Path dependence of heat and work; P–V diagrams",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 1"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave1-q003",
+      "title": "Wave 1 · Q003",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 1 · user-supplied source image · Q003 · source page(s) 2",
+      "tags": [
+        "AP-Physics-2",
+        "FRQ",
+        "PV-diagram",
+        "isothermal",
+        "thermodynamic-cycle",
+        "Thermodynamic cycles",
+        "P–V work and isothermal processes",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 1"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave1-q004",
+      "title": "Wave 1 · Q004",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 1 · user-supplied source image · Q004 · source page(s) 1, 2",
+      "tags": [
+        "piston",
+        "ideal-gas",
+        "free-body-diagram",
+        "PV-diagram",
+        "work",
+        "Pressure, work, and ideal-gas processes",
+        "Piston equilibrium; constant-pressure and constant-volume processes",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 1"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave1-q005",
+      "title": "Wave 1 · Q005",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 1 · user-supplied source image · Q005 · source page(s) 1, 2",
+      "tags": [
+        "cyclic-process",
+        "PV-diagram",
+        "monatomic-ideal-gas",
+        "efficiency",
+        "first-law",
+        "Thermodynamic cycles",
+        "P–V work, heat transfer, and efficiency",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 1"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q002",
+      "title": "Wave 2 · Q002",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q002 · source page(s) 1",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q004",
+      "title": "Wave 2 · Q004",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q004 · source page(s) 2, 3",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q006",
+      "title": "Wave 2 · Q006",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q006 · source page(s) 5, 6, 7",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q007",
+      "title": "Wave 2 · Q007",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q007 · source page(s) 7, 8",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q010",
+      "title": "Wave 2 · Q010",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q010 · source page(s) 10, 11",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q014",
+      "title": "Wave 2 · Q014",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q014 · source page(s) 13",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q015",
+      "title": "Wave 2 · Q015",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q015 · source page(s) 13, 14",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q017",
+      "title": "Wave 2 · Q017",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q017 · source page(s) 18, 19, 20, 21, 22",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q018",
+      "title": "Wave 2 · Q018",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q018 · source page(s) 22",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q023",
+      "title": "Wave 2 · Q023",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q023 · source page(s) 24",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q025",
+      "title": "Wave 2 · Q025",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q025 · source page(s) 25",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q031",
+      "title": "Wave 2 · Q031",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q031 · source page(s) 28, 29, 30, 31, 32",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q034",
+      "title": "Wave 2 · Q034",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q034 · source page(s) 33, 34",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q035",
+      "title": "Wave 2 · Q035",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q035 · source page(s) 34",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q036",
+      "title": "Wave 2 · Q036",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q036 · source page(s) 34, 35",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q037",
+      "title": "Wave 2 · Q037",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q037 · source page(s) 35",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q038",
+      "title": "Wave 2 · Q038",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q038 · source page(s) 35, 36",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q040",
+      "title": "Wave 2 · Q040",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q040 · source page(s) 37",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q042",
+      "title": "Wave 2 · Q042",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q042 · source page(s) 37, 38, 39",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q052",
+      "title": "Wave 2 · Q052",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q052 · source page(s) 52, 53",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q057",
+      "title": "Wave 2 · Q057",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q057 · source page(s) 56, 57",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q059",
+      "title": "Wave 2 · Q059",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q059 · source page(s) 62, 63",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q061",
+      "title": "Wave 2 · Q061",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q061 · source page(s) 63, 64",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q064",
+      "title": "Wave 2 · Q064",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q064 · source page(s) 65, 66",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q067",
+      "title": "Wave 2 · Q067",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q067 · source page(s) 68, 69, 70, 71",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "FRQ",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Isothermal processes",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q068",
+      "title": "Wave 2 · Q068",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q068 · source page(s) 71, 72",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q075",
+      "title": "Wave 2 · Q075",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q075 · source page(s) 88",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q078",
+      "title": "Wave 2 · Q078",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q078 · source page(s) 89, 90",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Isothermal processes",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q079",
+      "title": "Wave 2 · Q079",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q079 · source page(s) 90, 91",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q080",
+      "title": "Wave 2 · Q080",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q080 · source page(s) 91, 92, 93, 94",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "FRQ",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q081",
+      "title": "Wave 2 · Q081",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q081 · source page(s) 94, 95",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q085",
+      "title": "Wave 2 · Q085",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q085 · source page(s) 105, 106",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q086",
+      "title": "Wave 2 · Q086",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q086 · source page(s) 106, 107, 108",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Isothermal processes",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q088",
+      "title": "Wave 2 · Q088",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q088 · source page(s) 109, 110",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Isothermal processes",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q092",
+      "title": "Wave 2 · Q092",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q092 · source page(s) 111, 112",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q093",
+      "title": "Wave 2 · Q093",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q093 · source page(s) 112, 113, 114, 115, 116",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Isothermal processes",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q094",
+      "title": "Wave 2 · Q094",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q094 · source page(s) 116, 117",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q095",
+      "title": "Wave 2 · Q095",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q095 · source page(s) 117, 118, 119",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "FRQ",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q096",
+      "title": "Wave 2 · Q096",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q096 · source page(s) 119, 120, 121, 122",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "FRQ",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q097",
+      "title": "Wave 2 · Q097",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q097 · source page(s) 122, 123, 124, 125",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "FRQ",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q098",
+      "title": "Wave 2 · Q098",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q098 · source page(s) 125, 126, 127, 128, 129",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "FRQ",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q099",
+      "title": "Wave 2 · Q099",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q099 · source page(s) 129",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Isobaric processes",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q100",
+      "title": "Wave 2 · Q100",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q100 · source page(s) 129, 130",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Isothermal processes",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q102",
+      "title": "Wave 2 · Q102",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q102 · source page(s) 131",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q103",
+      "title": "Wave 2 · Q103",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q103 · source page(s) 131, 132",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q105",
+      "title": "Wave 2 · Q105",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q105 · source page(s) 133",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q106",
+      "title": "Wave 2 · Q106",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q106 · source page(s) 133",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q107",
+      "title": "Wave 2 · Q107",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q107 · source page(s) 133, 134, 135",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Piston equilibrium and pressure forces",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q108",
+      "title": "Wave 2 · Q108",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q108 · source page(s) 135, 136",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q109",
+      "title": "Wave 2 · Q109",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q109 · source page(s) 136, 137",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q110",
+      "title": "Wave 2 · Q110",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q110 · source page(s) 137",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q112",
+      "title": "Wave 2 · Q112",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q112 · source page(s) 138, 139",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q114",
+      "title": "Wave 2 · Q114",
+      "topic": "9.4",
+      "mode": "multiple_choice",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q114 · source page(s) 139, 140",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q119",
+      "title": "Wave 2 · Q119",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q119 · source page(s) 151, 152, 153, 154",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Isochoric processes",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q121",
+      "title": "Wave 2 · Q121",
+      "topic": "9.4",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q121 · source page(s) 157, 158, 159",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Thermodynamic processes and energy transfer",
+        "Isobaric processes",
+        "CED 9.4",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q117",
+      "title": "Wave 2 · Q117",
+      "topic": "9.5",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q117 · source page(s) 147, 148",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "Thermodynamic processes and energy transfer",
+        "Ideal-gas law and first-law applications",
+        "CED 9.5",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    },
+    {
+      "id": "ap2-thermo-wave2-q069",
+      "title": "Wave 2 · Q069",
+      "topic": "9.6",
+      "mode": "free_response",
+      "source": "AP Physics 2 · Wave 2 · Official Unit 9 Scoring Guide PDF · Q069 · source page(s) 72, 73, 74, 75, 76, 77",
+      "tags": [
+        "AP-Physics-2",
+        "Unit-9",
+        "thermodynamics",
+        "multiple-choice",
+        "visual-source",
+        "Kinetic theory of gases",
+        "Ideal-gas law and first-law applications",
+        "CED 9.6",
+        "AP Physics 2",
+        "Thermodynamics",
+        "Wave 2"
+      ]
+    }
+  ]
+}

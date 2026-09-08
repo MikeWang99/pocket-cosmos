@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 430" role="img" aria-label="Pressure-volume diagram with states a, b, c, and d and three paths from a to c">
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#111"/>
+    </marker>
+  </defs>
+  <rect width="720" height="430" fill="white"/>
+  <g stroke="#111" fill="none" stroke-width="3">
+    <line x1="95" y1="360" x2="650" y2="360"/>
+    <line x1="95" y1="360" x2="95" y2="40"/>
+    <path d="M95 360 l-10 -6 m10 6 l-6 -11"/>
+    <path d="M650 360 l-11 -6 m11 6 l-6 -11"/>
+    <line x1="220" y1="120" x2="540" y2="120"/>
+    <line x1="220" y1="120" x2="220" y2="300"/>
+    <line x1="540" y1="120" x2="540" y2="300"/>
+    <line x1="220" y1="300" x2="540" y2="300"/>
+    <path d="M540 120 C470 150 330 210 220 300" marker-end="url(#arrow)"/>
+  </g>
+  <g stroke="#111" fill="none" stroke-width="3" marker-end="url(#arrow)">
+    <line x1="520" y1="120" x2="445" y2="120"/>
+    <line x1="220" y1="140" x2="220" y2="205"/>
+    <line x1="540" y1="140" x2="540" y2="205"/>
+    <line x1="520" y1="300" x2="445" y2="300"/>
+  </g>
+  <g fill="#111" font-family="Arial, Helvetica, sans-serif" font-size="28">
+    <text x="662" y="370">V</text><text x="78" y="35">P</text>
+    <text x="553" y="112">a</text><text x="197" y="112">b</text>
+    <text x="197" y="326">c</text><text x="553" y="326">d</text>
+  </g>
+</svg>

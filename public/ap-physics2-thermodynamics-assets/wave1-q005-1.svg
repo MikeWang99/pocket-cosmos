@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 500" role="img" aria-label="Pressure-volume diagram for a rectangular cyclic process with states A, B, C, and D">
+  <rect width="720" height="500" fill="white"/>
+  <g stroke="#111" fill="none" stroke-width="3">
+    <line x1="100" y1="420" x2="660" y2="420"/>
+    <line x1="100" y1="420" x2="100" y2="55"/>
+    <path d="M660 420 l-12 -6 m12 6 l-7 -12"/><path d="M100 55 l-7 12 m7 -12 l7 12"/>
+    <rect x="210" y="125" width="330" height="180"/>
+  </g>
+  <g fill="#111" font-family="Arial, Helvetica, sans-serif">
+    <circle cx="210" cy="125" r="6"/><circle cx="540" cy="125" r="6"/><circle cx="540" cy="305" r="6"/><circle cx="210" cy="305" r="6"/>
+    <g font-size="24"><text x="188" y="115">A</text><text x="550" y="115">B</text><text x="550" y="330">C</text><text x="185" y="330">D</text><text x="670" y="430">V</text><text x="80" y="45">p</text></g>
+    <g font-size="18"><text x="180" y="443">V₀</text><text x="518" y="443">3V₀</text><text x="55" y="130">2p₀</text><text x="55" y="310">p₀</text><text x="92" y="440">0</text></g>
+  </g>
+</svg>

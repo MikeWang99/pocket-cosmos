@@ -44,6 +44,7 @@ import { apcEmRcTest16Meta, apcEmRcTest16Steps } from './apcEmRcTest16';
 import { workEnergyMultipleChoiceMeta, workEnergyMultipleChoiceSteps } from './workEnergyMultipleChoice';
 import { fmaQuestionBankV5Sets } from './fmaQuestionBankV5';
 import { fmaApPhysics1KinematicsMeta, fmaApPhysics1KinematicsSteps } from './fmaApPhysics1Kinematics';
+import { apPhysics2ThermodynamicsSets } from './apPhysics2ThermodynamicsQuestionBanks';
 import type { PracticeStep } from '../types/practice';
 
 export interface PracticeSet {
@@ -71,6 +72,7 @@ export interface PracticeSet {
 }
 
 export const practiceSets: PracticeSet[] = [
+  ...apPhysics2ThermodynamicsSets,
   {
     id: 'calculus-for-physics',
     category: 'mechanics',
