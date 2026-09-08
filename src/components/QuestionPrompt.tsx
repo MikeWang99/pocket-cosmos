@@ -43,14 +43,14 @@ export const QuestionPrompt: React.FC<QuestionPromptProps> = ({ prompt, classNam
 
   if (blocks.length <= 1) {
     return (
-      <div className={`whitespace-pre-line ${className ?? ''}`}>
+      <div className={`whitespace-pre-line font-serif ${className ?? ''}`}>
         <MathText>{prompt}</MathText>
       </div>
     );
   }
 
   return (
-    <div className={className}>
+    <div className={`font-serif ${className ?? ''}`}>
       {blocks.map((block, index) => (
         <div key={index} className={index ? 'mt-3 border-t border-line pt-3' : ''}>
           {block.marker ? (
