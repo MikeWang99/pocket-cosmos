@@ -1357,7 +1357,7 @@ export const PracticeSection: React.FC = () => {
                             }`}>
                               {isSelected ? '✓' : choice.label}
                             </span>
-                            <span className={`min-w-0 flex-1 self-center text-xs leading-relaxed text-ink sm:text-sm ${useStackedChoices ? 'whitespace-normal' : 'leading-tight'}`}>
+                            <span className={`min-w-0 flex-1 self-center font-serif text-xs leading-relaxed text-ink sm:text-sm ${useStackedChoices ? 'whitespace-normal' : 'leading-tight'}`}>
                               {choice.image ? (
                                 <>
                                   <img
