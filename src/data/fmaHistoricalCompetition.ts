@@ -75,17 +75,17 @@ export const fmaCompetitionSteps: PracticeStep[] = [...legacySteps, ...generated
 export const fmaCompetitionSet: PracticeSet = {
   id: 'fma-competition-bank',
   category: 'mechanics',
-  label: 'All questions',
-  title: 'F=ma Competition',
+  label: 'All Question',
+  title: 'F=ma Competition · All Question',
   subtitle: `${fmaCompetitionSteps.length} model-based multiple-choice questions`,
   eyebrow: 'F=ma Competition',
-  description: 'Historical F=ma questions organized by the underlying problem model.',
+  description: 'The complete historical F=ma question archive, kept alongside the current specialty chapters.',
   steps: fmaCompetitionSteps,
   sources: [
     { label: 'AAPT F=ma historical exams (2008–2020)', url: '/fma-historical-assets/source-inventory.json' },
   ],
   practiceKind: 'mcq',
   system: 'competition',
-  chapter: 1,
-  chapterTitle: 'F=ma Competition',
+  chapter: 0,
+  chapterTitle: 'All Question',
 };

@@ -43,6 +43,7 @@ import { apcEmFrq2Meta, apcEmFrq2Steps } from './apcEmFrqTest2';
 import { apcEmRcTest16Meta, apcEmRcTest16Steps } from './apcEmRcTest16';
 import { workEnergyMultipleChoiceMeta, workEnergyMultipleChoiceSteps } from './workEnergyMultipleChoice';
 import { fmaQuestionBankV5Sets } from './fmaQuestionBankV5';
+import { fmaCompetitionSet } from './fmaHistoricalCompetition';
 import { fmaApPhysics1KinematicsMeta, fmaApPhysics1KinematicsSteps } from './fmaApPhysics1Kinematics';
 import { apPhysics2ThermodynamicsSets } from './apPhysics2ThermodynamicsQuestionBanks';
 import type { PracticeStep } from '../types/practice';
@@ -231,6 +232,9 @@ export const practiceSets: PracticeSet[] = [
     steps: apcEmRcTest16Steps,
   },
   // F=ma competition bank, exposed directly as model-based chapters.
+  // Historical archive is kept as a separate All Question view alongside
+  // the current specialty chapters.
+  fmaCompetitionSet,
   ...fmaQuestionBankV5Sets,
   {
     id: 'fma-ap-physics1-kinematics-2026',
