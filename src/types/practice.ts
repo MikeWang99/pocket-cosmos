@@ -75,6 +75,14 @@ export interface PracticeStep {
       height?: number;
       downloadName?: string;
     };
+    /** Some source options contain a pair or group of linked figures. */
+    images?: Array<{
+      src: string;
+      alt: string;
+      width?: number;
+      height?: number;
+      downloadName?: string;
+    }>;
   }>;
   correctAnswer?: string;
   sampleAnswer?: string;

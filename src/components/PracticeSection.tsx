@@ -132,7 +132,7 @@ const RichText: React.FC<{ children: string; className?: string }> = ({ children
 );
 
 const isMultipleChoiceStep = (step: PracticeStep) =>
-  step.mode === 'multiple_choice' && Boolean(step.choices?.length && step.correctAnswer);
+  step.mode === 'multiple_choice' && Boolean(step.choices?.length);
 
 type PracticeKind = NonNullable<PracticeSet['practiceKind']>;
 
@@ -854,6 +854,22 @@ export const PracticeSection: React.FC = () => {
     if (isMultipleChoiceStep(activeStep)) {
       if (!currentAnswer) return;
 
+      // Some imported question banks intentionally omit their answer key. In
+      // that case record the response without pretending it was correct or
+      // incorrect; the question remains a usable practice item while the
+      // teacher can add an answer key later.
+      if (!activeStep.correctAnswer) {
+        const result: EvaluationResult = {
+          score: 0,
+          maxScore: 0,
+          hits: [],
+          misses: [],
+          suggestions: [],
+        };
+        recordResult(result, currentAnswer);
+        return;
+      }
+
       // Multi-select: compare sorted sets
       const selectedSet = currentAnswer.split(',').filter(Boolean).sort();
       const correctSet = (activeStep.correctAnswer ?? '').split(',').filter(Boolean).sort();
@@ -1441,7 +1457,19 @@ export const PracticeSection: React.FC = () => {
                               {isSelected ? '✓' : choice.label}
                             </span>
                             <span className={`min-w-0 flex-1 self-center font-serif text-xs leading-relaxed text-ink sm:text-sm ${useStackedChoices ? 'whitespace-normal' : 'leading-tight'}`}>
-                              {choice.image ? (
+                              {choice.images?.length ? (
+                                <span className="flex min-w-0 flex-wrap items-center justify-center gap-2">
+                                  {choice.images.map((image) => (
+                                    <img
+                                      key={image.src}
+                                      src={image.src}
+                                      alt={image.alt}
+                                      className="practice-choice-image"
+                                    />
+                                  ))}
+                                  <span className="sr-only">{choice.text}</span>
+                                </span>
+                              ) : choice.image ? (
                                 <>
                                   <img
                                     src={choice.image.src}
@@ -1462,7 +1490,9 @@ export const PracticeSection: React.FC = () => {
                       <div className="mt-5 rounded-lg border border-line bg-surface-muted p-4">
                         <div className="flex items-center justify-between gap-3">
                           <div className="text-xs uppercase tracking-widest text-slate-500">
-                            {currentResult.score === 1 ? t.practice.correct : t.practice.notQuite}
+                            {currentResult.maxScore === 0
+                              ? language === 'zh' ? '已记录' : 'Recorded'
+                              : currentResult.score === 1 ? t.practice.correct : t.practice.notQuite}
                           </div>
                           <div className="flex gap-2">
                             {/* #11: Retry button */}
@@ -1488,9 +1518,11 @@ export const PracticeSection: React.FC = () => {
                             )}
                           </div>
                         </div>
-                        <p className="mt-3 text-sm text-ink-soft leading-relaxed">
-                          <MathText>{activeStep.solution ?? ''}</MathText>
-                        </p>
+                        {activeStep.solution && (
+                          <p className="mt-3 text-sm text-ink-soft leading-relaxed">
+                            <MathText>{activeStep.solution}</MathText>
+                          </p>
+                        )}
                         {activeStep.solutionImage && (
                           <div className="mt-3 overflow-hidden rounded-lg border border-line bg-white">
                             <img

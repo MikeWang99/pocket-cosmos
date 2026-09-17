@@ -46,6 +46,10 @@ import { fmaQuestionBankV5Sets } from './fmaQuestionBankV5';
 import { fmaCompetitionSet } from './fmaHistoricalCompetition';
 import { fmaApPhysics1KinematicsMeta, fmaApPhysics1KinematicsSteps } from './fmaApPhysics1Kinematics';
 import { apPhysics2ThermodynamicsSets } from './apPhysics2ThermodynamicsQuestionBanks';
+import {
+  apPhysics1Unit1FreeResponseQuestionBankSet,
+  apPhysics1Unit1QuestionBankSet,
+} from './apPhysics1Unit1QuestionBank';
 import type { PracticeStep } from '../types/practice';
 
 export interface PracticeSet {
@@ -74,6 +78,8 @@ export interface PracticeSet {
 
 export const practiceSets: PracticeSet[] = [
   ...apPhysics2ThermodynamicsSets,
+  apPhysics1Unit1QuestionBankSet,
+  apPhysics1Unit1FreeResponseQuestionBankSet,
   {
     id: 'calculus-for-physics',
     category: 'mechanics',
