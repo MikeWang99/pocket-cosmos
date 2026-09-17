@@ -18,6 +18,15 @@ export interface PracticeAsset {
   sourceUrl?: string;
 }
 
+/** Admin-only annotations that describe why a question is worth revisiting. */
+export type PracticeLabel = 'high_difficulty' | 'high_value' | 'classroom_practice';
+
+export const PRACTICE_LABELS: readonly PracticeLabel[] = [
+  'high_difficulty',
+  'high_value',
+  'classroom_practice',
+];
+
 export interface PracticeStep {
   id: string;
   mode?: 'free_response' | 'multiple_choice';

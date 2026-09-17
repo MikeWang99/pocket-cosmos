@@ -15,15 +15,17 @@ import {
   RotateCcw,
   Sparkles,
   Square,
+  Tag,
   Target,
 } from 'lucide-react';
 import { practiceSets, type PracticeSet } from '../data/practiceSets';
-import type { EvaluationResult, PracticeStep } from '../types/practice';
+import { PRACTICE_LABELS, type EvaluationResult, type PracticeLabel, type PracticeStep } from '../types/practice';
 import { evaluateLocally } from '../utils/rubricScoring';
 import { useLanguage } from '../LanguageContext';
 import { useAuth } from '../auth/AuthContext';
 import { usePracticeProgress, type SavedPracticeAttempt } from '../hooks/usePracticeProgress';
 import { usePracticePermissions } from '../hooks/usePracticePermissions';
+import { usePracticeLabels } from '../hooks/usePracticeLabels';
 import { StudentWorkUpload } from './StudentWorkUpload';
 import { QuestionPrompt } from './QuestionPrompt';
 import { isLongChoice, MathText } from './MathText';
@@ -337,7 +339,7 @@ const QuestionAssetDownloads: React.FC<{ step: PracticeStep; language: 'en' | 'z
 
 export const PracticeSection: React.FC = () => {
   const { language, t } = useLanguage();
-  const { authEnabled, configured, user } = useAuth();
+  const { authEnabled, configured, isAdmin, user } = useAuth();
   const { hasAccess } = usePracticePermissions();
   const initialSelection = useMemo(() => getSafePracticeSelection(
     readPracticeSelectionFromUrl().setId,
@@ -355,8 +357,10 @@ export const PracticeSection: React.FC = () => {
   const [shareCopied, setShareCopied] = useState(false);
   const [difficultyFilter, setDifficultyFilter] = useState<'all' | 'easy' | 'medium' | 'hard'>('all');
   const [specialtyFilter, setSpecialtyFilter] = useState<'all' | string>('all');
+  const [labelFilter, setLabelFilter] = useState<'all' | PracticeLabel>('all');
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const { resetSavedAttempts, savedAttempts, saveAttempt, syncError, syncState } = usePracticeProgress(activeSetId);
+  const { labelsByQuestion, getLabels, toggleLabel } = usePracticeLabels();
 
   const activeSet = practiceSets.find((set) => set.id === activeSetId) ?? practiceSets[0];
   const practiceSetMeta = activeSet;
@@ -391,6 +395,7 @@ export const PracticeSection: React.FC = () => {
     activePracticeKind === 'mcq' &&
     activeSet.steps.some((step) => Number.isFinite(step.difficulty) || step.tags?.some((tag) => tag.startsWith('Difficulty ')));
   const supportsSpecialtyFilter = activeSet.system === 'competition' && activeSet.steps.some((step) => (step.specialtyTags?.length ?? 0) > 0);
+  const supportsLabelFilter = isAdmin && activeSet.steps.length > 0;
   const specialtyOptions = useMemo(() => {
     const labels = new Set<string>();
     activeSet.steps.forEach((step) => step.specialtyTags?.forEach((label) => labels.add(label)));
@@ -401,6 +406,7 @@ export const PracticeSection: React.FC = () => {
   const practiceSteps = useMemo(() => {
     return activeSet.steps.filter((step) => {
       if (supportsSpecialtyFilter && specialtyFilter !== 'all' && !step.specialtyTags?.includes(specialtyFilter)) return false;
+      if (supportsLabelFilter && labelFilter !== 'all' && !labelsByQuestion[`${activeSet.id}:${step.id}`]?.includes(labelFilter)) return false;
       if (!supportsDifficultyFilter || difficultyFilter === 'all') return true;
       const diffTag = step.tags?.find((tag) => tag.startsWith('Difficulty '));
       const taggedLevel = diffTag
@@ -413,7 +419,7 @@ export const PracticeSection: React.FC = () => {
       if (difficultyFilter === 'hard') return level >= 4;
       return true;
     });
-  }, [activeSet.steps, supportsDifficultyFilter, difficultyFilter, supportsSpecialtyFilter, specialtyFilter]);
+  }, [activeSet.id, activeSet.steps, labelsByQuestion, supportsDifficultyFilter, difficultyFilter, supportsSpecialtyFilter, specialtyFilter, supportsLabelFilter, labelFilter]);
 
   // Map "Difficulty N" tag to display label
   const formatTag = (tag: string): string => {
@@ -451,6 +457,18 @@ export const PracticeSection: React.FC = () => {
   const currentAnswer = activeStep ? (answers[activeStep.id] ?? '') : '';
   const currentAnswerImage = activeStep ? (answerImages[activeStep.id] ?? null) : null;
   const currentResult = activeStep ? results[activeStep.id] : undefined;
+  const activeLabels = activeStep ? getLabels(activeSet.id, activeStep.id) : [];
+  const practiceLabelCopy: Record<PracticeLabel, string> = language === 'zh'
+    ? {
+        high_difficulty: t.practice.questionLabels.highDifficulty,
+        high_value: t.practice.questionLabels.highValue,
+        classroom_practice: t.practice.questionLabels.classroomPractice,
+      }
+    : {
+        high_difficulty: t.practice.questionLabels.highDifficulty,
+        high_value: t.practice.questionLabels.highValue,
+        classroom_practice: t.practice.questionLabels.classroomPractice,
+      };
   const completedCount = practiceSteps.filter((step) => Boolean(results[step.id])).length;
   const resultList: EvaluationResult[] = practiceSteps.flatMap((step) => results[step.id] ? [results[step.id]] : []);
 
@@ -887,6 +905,7 @@ export const PracticeSection: React.FC = () => {
   };
 
   const goToStep = (index: number) => {
+    if (!practiceSteps.length) return;
     recognitionRef.current?.stop();
     setIsListening(false);
     setShareCopied(false);
@@ -903,6 +922,7 @@ export const PracticeSection: React.FC = () => {
     setShareCopied(false);
     setDifficultyFilter('all');
     setSpecialtyFilter('all');
+    setLabelFilter('all');
     const nextSet = practiceSets.find((set) => set.id === setId) ?? practiceSets[0];
     setActiveSetId(setId);
     setAnswers({});
@@ -933,7 +953,9 @@ export const PracticeSection: React.FC = () => {
     setShareCopied(false);
     setDifficultyFilter('all');
     setSpecialtyFilter('all');
-    updatePracticeUrl(activeSet.id, practiceSteps[0].id, 'replace');
+    setLabelFilter('all');
+    const firstStep = practiceSteps[0] ?? activeSet.steps[0];
+    if (firstStep) updatePracticeUrl(activeSet.id, firstStep.id, 'replace');
     resetSavedAttempts();
   };
 
@@ -945,6 +967,17 @@ export const PracticeSection: React.FC = () => {
   const changeSpecialtyFilter = (filter: 'all' | string) => {
     setSpecialtyFilter(filter);
     setActiveIndex(0);
+  };
+
+  const changeLabelFilter = (filter: 'all' | PracticeLabel) => {
+    setLabelFilter(filter);
+    setActiveIndex(0);
+  };
+
+  const handleToggleLabel = (label: PracticeLabel) => {
+    if (!activeStep) return;
+    if (labelFilter !== 'all' && label === labelFilter) setActiveIndex(0);
+    void toggleLabel(activeSet.id, activeStep.id, label);
   };
 
   const copyCurrentQuestionLink = async () => {
@@ -1173,7 +1206,33 @@ export const PracticeSection: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center justify-end gap-3">
+          {supportsLabelFilter && (
+            <div className="flex flex-wrap items-center gap-1.5 rounded-full border border-line bg-surface-tint px-2 py-1.5">
+              <span className="px-1.5 text-[10px] font-semibold uppercase tracking-widest text-slate-500">
+                {t.practice.questionLabels.filterLabel}
+              </span>
+              {([
+                ['all', t.practice.questionLabels.all],
+                ['high_difficulty', t.practice.questionLabels.filterHighDifficulty],
+                ['high_value', t.practice.questionLabels.filterHighValue],
+                ['classroom_practice', t.practice.questionLabels.filterClassroomPractice],
+              ] as Array<['all' | PracticeLabel, string]>).map(([filter, label]) => (
+                <button
+                  key={filter}
+                  type="button"
+                  onClick={() => changeLabelFilter(filter)}
+                  className={`min-h-7 rounded-full border px-2.5 py-1 text-[10px] font-semibold transition-colors ${
+                    labelFilter === filter
+                      ? 'border-nebula/60 bg-nebula/10 text-nebula'
+                      : 'border-transparent text-ink-soft hover:border-line-strong hover:text-ink'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          )}
           <div className="flex items-center gap-2 rounded-full border border-line bg-surface-tint px-4 py-2 text-xs text-ink-soft">
             <span>{t.practice.progress} <strong className="text-ink">{completedCount}/{practiceSteps.length}</strong></span>
             {completedCount > 0 && (
@@ -1289,6 +1348,30 @@ export const PracticeSection: React.FC = () => {
                       <Link2 className="h-4 w-4" />
                       {shareCopied ? t.practice.linkCopied : t.practice.shareQuestion}
                     </button>
+                    {isAdmin && (
+                      <div className="flex flex-wrap items-center gap-1.5" aria-label={t.practice.questionLabels.label}>
+                        {PRACTICE_LABELS.map((label) => {
+                          const selected = activeLabels.includes(label);
+                          return (
+                            <button
+                              key={label}
+                              type="button"
+                              onClick={() => handleToggleLabel(label)}
+                              aria-pressed={selected}
+                              title={practiceLabelCopy[label]}
+                              className={`inline-flex min-h-10 items-center gap-1.5 rounded-full border px-3 py-2 text-[10px] font-semibold transition-colors ${
+                                selected
+                                  ? 'border-nebula/70 bg-nebula/12 text-nebula'
+                                  : 'border-line text-ink-soft hover:border-nebula/50 hover:text-nebula'
+                              }`}
+                            >
+                              <Tag className="h-3.5 w-3.5" />
+                              {practiceLabelCopy[label]}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
                     <div className="rounded-full border border-line px-4 py-2 text-sm text-ink-soft w-fit">
                       {activeIndex + 1} / {practiceSteps.length}
                     </div>
