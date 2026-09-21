@@ -2,9 +2,9 @@ import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { getPracticeSetById } from '@/src/practice/server';
 import {
-  getSyncedPracticeSteps,
   isNormalizedQuestionReadEnabled,
   practiceStepFromMetadata,
+  resolvePracticeStepAssets,
 } from '@/src/practice/database';
 import { PUBLIC_SAMPLE_LIMIT, PUBLIC_SAMPLE_SET_ID } from '@/src/practice/navigation';
 
@@ -26,20 +26,17 @@ export async function GET(
     return NextResponse.json({ error: 'Practice set not found.' }, { status: 404 });
   }
 
-  const loadServiceResolvedSet = async () => {
-    const syncedSteps = await getSyncedPracticeSteps(id, legacySet.steps.length);
-    return syncedSteps ? { ...legacySet, steps: syncedSteps } : legacySet;
-  };
+  const loadLegacySet = () => legacySet;
 
   // Only local development may bypass authorization. Preview and Production
   // must fail closed when auth or Supabase configuration is missing.
   if (localDevBypass) {
-    return NextResponse.json({ set: await loadServiceResolvedSet(), access: 'full' });
+    return NextResponse.json({ set: loadLegacySet(), access: 'full' });
   }
 
   if (!authEnabled || !supabaseUrl || !supabaseAnonKey) {
     if (id === PUBLIC_SAMPLE_SET_ID) {
-      const resolvedSet = await loadServiceResolvedSet();
+      const resolvedSet = loadLegacySet();
       return NextResponse.json({
         set: { ...resolvedSet, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
         access: 'sample',
@@ -57,7 +54,7 @@ export async function GET(
 
   if (!token) {
     if (id !== PUBLIC_SAMPLE_SET_ID) return unauthorized();
-    const resolvedSet = await loadServiceResolvedSet();
+    const resolvedSet = loadLegacySet();
     return NextResponse.json({
       set: { ...resolvedSet, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
       access: 'sample',
@@ -72,7 +69,7 @@ export async function GET(
   const { data: userData, error: userError } = await supabase.auth.getUser(token);
   if (userError || !userData.user) {
     if (id !== PUBLIC_SAMPLE_SET_ID) return unauthorized('Session is invalid or expired.');
-    const resolvedSet = await loadServiceResolvedSet();
+    const resolvedSet = loadLegacySet();
     return NextResponse.json({
       set: { ...resolvedSet, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
       access: 'sample',
@@ -89,9 +86,6 @@ export async function GET(
   ]);
 
   const loadAuthorizedResolvedSet = async () => {
-    const serviceSteps = await getSyncedPracticeSteps(id, legacySet.steps.length);
-    if (serviceSteps) return { ...legacySet, steps: serviceSteps };
-
     if (!isNormalizedQuestionReadEnabled()) return legacySet;
 
     const { data, error } = await supabase.rpc('get_authorized_practice_steps', {
@@ -115,13 +109,18 @@ export async function GET(
       );
     }
 
-    const steps = rows.map((row) => {
-      const step = practiceStepFromMetadata(row.metadata);
-      if (!step) {
-        throw new Error(`Invalid normalized question payload: ${row.question_id}`);
-      }
-      return { ...step, questionVersionId: row.question_version_id };
-    });
+    const steps = await Promise.all(
+      rows.map(async (row) => {
+        const step = practiceStepFromMetadata(row.metadata);
+        if (!step) {
+          throw new Error(`Invalid normalized question payload: ${row.question_id}`);
+        }
+        return resolvePracticeStepAssets({
+          ...step,
+          questionVersionId: row.question_version_id,
+        });
+      }),
+    );
 
     return { ...legacySet, steps };
   };
@@ -139,7 +138,7 @@ export async function GET(
   }
 
   if (id === PUBLIC_SAMPLE_SET_ID) {
-    const resolvedSet = await loadServiceResolvedSet();
+    const resolvedSet = loadLegacySet();
     return NextResponse.json({
       set: { ...resolvedSet, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
       access: 'sample',
