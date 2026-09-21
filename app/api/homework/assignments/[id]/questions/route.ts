@@ -2,8 +2,8 @@ import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { getPracticeSetById } from '@/src/practice/server';
 import {
-  getPinnedPracticeSteps,
   practiceStepFromMetadata,
+  resolvePracticeStepAssets,
 } from '@/src/practice/database';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -49,12 +49,12 @@ export async function GET(
     .map((row) => row.question_version_id as string | null)
     .filter((id): id is string => Boolean(id));
 
-  let pinnedSteps = pinnedIds.length ? await getPinnedPracticeSteps(pinnedIds) : new Map();
+  let pinnedSteps = new Map<string, Awaited<ReturnType<typeof resolvePracticeStepAssets>>>();
 
-  // If the deployment has no server-side Supabase secret, use the authorized
-  // SECURITY DEFINER RPC. It independently verifies the learner can see the
-  // assignment before returning immutable question metadata.
-  if (pinnedIds.length && !pinnedSteps) {
+  // Immutable Homework content is always loaded through the assignment-aware
+  // RPC using the learner's token. Direct service-role reads are intentionally
+  // avoided so authorization remains enforced inside the database.
+  if (pinnedIds.length) {
     const { data: pinnedRows, error: pinnedError } = await supabase.rpc(
       'get_authorized_assignment_question_steps',
       { p_assignment_id: assignmentId },
@@ -77,18 +77,14 @@ export async function GET(
       if (!row.question_version_id) continue;
       const step = practiceStepFromMetadata(row.metadata);
       if (!step) continue;
-      pinnedSteps.set(row.question_version_id, {
-        ...step,
-        questionVersionId: row.question_version_id,
-      });
+      pinnedSteps.set(
+        row.question_version_id,
+        await resolvePracticeStepAssets({
+          ...step,
+          questionVersionId: row.question_version_id,
+        }),
+      );
     }
-  }
-
-  if (pinnedIds.length && !pinnedSteps) {
-    return NextResponse.json(
-      { error: 'Immutable homework versions are not available in this deployment.' },
-      { status: 503 },
-    );
   }
 
   const items = [];
