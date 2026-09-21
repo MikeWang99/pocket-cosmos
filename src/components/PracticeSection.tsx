@@ -404,6 +404,7 @@ export const PracticeSection: React.FC = () => {
       practiceSetId: activeSetId,
       practiceSetTitle: setCopy.title,
       questionId: activeStep.id,
+      questionVersionId: activeStep.questionVersionId,
       questionTitle: activeStep.title,
       answer,
       answerImageUrl: answerImageUrl ?? undefined,
