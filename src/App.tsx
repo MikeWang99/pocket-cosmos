@@ -12,7 +12,7 @@ import { HomeworkSection } from './components/HomeworkSection';
 import { CurriculumSection } from './components/CurriculumSection';
 import { AdminSection } from './components/AdminSection';
 import { AnimatePresence } from 'motion/react';
-import { ROUTE_CHANGE_EVENT, useLanguage } from './LanguageContext';
+import { LanguageProvider, ROUTE_CHANGE_EVENT, useLanguage } from './LanguageContext';
 import { useAuth } from './auth/AuthContext';
 import { HomeSection } from './components/HomeSection';
 import {
@@ -27,7 +27,7 @@ const readTabFromUrl = () => {
   return parseAppPath(window.location.pathname, window.location.search).tab;
 };
 
-export default function App({ initialTab = 'home' }: { initialTab?: string }) {
+function AppShell({ initialTab = 'home' }: { initialTab?: string }) {
   const [activeTab, setActiveTab] = useState<AppTab>(() => normalizeAppTab(initialTab));
   const { language, ready: languageReady, t } = useLanguage();
   const { isAdmin, loading: authLoading } = useAuth();
@@ -111,5 +111,20 @@ export default function App({ initialTab = 'home' }: { initialTab?: string }) {
         </div>
       </main>
     </div>
+  );
+}
+
+
+export default function App({
+  initialTab = 'home',
+  initialLanguage,
+}: {
+  initialTab?: string;
+  initialLanguage?: 'en' | 'zh';
+}) {
+  return (
+    <LanguageProvider initialLanguage={initialLanguage}>
+      <AppShell initialTab={initialTab} />
+    </LanguageProvider>
   );
 }
