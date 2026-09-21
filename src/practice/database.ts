@@ -138,13 +138,13 @@ export async function getSyncedPracticeSteps(
     return null;
   }
 
-  const latestByQuestion = new Map<string, { metadata: unknown }>();
+  const latestByQuestion = new Map<string, { id: string; metadata: unknown }>();
   const ids = questions.map((question) => question.id);
 
   for (const idBatch of chunks(ids, 80)) {
     const { data: versions, error: versionError } = await client
       .from('question_versions')
-      .select('question_id, version, metadata')
+      .select('id, question_id, version, metadata')
       .in('question_id', idBatch)
       .order('version', { ascending: false });
 
@@ -155,7 +155,7 @@ export async function getSyncedPracticeSteps(
 
     for (const version of versions ?? []) {
       if (!latestByQuestion.has(version.question_id)) {
-        latestByQuestion.set(version.question_id, { metadata: version.metadata });
+        latestByQuestion.set(version.question_id, { id: version.id, metadata: version.metadata });
       }
     }
   }
@@ -165,7 +165,9 @@ export async function getSyncedPracticeSteps(
     const row = latestByQuestion.get(question.id);
     const step = row ? stepFromMetadata(row.metadata) : null;
     if (!step) return null;
-    steps.push(await signPracticeStepAssets(client, step));
+    steps.push(
+      await signPracticeStepAssets(client, { ...step, questionVersionId: row.id }),
+    );
   }
 
   return steps;
@@ -195,7 +197,10 @@ export async function getPinnedPracticeSteps(
     for (const version of versions ?? []) {
       const step = stepFromMetadata(version.metadata);
       if (!step) continue;
-      result.set(version.id, await signPracticeStepAssets(client, step));
+      result.set(
+        version.id,
+        await signPracticeStepAssets(client, { ...step, questionVersionId: version.id }),
+      );
     }
   }
 
