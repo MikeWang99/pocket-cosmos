@@ -5,6 +5,7 @@ import type { PracticeStep } from '../types/practice';
 
 const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const normalizedPracticeReadsEnabled = process.env.QUESTION_DB_READS_ENABLED === 'true';
 const SIGNED_ASSET_TTL_SECONDS = 60 * 60;
 
 const createServiceClient = () => {
@@ -113,6 +114,7 @@ export async function getSyncedPracticeSteps(
   practiceSetId: string,
   expectedQuestionCount?: number,
 ): Promise<PracticeStep[] | null> {
+  if (!normalizedPracticeReadsEnabled) return null;
   const client = createServiceClient();
   if (!client) return null;
 
