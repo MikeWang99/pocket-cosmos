@@ -3,6 +3,7 @@
 import { ArrowRight, BookOpenCheck, ClipboardCheck, ListChecks, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 import { ProfileInfoPanel } from './ProfileInfoPanel';
+import { buildAppPath } from '../routing';
 
 const appLinks = [
   { id: 'curriculum', icon: BookOpenCheck },
@@ -90,14 +91,14 @@ export function HomeSection() {
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a
-              href="/?tab=curriculum"
+              href={buildAppPath('curriculum', language)}
               className="inline-flex items-center gap-2 rounded-full bg-nebula px-5 py-3 text-sm font-semibold text-on-accent transition-transform hover:-translate-y-0.5"
             >
               {content.primaryCta}
               <ArrowRight className="h-4 w-4" />
             </a>
             <a
-              href="/?tab=practice"
+              href={buildAppPath('practice', language)}
               className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-5 py-3 text-sm font-semibold text-ink transition-colors hover:border-nebula/40 hover:text-nebula"
             >
               {content.secondaryCta}
@@ -115,7 +116,7 @@ export function HomeSection() {
               return (
                 <a
                   key={item.id}
-                  href={`/?tab=${item.id}`}
+                  href={buildAppPath(item.id as 'curriculum' | 'practice' | 'homework', language)}
                   className="group rounded-[24px] border border-line bg-surface p-5 transition-transform hover:-translate-y-1"
                 >
                   <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-surface-tint text-nebula">
