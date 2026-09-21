@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { getPracticeSetById } from '@/src/practice/server';
+import { getSyncedPracticeSteps } from '@/src/practice/database';
 import { PUBLIC_SAMPLE_LIMIT, PUBLIC_SAMPLE_SET_ID } from '@/src/practice/navigation';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -16,21 +17,23 @@ export async function GET(
   context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
-  const set = getPracticeSetById(id);
-  if (!set) {
+  const legacySet = getPracticeSetById(id);
+  if (!legacySet) {
     return NextResponse.json({ error: 'Practice set not found.' }, { status: 404 });
   }
 
   // Only local development may bypass authorization. Preview and Production
   // must fail closed when auth or Supabase configuration is missing.
   if (localDevBypass) {
-    return NextResponse.json({ set, access: 'full' });
+    const syncedSteps = await getSyncedPracticeSteps(id, legacySet.steps.length);
+    const set = syncedSteps ? { ...legacySet, steps: syncedSteps } : legacySet;
+    return NextResponse.json({ set: resolvedSet, access: 'full' });
   }
 
   if (!authEnabled || !supabaseUrl || !supabaseAnonKey) {
     if (id === PUBLIC_SAMPLE_SET_ID) {
       return NextResponse.json({
-        set: { ...set, steps: set.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
+        set: { ...set, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
         access: 'sample',
       });
     }
@@ -40,13 +43,16 @@ export async function GET(
     );
   }
 
-  const authorization = request.headers.get('authorization');
+  const syncedSteps = await getSyncedPracticeSteps(id, legacySet.steps.length);
+  const resolvedSet = syncedSteps ? { ...legacySet, steps: syncedSteps } : legacySet;
+
+    const authorization = request.headers.get('authorization');
   const token = authorization?.match(/^Bearer\s+(.+)$/i)?.[1] ?? null;
 
   if (!token) {
     if (id !== PUBLIC_SAMPLE_SET_ID) return unauthorized();
     return NextResponse.json({
-      set: { ...set, steps: set.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
+      set: { ...set, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
       access: 'sample',
     });
   }
@@ -60,7 +66,7 @@ export async function GET(
   if (userError || !userData.user) {
     if (id !== PUBLIC_SAMPLE_SET_ID) return unauthorized('Session is invalid or expired.');
     return NextResponse.json({
-      set: { ...set, steps: set.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
+      set: { ...set, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
       access: 'sample',
     });
   }
@@ -71,16 +77,16 @@ export async function GET(
       .from('practice_permissions')
       .select('system')
       .eq('user_id', userData.user.id)
-      .eq('system', set.system),
+      .eq('system', legacySet.system),
   ]);
 
   if (admin === true || (!permissionError && (permissions?.length ?? 0) > 0)) {
-    return NextResponse.json({ set, access: 'full' });
+    return NextResponse.json({ set: resolvedSet, access: 'full' });
   }
 
   if (id === PUBLIC_SAMPLE_SET_ID) {
     return NextResponse.json({
-      set: { ...set, steps: set.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
+      set: { ...set, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
       access: 'sample',
     });
   }
