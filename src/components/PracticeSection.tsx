@@ -153,6 +153,9 @@ const inferPracticeKind = (set: PracticeSet): PracticeKind =>
   set.practiceKind ??
   (set.id.includes('-frq-') ? 'structured' : set.id.includes('paper5') ? 'paper5' : 'mcq');
 
+const PUBLIC_PREVIEW_SET_ID = 'kinematics-multiple-choice';
+const PUBLIC_PREVIEW_QUESTION_LIMIT = 5;
+
 const getIgcseCourseNodeId = (kind: PracticeKind) => `igcse-course-${kind}`;
 
 const getCourseNodeId = (set: PracticeSet) => `${set.system}-course-${inferPracticeKind(set)}`;
@@ -365,6 +368,8 @@ export const PracticeSection: React.FC = () => {
   const { labelsByQuestion, getLabels, toggleLabel } = usePracticeLabels();
 
   const activeSet = practiceSets.find((set) => set.id === activeSetId) ?? practiceSets[0];
+  const hasActiveSystemAccess = hasAccess(activeSet.system);
+  const isPublicPreview = !hasActiveSystemAccess && activeSet.id === PUBLIC_PREVIEW_SET_ID;
   const practiceSetMeta = activeSet;
   const getSetCopy = (setId: string) => {
     if (setId === 'calculus-for-physics') return t.practice.sets.calculusForPhysics;
@@ -406,7 +411,7 @@ export const PracticeSection: React.FC = () => {
 
   // Filter any indexed MCQ bank by its normalized 1–5 difficulty value.
   const practiceSteps = useMemo(() => {
-    return activeSet.steps.filter((step) => {
+    const filtered = activeSet.steps.filter((step) => {
       if (supportsSpecialtyFilter && specialtyFilter !== 'all' && !step.specialtyTags?.includes(specialtyFilter)) return false;
       if (supportsLabelFilter && labelFilter !== 'all' && !labelsByQuestion[`${activeSet.id}:${step.id}`]?.includes(labelFilter)) return false;
       if (!supportsDifficultyFilter || difficultyFilter === 'all') return true;
@@ -421,7 +426,9 @@ export const PracticeSection: React.FC = () => {
       if (difficultyFilter === 'hard') return level >= 4;
       return true;
     });
-  }, [activeSet.id, activeSet.steps, labelsByQuestion, supportsDifficultyFilter, difficultyFilter, supportsSpecialtyFilter, specialtyFilter, supportsLabelFilter, labelFilter]);
+
+    return isPublicPreview ? filtered.slice(0, PUBLIC_PREVIEW_QUESTION_LIMIT) : filtered;
+  }, [activeSet.id, activeSet.steps, labelsByQuestion, supportsDifficultyFilter, difficultyFilter, supportsSpecialtyFilter, specialtyFilter, supportsLabelFilter, labelFilter, isPublicPreview]);
 
   // Map "Difficulty N" tag to display label
   const formatTag = (tag: string): string => {
@@ -1281,14 +1288,34 @@ export const PracticeSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Permission gate: show locked card if system not accessible */}
-      {!hasAccess(activeSet.system) ? (
-        <div className="glass-panel flex flex-col items-center justify-center gap-4 rounded-lg p-12 text-center">
+      {/* Permission gate: locked systems still offer a small public sample. */}
+      {!hasActiveSystemAccess && !isPublicPreview ? (
+        <div className="glass-panel flex flex-col items-center justify-center gap-4 rounded-lg p-8 text-center sm:p-12">
           <Lock className="h-10 w-10 text-slate-500" />
-          <p className="text-sm text-ink-soft max-w-md">{t.practice.lockedMessage}</p>
+          <p className="max-w-md text-sm leading-6 text-ink-soft">{t.practice.lockedMessage}</p>
+          <button
+            type="button"
+            onClick={() => selectPracticeSet(PUBLIC_PREVIEW_SET_ID)}
+            className="inline-flex min-h-11 items-center gap-2 rounded-full bg-nebula px-5 py-2.5 text-sm font-semibold text-on-accent transition-transform hover:-translate-y-0.5"
+          >
+            <Sparkles className="h-4 w-4" />
+            {language === 'zh' ? '免费试做 5 题' : 'Try 5 sample questions'}
+          </button>
         </div>
       ) : (
       <div className="grid gap-4 lg:grid-cols-[185px_minmax(0,1fr)] lg:gap-5 xl:grid-cols-[200px_minmax(0,1fr)]">
+        {isPublicPreview && (
+          <div className="rounded-xl border border-nebula/20 bg-surface-tint px-4 py-3 text-sm leading-6 text-ink-soft lg:col-span-2">
+            <strong className="text-nebula">
+              {language === 'zh' ? '免费预览 · 5 题' : 'Free preview · 5 questions'}
+            </strong>
+            <span className="ml-2">
+              {language === 'zh'
+                ? '无需登录即可体验做题流程；登录并获得课程权限后可访问完整题库并保存进度。'
+                : 'Try the practice flow without signing in. Sign in with course access to unlock the full bank and saved progress.'}
+            </span>
+          </div>
+        )}
         <aside className="glass-panel h-fit rounded-lg p-3 lg:sticky lg:top-6">
           <div className="px-3 py-2 text-[10px] uppercase tracking-widest text-slate-500">{t.practice.questionPath}</div>
           <div className="grid grid-cols-5 gap-1.5 pb-1">
