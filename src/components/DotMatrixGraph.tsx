@@ -4,41 +4,41 @@ import { DOT_MATRIX_GRID_SIZE, DOT_MATRIX_ROWS } from '../data/dotMatrixSeed';
 
 const isCornerMarkerArea = (rowIndex: number, columnIndex: number) =>
   (rowIndex < 7 && columnIndex < 7) ||
-  (rowIndex < 7 && columnIndex >= 30) ||
-  (rowIndex >= 30 && columnIndex < 7);
+  (rowIndex < 7 && columnIndex >= DOT_MATRIX_GRID_SIZE - 7) ||
+  (rowIndex >= DOT_MATRIX_GRID_SIZE - 7 && columnIndex < 7);
 
-const DOT_MATRIX_POINTS = DOT_MATRIX_ROWS.flatMap((row, rowIndex) =>
-  row.split('').flatMap((value, columnIndex) => (
+const DOT_MATRIX_PATH = DOT_MATRIX_ROWS.flatMap((row, rowIndex) =>
+  row.split('').flatMap((value, columnIndex) =>
     value === '1' && !isCornerMarkerArea(rowIndex, columnIndex)
-      ? [{
-          key: `${rowIndex}-${columnIndex}`,
-          left: `${((columnIndex + 0.5) / DOT_MATRIX_GRID_SIZE) * 100}%`,
-          top: `${((rowIndex + 0.5) / DOT_MATRIX_GRID_SIZE) * 100}%`,
-        }]
-      : []
-  )),
+      ? [`M${columnIndex + 0.14} ${rowIndex + 0.14}h0.72v0.72h-0.72z`]
+      : [],
+  ),
+).join('');
+
+const FinderMarker = ({ x, y }: { x: number; y: number }) => (
+  <g transform={`translate(${x} ${y})`}>
+    <rect width="7" height="7" rx="0.45" fill="currentColor" />
+    <rect x="1" y="1" width="5" height="5" rx="0.25" fill="white" />
+    <rect x="2" y="2" width="3" height="3" rx="0.2" fill="currentColor" />
+  </g>
 );
 
 export function DotMatrixGraph() {
   return (
-    <div
-      aria-label="Dot matrix graph"
-      className="relative mx-auto w-full max-w-[320px]"
-    >
+    <div aria-label="Dot matrix graph" className="relative mx-auto w-full max-w-[320px]">
       <div className="relative aspect-square w-full bg-white p-[10.8108%]">
-        <div aria-hidden="true" className="relative h-full w-full bg-white">
-          <div className="absolute left-0 top-0 h-[18.9189%] w-[18.9189%] rounded-[8%] bg-black before:absolute before:inset-[14.2857%] before:rounded-[5%] before:bg-white before:content-[''] after:absolute after:inset-[28.5714%] after:rounded-[4%] after:bg-black after:content-['']" />
-          <div className="absolute right-0 top-0 h-[18.9189%] w-[18.9189%] rounded-[8%] bg-black before:absolute before:inset-[14.2857%] before:rounded-[5%] before:bg-white before:content-[''] after:absolute after:inset-[28.5714%] after:rounded-[4%] after:bg-black after:content-['']" />
-          <div className="absolute bottom-0 left-0 h-[18.9189%] w-[18.9189%] rounded-[8%] bg-black before:absolute before:inset-[14.2857%] before:rounded-[5%] before:bg-white before:content-[''] after:absolute after:inset-[28.5714%] after:rounded-[4%] after:bg-black after:content-['']" />
-
-          {DOT_MATRIX_POINTS.map((module) => (
-            <span
-              key={module.key}
-              aria-hidden="true"
-              className="absolute h-[1.8919%] w-[1.8919%] -translate-x-1/2 -translate-y-1/2 rounded-[22%] bg-black"
-              style={{ left: module.left, top: module.top }}
-            />
-          ))}
+        <div aria-hidden="true" className="relative h-full w-full bg-white text-black">
+          <svg
+            viewBox={`0 0 ${DOT_MATRIX_GRID_SIZE} ${DOT_MATRIX_GRID_SIZE}`}
+            className="h-full w-full"
+            role="presentation"
+            shapeRendering="crispEdges"
+          >
+            <FinderMarker x={0} y={0} />
+            <FinderMarker x={DOT_MATRIX_GRID_SIZE - 7} y={0} />
+            <FinderMarker x={0} y={DOT_MATRIX_GRID_SIZE - 7} />
+            <path d={DOT_MATRIX_PATH} fill="currentColor" />
+          </svg>
 
           <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 h-[25.9459%] w-[25.9459%] -translate-x-1/2 -translate-y-1/2 bg-white">
             <img
