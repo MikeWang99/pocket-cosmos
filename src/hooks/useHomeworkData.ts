@@ -19,7 +19,7 @@ import type {
   HomeworkAttempt,
   HomeworkProfile,
 } from '../homework/types';
-import { findPracticeSet, isSupabaseUuid } from '../homework/catalog';
+import { isSupabaseUuid } from '../homework/catalog';
 import { getSupabaseClient } from '../lib/supabaseClient';
 import type { EvaluationResult } from '../types/practice';
 
@@ -257,19 +257,15 @@ export const useHomeworkData = () => {
           createdAt: timestamp,
           updatedAt: timestamp,
           studentIds: input.studentIds,
-          items: input.items.map((item, position) => {
-            const set = findPracticeSet(item.practiceSetId);
-            const step = set?.steps.find((candidate) => candidate.id === item.questionId);
-            return {
-              id: `${id}-item-${position + 1}`,
-              assignmentId: id,
-              position,
-              practiceSetId: item.practiceSetId,
-              questionId: item.questionId,
-              practiceSetTitle: set?.title,
-              questionTitle: step?.title,
-            };
-          }),
+          items: input.items.map((item, position) => ({
+            id: `${id}-item-${position + 1}`,
+            assignmentId: id,
+            position,
+            practiceSetId: item.practiceSetId,
+            questionId: item.questionId,
+            practiceSetTitle: item.practiceSetTitle,
+            questionTitle: item.questionTitle,
+          })),
         };
         const next = [assignment, ...assignments];
         setAssignments(next);
@@ -287,17 +283,13 @@ export const useHomeworkData = () => {
           error: 'Select at least one valid student before publishing.',
         };
       }
-      const itemRows = input.items.map((item, position) => {
-        const set = findPracticeSet(item.practiceSetId);
-        const step = set?.steps.find((candidate) => candidate.id === item.questionId);
-        return {
-          position,
-          practice_set_id: item.practiceSetId,
-          question_id: item.questionId,
-          practice_set_title: set?.title ?? item.practiceSetId,
-          question_title: step?.title ?? item.questionId,
-        };
-      });
+      const itemRows = input.items.map((item, position) => ({
+        position,
+        practice_set_id: item.practiceSetId,
+        question_id: item.questionId,
+        practice_set_title: item.practiceSetTitle ?? item.practiceSetId,
+        question_title: item.questionTitle ?? item.questionId,
+      }));
 
       const { data: assignmentId, error: createError } = await supabase.rpc(
         'create_homework_assignment',
@@ -373,19 +365,15 @@ export const useHomeworkData = () => {
           aiInstruction: input.aiInstruction ?? null,
           updatedAt: timestamp,
           studentIds: input.assignedToAll ? [] : input.studentIds,
-          items: input.items.map((item, position) => {
-            const set = findPracticeSet(item.practiceSetId);
-            const step = set?.steps.find((candidate) => candidate.id === item.questionId);
-            return {
-              id: `${assignmentId}-item-${position + 1}`,
-              assignmentId,
-              position,
-              practiceSetId: item.practiceSetId,
-              questionId: item.questionId,
-              practiceSetTitle: set?.title,
-              questionTitle: step?.title,
-            };
-          }),
+          items: input.items.map((item, position) => ({
+            id: `${assignmentId}-item-${position + 1}`,
+            assignmentId,
+            position,
+            practiceSetId: item.practiceSetId,
+            questionId: item.questionId,
+            practiceSetTitle: item.practiceSetTitle,
+            questionTitle: item.questionTitle,
+          })),
         };
         const next = assignments.map((assignment) => assignment.id === assignmentId ? updated : assignment);
         setAssignments(next);
@@ -403,17 +391,13 @@ export const useHomeworkData = () => {
         return { assignment: null, error: 'Select at least one valid student.' };
       }
 
-      const itemRows = input.items.map((item, position) => {
-        const set = findPracticeSet(item.practiceSetId);
-        const step = set?.steps.find((candidate) => candidate.id === item.questionId);
-        return {
-          position,
-          practice_set_id: item.practiceSetId,
-          question_id: item.questionId,
-          practice_set_title: set?.title ?? item.practiceSetId,
-          question_title: step?.title ?? item.questionId,
-        };
-      });
+      const itemRows = input.items.map((item, position) => ({
+        position,
+        practice_set_id: item.practiceSetId,
+        question_id: item.questionId,
+        practice_set_title: item.practiceSetTitle ?? item.practiceSetId,
+        question_title: item.questionTitle ?? item.questionId,
+      }));
 
       const { error: updateError } = await supabase.rpc('update_draft_assignment', {
         p_assignment_id: assignmentId,
@@ -509,9 +493,10 @@ export const useHomeworkData = () => {
       isCorrect: boolean;
       result: EvaluationResult;
       assignmentId?: string;
+      practiceSetTitle?: string;
+      questionTitle?: string;
+      tags?: string[];
     }) => {
-      const set = findPracticeSet(input.practiceSetId);
-      const step = set?.steps.find((candidate) => candidate.id === input.questionId);
       const attempt: HomeworkAttempt = {
         studentId: currentStudentId,
         studentEmail: user?.email ?? 'eden@example.com',
@@ -544,14 +529,14 @@ export const useHomeworkData = () => {
           student_id: user.id,
           student_email: user.email ?? null,
           practice_set_id: input.practiceSetId,
-          practice_set_title: set?.title ?? input.practiceSetId,
+          practice_set_title: input.practiceSetTitle ?? input.practiceSetId,
           question_id: input.questionId,
-          question_title: step?.title ?? input.questionId,
+          question_title: input.questionTitle ?? input.questionId,
           answer: input.answer,
           score: input.score,
           max_score: input.maxScore,
           is_correct: input.isCorrect,
-          tags: step?.tags ?? [],
+          tags: input.tags ?? [],
           result: input.result,
           updated_at: attempt.updatedAt,
         },
@@ -579,7 +564,7 @@ export const useHomeworkData = () => {
           score: input.score,
           max_score: input.maxScore,
           is_correct: input.isCorrect,
-          tags: step?.tags ?? [],
+          tags: input.tags ?? [],
           result: input.result,
           submitted_at: attempt.updatedAt,
         });
