@@ -18,10 +18,12 @@ import {
   Undo2,
   UsersRound,
 } from 'lucide-react';
-import { practiceSets } from '../data/practiceSets';
-import { isSupabaseUuid, questionsFromNumbers, resolveHomeworkItem } from '../homework/catalog';
+import { isSupabaseUuid } from '../homework/catalog';
+import { getAdminAiSuggestion, questionsFromAdminCatalog } from '../homework/adminCatalog';
 import type { CreateHomeworkInput, HomeworkAssignment, HomeworkProfile } from '../homework/types';
 import { useHomeworkData } from '../hooks/useHomeworkData';
+import { useAdminPracticeCatalog } from '../hooks/useAdminPracticeCatalog';
+import { useHomeworkQuestions } from '../hooks/useHomeworkQuestions';
 import { useLanguage } from '../LanguageContext';
 import { HomeworkQuestionReview } from './HomeworkQuestionReview';
 
@@ -47,48 +49,22 @@ const dedupeItems = (items: Array<{ practiceSetId: string; questionId: string }>
   });
 };
 
-const getAiSuggestion = (instruction: string, fallbackSetId: string) => {
-  const normalized = instruction.toLowerCase();
-  const topicMap: Array<[RegExp, string]> = [
-    [/运动|motion|speed|acceleration|kinematics/, 'igcse-cie-topic-1-2'],
-    [/力|force|dynamics|equilibrium|hooke/, 'igcse-cie-topic-1-5'],
-    [/动量|momentum|collision|impulse/, 'igcse-cie-topic-1-6'],
-    [/能量|energy|work|power/, 'igcse-cie-topic-1-7'],
-    [/电路|circuit|resistance|电阻/, 'igcse-cie-topic-4-3'],
-    [/放射|radioactivity|half.?life|半衰期/, 'igcse-cie-topic-5-2'],
-  ];
-  const setId = topicMap.find(([pattern]) => pattern.test(normalized))?.[1] ?? fallbackSetId;
-  const set = practiceSets.find((candidate) => candidate.id === setId) ?? practiceSets[0];
-  const requestedCount = Number(instruction.match(/(\d+)\s*(?:道|题|questions?)/i)?.[1] ?? 8);
-  const count = Math.min(Math.max(requestedCount, 3), 20);
-  const difficulty = /挑战|进阶|challenge|hard/i.test(instruction)
-    ? 'hard'
-    : /基础|简单|foundation|easy/i.test(instruction)
-      ? 'easy'
-      : 'mixed';
-  const candidates = set.steps.filter((step) => {
-    if (difficulty === 'hard') return (step.difficulty ?? 3) >= 4;
-    if (difficulty === 'easy') return (step.difficulty ?? 3) <= 2;
-    return true;
-  });
-  const selected = (candidates.length >= count ? candidates : set.steps).slice(0, count);
-  return {
-    set,
-    items: selected.map((step) => ({ practiceSetId: set.id, questionId: step.id })),
-  };
-};
-
 const statusStyle: Record<HomeworkAssignment['status'], string> = {
   draft: 'border-amber-500/25 bg-amber-500/10 text-amber-700',
   published: 'border-emerald-500/25 bg-emerald-500/10 text-emerald-700',
   archived: 'border-line bg-surface-tint text-ink-soft',
 };
 
-const isAutoGradedHomeworkItem = (item: { resolved?: ReturnType<typeof resolveHomeworkItem> }) =>
+const isAutoGradedResolvedItem = (item: { resolved?: { step: { choices?: unknown[]; correctAnswer?: string } } | null }) =>
   Boolean(item.resolved?.step.choices?.length && item.resolved.step.correctAnswer);
 
 export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = false }) => {
   const { language } = useLanguage();
+  const {
+    sets: adminPracticeSets,
+    loading: practiceCatalogLoading,
+    error: practiceCatalogError,
+  } = useAdminPracticeCatalog();
   const {
     assignments,
     attempts,
@@ -188,7 +164,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
   };
 
   const addQuestionNumbers = () => {
-    const parsed = questionsFromNumbers(selectedSetId, questionNumbers);
+    const parsed = questionsFromAdminCatalog(adminPracticeSets, selectedSetId, questionNumbers);
     if (!parsed.items.length) {
       setFormMessage(language === 'zh' ? '没有找到可添加的题号。' : 'No valid question numbers were found.');
       return;
@@ -212,7 +188,11 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
       setFormMessage(language === 'zh' ? '请先输入 AI 选题要求。' : 'Enter an AI selection instruction first.');
       return;
     }
-    const suggestion = getAiSuggestion(aiInstruction, selectedSetId);
+    const suggestion = getAdminAiSuggestion(adminPracticeSets, aiInstruction, selectedSetId);
+    if (!suggestion) {
+      setFormMessage(language === 'zh' ? '题库目录仍在加载，请稍后重试。' : 'Question catalog is still loading.');
+      return;
+    }
     setSelectedSetId(suggestion.set.id);
     setDraftItems(dedupeItems(suggestion.items));
     setSourceType('ai');
@@ -345,7 +325,10 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
       const item = assignment.items.find(
         (candidate) => candidate.practiceSetId === attempt.practiceSetId && candidate.questionId === attempt.questionId,
       );
-      return item ? isAutoGradedHomeworkItem({ resolved: resolveHomeworkItem(item) }) : false;
+      if (!item) return false;
+      const set = adminPracticeSets.find((candidate) => candidate.id === item.practiceSetId);
+      const question = set?.questions.find((candidate) => candidate.id === item.questionId);
+      return Boolean(question?.hasChoices && question.hasAnswerKey);
     });
     const correct = gradedAttempts.filter((attempt) => attempt.isCorrect).length;
     const latest = studentAttempts.map((attempt) => attempt.updatedAt).sort().at(-1);
@@ -380,6 +363,22 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
       }, new Map());
   }, [attempts, selectedStudent, viewingAssignment]);
 
+  const {
+    items: resolvedAssignmentItems,
+    loading: reviewQuestionsLoading,
+    error: reviewQuestionsError,
+  } = useHomeworkQuestions(viewingAssignment?.id ?? null);
+  const resolvedAssignmentMap = useMemo(
+    () =>
+      new Map(
+        resolvedAssignmentItems.map((item) => [
+          `${item.practiceSetId}:${item.questionId}`,
+          item,
+        ]),
+      ),
+    [resolvedAssignmentItems],
+  );
+
   const reviewItems = useMemo(() => {
     if (!viewingAssignment) return [];
     return viewingAssignment.items.map((item, index) => {
@@ -388,23 +387,23 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
         key,
         index,
         item,
-        resolved: resolveHomeworkItem(item),
+        resolved: resolvedAssignmentMap.get(key) ?? null,
         attempt: selectedStudentAttemptMap.get(key),
       };
     });
-  }, [selectedStudentAttemptMap, viewingAssignment]);
+  }, [resolvedAssignmentMap, selectedStudentAttemptMap, viewingAssignment]);
   const selectedReviewItem =
     reviewItems.find((entry) => entry.key === selectedReviewQuestionKey) ??
-    reviewItems.find((entry) => isAutoGradedHomeworkItem(entry) && entry.attempt && !entry.attempt.isCorrect) ??
+    reviewItems.find((entry) => isAutoGradedResolvedItem(entry) && entry.attempt && !entry.attempt.isCorrect) ??
     reviewItems.find((entry) => entry.attempt) ??
     reviewItems[0] ??
     null;
-  const correctReviewCount = reviewItems.filter((entry) => isAutoGradedHomeworkItem(entry) && entry.attempt?.isCorrect).length;
+  const correctReviewCount = reviewItems.filter((entry) => isAutoGradedResolvedItem(entry) && entry.attempt?.isCorrect).length;
   const incorrectReviewCount = reviewItems.filter(
-    (entry) => isAutoGradedHomeworkItem(entry) && entry.attempt && !entry.attempt.isCorrect,
+    (entry) => isAutoGradedResolvedItem(entry) && entry.attempt && !entry.attempt.isCorrect,
   ).length;
   const submittedReviewCount = reviewItems.filter(
-    (entry) => Boolean(entry.attempt) && !isAutoGradedHomeworkItem(entry),
+    (entry) => Boolean(entry.attempt) && !isAutoGradedResolvedItem(entry),
   ).length;
   const unansweredReviewCount = reviewItems.filter((entry) => !entry.attempt).length;
 
@@ -461,6 +460,11 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
         </div>
       )}
       {error && <div className="mb-5 rounded-xl border border-rose-500/25 bg-rose-500/10 p-4 text-sm text-rose-800">{error}</div>}
+      {practiceCatalogError && (
+        <div className="mb-5 rounded-xl border border-rose-500/25 bg-rose-500/10 p-4 text-sm text-rose-800">
+          {practiceCatalogError}
+        </div>
+      )}
 
       {view === 'overview' ? (
         <div className="space-y-5">
@@ -746,7 +750,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                                 className={`grid h-9 w-9 place-items-center rounded-md border text-xs font-semibold transition-colors ${
                                   selected
                                     ? 'border-nebula/80 bg-nebula/20 text-ink ring-1 ring-nebula/30'
-                                    : entry.attempt && isAutoGradedHomeworkItem(entry)
+                                    : entry.attempt && isAutoGradedResolvedItem(entry)
                                       ? entry.attempt.isCorrect
                                         ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700 hover:border-emerald-400'
                                         : 'border-rose-500/35 bg-rose-500/10 text-rose-700 hover:border-rose-400'
@@ -821,7 +825,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
               <label>
                 <span className="mb-2 block text-xs text-ink-soft">{language === 'zh' ? '题库章节' : 'Question bank'}</span>
                 <select value={selectedSetId} onChange={(event) => setSelectedSetId(event.target.value)} className="w-full rounded-lg border border-line bg-surface px-4 py-3 text-sm text-ink outline-none focus:border-nebula">
-                  {practiceSets.map((set) => (
+                  {adminPracticeSets.map((set) => (
                     <option key={set.id} value={set.id}>{set.system.toUpperCase()} · {set.label} ({set.steps.length})</option>
                   ))}
                 </select>
@@ -856,7 +860,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
               </div>
               <div className="max-h-[420px] space-y-2 overflow-y-auto pr-1">
                 {draftItems.map((item, index) => {
-                  const set = practiceSets.find((candidate) => candidate.id === item.practiceSetId);
+                  const set = adminPracticeSets.find((candidate) => candidate.id === item.practiceSetId);
                   const step = set?.steps.find((candidate) => candidate.id === item.questionId);
                   return (
                     <div key={`${item.practiceSetId}:${item.questionId}`} className="flex items-center gap-3 rounded-lg border border-line bg-surface-tint p-3">
