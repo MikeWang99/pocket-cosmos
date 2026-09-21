@@ -45,7 +45,7 @@ if (onlySet && selectedSets.length === 0) {
 }
 
 const candidates = selectedSets.flatMap((set) =>
-  set.steps.map((step) => {
+  set.steps.map((step, position) => {
     const questionId = questionIdFor(set.id, step.id);
     const hash = contentHash(step);
 
@@ -54,6 +54,7 @@ const candidates = selectedSets.flatMap((set) =>
         id: questionId,
         practice_set_id: set.id,
         legacy_question_id: step.id,
+        position,
         status: 'active',
       },
       version: {
