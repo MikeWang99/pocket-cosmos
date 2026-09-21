@@ -29,6 +29,8 @@ export const PRACTICE_LABELS: readonly PracticeLabel[] = [
 
 export interface PracticeStep {
   id: string;
+  /** Immutable normalized database version used for attempt provenance. */
+  questionVersionId?: string;
   mode?: 'free_response' | 'multiple_choice';
   difficulty?: number;
   title: string;
