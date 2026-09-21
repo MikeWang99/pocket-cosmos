@@ -348,6 +348,8 @@ export const PracticeSection: React.FC = () => {
   const [activeSetId, setActiveSetId] = useState(initialSelection.setId);
   const [activeIndex, setActiveIndex] = useState(initialSelection.index);
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  // Store private Supabase object paths here. StudentWorkUpload resolves
+  // short-lived signed URLs only for display.
   const [answerImages, setAnswerImages] = useState<Record<string, string>>({});
   // True while the answer image is still compressing/uploading, so the submit
   // button can explain why it stays disabled instead of looking broken.
@@ -826,13 +828,27 @@ export const PracticeSection: React.FC = () => {
 
       return changed ? next : previous;
     });
+
+    setAnswerImages((previous) => {
+      let changed = false;
+      const next = { ...previous };
+
+      attempts.forEach((attempt) => {
+        if (!next[attempt.questionId] && attempt.answerImagePath) {
+          next[attempt.questionId] = attempt.answerImagePath;
+          changed = true;
+        }
+      });
+
+      return changed ? next : previous;
+    });
   }, [savedAttempts]);
 
   const updateAnswer = (value: string) => {
     setAnswers((previous) => ({ ...previous, [activeStep.id]: value }));
   };
 
-  const recordResult = (result: EvaluationResult, answer: string, answerImageUrl?: string | null) => {
+  const recordResult = (result: EvaluationResult, answer: string, answerImagePath?: string | null) => {
     setResults((previous) => ({ ...previous, [activeStep.id]: result }));
 
     void saveAttempt({
@@ -841,7 +857,7 @@ export const PracticeSection: React.FC = () => {
       questionId: activeStep.id,
       questionTitle: activeStep.title,
       answer,
-      answerImageUrl: answerImageUrl ?? undefined,
+      answerImagePath: answerImagePath ?? undefined,
       score: result.score,
       maxScore: result.maxScore,
       isCorrect: result.maxScore > 0 && result.score >= result.maxScore,
@@ -1543,9 +1559,9 @@ export const PracticeSection: React.FC = () => {
                     <StudentWorkUpload
                       practiceSetId={activeSet.id}
                       questionId={activeStep.id}
-                      existingImageUrl={currentAnswerImage}
-                      onUploadComplete={(imageUrl) => {
-                        setAnswerImages((prev) => ({ ...prev, [activeStep.id]: imageUrl }));
+                      existingImagePath={currentAnswerImage}
+                      onUploadComplete={(imagePath) => {
+                        setAnswerImages((prev) => ({ ...prev, [activeStep.id]: imagePath }));
                       }}
                       onClear={() => {
                         setAnswerImages((prev) => {
