@@ -39,13 +39,9 @@ where answer_image_path is null
 -- Keep answer_image_url for one compatibility window. New application code
 -- writes answer_image_path and resolves a short-lived signed URL at read time.
 
--- 3) Student answer images are private. Students can read their own folder;
--- practice admins can read all submissions for review.
-update storage.buckets
-set public = false
-where id = 'student-work';
-
-drop policy if exists "sw_public_read" on storage.objects;
+-- 3) Prepare private student-work reads without changing the bucket visibility
+-- yet. The actual public -> private cutover is intentionally a manual second
+-- step after the signed-URL application code is deployed and verified.
 drop policy if exists "sw_select_own_or_admin" on storage.objects;
 
 create policy "sw_select_own_or_admin"
