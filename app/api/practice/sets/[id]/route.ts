@@ -6,6 +6,7 @@ import { PUBLIC_SAMPLE_LIMIT, PUBLIC_SAMPLE_SET_ID } from '@/src/practice/naviga
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const authEnabled = process.env.NEXT_PUBLIC_AUTH_ENABLED === 'true';
+const localDevBypass = process.env.NODE_ENV === 'development' && !authEnabled;
 
 const unauthorized = (message = 'Practice set is locked.') =>
   NextResponse.json({ error: message }, { status: 403 });
@@ -20,10 +21,23 @@ export async function GET(
     return NextResponse.json({ error: 'Practice set not found.' }, { status: 404 });
   }
 
-  // Preserve local/dev behavior when auth is explicitly disabled or Supabase
-  // is not configured. Production deployments should keep auth enabled.
-  if (!authEnabled || !supabaseUrl || !supabaseAnonKey) {
+  // Only local development may bypass authorization. Preview and Production
+  // must fail closed when auth or Supabase configuration is missing.
+  if (localDevBypass) {
     return NextResponse.json({ set, access: 'full' });
+  }
+
+  if (!authEnabled || !supabaseUrl || !supabaseAnonKey) {
+    if (id === PUBLIC_SAMPLE_SET_ID) {
+      return NextResponse.json({
+        set: { ...set, steps: set.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
+        access: 'sample',
+      });
+    }
+    return NextResponse.json(
+      { error: 'Practice authorization is not configured for this deployment.' },
+      { status: 503 },
+    );
   }
 
   const authorization = request.headers.get('authorization');
