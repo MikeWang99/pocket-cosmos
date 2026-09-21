@@ -36,6 +36,10 @@ import {
 } from './practice/PracticeQuestionMedia';
 import {
   buildPracticeTree,
+  getChapterNodeId,
+  getCourseNodeId,
+  getIgcseChapterNodeId,
+  getIgcseCourseNodeId,
   getInitialExpandedNodes,
   inferPracticeKind,
 } from '../practice/catalog';
