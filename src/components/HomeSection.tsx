@@ -2,6 +2,7 @@
 
 import { ArrowRight, BookOpenCheck, ClipboardCheck, ListChecks, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
+import { AuthStatusButton } from './AuthStatusButton';
 import { ProfileInfoPanel } from './ProfileInfoPanel';
 
 const appLinks = [
@@ -111,6 +112,10 @@ export function HomeSection() {
           >
             {content.secondaryCta}
           </a>
+        </div>
+
+        <div className="mt-4 md:hidden">
+          <AuthStatusButton />
         </div>
       </div>
 
