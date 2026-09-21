@@ -5,7 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
+      disallow: ['/en/admin', '/zh/admin', '/api/'],
     },
-    sitemap: 'https://pocket-cosmos.com/sitemap.xml',
+    sitemap: 'https://www.pocket-cosmos.com/sitemap.xml',
   };
 }
