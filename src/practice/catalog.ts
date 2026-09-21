@@ -1,11 +1,9 @@
-import { practiceSets, type PracticeSet } from '../data/practiceSets';
-
-export type PracticeKind = NonNullable<PracticeSet['practiceKind']>;
+import type { PracticeSetMeta, PracticeKind } from './types';
 
 export type PracticeTreeChapter = {
   id: string;
   label: string;
-  sets: PracticeSet[];
+  sets: PracticeSetMeta[];
 };
 
 export type PracticeTreeCourse = {
@@ -33,27 +31,27 @@ export type PracticeTreeLabels = {
   igcse: string;
 };
 
-export const inferPracticeKind = (set: PracticeSet): PracticeKind =>
+export const inferPracticeKind = (set: PracticeSetMeta): PracticeKind =>
   set.practiceKind ??
   (set.id.includes('-frq-') ? 'structured' : set.id.includes('paper5') ? 'paper5' : 'mcq');
 
 export const getIgcseCourseNodeId = (kind: PracticeKind) => `igcse-course-${kind}`;
 
-export const getCourseNodeId = (set: PracticeSet) =>
+export const getCourseNodeId = (set: PracticeSetMeta) =>
   `${set.system}-course-${inferPracticeKind(set)}`;
 
-export const getChapterNodeId = (set: PracticeSet) =>
+export const getChapterNodeId = (set: PracticeSetMeta) =>
   `${set.system}-${inferPracticeKind(set)}-ch${set.chapter ?? 0}`;
 
-export const getIgcseChapterNodeId = (set: PracticeSet) => {
+export const getIgcseChapterNodeId = (set: PracticeSetMeta) => {
   const kind = inferPracticeKind(set);
   if (kind === 'paper5') return 'igcse-paper5-years';
   if (kind === 'evaluation') return 'igcse-evaluation-papers';
   return `igcse-${kind}-ch${set.chapter ?? 0}`;
 };
 
-export const getInitialExpandedNodes = (setId: string) => {
-  const set = practiceSets.find((item) => item.id === setId);
+export const getInitialExpandedNodes = (setId: string, sets: PracticeSetMeta[]) => {
+  const set = sets.find((item) => item.id === setId);
   const nodes = new Set<string>();
   if (!set) return nodes;
 
@@ -80,6 +78,7 @@ export const getInitialExpandedNodes = (setId: string) => {
 export const buildPracticeTree = (
   language: 'en' | 'zh',
   labels: PracticeTreeLabels,
+  practiceSets: PracticeSetMeta[],
 ): PracticeTreeSystem[] => {
   const systems: PracticeTreeSystem[] = [];
 
@@ -96,8 +95,8 @@ export const buildPracticeTree = (
       const mcqSets = sets.filter((set) => inferPracticeKind(set) === 'mcq');
       const structuredSets = sets.filter((set) => inferPracticeKind(set) === 'structured');
 
-      const makeCourse = (kind: PracticeKind, kindSets: PracticeSet[]): PracticeTreeCourse => {
-        const chapterMap = new Map<number, { title: string; sets: PracticeSet[] }>();
+      const makeCourse = (kind: PracticeKind, kindSets: PracticeSetMeta[]): PracticeTreeCourse => {
+        const chapterMap = new Map<number, { title: string; sets: PracticeSetMeta[] }>();
         kindSets.forEach((set) => {
           const unit = set.chapter ?? 0;
           if (!chapterMap.has(unit)) {
@@ -174,7 +173,7 @@ export const buildPracticeTree = (
     const courses = (['mcq', 'structured'] as const)
       .map((kind): PracticeTreeCourse => {
         const kindSets = apMechSets.filter((set) => inferPracticeKind(set) === kind);
-        const chapterMap = new Map<number, { title: string; sets: PracticeSet[] }>();
+        const chapterMap = new Map<number, { title: string; sets: PracticeSetMeta[] }>();
 
         kindSets.forEach((set) => {
           const unit = set.chapter ?? 0;
@@ -298,10 +297,10 @@ export const buildPracticeTree = (
     };
 
     const buildTopicChapters = (
-      sets: PracticeSet[],
+      sets: PracticeSetMeta[],
       kind: PracticeKind,
     ): PracticeTreeChapter[] => {
-      const chapterMap = new Map<number, { title: string; sets: PracticeSet[] }>();
+      const chapterMap = new Map<number, { title: string; sets: PracticeSetMeta[] }>();
 
       sets.forEach((set) => {
         const chapter = set.chapter ?? 0;
