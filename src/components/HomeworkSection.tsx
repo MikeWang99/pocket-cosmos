@@ -433,6 +433,7 @@ export const HomeworkSection: React.FC = () => {
     const saveError = await saveAttempt({
       practiceSetId: activeItem.practiceSetId,
       questionId: activeItem.questionId,
+      questionVersionId: activeItem.questionVersionId ?? activeItem.step.questionVersionId,
       answer: currentAnswer,
       score: result.score,
       maxScore: result.maxScore,
