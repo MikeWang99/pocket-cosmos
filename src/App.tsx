@@ -18,31 +18,52 @@ import { HomeSection } from './components/HomeSection';
 
 const validTabs = new Set(['home', 'curriculum', 'practice', 'homework', 'admin']);
 
+const tabPaths: Record<string, string> = {
+  home: '/',
+  curriculum: '/knowledge-map',
+  practice: '/practice',
+  homework: '/homework',
+  admin: '/admin',
+};
+
+const pathTabs = new Map(Object.entries(tabPaths).map(([tab, pathname]) => [pathname, tab]));
+
 const normalizeRequestedTab = (tab: string | null | undefined) =>
   tab && validTabs.has(tab) ? tab : 'home';
 
+const normalizePathname = (pathname: string) => {
+  if (pathname === '/') return '/';
+  return pathname.replace(/\/+$/, '') || '/';
+};
+
 const readTabFromUrl = () => {
   if (typeof window === 'undefined') return 'home';
-  return normalizeRequestedTab(new URLSearchParams(window.location.search).get('tab'));
+
+  // Keep old /?tab=... links working, then normalize them to semantic paths.
+  const requestedTab = new URLSearchParams(window.location.search).get('tab');
+  if (requestedTab && validTabs.has(requestedTab)) return requestedTab;
+
+  return normalizeRequestedTab(pathTabs.get(normalizePathname(window.location.pathname)));
 };
 
 const normalizeUrlForTab = (tab: string, mode: 'push' | 'replace' = 'push') => {
   if (typeof window === 'undefined') return;
 
   const url = new URL(window.location.href);
-  url.pathname = '/';
+  url.pathname = tabPaths[tab] ?? '/';
   url.hash = '';
+  url.searchParams.delete('tab');
 
   if (tab === 'home') {
-    url.searchParams.delete('tab');
     url.searchParams.delete('set');
     url.searchParams.delete('q');
+    url.searchParams.delete('question');
     url.searchParams.delete('assignment');
   } else {
-    url.searchParams.set('tab', tab);
     if (tab !== 'practice') {
       url.searchParams.delete('set');
       url.searchParams.delete('q');
+      url.searchParams.delete('question');
     }
     if (tab !== 'homework') {
       url.searchParams.delete('assignment');
