@@ -23,9 +23,9 @@ import {
   Target,
 } from 'lucide-react';
 import { useAuth } from '../auth/AuthContext';
-import { resolveHomeworkItems } from '../homework/catalog';
 import type { HomeworkAssignment, ResolvedHomeworkItem } from '../homework/types';
 import { useHomeworkData } from '../hooks/useHomeworkData';
+import { useHomeworkQuestions } from '../hooks/useHomeworkQuestions';
 import { useLanguage } from '../LanguageContext';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
 import { HomeworkAdminPanel } from './HomeworkAdminPanel';
@@ -343,10 +343,11 @@ export const HomeworkSection: React.FC = () => {
   );
   const activeAssignment =
     publishedAssignments.find((assignment) => assignment.id === activeAssignmentId) ?? null;
-  const activeItems = useMemo(
-    () => (activeAssignment ? resolveHomeworkItems(activeAssignment.items) : []),
-    [activeAssignment],
-  );
+  const {
+    items: activeItems,
+    loading: activeItemsLoading,
+    error: activeItemsError,
+  } = useHomeworkQuestions(activeAssignment?.id ?? null);
   const activeItem = activeItems[activeIndex];
 
   const studentAttempts = useMemo(
@@ -537,9 +538,18 @@ export const HomeworkSection: React.FC = () => {
       </div>
 
       {error && <div className="mb-5 rounded-xl border border-rose-500/25 bg-rose-500/10 p-4 text-sm text-rose-800">{error}</div>}
+      {activeItemsError && view === 'student' && (
+        <div className="mb-5 rounded-xl border border-rose-500/25 bg-rose-500/10 p-4 text-sm text-rose-800">
+          {activeItemsError}
+        </div>
+      )}
 
       {view === 'teacher' ? (
         <HomeworkAdminPanel />
+      ) : activeAssignment && activeItemsLoading ? (
+        <div className="glass-panel rounded-xl p-10 text-center text-sm text-ink-soft">
+          {language === 'zh' ? '正在安全加载作业题目…' : 'Loading assignment questions securely…'}
+        </div>
       ) : activeAssignment && activeItem ? (
         <div>
           <button type="button" onClick={closeAssignment} className="mb-5 inline-flex items-center gap-2 text-sm text-ink-soft hover:text-ink">
