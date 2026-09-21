@@ -834,7 +834,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
                 <span className="mb-2 block text-xs text-ink-soft">{language === 'zh' ? '题库章节' : 'Question bank'}</span>
                 <select value={selectedSetId} onChange={(event) => setSelectedSetId(event.target.value)} className="w-full rounded-lg border border-line bg-surface px-4 py-3 text-sm text-ink outline-none focus:border-nebula">
                   {adminPracticeSets.map((set) => (
-                    <option key={set.id} value={set.id}>{set.system.toUpperCase()} · {set.label} ({set.steps.length})</option>
+                    <option key={set.id} value={set.id}>{set.system.toUpperCase()} · {set.label} ({set.questionCount})</option>
                   ))}
                 </select>
               </label>
@@ -869,7 +869,7 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
               <div className="max-h-[420px] space-y-2 overflow-y-auto pr-1">
                 {draftItems.map((item, index) => {
                   const set = adminPracticeSets.find((candidate) => candidate.id === item.practiceSetId);
-                  const step = set?.steps.find((candidate) => candidate.id === item.questionId);
+                  const step = set?.questions.find((candidate) => candidate.id === item.questionId);
                   return (
                     <div key={`${item.practiceSetId}:${item.questionId}`} className="flex items-center gap-3 rounded-lg border border-line bg-surface-tint p-3">
                       <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-nebula/15 text-xs font-bold text-nebula">{index + 1}</span>
