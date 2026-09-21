@@ -41,7 +41,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, showA
         </div>
       </div>
 
-      <nav className={`mx-auto grid max-w-md items-center gap-1 py-2 pl-3 pr-14 md:absolute md:inset-y-0 md:left-0 md:mx-0 md:flex md:w-full md:max-w-none md:flex-col md:justify-center md:gap-3 md:px-2 md:py-0 ${mobileGridClass}`}>
+      <nav className={`mx-auto grid max-w-md items-center gap-1 py-2 pl-3 pr-24 md:absolute md:inset-y-0 md:left-0 md:mx-0 md:flex md:w-full md:max-w-none md:flex-col md:justify-center md:gap-3 md:px-2 md:py-0 ${mobileGridClass}`}>
         {navItems.map((item) => {
           const isActive = activeTab === item.id;
           return (
@@ -82,13 +82,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, showA
         </div>
       </div>
 
-      <button
-        onClick={toggleLanguage}
-        className="absolute right-3 top-2 grid h-10 w-10 place-items-center rounded-full border border-line bg-surface-tint text-nebula md:hidden"
-        title={t.nav.language}
-      >
-        <Languages className="h-4 w-4" />
-      </button>
+      <div className="absolute right-2 top-2 flex items-center gap-1 md:hidden">
+        <button
+          onClick={toggleLanguage}
+          className="grid h-10 w-10 place-items-center rounded-full border border-line bg-surface-tint text-nebula"
+          title={t.nav.language}
+          aria-label={t.nav.language}
+        >
+          <Languages className="h-4 w-4" />
+        </button>
+        <AuthStatusButton iconOnly />
+      </div>
     </aside>
   );
 };
