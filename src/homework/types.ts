@@ -64,6 +64,11 @@ export interface CreateHomeworkInput {
   assignedToAll: boolean;
   studentIds: string[];
   aiInstruction?: string;
-  items: Array<Pick<HomeworkItem, 'practiceSetId' | 'questionId'>>;
+  items: Array<
+    Pick<HomeworkItem, 'practiceSetId' | 'questionId'> & {
+      practiceSetTitle?: string;
+      questionTitle?: string;
+    }
+  >;
 }
 
