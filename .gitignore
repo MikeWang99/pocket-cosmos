@@ -15,3 +15,9 @@ outputs/crackap-apc-mechanics-test17/full_explanations.txt
 .vercel
 supabase/.temp/
 tmp/
+
+# Question-bank generated assets belong in object storage.
+# Existing tracked files remain tracked; this prevents new generated media from being added.
+public/*-assets/
+public/questions/
+asset-upload-manifest-*.json
