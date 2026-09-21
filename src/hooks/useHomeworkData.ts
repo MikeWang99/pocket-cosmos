@@ -22,7 +22,7 @@ import type {
 import { findPracticeSet, isSupabaseUuid } from '../homework/catalog';
 import { getSupabaseClient } from '../lib/supabaseClient';
 import { createStudentWorkSignedUrl, resolveStudentWorkPath } from '../lib/studentWorkStorage';
-import type { EvaluationResult } from '../types/practice';
+import type { EvaluationResult, PracticeStep } from '../types/practice';
 
 interface AssignmentRow {
   id: string;
@@ -44,6 +44,7 @@ interface AssignmentRow {
     question_id: string;
     practice_set_title: string | null;
     question_title: string | null;
+    question_snapshot: unknown | null;
   }>;
   assignment_students?: Array<{ student_id: string }>;
 }
@@ -99,6 +100,9 @@ const normalizeAssignment = (row: AssignmentRow): HomeworkAssignment => ({
       questionId: item.question_id,
       practiceSetTitle: item.practice_set_title ?? undefined,
       questionTitle: item.question_title ?? undefined,
+      questionSnapshot: item.question_snapshot && typeof item.question_snapshot === 'object'
+        ? item.question_snapshot as PracticeStep
+        : undefined,
     })),
 });
 
@@ -178,7 +182,7 @@ export const useHomeworkData = () => {
     const assignmentQuery = supabase
       .from('assignments')
       .select(
-        'id, title, description, status, source_type, due_at, published_at, assigned_to_all, ai_instruction, created_at, updated_at, assignment_items(id, assignment_id, position, practice_set_id, question_id, practice_set_title, question_title), assignment_students(student_id)',
+        'id, title, description, status, source_type, due_at, published_at, assigned_to_all, ai_instruction, created_at, updated_at, assignment_items(id, assignment_id, position, practice_set_id, question_id, practice_set_title, question_title, question_snapshot), assignment_students(student_id)',
       )
       .order('created_at', { ascending: false });
 
@@ -281,6 +285,7 @@ export const useHomeworkData = () => {
               questionId: item.questionId,
               practiceSetTitle: set?.title,
               questionTitle: step?.title,
+              questionSnapshot: step,
             };
           }),
         };
@@ -328,6 +333,7 @@ export const useHomeworkData = () => {
           question_id: item.questionId,
           practice_set_title: set?.title ?? item.practiceSetId,
           question_title: step?.title ?? item.questionId,
+          question_snapshot: step ?? null,
         };
       });
       const { error: itemError } = await supabase.from('assignment_items').insert(itemRows);
@@ -382,6 +388,7 @@ export const useHomeworkData = () => {
               questionId: item.questionId,
               practiceSetTitle: set?.title,
               questionTitle: step?.title,
+              questionSnapshot: step,
             };
           }),
         };
@@ -411,6 +418,7 @@ export const useHomeworkData = () => {
           question_id: item.questionId,
           practice_set_title: set?.title ?? item.practiceSetId,
           question_title: step?.title ?? item.questionId,
+          question_snapshot: step ?? null,
         };
       });
 
@@ -425,6 +433,7 @@ export const useHomeworkData = () => {
           question_id: item.questionId,
           practice_set_title: item.practiceSetTitle ?? item.practiceSetId,
           question_title: item.questionTitle ?? item.questionId,
+          question_snapshot: item.questionSnapshot ?? null,
         }));
         if (restoreRows.length) await supabase.from('assignment_items').insert(restoreRows);
         return { assignment: null, error: insertItemsError.message };
@@ -478,6 +487,7 @@ export const useHomeworkData = () => {
           questionId: item.question_id,
           practiceSetTitle: item.practice_set_title,
           questionTitle: item.question_title,
+          questionSnapshot: item.question_snapshot ?? undefined,
         })),
         updatedAt: new Date().toISOString(),
       };
