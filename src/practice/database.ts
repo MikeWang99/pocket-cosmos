@@ -114,7 +114,36 @@ export const practiceStepFromMetadata = (metadata: unknown): PracticeStep | null
   return candidate as PracticeStep;
 };
 
-export const hasQuestionDatabaseConfig = () => Boolean(supabaseUrl && serviceRoleKey);
+export const hasQuestionDatabaseConfig = () => Boolean(supabaseUrl);
+const hasStorageBackedAsset = (step: PracticeStep) => {
+  const refs = [
+    step.image?.src,
+    ...(step.supportingImages?.map((image) => image.src) ?? []),
+    ...(step.assets?.map((asset) => asset.src) ?? []),
+    ...(step.choices?.flatMap((choice) => [
+      choice.image?.src,
+      ...(choice.images?.map((image) => image.src) ?? []),
+    ]) ?? []),
+    step.solutionImage?.src,
+  ].filter((src): src is string => Boolean(src));
+
+  return refs.some((src) => storageRef(src)?.bucket === 'question-assets');
+};
+
+export async function resolvePracticeStepAssets(
+  step: PracticeStep,
+): Promise<PracticeStep> {
+  if (!hasStorageBackedAsset(step)) return step;
+
+  const client = createServiceClient();
+  if (!client) {
+    throw new Error(
+      'Private question assets require a server-side Supabase secret for signed URLs.',
+    );
+  }
+
+  return signPracticeStepAssets(client, step);
+}
 export const isNormalizedQuestionReadEnabled = () => normalizedPracticeReadsEnabled;
 
 export async function getSyncedPracticeSteps(
