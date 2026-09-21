@@ -73,7 +73,7 @@ for (const file of files) {
     bytes: info.size,
     contentType: contentTypeFor(file),
     uploaded: false,
-    publicUrl: null,
+    objectRef: `${bucket}/${storagePath}`,
   };
 
   if (apply && client) {
@@ -91,9 +91,6 @@ for (const file of files) {
       process.exitCode = 1;
     } else {
       row.uploaded = true;
-      if (bucket === 'question-assets') {
-        row.publicUrl = client.storage.from(bucket).getPublicUrl(storagePath).data.publicUrl;
-      }
       console.log(`Uploaded: ${relativePath} -> ${bucket}/${storagePath}`);
     }
   } else {
