@@ -1,7 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { getPracticeSetById } from '@/src/practice/server';
-import { getSyncedPracticeSteps } from '@/src/practice/database';
+import {
+  getSyncedPracticeSteps,
+  isNormalizedQuestionReadEnabled,
+  practiceStepFromMetadata,
+} from '@/src/practice/database';
 import { PUBLIC_SAMPLE_LIMIT, PUBLIC_SAMPLE_SET_ID } from '@/src/practice/navigation';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -22,7 +26,7 @@ export async function GET(
     return NextResponse.json({ error: 'Practice set not found.' }, { status: 404 });
   }
 
-  const loadResolvedSet = async () => {
+  const loadServiceResolvedSet = async () => {
     const syncedSteps = await getSyncedPracticeSteps(id, legacySet.steps.length);
     return syncedSteps ? { ...legacySet, steps: syncedSteps } : legacySet;
   };
@@ -30,12 +34,12 @@ export async function GET(
   // Only local development may bypass authorization. Preview and Production
   // must fail closed when auth or Supabase configuration is missing.
   if (localDevBypass) {
-    return NextResponse.json({ set: await loadResolvedSet(), access: 'full' });
+    return NextResponse.json({ set: await loadServiceResolvedSet(), access: 'full' });
   }
 
   if (!authEnabled || !supabaseUrl || !supabaseAnonKey) {
     if (id === PUBLIC_SAMPLE_SET_ID) {
-      const resolvedSet = await loadResolvedSet();
+      const resolvedSet = await loadServiceResolvedSet();
       return NextResponse.json({
         set: { ...resolvedSet, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
         access: 'sample',
@@ -53,7 +57,7 @@ export async function GET(
 
   if (!token) {
     if (id !== PUBLIC_SAMPLE_SET_ID) return unauthorized();
-    const resolvedSet = await loadResolvedSet();
+    const resolvedSet = await loadServiceResolvedSet();
     return NextResponse.json({
       set: { ...resolvedSet, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
       access: 'sample',
@@ -68,7 +72,7 @@ export async function GET(
   const { data: userData, error: userError } = await supabase.auth.getUser(token);
   if (userError || !userData.user) {
     if (id !== PUBLIC_SAMPLE_SET_ID) return unauthorized('Session is invalid or expired.');
-    const resolvedSet = await loadResolvedSet();
+    const resolvedSet = await loadServiceResolvedSet();
     return NextResponse.json({
       set: { ...resolvedSet, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
       access: 'sample',
@@ -84,12 +88,58 @@ export async function GET(
       .eq('system', legacySet.system),
   ]);
 
+  const loadAuthorizedResolvedSet = async () => {
+    const serviceSteps = await getSyncedPracticeSteps(id, legacySet.steps.length);
+    if (serviceSteps) return { ...legacySet, steps: serviceSteps };
+
+    if (!isNormalizedQuestionReadEnabled()) return legacySet;
+
+    const { data, error } = await supabase.rpc('get_authorized_practice_steps', {
+      p_practice_set_id: id,
+    });
+
+    if (error) {
+      throw new Error(`Unable to load normalized practice set: ${error.message}`);
+    }
+
+    const rows = (data ?? []) as Array<{
+      sort_position: number;
+      question_id: string;
+      question_version_id: string;
+      metadata: unknown;
+    }>;
+
+    if (rows.length !== legacySet.steps.length) {
+      throw new Error(
+        `Normalized practice set count mismatch: expected ${legacySet.steps.length}, received ${rows.length}.`,
+      );
+    }
+
+    const steps = rows.map((row) => {
+      const step = practiceStepFromMetadata(row.metadata);
+      if (!step) {
+        throw new Error(`Invalid normalized question payload: ${row.question_id}`);
+      }
+      return { ...step, questionVersionId: row.question_version_id };
+    });
+
+    return { ...legacySet, steps };
+  };
+
   if (admin === true || (!permissionError && (permissions?.length ?? 0) > 0)) {
-    return NextResponse.json({ set: await loadResolvedSet(), access: 'full' });
+    try {
+      return NextResponse.json({ set: await loadAuthorizedResolvedSet(), access: 'full' });
+    } catch (error) {
+      console.error(error);
+      return NextResponse.json(
+        { error: 'Normalized question bank is unavailable for this deployment.' },
+        { status: 503 },
+      );
+    }
   }
 
   if (id === PUBLIC_SAMPLE_SET_ID) {
-    const resolvedSet = await loadResolvedSet();
+    const resolvedSet = await loadServiceResolvedSet();
     return NextResponse.json({
       set: { ...resolvedSet, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
       access: 'sample',
