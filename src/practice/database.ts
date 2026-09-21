@@ -26,7 +26,7 @@ const storageRef = (src: string) => {
 };
 
 const signSrc = async (
-  client: ReturnType<typeof createClient>,
+  client: NonNullable<ReturnType<typeof createServiceClient>>,
   src: string,
 ) => {
   const ref = storageRef(src);
@@ -44,7 +44,7 @@ const signSrc = async (
 };
 
 const signPracticeStepAssets = async (
-  client: ReturnType<typeof createClient>,
+  client: NonNullable<ReturnType<typeof createServiceClient>>,
   step: PracticeStep,
 ): Promise<PracticeStep> => ({
   ...step,
