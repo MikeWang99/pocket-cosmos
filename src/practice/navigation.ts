@@ -1,4 +1,3 @@
-import { practiceSets } from '../data/practiceSets';
 import { buildAppPath, parseAppPath } from '../routing';
 
 export const PUBLIC_SAMPLE_SET_ID = 'ap1-unit-1-kinematics-question-bank';
@@ -13,16 +12,6 @@ export const readPracticeSelectionFromUrl = () => {
   return {
     setId: params.get('set') || PUBLIC_SAMPLE_SET_ID,
     questionId: params.get('q') || params.get('question'),
-  };
-};
-
-export const getSafePracticeSelection = (setId: string, questionId: string | null) => {
-  const set = practiceSets.find((item) => item.id === setId) ?? practiceSets[0];
-  const index = questionId ? set.steps.findIndex((step) => step.id === questionId) : 0;
-
-  return {
-    setId: set.id,
-    index: index >= 0 ? index : 0,
   };
 };
 
