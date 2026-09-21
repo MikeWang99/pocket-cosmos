@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Camera, Upload, X, CheckCircle2, Loader2 } from 'lucide-react';
 import { getSupabaseClient } from '../lib/supabaseClient';
 import { useAuth } from '../auth/AuthContext';
@@ -17,6 +17,26 @@ interface StudentWorkUploadProps {
 const MAX_UPLOAD_SIZE = 2 * 1024 * 1024; // 2MB target after compression
 const MAX_DIMENSION = 2048; // max width/height in pixels
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic'];
+const STUDENT_WORK_BUCKET = 'student-work';
+
+const normalizeStudentWorkPath = (value?: string | null) => {
+  if (!value) return null;
+  if (!/^https?:\/\//i.test(value)) return value.replace(/^\/+/, '');
+
+  try {
+    const url = new URL(value);
+    const markers = [
+      '/storage/v1/object/public/student-work/',
+      '/storage/v1/object/sign/student-work/',
+      '/storage/v1/object/authenticated/student-work/',
+    ];
+    const marker = markers.find((candidate) => url.pathname.includes(candidate));
+    if (!marker) return null;
+    return decodeURIComponent(url.pathname.split(marker)[1] ?? '').replace(/^\/+/, '') || null;
+  } catch {
+    return null;
+  }
+};
 
 /** Compress image via Canvas: resize + JPEG quality reduction */
 const compressImage = (file: File): Promise<Blob> => {
@@ -83,6 +103,37 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [pendingRetry, setPendingRetry] = useState<File | null>(null);
+
+  useEffect(() => {
+    if (!existingImageUrl) {
+      setPreview(null);
+      return;
+    }
+
+    const path = normalizeStudentWorkPath(existingImageUrl);
+    const supabase = getSupabaseClient();
+    if (!path || !supabase || !user) {
+      setPreview(existingImageUrl);
+      return;
+    }
+
+    let mounted = true;
+    void supabase.storage
+      .from(STUDENT_WORK_BUCKET)
+      .createSignedUrl(path, 60 * 60)
+      .then(({ data, error }) => {
+        if (!mounted) return;
+        if (error || !data?.signedUrl) {
+          setError(t.errorUpload);
+          return;
+        }
+        setPreview(data.signedUrl);
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, [existingImageUrl, user]);
 
   const setBusyState = (compressingNext: boolean, uploadingNext: boolean) => {
     setCompressing(compressingNext);
@@ -163,7 +214,7 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
     const path = `${user.id}/${practiceSetId}/${questionId}-${Date.now()}.jpg`;
 
     const { error: uploadError } = await supabase.storage
-      .from('student-work')
+      .from(STUDENT_WORK_BUCKET)
       .upload(path, uploadBlob, { upsert: true, contentType: 'image/jpeg' });
 
     if (uploadError) {
@@ -174,10 +225,21 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
       return;
     }
 
-    const { data: urlData } = supabase.storage.from('student-work').getPublicUrl(path);
-    const publicUrl = urlData.publicUrl;
+    const { data: signedData, error: signedError } = await supabase.storage
+      .from(STUDENT_WORK_BUCKET)
+      .createSignedUrl(path, 60 * 60);
 
-    onUploadComplete(publicUrl);
+    if (signedError || !signedData?.signedUrl) {
+      setError(t.errorUpload);
+      setPendingRetry(file);
+      setBusyState(false, false);
+      return;
+    }
+
+    // Persist only the stable object path. Signed URLs are short-lived and
+    // must never be stored in Postgres.
+    setPreview(signedData.signedUrl);
+    onUploadComplete(path);
     setBusyState(false, false);
   }, [user, practiceSetId, questionId, onUploadComplete, t, setBusyState]);
 
@@ -188,7 +250,19 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
     event.target.value = '';
   };
 
-  const handleClear = () => {
+  const handleClear = async () => {
+    const path = normalizeStudentWorkPath(existingImageUrl);
+    const supabase = getSupabaseClient();
+
+    if (path && supabase && user) {
+      const { error: removeError } = await supabase.storage
+        .from(STUDENT_WORK_BUCKET)
+        .remove([path]);
+      if (removeError) {
+        console.error('Storage delete error:', removeError);
+      }
+    }
+
     setPreview(null);
     setFileName(null);
     setError(null);
@@ -295,7 +369,7 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
               </button>
               <button
                 type="button"
-                onClick={handleClear}
+                onClick={() => void handleClear()}
                 className="flex items-center gap-1 rounded-md border border-rose-400/30 px-3 py-1.5 text-xs text-rose-600 hover:bg-rose-400/10"
               >
                 <X className="h-3 w-3" />
