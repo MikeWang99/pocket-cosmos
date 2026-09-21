@@ -4,7 +4,8 @@ import { createClient } from '@supabase/supabase-js';
 import type { PracticeStep } from '../types/practice';
 
 const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const serviceRoleKey =
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY;
 const normalizedPracticeReadsEnabled = process.env.QUESTION_DB_READS_ENABLED === 'true';
 const SIGNED_ASSET_TTL_SECONDS = 60 * 60;
 
@@ -90,7 +91,7 @@ const signPracticeStepAssets = async (
     : undefined,
 });
 
-const stepFromMetadata = (metadata: unknown): PracticeStep | null => {
+export const practiceStepFromMetadata = (metadata: unknown): PracticeStep | null => {
   if (!metadata || typeof metadata !== 'object') return null;
   const step = (metadata as { practiceStep?: unknown }).practiceStep;
   if (!step || typeof step !== 'object') return null;
@@ -109,6 +110,7 @@ const stepFromMetadata = (metadata: unknown): PracticeStep | null => {
 };
 
 export const hasQuestionDatabaseConfig = () => Boolean(supabaseUrl && serviceRoleKey);
+export const isNormalizedQuestionReadEnabled = () => normalizedPracticeReadsEnabled;
 
 export async function getSyncedPracticeSteps(
   practiceSetId: string,
@@ -163,7 +165,7 @@ export async function getSyncedPracticeSteps(
   const steps: PracticeStep[] = [];
   for (const question of questions) {
     const row = latestByQuestion.get(question.id);
-    const step = row ? stepFromMetadata(row.metadata) : null;
+    const step = row ? practiceStepFromMetadata(row.metadata) : null;
     if (!step) return null;
     steps.push(
       await signPracticeStepAssets(client, { ...step, questionVersionId: row.id }),
@@ -195,7 +197,7 @@ export async function getPinnedPracticeSteps(
     }
 
     for (const version of versions ?? []) {
-      const step = stepFromMetadata(version.metadata);
+      const step = practiceStepFromMetadata(version.metadata);
       if (!step) continue;
       result.set(
         version.id,
