@@ -2,6 +2,12 @@
 -- Adds a stable content hash so immutable versions are created only when
 -- question content actually changes.
 
+alter table public.questions
+  add column if not exists position integer;
+
+create index if not exists questions_practice_set_position_idx
+  on public.questions (practice_set_id, position);
+
 alter table public.question_versions
   add column if not exists content_hash text;
 
