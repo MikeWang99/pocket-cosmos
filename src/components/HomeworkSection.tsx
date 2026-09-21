@@ -439,6 +439,9 @@ export const HomeworkSection: React.FC = () => {
       isCorrect: result.maxScore > 0 && result.score >= result.maxScore,
       result,
       assignmentId: activeAssignment?.id,
+      practiceSetTitle: activeItem.setTitle,
+      questionTitle: activeItem.step.title,
+      tags: activeItem.step.tags ?? [],
     });
     setSaving(false);
     if (!saveError) setResults((current) => ({ ...current, [activeResponseKey]: result }));
