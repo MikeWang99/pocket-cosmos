@@ -1,13 +1,14 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Camera, Upload, X, CheckCircle2, Loader2 } from 'lucide-react';
 import { getSupabaseClient } from '../lib/supabaseClient';
 import { useAuth } from '../auth/AuthContext';
+import { createStudentWorkSignedUrl, STUDENT_WORK_BUCKET } from '../lib/studentWorkStorage';
 
 interface StudentWorkUploadProps {
   practiceSetId: string;
   questionId: string;
-  existingImageUrl?: string | null;
-  onUploadComplete: (imageUrl: string) => void;
+  existingImagePath?: string | null;
+  onUploadComplete: (imagePath: string) => void;
   onClear: () => void;
   language: 'en' | 'zh';
   /** Fires while the file is compressing/uploading so parents can explain why submit stays disabled. */
@@ -68,7 +69,7 @@ const compressImage = (file: File): Promise<Blob> => {
 export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
   practiceSetId,
   questionId,
-  existingImageUrl,
+  existingImagePath,
   onUploadComplete,
   onClear,
   language,
@@ -77,12 +78,39 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
   const { user } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
-  const [preview, setPreview] = useState<string | null>(existingImageUrl ?? null);
+  const [preview, setPreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [compressing, setCompressing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [pendingRetry, setPendingRetry] = useState<File | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    if (!existingImagePath) {
+      setPreview(null);
+      return () => {
+        mounted = false;
+      };
+    }
+
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      setPreview(null);
+      return () => {
+        mounted = false;
+      };
+    }
+
+    void createStudentWorkSignedUrl(supabase, existingImagePath).then((signedUrl) => {
+      if (mounted) setPreview(signedUrl);
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, [existingImagePath]);
 
   const setBusyState = (compressingNext: boolean, uploadingNext: boolean) => {
     setCompressing(compressingNext);
@@ -163,7 +191,7 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
     const path = `${user.id}/${practiceSetId}/${questionId}-${Date.now()}.jpg`;
 
     const { error: uploadError } = await supabase.storage
-      .from('student-work')
+      .from(STUDENT_WORK_BUCKET)
       .upload(path, uploadBlob, { upsert: true, contentType: 'image/jpeg' });
 
     if (uploadError) {
