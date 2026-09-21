@@ -848,8 +848,17 @@ export const PracticeSection: React.FC = () => {
         </div>
       )}
 
-      {/* Permission gate: show locked card if the selected set is not accessible */}
-      {!activeSetAccessible ? (
+      {/* Question bodies load only after the server has authorized this set. */}
+      {setLoading ? (
+        <div className="glass-panel flex min-h-48 items-center justify-center rounded-lg p-10 text-sm text-ink-soft">
+          {language === 'zh' ? '正在加载题目…' : 'Loading questions…'}
+        </div>
+      ) : setLoadError && !activeSetAccessible ? (
+        <div className="glass-panel flex flex-col items-center justify-center gap-4 rounded-lg p-12 text-center">
+          <Lock className="h-10 w-10 text-slate-500" />
+          <p className="max-w-md text-sm text-ink-soft">{t.practice.lockedMessage}</p>
+        </div>
+      ) : !activeSetAccessible ? (
         <div className="glass-panel flex flex-col items-center justify-center gap-4 rounded-lg p-12 text-center">
           <Lock className="h-10 w-10 text-slate-500" />
           <p className="text-sm text-ink-soft max-w-md">{t.practice.lockedMessage}</p>
@@ -925,7 +934,7 @@ export const PracticeSection: React.FC = () => {
                   <div className="min-w-0">
                     <div className="text-xs uppercase tracking-widest text-nebula mb-3">{activeStep.source}</div>
                     <h2 className="text-balance font-serif text-2xl text-ink md:text-3xl">{activeDisplayTitle}</h2>
-                    {activeSet.system !== 'competition' && !!activeStep.tags?.length && (
+                    {(activeSet?.system ?? activeMeta?.system) !== 'competition' && !!activeStep.tags?.length && (
                       <div className="mt-3 flex flex-wrap gap-2">
                         {activeStep.tags.slice(0, 4).map((tag) => (
                           <span
@@ -1124,7 +1133,7 @@ export const PracticeSection: React.FC = () => {
                 ) : (
                   <>
                     <StudentWorkUpload
-                      practiceSetId={activeSet.id}
+                      practiceSetId={activeSetId}
                       questionId={activeStep.id}
                       existingImageUrl={currentAnswerImage}
                       onUploadComplete={(imageUrl) => {
