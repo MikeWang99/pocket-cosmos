@@ -22,37 +22,40 @@ export async function GET(
     return NextResponse.json({ error: 'Practice set not found.' }, { status: 404 });
   }
 
+  const loadResolvedSet = async () => {
+    const syncedSteps = await getSyncedPracticeSteps(id, legacySet.steps.length);
+    return syncedSteps ? { ...legacySet, steps: syncedSteps } : legacySet;
+  };
+
   // Only local development may bypass authorization. Preview and Production
   // must fail closed when auth or Supabase configuration is missing.
   if (localDevBypass) {
-    const syncedSteps = await getSyncedPracticeSteps(id, legacySet.steps.length);
-    const set = syncedSteps ? { ...legacySet, steps: syncedSteps } : legacySet;
-    return NextResponse.json({ set: resolvedSet, access: 'full' });
+    return NextResponse.json({ set: await loadResolvedSet(), access: 'full' });
   }
 
   if (!authEnabled || !supabaseUrl || !supabaseAnonKey) {
     if (id === PUBLIC_SAMPLE_SET_ID) {
+      const resolvedSet = await loadResolvedSet();
       return NextResponse.json({
-        set: { ...set, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
+        set: { ...resolvedSet, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
         access: 'sample',
       });
     }
+
     return NextResponse.json(
       { error: 'Practice authorization is not configured for this deployment.' },
       { status: 503 },
     );
   }
 
-  const syncedSteps = await getSyncedPracticeSteps(id, legacySet.steps.length);
-  const resolvedSet = syncedSteps ? { ...legacySet, steps: syncedSteps } : legacySet;
-
-    const authorization = request.headers.get('authorization');
+  const authorization = request.headers.get('authorization');
   const token = authorization?.match(/^Bearer\s+(.+)$/i)?.[1] ?? null;
 
   if (!token) {
     if (id !== PUBLIC_SAMPLE_SET_ID) return unauthorized();
+    const resolvedSet = await loadResolvedSet();
     return NextResponse.json({
-      set: { ...set, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
+      set: { ...resolvedSet, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
       access: 'sample',
     });
   }
@@ -65,8 +68,9 @@ export async function GET(
   const { data: userData, error: userError } = await supabase.auth.getUser(token);
   if (userError || !userData.user) {
     if (id !== PUBLIC_SAMPLE_SET_ID) return unauthorized('Session is invalid or expired.');
+    const resolvedSet = await loadResolvedSet();
     return NextResponse.json({
-      set: { ...set, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
+      set: { ...resolvedSet, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
       access: 'sample',
     });
   }
@@ -81,12 +85,13 @@ export async function GET(
   ]);
 
   if (admin === true || (!permissionError && (permissions?.length ?? 0) > 0)) {
-    return NextResponse.json({ set: resolvedSet, access: 'full' });
+    return NextResponse.json({ set: await loadResolvedSet(), access: 'full' });
   }
 
   if (id === PUBLIC_SAMPLE_SET_ID) {
+    const resolvedSet = await loadResolvedSet();
     return NextResponse.json({
-      set: { ...set, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
+      set: { ...resolvedSet, steps: resolvedSet.steps.slice(0, PUBLIC_SAMPLE_LIMIT) },
       access: 'sample',
     });
   }
