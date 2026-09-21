@@ -221,9 +221,9 @@ const updatePracticeUrl = (setId: string, questionId: string, mode: 'push' | 're
   if (typeof window === 'undefined') return;
 
   const url = new URL(window.location.href);
-  url.pathname = '/';
+  url.pathname = '/practice';
   url.hash = '';
-  url.searchParams.set('tab', 'practice');
+  url.searchParams.delete('tab');
   url.searchParams.set('set', setId);
   url.searchParams.set('q', questionId);
   const nextUrl = `${url.pathname}${url.search}`;
@@ -234,8 +234,7 @@ const updatePracticeUrl = (setId: string, questionId: string, mode: 'push' | 're
 
 const buildPracticeShareUrl = (setId: string, questionId: string) => {
   if (typeof window === 'undefined') return '';
-  const url = new URL(window.location.origin);
-  url.searchParams.set('tab', 'practice');
+  const url = new URL('/practice', window.location.origin);
   url.searchParams.set('set', setId);
   url.searchParams.set('q', questionId);
   return url.toString();
