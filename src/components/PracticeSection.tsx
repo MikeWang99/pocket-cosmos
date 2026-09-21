@@ -29,6 +29,7 @@ import { usePracticeLabels } from '../hooks/usePracticeLabels';
 import { StudentWorkUpload } from './StudentWorkUpload';
 import { QuestionPrompt } from './QuestionPrompt';
 import { isLongChoice, MathText } from './MathText';
+import { buildAppPath, parseAppPath } from '../routing';
 
 type SpeechRecognitionConstructor = new () => SpeechRecognition;
 
@@ -192,14 +193,17 @@ const getInitialExpandedNodes = (setId: string) => {
   return nodes;
 };
 
+const PUBLIC_SAMPLE_SET_ID = 'ap1-unit-1-kinematics-question-bank';
+const PUBLIC_SAMPLE_LIMIT = 5;
+
 const readPracticeSelectionFromUrl = () => {
   if (typeof window === 'undefined') {
-    return { setId: 'kinematics-multiple-choice', questionId: null as string | null };
+    return { setId: PUBLIC_SAMPLE_SET_ID, questionId: null as string | null };
   }
 
   const params = new URLSearchParams(window.location.search);
   return {
-    setId: params.get('set') || 'kinematics-multiple-choice',
+    setId: params.get('set') || PUBLIC_SAMPLE_SET_ID,
     questionId: params.get('q') || params.get('question'),
   };
 };
@@ -217,9 +221,10 @@ const updatePracticeUrl = (setId: string, questionId: string, mode: 'push' | 're
   if (typeof window === 'undefined') return;
 
   const url = new URL(window.location.href);
-  url.pathname = '/';
+  const route = parseAppPath(url.pathname, url.search);
+  url.pathname = buildAppPath('practice', route.language ?? 'en');
   url.hash = '';
-  url.searchParams.set('tab', 'practice');
+  url.searchParams.delete('tab');
   url.searchParams.set('set', setId);
   url.searchParams.set('q', questionId);
   const nextUrl = `${url.pathname}${url.search}`;
@@ -230,8 +235,8 @@ const updatePracticeUrl = (setId: string, questionId: string, mode: 'push' | 're
 
 const buildPracticeShareUrl = (setId: string, questionId: string) => {
   if (typeof window === 'undefined') return '';
-  const url = new URL(window.location.origin);
-  url.searchParams.set('tab', 'practice');
+  const route = parseAppPath(window.location.pathname, window.location.search);
+  const url = new URL(buildAppPath('practice', route.language ?? 'en'), window.location.origin);
   url.searchParams.set('set', setId);
   url.searchParams.set('q', questionId);
   return url.toString();
@@ -363,6 +368,9 @@ export const PracticeSection: React.FC = () => {
   const { labelsByQuestion, getLabels, toggleLabel } = usePracticeLabels();
 
   const activeSet = practiceSets.find((set) => set.id === activeSetId) ?? practiceSets[0];
+  const hasFullAccess = hasAccess(activeSet.system);
+  const sampleMode = !user && !hasFullAccess && activeSet.id === PUBLIC_SAMPLE_SET_ID;
+  const activeSetAccessible = hasFullAccess || sampleMode;
   const practiceSetMeta = activeSet;
   const getSetCopy = (setId: string) => {
     if (setId === 'calculus-for-physics') return t.practice.sets.calculusForPhysics;
@@ -404,7 +412,7 @@ export const PracticeSection: React.FC = () => {
 
   // Filter any indexed MCQ bank by its normalized 1–5 difficulty value.
   const practiceSteps = useMemo(() => {
-    return activeSet.steps.filter((step) => {
+    const filtered = activeSet.steps.filter((step) => {
       if (supportsSpecialtyFilter && specialtyFilter !== 'all' && !step.specialtyTags?.includes(specialtyFilter)) return false;
       if (supportsLabelFilter && labelFilter !== 'all' && !labelsByQuestion[`${activeSet.id}:${step.id}`]?.includes(labelFilter)) return false;
       if (!supportsDifficultyFilter || difficultyFilter === 'all') return true;
@@ -419,7 +427,9 @@ export const PracticeSection: React.FC = () => {
       if (difficultyFilter === 'hard') return level >= 4;
       return true;
     });
-  }, [activeSet.id, activeSet.steps, labelsByQuestion, supportsDifficultyFilter, difficultyFilter, supportsSpecialtyFilter, specialtyFilter, supportsLabelFilter, labelFilter]);
+
+    return sampleMode ? filtered.slice(0, PUBLIC_SAMPLE_LIMIT) : filtered;
+  }, [activeSet.id, activeSet.steps, labelsByQuestion, supportsDifficultyFilter, difficultyFilter, supportsSpecialtyFilter, specialtyFilter, supportsLabelFilter, labelFilter, sampleMode]);
 
   // Map "Difficulty N" tag to display label
   const formatTag = (tag: string): string => {
@@ -1081,7 +1091,7 @@ export const PracticeSection: React.FC = () => {
           <div className="mt-5 space-y-1">
             {practiceTree.map((system) => {
               const sysExpanded = expandedNodes.has(system.id);
-              const systemAccessible = hasAccess(system.id);
+              const systemAccessible = hasAccess(system.id) || (!user && system.id === 'ap-physics-1');
               const hasSystemContent = system.courses.some((course) => course.chapters.some((chapter) => chapter.sets.length > 0));
               const canExpandSystem = systemAccessible && hasSystemContent;
               return (
@@ -1265,8 +1275,24 @@ export const PracticeSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Permission gate: show locked card if system not accessible */}
-      {!hasAccess(activeSet.system) ? (
+      {sampleMode && (
+        <div className="mb-5 flex flex-col gap-2 rounded-xl border border-nebula/25 bg-nebula/[0.07] p-4 text-sm text-ink-soft sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <strong className="text-ink">{language === 'zh' ? '免费体验' : 'Free preview'}</strong>
+            <span className="ml-2">
+              {language === 'zh'
+                ? `当前开放前 ${PUBLIC_SAMPLE_LIMIT} 道 AP Physics 1 题目，无需登录。`
+                : `Try the first ${PUBLIC_SAMPLE_LIMIT} AP Physics 1 questions without signing in.`}
+            </span>
+          </div>
+          <span className="text-xs font-semibold text-nebula">
+            {language === 'zh' ? '登录后可保存学习记录' : 'Sign in to save progress'}
+          </span>
+        </div>
+      )}
+
+      {/* Permission gate: show locked card if the selected set is not accessible */}
+      {!activeSetAccessible ? (
         <div className="glass-panel flex flex-col items-center justify-center gap-4 rounded-lg p-12 text-center">
           <Lock className="h-10 w-10 text-slate-500" />
           <p className="text-sm text-ink-soft max-w-md">{t.practice.lockedMessage}</p>
