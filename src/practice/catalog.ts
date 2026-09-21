@@ -31,7 +31,7 @@ export type PracticeTreeLabels = {
   igcse: string;
 };
 
-export const inferPracticeKind = (set: Pick<PracticeSetMeta, 'practiceKind'>): PracticeKind =>
+export const inferPracticeKind = (set: Pick<PracticeSetMeta, 'id' | 'practiceKind'>): PracticeKind =>
   set.practiceKind ??
   (set.id.includes('-frq-') ? 'structured' : set.id.includes('paper5') ? 'paper5' : 'mcq');
 
