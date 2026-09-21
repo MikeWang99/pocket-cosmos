@@ -33,18 +33,22 @@ const detectInitialLanguage = (): AppLanguage => {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // Keep the server and first client paint deterministic, then hydrate the
-  // route/browser preference before canonical navigation runs.
-  const [language, setLanguage] = useState<Language>('en');
-  const [ready, setReady] = useState(false);
+export const LanguageProvider: React.FC<{ children: ReactNode; initialLanguage?: Language }> = ({
+  children,
+  initialLanguage,
+}) => {
+  // Localized routes provide the language on the server so /zh renders
+  // Chinese immediately instead of flashing English before hydration.
+  const [language, setLanguage] = useState<Language>(initialLanguage ?? 'en');
+  const [ready, setReady] = useState(Boolean(initialLanguage));
 
   useEffect(() => {
-    const next = detectInitialLanguage();
+    const next = initialLanguage ?? detectInitialLanguage();
     setLanguage(next);
     document.documentElement.lang = next;
+    if (initialLanguage) window.localStorage.setItem(LANGUAGE_STORAGE_KEY, initialLanguage);
     setReady(true);
-  }, []);
+  }, [initialLanguage]);
 
   const toggleLanguage = () => {
     setLanguage((prev) => {
