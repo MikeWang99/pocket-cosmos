@@ -60,15 +60,6 @@ const normalizeResult = (row: PracticeAttemptRow): EvaluationResult => {
   };
 };
 
-const resetStorageKey = (studentId: string, practiceSetId: string) =>
-  `pocket-cosmos:practice-reset:${studentId}:${practiceSetId}`;
-
-const readResetTimestamp = (studentId: string | undefined, practiceSetId: string) => {
-  if (!studentId || typeof window === 'undefined') return 0;
-  const value = window.localStorage.getItem(resetStorageKey(studentId, practiceSetId));
-  return value ? Number(value) || 0 : 0;
-};
-
 export const usePracticeProgress = (practiceSetId: string) => {
   const { authEnabled, configured, user } = useAuth();
   const supabase = getSupabaseClient();
@@ -124,40 +115,55 @@ export const usePracticeProgress = (practiceSetId: string) => {
     setSyncState('loading');
     setSyncError(null);
 
-    supabase
-      .from('practice_attempts')
-      .select('question_id, answer, answer_image_url, score, max_score, is_correct, result, updated_at')
-      .eq('practice_set_id', practiceSetId)
-      .order('updated_at', { ascending: false })
-      .then(({ data, error }) => {
-        if (!mounted) return;
+    void (async () => {
+      const [attemptsResponse, resetResponse] = await Promise.all([
+        supabase
+          .from('practice_attempts')
+          .select('question_id, answer, answer_image_url, score, max_score, is_correct, result, updated_at')
+          .eq('practice_set_id', practiceSetId)
+          .order('updated_at', { ascending: false }),
+        supabase
+          .from('practice_progress_resets')
+          .select('reset_at')
+          .eq('student_id', user.id)
+          .eq('practice_set_id', practiceSetId)
+          .maybeSingle(),
+      ]);
 
-        if (error) {
-          setSyncError(error.message);
-          setSyncState('error');
-          return;
-        }
+      if (!mounted) return;
 
-        const resetAt = readResetTimestamp(user.id, practiceSetId);
-        const attempts = (data ?? []).reduce<Record<string, SavedPracticeAttempt>>((map, row) => {
-          const typedRow = row as PracticeAttemptRow;
-          const updatedAt = Date.parse(typedRow.updated_at);
-          if (resetAt && Number.isFinite(updatedAt) && updatedAt <= resetAt) return map;
+      if (attemptsResponse.error) {
+        setSyncError(attemptsResponse.error.message);
+        setSyncState('error');
+        return;
+      }
 
-          map[typedRow.question_id] = {
-            questionId: typedRow.question_id,
-            answer: typedRow.answer ?? '',
-            answerImageUrl: typedRow.answer_image_url ?? undefined,
-            result: normalizeResult(typedRow),
-            isCorrect: typedRow.is_correct,
-            updatedAt: typedRow.updated_at,
-          };
-          return map;
-        }, {});
+      if (resetResponse.error && resetResponse.error.code !== '42P01') {
+        console.warn('Unable to load practice reset marker:', resetResponse.error);
+      }
 
-        setSavedAttempts(attempts);
-        setSyncState('idle');
-      });
+      const resetAt = resetResponse.data?.reset_at
+        ? Date.parse(resetResponse.data.reset_at)
+        : 0;
+      const attempts = (attemptsResponse.data ?? []).reduce<Record<string, SavedPracticeAttempt>>((map, row) => {
+        const typedRow = row as PracticeAttemptRow;
+        const updatedAt = Date.parse(typedRow.updated_at);
+        if (resetAt && Number.isFinite(updatedAt) && updatedAt <= resetAt) return map;
+
+        map[typedRow.question_id] = {
+          questionId: typedRow.question_id,
+          answer: typedRow.answer ?? '',
+          answerImageUrl: typedRow.answer_image_url ?? undefined,
+          result: normalizeResult(typedRow),
+          isCorrect: typedRow.is_correct,
+          updatedAt: typedRow.updated_at,
+        };
+        return map;
+      }, {});
+
+      setSavedAttempts(attempts);
+      setSyncState('idle');
+    })();
 
     return () => {
       mounted = false;
@@ -166,6 +172,7 @@ export const usePracticeProgress = (practiceSetId: string) => {
 
   const resetSavedAttempts = useCallback(() => {
     setSavedAttempts({});
+
     if (demoMode) {
       const stored = readStored<Record<string, HomeworkAttempt>>(SHARED_PRACTICE_ATTEMPTS_KEY, {});
       Object.keys(stored).forEach((key) => {
@@ -174,10 +181,28 @@ export const usePracticeProgress = (practiceSetId: string) => {
       writeStored(SHARED_PRACTICE_ATTEMPTS_KEY, stored);
       return;
     }
-    if (!user || typeof window === 'undefined') return;
-    window.localStorage.setItem(resetStorageKey(user.id, practiceSetId), String(Date.now()));
+
+    if (!user || !supabase) return;
+
+    const resetAt = new Date().toISOString();
+    void supabase
+      .from('practice_progress_resets')
+      .upsert(
+        {
+          student_id: user.id,
+          practice_set_id: practiceSetId,
+          reset_at: resetAt,
+        },
+        { onConflict: 'student_id,practice_set_id' },
+      )
+      .then(({ error }) => {
+        if (error && error.code !== '42P01') {
+          console.warn('Unable to persist practice reset marker:', error);
+        }
+      });
+
     setResetVersion((version) => version + 1);
-  }, [demoMode, practiceSetId, user]);
+  }, [demoMode, practiceSetId, supabase, user]);
 
   const saveAttempt = useCallback(
     async (attempt: SavePracticeAttemptInput) => {
