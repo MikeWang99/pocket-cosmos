@@ -48,7 +48,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, showA
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className="group relative flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl px-2 text-[10px] font-semibold text-slate-500 md:min-h-0 md:w-full md:rounded-2xl md:px-2 md:py-3"
+              className="group relative flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl px-2 text-[11px] font-semibold md:text-xs text-slate-500 md:min-h-0 md:w-full md:rounded-2xl md:px-2 md:py-3"
               title={item.label}
             >
               {isActive && (
