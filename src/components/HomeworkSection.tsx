@@ -399,7 +399,8 @@ export const HomeworkSection: React.FC = () => {
     setActiveIndex(0);
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href);
-      url.searchParams.set('tab', 'homework');
+      url.pathname = '/homework';
+      url.searchParams.delete('tab');
       url.searchParams.set('assignment', assignmentId);
       window.history.pushState({}, '', `${url.pathname}${url.search}`);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -411,6 +412,8 @@ export const HomeworkSection: React.FC = () => {
     setActiveIndex(0);
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href);
+      url.pathname = '/homework';
+      url.searchParams.delete('tab');
       url.searchParams.delete('assignment');
       window.history.pushState({}, '', `${url.pathname}${url.search}`);
     }
