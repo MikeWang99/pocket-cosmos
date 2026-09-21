@@ -11,6 +11,8 @@ export interface HomeworkItem {
   questionId: string;
   practiceSetTitle?: string;
   questionTitle?: string;
+  /** Immutable question payload captured when the assignment is created. */
+  questionSnapshot?: PracticeStep;
 }
 
 export interface HomeworkAssignment {
