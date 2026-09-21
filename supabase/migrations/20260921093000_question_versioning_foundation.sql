@@ -61,5 +61,13 @@ create index if not exists assignment_items_question_version_idx
   on public.assignment_items (question_version_id)
   where question_version_id is not null;
 
--- No browser grants are added yet. The existing code-based catalog remains
--- authoritative until server-side question APIs are introduced.
+-- Keep the normalized question bank server-only until entitlement-aware
+-- question APIs are introduced. Supabase projects may have permissive default
+-- grants on public-schema tables, so revoke them explicitly.
+alter table public.questions enable row level security;
+alter table public.question_versions enable row level security;
+alter table public.question_assets enable row level security;
+
+revoke all on public.questions from anon, authenticated;
+revoke all on public.question_versions from anon, authenticated;
+revoke all on public.question_assets from anon, authenticated;
