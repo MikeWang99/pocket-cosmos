@@ -285,3 +285,10 @@ textarea::placeholder {
     font-size: 0.96rem;
   }
 }
+
+
+/* Keyboard users should never have to infer focus from hover styling. */
+:where(button, a, input, textarea, select):focus-visible {
+  outline: 3px solid rgba(21, 94, 117, 0.35);
+  outline-offset: 2px;
+}
