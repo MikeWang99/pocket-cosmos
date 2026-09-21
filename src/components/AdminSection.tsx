@@ -19,6 +19,7 @@ import { practiceSets } from '../data/practiceSets';
 import { useAuth } from '../auth/AuthContext';
 import { useLanguage } from '../LanguageContext';
 import { getSupabaseClient } from '../lib/supabaseClient';
+import { createStudentWorkSignedUrl } from '../lib/studentWorkStorage';
 import { ALL_SYSTEMS } from '../hooks/usePracticePermissions';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
 import { repairLatexExpression } from '../utils/latexRepair';
@@ -158,6 +159,7 @@ export const AdminSection: React.FC = () => {
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
   const [selectedSetId, setSelectedSetId] = useState(practiceSets[0]?.id ?? '');
   const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
+  const [selectedAnswerImageUrl, setSelectedAnswerImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (!authEnabled || !configured || !supabase || !isAdmin) return;
@@ -263,6 +265,29 @@ export const AdminSection: React.FC = () => {
     selectedSet.steps[0];
   const selectedAttempt = selectedStep ? selectedSetAttempts.get(selectedStep.id) : undefined;
   const selectedResult = selectedAttempt ? normalizeResult(selectedAttempt) : null;
+
+  useEffect(() => {
+    const imageRef = selectedAttempt?.answer_image_url;
+    if (!imageRef || !supabase || !isAdmin) {
+      setSelectedAnswerImageUrl(null);
+      return;
+    }
+
+    let mounted = true;
+    void createStudentWorkSignedUrl(supabase, imageRef).then(({ signedUrl, error: signedError }) => {
+      if (!mounted) return;
+      if (signedError) {
+        console.error('Unable to sign student work image:', signedError);
+        setSelectedAnswerImageUrl(null);
+        return;
+      }
+      setSelectedAnswerImageUrl(signedUrl);
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, [isAdmin, selectedAttempt?.answer_image_url, supabase]);
   const selectedGradedCount = selectedStudent?.attempts.filter(isAutoGradedAttempt).length ?? 0;
   const selectedAccuracy = selectedGradedCount ? Math.round((selectedStudent!.correct / selectedGradedCount) * 100) : 0;
 
@@ -589,16 +614,16 @@ export const AdminSection: React.FC = () => {
                       ) : (
                         <div className="rounded-lg border border-line bg-surface-muted p-4">
                           <div className="mb-2 text-xs uppercase tracking-widest text-slate-500">{t.admin.studentAnswer}</div>
-                          {selectedAttempt?.answer_image_url ? (
+                          {selectedAttempt?.answer_image_url && selectedAnswerImageUrl ? (
                             <a
-                              href={selectedAttempt.answer_image_url}
+                              href={selectedAnswerImageUrl}
                               target="_blank"
                               rel="noreferrer"
                               className="block overflow-hidden rounded-lg border border-line bg-white"
                               title={language === 'zh' ? '点击放大查看' : 'Click to open full size'}
                             >
                               <img
-                                src={selectedAttempt.answer_image_url}
+                                src={selectedAnswerImageUrl}
                                 alt={language === 'zh' ? '学生答案图片' : 'Student answer image'}
                                 className="max-h-[480px] w-full object-contain"
                               />
