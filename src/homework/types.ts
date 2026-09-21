@@ -35,6 +35,7 @@ export interface HomeworkAttempt {
   studentEmail?: string | null;
   practiceSetId: string;
   questionId: string;
+  questionVersionId?: string;
   answer: string;
   answerImageUrl?: string | null;
   score: number;
