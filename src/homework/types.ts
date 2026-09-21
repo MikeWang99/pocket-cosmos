@@ -9,6 +9,7 @@ export interface HomeworkItem {
   position: number;
   practiceSetId: string;
   questionId: string;
+  questionVersionId?: string;
   practiceSetTitle?: string;
   questionTitle?: string;
 }
