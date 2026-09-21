@@ -392,7 +392,6 @@ export const useHomeworkData = () => {
         const set = findPracticeSet(item.practiceSetId);
         const step = set?.steps.find((candidate) => candidate.id === item.questionId);
         return {
-          assignment_id: assignmentId,
           position,
           practice_set_id: item.practiceSetId,
           question_id: item.questionId,
@@ -401,51 +400,27 @@ export const useHomeworkData = () => {
         };
       });
 
-      const { error: deleteItemsError } = await supabase.from('assignment_items').delete().eq('assignment_id', assignmentId);
-      if (deleteItemsError) return { assignment: null, error: deleteItemsError.message };
-      const { error: insertItemsError } = await supabase.from('assignment_items').insert(itemRows);
-      if (insertItemsError) {
-        const restoreRows = existing.items.map((item, position) => ({
-          assignment_id: assignmentId,
-          position,
-          practice_set_id: item.practiceSetId,
-          question_id: item.questionId,
-          practice_set_title: item.practiceSetTitle ?? item.practiceSetId,
-          question_title: item.questionTitle ?? item.questionId,
-        }));
-        if (restoreRows.length) await supabase.from('assignment_items').insert(restoreRows);
-        return { assignment: null, error: insertItemsError.message };
-      }
+      const { error: updateError } = await supabase.rpc('update_draft_assignment', {
+        p_assignment_id: assignmentId,
+        p_title: input.title,
+        p_description: input.description,
+        p_status: input.status,
+        p_source_type: input.sourceType,
+        p_due_at: input.dueAt,
+        p_assigned_to_all: input.assignedToAll,
+        p_ai_instruction: input.aiInstruction ?? null,
+        p_items: itemRows,
+        p_student_ids: validStudentIds,
+      });
 
-      const { error: deleteStudentsError } = await supabase.from('assignment_students').delete().eq('assignment_id', assignmentId);
-      if (deleteStudentsError) return { assignment: null, error: deleteStudentsError.message };
-      if (!input.assignedToAll) {
-        const { error: insertStudentsError } = await supabase.from('assignment_students').insert(
-          validStudentIds.map((studentId) => ({ assignment_id: assignmentId, student_id: studentId })),
-        );
-        if (insertStudentsError) return { assignment: null, error: insertStudentsError.message };
+      if (updateError) {
+        // Preview can be connected to a database before this additive RPC
+        // migration lands. Never fall back to the old multi-write flow.
+        return { assignment: null, error: updateError.message };
       }
-
-      // Keep the assignment in draft while its questions and audience are replaced.
-      // Publishing is the final write so students can never see a partially updated assignment.
-      const { error: metadataError } = await supabase
-        .from('assignments')
-        .update({
-          title: input.title,
-          description: input.description,
-          status: input.status,
-          source_type: input.sourceType,
-          due_at: input.dueAt,
-          published_at: input.status === 'published' ? new Date().toISOString() : null,
-          assigned_to_all: input.assignedToAll,
-          ai_instruction: input.aiInstruction ?? null,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', assignmentId)
-        .eq('status', 'draft');
-      if (metadataError) return { assignment: null, error: metadataError.message };
 
       await refresh();
+      const now = new Date().toISOString();
       const updated: HomeworkAssignment = {
         ...existing,
         title: input.title,
@@ -453,7 +428,7 @@ export const useHomeworkData = () => {
         status: input.status,
         sourceType: input.sourceType,
         dueAt: input.dueAt,
-        publishedAt: input.status === 'published' ? new Date().toISOString() : null,
+        publishedAt: input.status === 'published' ? now : null,
         assignedToAll: input.assignedToAll,
         aiInstruction: input.aiInstruction ?? null,
         studentIds: validStudentIds,
@@ -466,7 +441,7 @@ export const useHomeworkData = () => {
           practiceSetTitle: item.practice_set_title,
           questionTitle: item.question_title,
         })),
-        updatedAt: new Date().toISOString(),
+        updatedAt: now,
       };
       return { assignment: updated, error: null };
     },
