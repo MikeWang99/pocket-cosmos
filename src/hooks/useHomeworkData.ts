@@ -518,6 +518,7 @@ export const useHomeworkData = () => {
       maxScore: number;
       isCorrect: boolean;
       result: EvaluationResult;
+      assignmentId?: string;
     }) => {
       const set = findPracticeSet(input.practiceSetId);
       const step = set?.steps.find((candidate) => candidate.id === input.questionId);
@@ -578,6 +579,23 @@ export const useHomeworkData = () => {
           ),
           attempt,
         ]);
+
+        const { error: historyError } = await supabase.from('practice_attempt_events').insert({
+          student_id: user.id,
+          practice_set_id: input.practiceSetId,
+          question_id: input.questionId,
+          assignment_id: input.assignmentId ?? null,
+          answer: input.answer,
+          score: input.score,
+          max_score: input.maxScore,
+          is_correct: input.isCorrect,
+          tags: step?.tags ?? [],
+          result: input.result,
+          submitted_at: attempt.updatedAt,
+        });
+        if (historyError && historyError.code !== '42P01') {
+          console.warn('Unable to append homework attempt history:', historyError);
+        }
       }
       return saveError?.message ?? null;
     },
