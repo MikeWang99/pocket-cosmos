@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { getPracticeSetById } from '@/src/practice/server';
+import { getPinnedPracticeSteps } from '@/src/practice/database';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -31,7 +32,9 @@ export async function GET(
   // can review any assignment; students only see items assigned to them.
   const { data: rows, error } = await supabase
     .from('assignment_items')
-    .select('id, assignment_id, position, practice_set_id, question_id, practice_set_title, question_title')
+    .select(
+      'id, assignment_id, position, practice_set_id, question_id, question_version_id, practice_set_title, question_title',
+    )
     .eq('assignment_id', assignmentId)
     .order('position', { ascending: true });
 
@@ -39,24 +42,53 @@ export async function GET(
     return NextResponse.json({ error: error.message }, { status: 403 });
   }
 
-  const items = (rows ?? []).flatMap((row) => {
-    const set = getPracticeSetById(row.practice_set_id);
-    const step = set?.steps.find((candidate) => candidate.id === row.question_id);
-    if (!set || !step) return [];
+  const pinnedIds = (rows ?? [])
+    .map((row) => row.question_version_id as string | null)
+    .filter((id): id is string => Boolean(id));
+  const pinnedSteps = pinnedIds.length ? await getPinnedPracticeSteps(pinnedIds) : new Map();
 
-    return [{
+  // Once an assignment is pinned, never silently fall back to mutable source
+  // code. Missing service-role configuration or a missing immutable version is
+  // an operational error and should be surfaced instead.
+  if (pinnedIds.length && !pinnedSteps) {
+    return NextResponse.json(
+      { error: 'Immutable homework versions are not available in this deployment.' },
+      { status: 503 },
+    );
+  }
+
+  const items = [];
+  for (const row of rows ?? []) {
+    const legacySet = getPracticeSetById(row.practice_set_id);
+    const pinnedStep = row.question_version_id
+      ? pinnedSteps?.get(row.question_version_id)
+      : null;
+    const legacyStep = legacySet?.steps.find((candidate) => candidate.id === row.question_id);
+    const step = pinnedStep ?? legacyStep;
+
+    if (row.question_version_id && !pinnedStep) {
+      return NextResponse.json(
+        { error: `Pinned question version is missing for assignment item ${row.id}.` },
+        { status: 500 },
+      );
+    }
+
+    if (!step) continue;
+
+    items.push({
       id: row.id,
       assignmentId: row.assignment_id,
       position: row.position,
       practiceSetId: row.practice_set_id,
       questionId: row.question_id,
-      practiceSetTitle: row.practice_set_title ?? set.title,
+      questionVersionId: row.question_version_id ?? undefined,
+      practiceSetTitle: row.practice_set_title ?? legacySet?.title ?? row.practice_set_id,
       questionTitle: row.question_title ?? step.title,
-      setTitle: set.title,
-      setLabel: set.label,
+      setTitle: legacySet?.title ?? row.practice_set_title ?? row.practice_set_id,
+      setLabel: legacySet?.label ?? row.practice_set_title ?? row.practice_set_id,
       step,
-    }];
-  });
+    });
+  }
 
   return NextResponse.json({ items });
 }
