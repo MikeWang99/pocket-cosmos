@@ -202,10 +202,9 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
       return;
     }
 
-    const { data: urlData } = supabase.storage.from('student-work').getPublicUrl(path);
-    const publicUrl = urlData.publicUrl;
-
-    onUploadComplete(publicUrl);
+    onUploadComplete(path);
+    const signedUrl = await createStudentWorkSignedUrl(supabase, path);
+    if (signedUrl) setPreview(signedUrl);
     setBusyState(false, false);
   }, [user, practiceSetId, questionId, onUploadComplete, t, setBusyState]);
 
