@@ -13,7 +13,7 @@ export async function RoutePage({
 }) {
   const { lang } = await params;
   if (!isAppLanguage(lang)) notFound();
-  return <App initialTab={tab} />;
+  return <App initialTab={tab} initialLanguage={lang} />;
 }
 
 export async function routeMetadata(
