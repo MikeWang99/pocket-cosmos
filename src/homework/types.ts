@@ -35,6 +35,8 @@ export interface HomeworkAttempt {
   practiceSetId: string;
   questionId: string;
   answer: string;
+  answerImagePath?: string | null;
+  /** Short-lived display URL resolved from answerImagePath. Never persist this value. */
   answerImageUrl?: string | null;
   score: number;
   maxScore: number;
