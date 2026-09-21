@@ -241,6 +241,27 @@ export const usePracticeProgress = (practiceSetId: string) => {
         return;
       }
 
+      const { error: historyError } = await supabase.from('practice_attempt_events').insert({
+        student_id: user.id,
+        practice_set_id: attempt.practiceSetId,
+        question_id: attempt.questionId,
+        answer: attempt.answer,
+        answer_image_ref: attempt.answerImageUrl ?? null,
+        score: attempt.score,
+        max_score: attempt.maxScore,
+        is_correct: attempt.isCorrect,
+        tags: attempt.tags,
+        result: attempt.result,
+        submitted_at: nextSavedAttempt.updatedAt,
+      });
+
+      // Preview deployments may run before the additive history migration is
+      // applied. Keep the learner flow working while still surfacing any
+      // unexpected history-write failure in the console.
+      if (historyError && historyError.code !== '42P01') {
+        console.warn('Unable to append practice attempt history:', historyError);
+      }
+
       setSyncState('idle');
     },
     [demoMode, supabase, user],
