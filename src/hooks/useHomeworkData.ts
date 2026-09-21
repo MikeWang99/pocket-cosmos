@@ -21,6 +21,7 @@ import type {
 } from '../homework/types';
 import { findPracticeSet, isSupabaseUuid } from '../homework/catalog';
 import { getSupabaseClient } from '../lib/supabaseClient';
+import { createStudentWorkSignedUrl, resolveStudentWorkPath } from '../lib/studentWorkStorage';
 import type { EvaluationResult } from '../types/practice';
 
 interface AssignmentRow {
@@ -53,6 +54,7 @@ interface AttemptRow {
   practice_set_id: string;
   question_id: string;
   answer: string | null;
+  answer_image_path: string | null;
   answer_image_url: string | null;
   score: number | string;
   max_score: number | string;
@@ -106,6 +108,7 @@ const normalizeAttempt = (row: AttemptRow): HomeworkAttempt => ({
   practiceSetId: row.practice_set_id,
   questionId: row.question_id,
   answer: row.answer ?? '',
+  answerImagePath: resolveStudentWorkPath(row.answer_image_path, row.answer_image_url),
   answerImageUrl: row.answer_image_url,
   score: Number(row.score),
   maxScore: Number(row.max_score),
@@ -181,7 +184,7 @@ export const useHomeworkData = () => {
 
     const attemptsQuery = supabase
       .from('practice_attempts')
-      .select('student_id, student_email, practice_set_id, question_id, answer, answer_image_url, score, max_score, is_correct, result, updated_at')
+      .select('student_id, student_email, practice_set_id, question_id, answer, answer_image_path, answer_image_url, score, max_score, is_correct, result, updated_at')
       .order('updated_at', { ascending: false });
 
     const queries: PromiseLike<unknown>[] = [assignmentQuery, attemptsQuery];
@@ -207,7 +210,17 @@ export const useHomeworkData = () => {
     }
 
     setAssignments(((assignmentResponse.data ?? []) as AssignmentRow[]).map(normalizeAssignment));
-    setAttempts(((attemptsResponse.data ?? []) as AttemptRow[]).map(normalizeAttempt));
+
+    const normalizedAttempts = await Promise.all(
+      ((attemptsResponse.data ?? []) as AttemptRow[]).map(async (row) => {
+        const attempt = normalizeAttempt(row);
+        if (attempt.answerImagePath) {
+          attempt.answerImageUrl = await createStudentWorkSignedUrl(supabase, attempt.answerImagePath);
+        }
+        return attempt;
+      }),
+    );
+    setAttempts(normalizedAttempts);
     setProfiles(
       ((profilesResponse?.data ?? []) as Array<{ user_id: string; email: string | null; display_name: string | null }>).map(
         (profile) => ({
