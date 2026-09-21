@@ -245,7 +245,15 @@ export const HomeworkAdminPanel: React.FC<{ compact?: boolean }> = ({ compact = 
         assignedToAll,
         studentIds: audienceStudentIds,
         aiInstruction: sourceType === 'ai' ? aiInstruction : undefined,
-        items: draftItems,
+        items: draftItems.map((item) => {
+          const set = adminPracticeSets.find((candidate) => candidate.id === item.practiceSetId);
+          const question = set?.questions.find((candidate) => candidate.id === item.questionId);
+          return {
+            ...item,
+            practiceSetTitle: set?.title ?? item.practiceSetId,
+            questionTitle: question?.title ?? item.questionId,
+          };
+        }),
       };
       const result = editingAssignmentId
         ? await updateAssignment(editingAssignmentId, input)
