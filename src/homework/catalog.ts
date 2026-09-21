@@ -8,14 +8,14 @@ export const isSupabaseUuid = (value: string) => UUID_PATTERN.test(value);
 
 export const resolveHomeworkItem = (item: HomeworkItem): ResolvedHomeworkItem | null => {
   const set = practiceSets.find((candidate) => candidate.id === item.practiceSetId);
-  const step = set?.steps.find((candidate) => candidate.id === item.questionId);
-  if (!set || !step) return null;
+  const step = item.questionSnapshot ?? set?.steps.find((candidate) => candidate.id === item.questionId);
+  if (!step) return null;
 
   return {
     ...item,
     step,
-    setTitle: set.title,
-    setLabel: set.label,
+    setTitle: item.practiceSetTitle ?? set?.title ?? item.practiceSetId,
+    setLabel: set?.label ?? item.practiceSetTitle ?? item.practiceSetId,
   };
 };
 
