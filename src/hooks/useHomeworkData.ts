@@ -287,29 +287,10 @@ export const useHomeworkData = () => {
           error: 'Select at least one valid student before publishing.',
         };
       }
-      const { data, error: assignmentError } = await supabase
-        .from('assignments')
-        .insert({
-          title: input.title,
-          description: input.description,
-          status: input.status,
-          source_type: input.sourceType,
-          due_at: input.dueAt,
-          published_at: input.status === 'published' ? new Date().toISOString() : null,
-          assigned_to_all: input.assignedToAll,
-          ai_instruction: input.aiInstruction ?? null,
-          created_by: user.id,
-        })
-        .select('id, title, description, status, source_type, due_at, published_at, assigned_to_all, ai_instruction, created_at, updated_at')
-        .single();
-      if (assignmentError || !data) return { assignment: null, error: assignmentError?.message ?? 'Unable to create assignment.' };
-
-      const assignmentId = (data as AssignmentRow).id;
       const itemRows = input.items.map((item, position) => {
         const set = findPracticeSet(item.practiceSetId);
         const step = set?.steps.find((candidate) => candidate.id === item.questionId);
         return {
-          assignment_id: assignmentId,
           position,
           practice_set_id: item.practiceSetId,
           question_id: item.questionId,
@@ -317,22 +298,56 @@ export const useHomeworkData = () => {
           question_title: step?.title ?? item.questionId,
         };
       });
-      const { error: itemError } = await supabase.from('assignment_items').insert(itemRows);
-      if (itemError) {
-        await supabase.from('assignments').delete().eq('id', assignmentId);
-        return { assignment: null, error: itemError.message };
+
+      const { data: assignmentId, error: createError } = await supabase.rpc(
+        'create_homework_assignment',
+        {
+          p_title: input.title,
+          p_description: input.description,
+          p_status: input.status,
+          p_source_type: input.sourceType,
+          p_due_at: input.dueAt,
+          p_assigned_to_all: input.assignedToAll,
+          p_ai_instruction: input.aiInstruction ?? null,
+          p_items: itemRows,
+          p_student_ids: validStudentIds,
+        },
+      );
+
+      if (createError || !assignmentId) {
+        return {
+          assignment: null,
+          error: createError?.message ?? 'Unable to create assignment.',
+        };
       }
-      if (!input.assignedToAll && validStudentIds.length) {
-        const { error: studentError } = await supabase.from('assignment_students').insert(
-          validStudentIds.map((studentId) => ({ assignment_id: assignmentId, student_id: studentId })),
-        );
-        if (studentError) {
-          await supabase.from('assignments').delete().eq('id', assignmentId);
-          return { assignment: null, error: studentError.message };
-        }
-      }
+
+      const now = new Date().toISOString();
+      const assignment: HomeworkAssignment = {
+        id: assignmentId as string,
+        title: input.title,
+        description: input.description,
+        status: input.status,
+        sourceType: input.sourceType,
+        dueAt: input.dueAt,
+        publishedAt: input.status === 'published' ? now : null,
+        assignedToAll: input.assignedToAll,
+        aiInstruction: input.aiInstruction ?? null,
+        createdAt: now,
+        updatedAt: now,
+        studentIds: validStudentIds,
+        items: itemRows.map((item, position) => ({
+          id: `${assignmentId}-item-${position + 1}`,
+          assignmentId: assignmentId as string,
+          position,
+          practiceSetId: item.practice_set_id,
+          questionId: item.question_id,
+          practiceSetTitle: item.practice_set_title,
+          questionTitle: item.question_title,
+        })),
+      };
+
       await refresh();
-      return { assignment: normalizeAssignment(data as AssignmentRow), error: null };
+      return { assignment, error: null };
     },
     [assignments, demoMode, isAdmin, refresh, supabase, user],
   );
