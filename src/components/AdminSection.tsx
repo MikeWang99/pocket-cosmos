@@ -19,6 +19,7 @@ import { practiceSets } from '../data/practiceSets';
 import { useAuth } from '../auth/AuthContext';
 import { useLanguage } from '../LanguageContext';
 import { getSupabaseClient } from '../lib/supabaseClient';
+import { createStudentWorkSignedUrl, resolveStudentWorkPath } from '../lib/studentWorkStorage';
 import { ALL_SYSTEMS } from '../hooks/usePracticePermissions';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
 import { repairLatexExpression } from '../utils/latexRepair';
@@ -32,6 +33,7 @@ interface PracticeAttemptRow {
   question_id: string;
   question_title: string;
   answer: string | null;
+  answer_image_path: string | null;
   answer_image_url: string | null;
   score: number | string;
   max_score: number | string;
@@ -169,17 +171,35 @@ export const AdminSection: React.FC = () => {
     supabase
       .from('practice_attempts')
       .select(
-        'id, student_id, student_email, practice_set_id, practice_set_title, question_id, question_title, answer, answer_image_url, score, max_score, is_correct, tags, result, created_at, updated_at',
+        'id, student_id, student_email, practice_set_id, practice_set_title, question_id, question_title, answer, answer_image_path, answer_image_url, score, max_score, is_correct, tags, result, created_at, updated_at',
       )
       .order('updated_at', { ascending: false })
-      .then(({ data, error: queryError }) => {
+      .then(async ({ data, error: queryError }) => {
         if (!mounted) return;
 
         if (queryError) {
           setError(queryError.message);
           setAttempts([]);
         } else {
-          setAttempts((data ?? []) as PracticeAttemptRow[]);
+          const hydratedAttempts = await Promise.all(
+            ((data ?? []) as PracticeAttemptRow[]).map(async (attempt) => {
+              const answerImagePath = resolveStudentWorkPath(
+                attempt.answer_image_path,
+                attempt.answer_image_url,
+              );
+              const signedUrl = answerImagePath
+                ? await createStudentWorkSignedUrl(supabase, answerImagePath)
+                : attempt.answer_image_url;
+
+              return {
+                ...attempt,
+                answer_image_path: answerImagePath,
+                answer_image_url: signedUrl,
+              };
+            }),
+          );
+          if (!mounted) return;
+          setAttempts(hydratedAttempts);
         }
 
         setLoading(false);
