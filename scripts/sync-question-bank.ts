@@ -35,6 +35,84 @@ const contentHash = (step: PracticeStep) =>
 const questionIdFor = (practiceSetId: string, legacyQuestionId: string) =>
   `${practiceSetId}::${legacyQuestionId}`;
 
+const parseStorageRef = (src: string) => {
+  const match = src.match(/^storage:\/\/([^/]+)\/(.+)$/);
+  return match ? { bucket: match[1], path: match[2] } : null;
+};
+
+const collectPrivateAssets = (step: PracticeStep, questionVersionId: string) => {
+  const rows: Array<{
+    question_version_id: string;
+    role: 'stem' | 'figure' | 'choice' | 'answer' | 'source';
+    storage_bucket: string;
+    storage_path: string;
+    choice_key: string | null;
+    sort_order: number;
+    metadata: Record<string, unknown>;
+  }> = [];
+
+  const add = (
+    src: string,
+    role: 'stem' | 'figure' | 'choice' | 'answer' | 'source',
+    sortOrder: number,
+    choiceKey: string | null = null,
+    metadata: Record<string, unknown> = {},
+  ) => {
+    const ref = parseStorageRef(src);
+    if (!ref) return;
+    rows.push({
+      question_version_id: questionVersionId,
+      role,
+      storage_bucket: ref.bucket,
+      storage_path: ref.path,
+      choice_key: choiceKey,
+      sort_order: sortOrder,
+      metadata,
+    });
+  };
+
+  if (step.image) {
+    add(step.image.src, step.image.role === 'question' ? 'stem' : 'figure', 0, null, {
+      alt: step.image.alt,
+    });
+  }
+
+  step.supportingImages?.forEach((image, index) => {
+    add(image.src, 'figure', index + 1, null, { alt: image.alt });
+  });
+
+  step.assets?.forEach((asset, index) => {
+    add(
+      asset.src,
+      asset.kind === 'choice' ? 'choice' : asset.kind === 'source' ? 'source' : 'stem',
+      index,
+      null,
+      { assetId: asset.id, alt: asset.alt },
+    );
+  });
+
+  step.choices?.forEach((choice, choiceIndex) => {
+    if (choice.image) {
+      add(choice.image.src, 'choice', choiceIndex * 10, choice.label, { alt: choice.image.alt });
+    }
+    choice.images?.forEach((image, imageIndex) => {
+      add(
+        image.src,
+        'choice',
+        choiceIndex * 10 + imageIndex,
+        choice.label,
+        { alt: image.alt },
+      );
+    });
+  });
+
+  if (step.solutionImage) {
+    add(step.solutionImage.src, 'answer', 0, null, { alt: step.solutionImage.alt });
+  }
+
+  return rows;
+};
+
 const selectedSets = onlySet
   ? practiceSets.filter((set) => set.id === onlySet)
   : practiceSets;
@@ -57,6 +135,7 @@ const candidates = selectedSets.flatMap((set) =>
         position,
         status: 'active',
       },
+      step,
       version: {
         question_id: questionId,
         content_hash: hash,
@@ -96,6 +175,7 @@ const summary = {
   questions: candidates.length,
   newVersions: 0,
   unchangedVersions: 0,
+  privateAssetRefs: 0,
   backfilledAssignmentItems: 0,
 };
 
@@ -156,6 +236,42 @@ for (const batch of chunks(inserts, 200)) {
   if (batch.length === 0) continue;
   const { error } = await supabase.from('question_versions').insert(batch);
   if (error) throw new Error(`Unable to insert question versions: ${error.message}`);
+}
+
+const versionIdByQuestionHash = new Map<string, string>();
+for (const idBatch of chunks(candidates.map(({ question }) => question.id), 80)) {
+  const { data: versions, error } = await supabase
+    .from('question_versions')
+    .select('id, question_id, content_hash')
+    .in('question_id', idBatch);
+
+  if (error) throw new Error(`Unable to resolve synchronized version ids: ${error.message}`);
+
+  for (const version of versions ?? []) {
+    if (!version.content_hash) continue;
+    versionIdByQuestionHash.set(
+      `${version.question_id}::${version.content_hash}`,
+      version.id,
+    );
+  }
+}
+
+const assetRows = candidates.flatMap(({ question, step, version }) => {
+  const versionId = versionIdByQuestionHash.get(
+    `${question.id}::${version.content_hash}`,
+  );
+  return versionId ? collectPrivateAssets(step, versionId) : [];
+});
+summary.privateAssetRefs = assetRows.length;
+
+for (const batch of chunks(assetRows, 200)) {
+  if (batch.length === 0) continue;
+  const { error } = await supabase
+    .from('question_assets')
+    .upsert(batch, {
+      onConflict: 'question_version_id,role,storage_bucket,storage_path',
+    });
+  if (error) throw new Error(`Unable to synchronize question assets: ${error.message}`);
 }
 
 const { data: backfilled, error: backfillError } = await supabase.rpc(
