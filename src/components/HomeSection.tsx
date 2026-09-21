@@ -88,6 +88,21 @@ export function HomeSection() {
           <p className="mt-4 max-w-4xl text-base leading-8 text-ink-soft sm:text-lg">
             {content.subtitle}
           </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href="/?tab=curriculum"
+              className="inline-flex items-center gap-2 rounded-full bg-nebula px-5 py-3 text-sm font-semibold text-on-accent transition-transform hover:-translate-y-0.5"
+            >
+              {content.primaryCta}
+              <ArrowRight className="h-4 w-4" />
+            </a>
+            <a
+              href="/?tab=practice"
+              className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-5 py-3 text-sm font-semibold text-ink transition-colors hover:border-nebula/40 hover:text-nebula"
+            >
+              {content.secondaryCta}
+            </a>
+          </div>
         </div>
         <div className="mt-6 glass-panel rounded-[28px] p-6 sm:p-8">
           <div className="mb-5 flex items-center gap-2">
@@ -118,25 +133,6 @@ export function HomeSection() {
           </div>
         </div>
 
-        <div className="mt-6 glass-panel rounded-[28px] p-6 sm:p-8">
-          <h3 className="font-serif text-2xl tracking-tight text-ink">{content.nextTitle}</h3>
-          <p className="mt-4 text-sm leading-7 text-ink-soft sm:text-base">{content.nextBody}</p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              href="/?tab=curriculum"
-              className="inline-flex items-center gap-2 rounded-full bg-nebula px-5 py-3 text-sm font-semibold text-on-accent transition-transform hover:-translate-y-0.5"
-            >
-              {content.primaryCta}
-              <ArrowRight className="h-4 w-4" />
-            </a>
-            <a
-              href="/?tab=practice"
-              className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-5 py-3 text-sm font-semibold text-ink transition-colors hover:border-nebula/40 hover:text-nebula"
-            >
-              {content.secondaryCta}
-            </a>
-          </div>
-        </div>
       </div>
 
       <div className="xl:sticky xl:top-8 xl:self-start">
