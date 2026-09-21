@@ -489,6 +489,7 @@ export const useHomeworkData = () => {
     async (input: {
       practiceSetId: string;
       questionId: string;
+      questionVersionId?: string;
       answer: string;
       score: number;
       maxScore: number;
@@ -533,6 +534,7 @@ export const useHomeworkData = () => {
           practice_set_id: input.practiceSetId,
           practice_set_title: input.practiceSetTitle ?? input.practiceSetId,
           question_id: input.questionId,
+          question_version_id: input.questionVersionId ?? null,
           question_title: input.questionTitle ?? input.questionId,
           answer: input.answer,
           score: input.score,
@@ -561,6 +563,7 @@ export const useHomeworkData = () => {
           student_id: user.id,
           practice_set_id: input.practiceSetId,
           question_id: input.questionId,
+          question_version_id: input.questionVersionId ?? null,
           assignment_id: input.assignmentId ?? null,
           answer: input.answer,
           score: input.score,
