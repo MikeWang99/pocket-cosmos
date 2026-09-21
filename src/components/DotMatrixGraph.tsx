@@ -7,17 +7,15 @@ const isCornerMarkerArea = (rowIndex: number, columnIndex: number) =>
   (rowIndex < 7 && columnIndex >= 30) ||
   (rowIndex >= 30 && columnIndex < 7);
 
-const DOT_MATRIX_POINTS = DOT_MATRIX_ROWS.flatMap((row, rowIndex) =>
-  row.split('').flatMap((value, columnIndex) => (
-    value === '1' && !isCornerMarkerArea(rowIndex, columnIndex)
-      ? [{
-          key: `${rowIndex}-${columnIndex}`,
-          left: `${((columnIndex + 0.5) / DOT_MATRIX_GRID_SIZE) * 100}%`,
-          top: `${((rowIndex + 0.5) / DOT_MATRIX_GRID_SIZE) * 100}%`,
-        }]
-      : []
-  )),
-);
+const DOT_SIZE = 0.7;
+const DOT_MATRIX_PATH = DOT_MATRIX_ROWS.flatMap((row, rowIndex) =>
+  row.split('').flatMap((value, columnIndex) => {
+    if (value !== '1' || isCornerMarkerArea(rowIndex, columnIndex)) return [];
+    const x = columnIndex + 0.15;
+    const y = rowIndex + 0.15;
+    return [`M ${x} ${y} h ${DOT_SIZE} v ${DOT_SIZE} h -${DOT_SIZE} Z`];
+  }),
+).join(' ');
 
 export function DotMatrixGraph() {
   return (
@@ -31,14 +29,13 @@ export function DotMatrixGraph() {
           <div className="absolute right-0 top-0 h-[18.9189%] w-[18.9189%] rounded-[8%] bg-black before:absolute before:inset-[14.2857%] before:rounded-[5%] before:bg-white before:content-[''] after:absolute after:inset-[28.5714%] after:rounded-[4%] after:bg-black after:content-['']" />
           <div className="absolute bottom-0 left-0 h-[18.9189%] w-[18.9189%] rounded-[8%] bg-black before:absolute before:inset-[14.2857%] before:rounded-[5%] before:bg-white before:content-[''] after:absolute after:inset-[28.5714%] after:rounded-[4%] after:bg-black after:content-['']" />
 
-          {DOT_MATRIX_POINTS.map((module) => (
-            <span
-              key={module.key}
-              aria-hidden="true"
-              className="absolute h-[1.8919%] w-[1.8919%] -translate-x-1/2 -translate-y-1/2 rounded-[22%] bg-black"
-              style={{ left: module.left, top: module.top }}
-            />
-          ))}
+          <svg
+            viewBox={`0 0 ${DOT_MATRIX_GRID_SIZE} ${DOT_MATRIX_GRID_SIZE}`}
+            className="absolute inset-0 h-full w-full"
+            focusable="false"
+          >
+            <path d={DOT_MATRIX_PATH} fill="black" />
+          </svg>
 
           <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 h-[25.9459%] w-[25.9459%] -translate-x-1/2 -translate-y-1/2 bg-white">
             <img

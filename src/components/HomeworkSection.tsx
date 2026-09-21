@@ -23,14 +23,16 @@ import {
   Target,
 } from 'lucide-react';
 import { useAuth } from '../auth/AuthContext';
-import { resolveHomeworkItems } from '../homework/catalog';
 import type { HomeworkAssignment, ResolvedHomeworkItem } from '../homework/types';
 import { useHomeworkData } from '../hooks/useHomeworkData';
+import { useHomeworkQuestions } from '../hooks/useHomeworkQuestions';
 import { useLanguage } from '../LanguageContext';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
 import { HomeworkAdminPanel } from './HomeworkAdminPanel';
 import { QuestionPrompt } from './QuestionPrompt';
 import { repairLatexExpression } from '../utils/latexRepair';
+import { buildAppPath, parseAppPath } from '../routing';
+import { AuthStatusButton } from './AuthStatusButton';
 
 type HomeworkView = 'student' | 'teacher';
 
@@ -341,10 +343,11 @@ export const HomeworkSection: React.FC = () => {
   );
   const activeAssignment =
     publishedAssignments.find((assignment) => assignment.id === activeAssignmentId) ?? null;
-  const activeItems = useMemo(
-    () => (activeAssignment ? resolveHomeworkItems(activeAssignment.items) : []),
-    [activeAssignment],
-  );
+  const {
+    items: activeItems,
+    loading: activeItemsLoading,
+    error: activeItemsError,
+  } = useHomeworkQuestions(activeAssignment?.id ?? null);
   const activeItem = activeItems[activeIndex];
 
   const studentAttempts = useMemo(
@@ -398,7 +401,9 @@ export const HomeworkSection: React.FC = () => {
     setActiveIndex(0);
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href);
-      url.searchParams.set('tab', 'homework');
+      const route = parseAppPath(url.pathname, url.search);
+      url.pathname = buildAppPath('homework', route.language ?? language);
+      url.searchParams.delete('tab');
       url.searchParams.set('assignment', assignmentId);
       window.history.pushState({}, '', `${url.pathname}${url.search}`);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -433,6 +438,10 @@ export const HomeworkSection: React.FC = () => {
       maxScore: result.maxScore,
       isCorrect: result.maxScore > 0 && result.score >= result.maxScore,
       result,
+      assignmentId: activeAssignment?.id,
+      practiceSetTitle: activeItem.setTitle,
+      questionTitle: activeItem.step.title,
+      tags: activeItem.step.tags ?? [],
     });
     setSaving(false);
     if (!saveError) setResults((current) => ({ ...current, [activeResponseKey]: result }));
@@ -443,14 +452,56 @@ export const HomeworkSection: React.FC = () => {
   }
 
   if (!demoMode && authEnabled && !user) {
+    const previewItems = language === 'zh'
+      ? [
+          ['01', '集中查看', '每次课后的完整作业集中在一个页面，不需要重新找题。'],
+          ['02', '自动同步', '选择题结果、作答记录和题库进度使用同一个学生账号同步。'],
+          ['03', '老师反馈', '手写过程可以拍照上传，老师能够按题查看并进行后续讲评。'],
+        ]
+      : [
+          ['01', 'One homework hub', 'Every lesson assignment stays in one place instead of being scattered across the question bank.'],
+          ['02', 'Progress sync', 'Answers, practice status, and assignment completion stay linked to one student account.'],
+          ['03', 'Teacher review', 'Upload handwritten work for free-response questions so your teacher can review the actual reasoning.'],
+        ];
+
     return (
-      <section className="max-w-4xl">
-        <div className="glass-panel rounded-xl p-8 text-center">
-          <GraduationCap className="mx-auto h-10 w-10 text-nebula" />
-          <h1 className="mt-4 font-serif text-3xl text-ink">{language === 'zh' ? '登录后查看你的作业' : 'Sign in to view homework'}</h1>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-ink-soft">
-            {language === 'zh' ? '作业、题库和做题状态使用同一个学生账号同步。' : 'Assignments and question-bank progress sync through the same student account.'}
-          </p>
+      <section className="max-w-5xl">
+        <div className="glass-panel rounded-[28px] p-6 sm:p-8 lg:p-10">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-nebula/20 bg-surface-tint px-4 py-2 text-xs font-semibold text-nebula">
+                <GraduationCap className="h-4 w-4" />
+                {language === 'zh' ? '学生作业中心' : 'Student homework hub'}
+              </div>
+              <h1 className="mt-5 max-w-2xl font-serif text-3xl leading-tight text-ink sm:text-4xl">
+                {language === 'zh' ? '登录后，你的课后作业会自动集中到这里。' : 'Sign in and every lesson assignment stays organized here.'}
+              </h1>
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-ink-soft sm:text-base">
+                {language === 'zh'
+                  ? '作业、题库和做题状态使用同一个学生账号同步。你可以按顺序完成题目、保存进度，并提交手写解题过程。'
+                  : 'Homework, practice, and progress use the same student account. Work through questions in order, keep your progress, and submit handwritten reasoning when needed.'}
+              </p>
+              <div className="mt-6">
+                <AuthStatusButton />
+              </div>
+            </div>
+            <div className="rounded-2xl border border-line bg-surface-tint p-5">
+              <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-nebula">
+                {language === 'zh' ? '登录后可用' : 'After sign-in'}
+              </div>
+              <div className="mt-4 space-y-4">
+                {previewItems.map(([number, title, body]) => (
+                  <div key={number} className="flex gap-3">
+                    <span className="text-xs font-bold text-nebula">{number}</span>
+                    <div>
+                      <div className="text-sm font-semibold text-ink">{title}</div>
+                      <p className="mt-1 text-xs leading-5 text-ink-soft">{body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     );
@@ -490,9 +541,18 @@ export const HomeworkSection: React.FC = () => {
       </div>
 
       {error && <div className="mb-5 rounded-xl border border-rose-500/25 bg-rose-500/10 p-4 text-sm text-rose-800">{error}</div>}
+      {activeItemsError && view === 'student' && (
+        <div className="mb-5 rounded-xl border border-rose-500/25 bg-rose-500/10 p-4 text-sm text-rose-800">
+          {activeItemsError}
+        </div>
+      )}
 
       {view === 'teacher' ? (
         <HomeworkAdminPanel />
+      ) : activeAssignment && activeItemsLoading ? (
+        <div className="glass-panel rounded-xl p-10 text-center text-sm text-ink-soft">
+          {language === 'zh' ? '正在安全加载作业题目…' : 'Loading assignment questions securely…'}
+        </div>
       ) : activeAssignment && activeItem ? (
         <div>
           <button type="button" onClick={closeAssignment} className="mb-5 inline-flex items-center gap-2 text-sm text-ink-soft hover:text-ink">

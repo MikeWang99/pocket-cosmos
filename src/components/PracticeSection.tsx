@@ -7,7 +7,6 @@ import {
   ClipboardCheck,
   Cloud,
   CloudOff,
-  Download,
   FileText,
   Link2,
   Lock,
@@ -18,17 +17,39 @@ import {
   Tag,
   Target,
 } from 'lucide-react';
-import { practiceSets, type PracticeSet } from '../data/practiceSets';
 import { PRACTICE_LABELS, type EvaluationResult, type PracticeLabel, type PracticeStep } from '../types/practice';
 import { evaluateLocally } from '../utils/rubricScoring';
 import { useLanguage } from '../LanguageContext';
 import { useAuth } from '../auth/AuthContext';
 import { usePracticeProgress, type SavedPracticeAttempt } from '../hooks/usePracticeProgress';
 import { usePracticePermissions } from '../hooks/usePracticePermissions';
+import { usePracticeCatalog, usePracticeSet } from '../hooks/usePracticeCatalog';
 import { usePracticeLabels } from '../hooks/usePracticeLabels';
 import { StudentWorkUpload } from './StudentWorkUpload';
 import { QuestionPrompt } from './QuestionPrompt';
 import { isLongChoice, MathText } from './MathText';
+import {
+  QuestionAssetDownloads,
+  QuestionMedia,
+  SupportingQuestionImages,
+} from './practice/PracticeQuestionMedia';
+import {
+  buildPracticeTree,
+  getChapterNodeId,
+  getCourseNodeId,
+  getIgcseChapterNodeId,
+  getIgcseCourseNodeId,
+  getInitialExpandedNodes,
+  inferPracticeKind,
+} from '../practice/catalog';
+import {
+  buildPracticeShareUrl,
+  copyTextToClipboard,
+  PUBLIC_SAMPLE_LIMIT,
+  PUBLIC_SAMPLE_SET_ID,
+  readPracticeSelectionFromUrl,
+  updatePracticeUrl,
+} from '../practice/navigation';
 
 type SpeechRecognitionConstructor = new () => SpeechRecognition;
 
@@ -57,296 +78,24 @@ declare global {
   }
 }
 
-const superscripts: Record<string, string> = {
-  '0': '⁰',
-  '1': '¹',
-  '2': '²',
-  '3': '³',
-  '4': '⁴',
-  '5': '⁵',
-  '6': '⁶',
-  '7': '⁷',
-  '8': '⁸',
-  '9': '⁹',
-  '+': '⁺',
-  '-': '⁻',
-  '=': '⁼',
-  '(': '⁽',
-  ')': '⁾',
-  n: 'ⁿ',
-};
-
-const subscripts: Record<string, string> = {
-  '0': '₀',
-  '1': '₁',
-  '2': '₂',
-  '3': '₃',
-  '4': '₄',
-  '5': '₅',
-  '6': '₆',
-  '7': '₇',
-  '8': '₈',
-  '9': '₉',
-  '+': '₊',
-  '-': '₋',
-  '=': '₌',
-  '(': '₍',
-  ')': '₎',
-};
-
-const translateRun = (value: string, map: Record<string, string>) =>
-  value
-    .split('')
-    .map((character) => map[character] ?? character)
-    .join('');
-
-const prettifyMath = (value: string) =>
-  value
-    .replace(/<=/g, '≤')
-    .replace(/>=/g, '≥')
-    .replace(/->/g, '→')
-    .replace(/\bDelta\b/g, 'Δ')
-    .replace(/\blambda0\b/g, 'λ₀')
-    .replace(/\blambda\b/g, 'λ')
-    .replace(/\btheta\b/g, 'θ')
-    .replace(/\bomega\b/g, 'ω')
-    .replace(/\balpha\b/g, 'α')
-    .replace(/\bmu\b/g, 'μ')
-    .replace(/\bintegral\b/g, '∫')
-    .replace(/sqrt\(k\/m\)/g, '√(k/m)')
-    .replace(/\bF_net\b/g, 'Fₙₑₜ')
-    .replace(/\bFmax\b/g, 'Fₘₐₓ')
-    .replace(/\bx_cm\b/g, 'x₍cm₎')
-    .replace(/\bv_f\b/g, 'v₍f₎')
-    .replace(/\bv0\b/g, 'v₀')
-    .replace(/\bv1\b/g, 'v₁')
-    .replace(/\bx0\b/g, 'x₀')
-    .replace(/\bx1\b/g, 'x₁')
-    .replace(/\ba0\b/g, 'a₀')
-    .replace(/\bF0\b/g, 'F₀')
-    .replace(/\^([0-9()+\-=n]+)/g, (_, run: string) => translateRun(run, superscripts))
-    .replace(/_([0-9]+)/g, (_, run: string) => translateRun(run, subscripts));
-
-const RichText: React.FC<{ children: string; className?: string }> = ({ children, className }) => (
-  <span className={className}>{prettifyMath(children)}</span>
-);
-
 const isMultipleChoiceStep = (step: PracticeStep) =>
   step.mode === 'multiple_choice' && Boolean(step.choices?.length);
-
-type PracticeKind = NonNullable<PracticeSet['practiceKind']>;
-
-type PracticeTreeChapter = {
-  id: string;
-  label: string;
-  sets: PracticeSet[];
-};
-
-type PracticeTreeCourse = {
-  id: string;
-  label: string;
-  description?: string;
-  chapters: PracticeTreeChapter[];
-};
-
-const inferPracticeKind = (set: PracticeSet): PracticeKind =>
-  set.practiceKind ??
-  (set.id.includes('-frq-') ? 'structured' : set.id.includes('paper5') ? 'paper5' : 'mcq');
-
-const getIgcseCourseNodeId = (kind: PracticeKind) => `igcse-course-${kind}`;
-
-const getCourseNodeId = (set: PracticeSet) => `${set.system}-course-${inferPracticeKind(set)}`;
-
-const getChapterNodeId = (set: PracticeSet) =>
-  `${set.system}-${inferPracticeKind(set)}-ch${set.chapter ?? 0}`;
-
-const getIgcseChapterNodeId = (set: PracticeSet) => {
-  const kind = inferPracticeKind(set);
-  if (kind === 'paper5') return 'igcse-paper5-years';
-  if (kind === 'evaluation') return 'igcse-evaluation-papers';
-  return `igcse-${kind}-ch${set.chapter ?? 0}`;
-};
-
-const getInitialExpandedNodes = (setId: string) => {
-  const set = practiceSets.find((item) => item.id === setId);
-  const nodes = new Set<string>();
-  if (!set) return nodes;
-
-  nodes.add(set.system);
-  if (set.system === 'competition' && set.id !== 'fma-ap-physics1-kinematics-2026') {
-    nodes.add('competition-course-fma');
-    nodes.add(`competition-fma-${set.id}`);
-  }
-  if (set.system === 'competition' && set.id === 'fma-ap-physics1-kinematics-2026') {
-    nodes.add('competition-fma-ap1-kinematics');
-    nodes.add('competition-fma-ap1-kinematics-mcq');
-  }
-  if (set.system === 'igcse') {
-    nodes.add(getIgcseCourseNodeId(inferPracticeKind(set)));
-    nodes.add(getIgcseChapterNodeId(set));
-  } else {
-    nodes.add(getCourseNodeId(set));
-    nodes.add(getChapterNodeId(set));
-  }
-
-  return nodes;
-};
-
-const readPracticeSelectionFromUrl = () => {
-  if (typeof window === 'undefined') {
-    return { setId: 'kinematics-multiple-choice', questionId: null as string | null };
-  }
-
-  const params = new URLSearchParams(window.location.search);
-  return {
-    setId: params.get('set') || 'kinematics-multiple-choice',
-    questionId: params.get('q') || params.get('question'),
-  };
-};
-
-const getSafePracticeSelection = (setId: string, questionId: string | null) => {
-  const set = practiceSets.find((item) => item.id === setId) ?? practiceSets[0];
-  const index = questionId ? set.steps.findIndex((step) => step.id === questionId) : 0;
-  return {
-    setId: set.id,
-    index: index >= 0 ? index : 0,
-  };
-};
-
-const updatePracticeUrl = (setId: string, questionId: string, mode: 'push' | 'replace' = 'push') => {
-  if (typeof window === 'undefined') return;
-
-  const url = new URL(window.location.href);
-  url.pathname = '/';
-  url.hash = '';
-  url.searchParams.set('tab', 'practice');
-  url.searchParams.set('set', setId);
-  url.searchParams.set('q', questionId);
-  const nextUrl = `${url.pathname}${url.search}`;
-  if (nextUrl !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
-    window.history[mode === 'replace' ? 'replaceState' : 'pushState']({}, '', nextUrl);
-  }
-};
-
-const buildPracticeShareUrl = (setId: string, questionId: string) => {
-  if (typeof window === 'undefined') return '';
-  const url = new URL(window.location.origin);
-  url.searchParams.set('tab', 'practice');
-  url.searchParams.set('set', setId);
-  url.searchParams.set('q', questionId);
-  return url.toString();
-};
-
-const copyTextToClipboard = async (value: string) => {
-  if (navigator.clipboard?.writeText) {
-    try {
-      await navigator.clipboard.writeText(value);
-      return;
-    } catch {
-      // Fall back below when the browser exposes Clipboard API but denies permission.
-    }
-  }
-
-  const textArea = document.createElement('textarea');
-  textArea.value = value;
-  textArea.setAttribute('readonly', '');
-  textArea.style.position = 'fixed';
-  textArea.style.opacity = '0';
-  document.body.appendChild(textArea);
-  textArea.select();
-  document.execCommand('copy');
-  document.body.removeChild(textArea);
-};
-
-const QuestionMedia: React.FC<{ step: PracticeStep; label: string; questionLabel: string }> = ({
-  step,
-  label,
-  questionLabel,
-}) => {
-  if (!step.image) return null;
-  const isQuestionImage = step.image.role === 'question';
-
-  return (
-    <figure className={`practice-media ${isQuestionImage ? 'practice-media--question' : ''}`}>
-      <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-3">
-        {isQuestionImage ? questionLabel : label}
-      </div>
-      <div className={isQuestionImage ? 'practice-question-image-scroll' : undefined}>
-        <img
-          src={step.image.src}
-          alt={step.image.alt}
-          className={`practice-media-image ${isQuestionImage ? 'practice-question-image' : ''} ${step.image.responsive ? 'practice-question-image--responsive' : ''}`}
-        />
-      </div>
-      {step.image.caption && <figcaption>{step.image.caption}</figcaption>}
-    </figure>
-  );
-};
-
-const SupportingQuestionImages: React.FC<{ step: PracticeStep; label: string }> = ({ step, label }) => {
-  if (!step.supportingImages?.length) return null;
-
-  return (
-    <div className="grid gap-4">
-      {step.supportingImages.map((figure, index) => (
-        <figure key={`${figure.src}-${index}`} className="practice-media practice-media--question">
-          {index === 0 && (
-            <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-3">{label}</div>
-          )}
-          <div className="practice-question-image-scroll">
-            <img
-              src={figure.src}
-              alt={figure.alt}
-              className="practice-media-image practice-question-image practice-question-image--responsive"
-            />
-          </div>
-          {figure.caption && <figcaption>{figure.caption}</figcaption>}
-        </figure>
-      ))}
-    </div>
-  );
-};
-
-const QuestionAssetDownloads: React.FC<{ step: PracticeStep; language: 'en' | 'zh' }> = ({
-  step,
-  language,
-}) => {
-  if (!step.assets?.length) return null;
-
-  return (
-    <details className="mt-1">
-      <summary className="inline-flex min-h-9 w-fit cursor-pointer list-none items-center gap-2 rounded-full border border-line bg-surface-tint px-3 py-1.5 text-[11px] font-semibold text-ink-soft transition-colors hover:border-nebula/40 hover:text-nebula">
-        <Download className="h-3.5 w-3.5" />
-        {language === 'zh' ? `下载题目素材 (${step.assets.length})` : `Download assets (${step.assets.length})`}
-      </summary>
-      <div className="mt-2 grid gap-2 rounded-lg border border-line bg-surface-muted p-3 sm:grid-cols-2 xl:grid-cols-3">
-        {step.assets.map((asset) => (
-          <a
-            key={asset.id}
-            href={asset.src}
-            download={asset.downloadName}
-            className="flex min-h-10 items-center gap-2 rounded-md border border-line bg-surface-muted px-3 py-2 text-xs text-ink-soft transition-colors hover:border-nebula/45 hover:text-nebula"
-          >
-            <Download className="h-3.5 w-3.5 shrink-0" />
-            <span className="min-w-0 truncate">{asset.downloadName}</span>
-            <span className="ml-auto shrink-0 text-[9px] uppercase tracking-wider text-slate-600">{asset.kind}</span>
-          </a>
-        ))}
-      </div>
-    </details>
-  );
-};
 
 export const PracticeSection: React.FC = () => {
   const { language, t } = useLanguage();
   const { authEnabled, configured, isAdmin, user } = useAuth();
   const { hasAccess } = usePracticePermissions();
-  const initialSelection = useMemo(() => getSafePracticeSelection(
-    readPracticeSelectionFromUrl().setId,
-    readPracticeSelectionFromUrl().questionId,
-  ), []);
+  const initialSelection = useMemo(() => readPracticeSelectionFromUrl(), []);
+  const { sets: practiceCatalog } = usePracticeCatalog();
   const [activeSetId, setActiveSetId] = useState(initialSelection.setId);
-  const [activeIndex, setActiveIndex] = useState(initialSelection.index);
+  const [requestedQuestionId, setRequestedQuestionId] = useState(initialSelection.questionId);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const {
+    set: loadedSet,
+    access: loadedAccess,
+    loading: setLoading,
+    error: setLoadError,
+  } = usePracticeSet(activeSetId);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [answerImages, setAnswerImages] = useState<Record<string, string>>({});
   // True while the answer image is still compressing/uploading, so the submit
@@ -362,8 +111,16 @@ export const PracticeSection: React.FC = () => {
   const { resetSavedAttempts, savedAttempts, saveAttempt, syncError, syncState } = usePracticeProgress(activeSetId);
   const { labelsByQuestion, getLabels, toggleLabel } = usePracticeLabels();
 
-  const activeSet = practiceSets.find((set) => set.id === activeSetId) ?? practiceSets[0];
-  const practiceSetMeta = activeSet;
+  const activeMeta =
+    practiceCatalog.find((set) => set.id === activeSetId) ??
+    practiceCatalog.find((set) => set.id === PUBLIC_SAMPLE_SET_ID) ??
+    practiceCatalog[0] ??
+    null;
+  const activeSet = loadedSet;
+  const hasFullAccess = loadedAccess === 'full';
+  const sampleMode = loadedAccess === 'sample';
+  const activeSetAccessible = loadedAccess !== 'locked' && Boolean(activeSet);
+  const practiceSetMeta = activeSet ?? activeMeta;
   const getSetCopy = (setId: string) => {
     if (setId === 'calculus-for-physics') return t.practice.sets.calculusForPhysics;
     if (setId === 'frq-2025-mechanics') return t.practice.sets.frq2025;
@@ -382,31 +139,31 @@ export const PracticeSection: React.FC = () => {
     if (setId === 'igcse-cie-ch1-topic-1-7') return t.practice.sets.igcseTopic17;
     if (setId === 'igcse-cie-ch1-topic-1-8') return t.practice.sets.igcseTopic18;
     // New IGCSE all-topic sets: use the set's own label/title
-    const matchedSet = practiceSets.find((s) => s.id === setId);
+    const matchedSet = practiceCatalog.find((s) => s.id === setId);
     if (matchedSet) {
       return { label: matchedSet.label, title: matchedSet.title, eyebrow: matchedSet.eyebrow, subtitle: matchedSet.subtitle, description: matchedSet.description };
     }
     return t.practice.sets.kinematicsMultipleChoice;
   };
-  const setCopy = getSetCopy(activeSet.id);
-  const isIgcseSet = activeSet.category === 'igcse';
-  const activePracticeKind = inferPracticeKind(activeSet);
+  const setCopy = getSetCopy(activeSetId);
+  const isIgcseSet = (activeSet ?? activeMeta)?.category === 'igcse';
+  const activePracticeKind = activeSet ? inferPracticeKind(activeSet) : activeMeta ? inferPracticeKind(activeMeta) : 'mcq';
   const supportsDifficultyFilter =
     activePracticeKind === 'mcq' &&
-    activeSet.steps.some((step) => Number.isFinite(step.difficulty) || step.tags?.some((tag) => tag.startsWith('Difficulty ')));
-  const supportsSpecialtyFilter = activeSet.system === 'competition' && activeSet.steps.some((step) => (step.specialtyTags?.length ?? 0) > 0);
-  const supportsLabelFilter = isAdmin && activeSet.steps.length > 0;
+    Boolean(activeSet?.steps.some((step) => Number.isFinite(step.difficulty) || step.tags?.some((tag) => tag.startsWith('Difficulty '))));
+  const supportsSpecialtyFilter = activeSet?.system === 'competition' && activeSet.steps.some((step) => (step.specialtyTags?.length ?? 0) > 0);
+  const supportsLabelFilter = isAdmin && Boolean(activeSet?.steps.length);
   const specialtyOptions = useMemo(() => {
     const labels = new Set<string>();
-    activeSet.steps.forEach((step) => step.specialtyTags?.forEach((label) => labels.add(label)));
+    activeSet?.steps.forEach((step) => step.specialtyTags?.forEach((label) => labels.add(label)));
     return [...labels].sort((a, b) => a.localeCompare(b));
-  }, [activeSet.steps]);
+  }, [activeSet?.steps]);
 
   // Filter any indexed MCQ bank by its normalized 1–5 difficulty value.
   const practiceSteps = useMemo(() => {
-    return activeSet.steps.filter((step) => {
+    const filtered = (activeSet?.steps ?? []).filter((step) => {
       if (supportsSpecialtyFilter && specialtyFilter !== 'all' && !step.specialtyTags?.includes(specialtyFilter)) return false;
-      if (supportsLabelFilter && labelFilter !== 'all' && !labelsByQuestion[`${activeSet.id}:${step.id}`]?.includes(labelFilter)) return false;
+      if (supportsLabelFilter && labelFilter !== 'all' && !labelsByQuestion[`${activeSetId}:${step.id}`]?.includes(labelFilter)) return false;
       if (!supportsDifficultyFilter || difficultyFilter === 'all') return true;
       const diffTag = step.tags?.find((tag) => tag.startsWith('Difficulty '));
       const taggedLevel = diffTag
@@ -419,7 +176,9 @@ export const PracticeSection: React.FC = () => {
       if (difficultyFilter === 'hard') return level >= 4;
       return true;
     });
-  }, [activeSet.id, activeSet.steps, labelsByQuestion, supportsDifficultyFilter, difficultyFilter, supportsSpecialtyFilter, specialtyFilter, supportsLabelFilter, labelFilter]);
+
+    return filtered;
+  }, [activeSet?.steps, activeSetId, labelsByQuestion, supportsDifficultyFilter, difficultyFilter, supportsSpecialtyFilter, specialtyFilter, supportsLabelFilter, labelFilter]);
 
   // Map "Difficulty N" tag to display label
   const formatTag = (tag: string): string => {
@@ -442,7 +201,7 @@ export const PracticeSection: React.FC = () => {
   // applied. Keep the heading in lockstep with that sequence; source-paper
   // numbering is intentionally hidden from the practice UI.
   const activeDisplayTitle = activeStep
-    ? activeSet.system === 'competition'
+    ? (activeSet ?? activeMeta)?.system === 'competition'
       ? `Question ${activeIndex + 1}`
       : activeStep.title
     : '';
@@ -457,7 +216,7 @@ export const PracticeSection: React.FC = () => {
   const currentAnswer = activeStep ? (answers[activeStep.id] ?? '') : '';
   const currentAnswerImage = activeStep ? (answerImages[activeStep.id] ?? null) : null;
   const currentResult = activeStep ? results[activeStep.id] : undefined;
-  const activeLabels = activeStep ? getLabels(activeSet.id, activeStep.id) : [];
+  const activeLabels = activeStep ? getLabels(activeSetId, activeStep.id) : [];
   const practiceLabelCopy: Record<PracticeLabel, string> = language === 'zh'
     ? {
         high_difficulty: t.practice.questionLabels.highDifficulty,
@@ -490,245 +249,24 @@ export const PracticeSection: React.FC = () => {
   const speechSupported = typeof window !== 'undefined' && Boolean(window.SpeechRecognition || window.webkitSpeechRecognition);
 
   // Hierarchical tree: system -> question type -> chapter/year -> sets
-  const practiceTree = useMemo(() => {
-    const systems: Array<{
-      id: string;
-      label: string;
-      courses: PracticeTreeCourse[];
-    }> = [];
-
-    // Reserved curriculum areas. They are intentionally empty until their
-    // question banks are imported, but remain visible as permission-gated
-    // destinations so the catalog can grow without changing its structure.
-    [
-      { id: 'ap-physics-1', label: t.practice.tree.apPhysics1 },
-      { id: 'ap-physics-2', label: t.practice.tree.apPhysics2 },
-      { id: 'bpho', label: t.practice.tree.bpho },
-      { id: 'a-level', label: t.practice.tree.aLevel },
-      { id: 'physics-bowl', label: t.practice.tree.physicsBowl },
-    ].forEach(({ id, label }) => {
-      const sets = practiceSets.filter((set) => set.system === id);
-      // AP Physics 1 follows the same explicit question-type → unit
-      // hierarchy as the other curriculum systems.  Keep the reserved
-      // systems empty when no bank has been imported yet.
-      if (id === 'ap-physics-1' && sets.length) {
-        const mcqSets = sets.filter((set) => inferPracticeKind(set) === 'mcq');
-        const structuredSets = sets.filter((set) => inferPracticeKind(set) === 'structured');
-        const makeCourse = (kind: PracticeKind, kindSets: PracticeSet[]): PracticeTreeCourse => {
-          const chapterMap = new Map<number, { title: string; sets: PracticeSet[] }>();
-          kindSets.forEach((set) => {
-            const unit = set.chapter ?? 0;
-            if (!chapterMap.has(unit)) chapterMap.set(unit, { title: set.chapterTitle ?? `Unit ${unit}`, sets: [] });
-            chapterMap.get(unit)!.sets.push(set);
-          });
-          return {
-            id: `${id}-course-${kind}`,
-            label: kind === 'mcq'
-              ? (language === 'zh' ? '选择题' : 'Multiple Choice')
-              : (language === 'zh' ? '问答题' : 'Free Response'),
-            chapters: [...chapterMap.entries()].sort(([a], [b]) => a - b).map(([unit, entry]) => ({
-              id: `${id}-${kind}-ch${unit}`,
-              label: entry.title,
-              sets: entry.sets,
-            })),
-          };
-        };
-        const courses = [
-          ...(mcqSets.length ? [makeCourse('mcq', mcqSets)] : []),
-          ...(structuredSets.length ? [makeCourse('structured', structuredSets)] : []),
-        ];
-        systems.push({ id, label, courses });
-        return;
-      }
-      systems.push({
-        id,
-        label,
-        courses: sets.length
-          ? [{
-              id: `${id}-all`,
-              label: '',
-              chapters: [{ id: `${id}-all`, label: '', sets }],
-            }]
-          : [],
-      });
-    });
-
-    // AP Physics C: Mechanics
-    const apMechSets = practiceSets.filter((s) => s.system === 'ap-c-mech');
-    if (apMechSets.length) {
-      const courseCopy: Record<'mcq' | 'structured', { label: string; description: string }> = {
-        mcq: {
-          label: language === 'zh' ? '选择题 MCQ' : 'Multiple Choice',
-          description: language === 'zh' ? '按 AP Physics C 单元整理的选择题题库。' : 'Multiple-choice banks organized by AP Physics C unit.',
-        },
-        structured: {
-          label: language === 'zh' ? '问答题 FRQ' : 'Free Response',
-          description: language === 'zh' ? '基础诊断、实验设计与综合问答题。' : 'Foundation diagnostics, lab design, and comprehensive FRQs.',
-        },
-      };
-      const courses = (['mcq', 'structured'] as const).map((kind): PracticeTreeCourse => {
-        const kindSets = apMechSets.filter((set) => inferPracticeKind(set) === kind);
-        const chapterMap = new Map<number, { title: string; sets: PracticeSet[] }>();
-        kindSets.forEach((set) => {
-          const unit = set.chapter ?? 0;
-          if (!chapterMap.has(unit)) {
-            chapterMap.set(unit, { title: set.chapterTitle ?? `Unit ${unit}`, sets: [] });
-          }
-          chapterMap.get(unit)!.sets.push(set);
-        });
-        return {
-          id: `ap-c-mech-course-${kind}`,
-          label: courseCopy[kind].label,
-          description: courseCopy[kind].description,
-          chapters: [...chapterMap.entries()]
-            .sort(([a], [b]) => a - b)
-            .map(([unit, entry]) => ({
-              id: `ap-c-mech-${kind}-ch${unit}`,
-              label: unit === 0
-                ? entry.title
-                : unit === 99
-                  ? entry.title
-                  : language === 'zh'
-                    ? `Unit ${unit} · ${entry.title}`
-                    : `Unit ${unit} · ${entry.title}`,
-              sets: entry.sets,
-            })),
-        };
-      }).filter((course) => course.chapters.some((chapter) => chapter.sets.length > 0));
-
-      systems.push({
-        id: 'ap-c-mech',
-        label: t.practice.tree.apCMech,
-        courses,
-      });
-    }
-
-    // AP Physics C: E&M
-    const apEmSets = practiceSets.filter((s) => s.system === 'ap-c-em');
-    if (apEmSets.length) {
-      systems.push({
-        id: 'ap-c-em',
-        label: t.practice.tree.apCEm,
-        courses: [{ id: 'ap-c-em-all', label: '', chapters: [{ id: 'ap-c-em-all', label: '', sets: apEmSets }] }],
-      });
-    }
-
-    // FMA Competition: expose the rebuilt bank directly as model-based
-    // chapters. The old aggregate archive and the temporary New Question
-    // level are intentionally not shown in the learner-facing tree.
-    const competitionSets = practiceSets.filter((s) => s.system === 'competition');
-    if (competitionSets.length) {
-      const ap1KinematicsSets = competitionSets.filter((s) => s.id === 'fma-ap-physics1-kinematics-2026');
-      const fmaChapterSets = competitionSets.filter((s) => s.id !== 'fma-ap-physics1-kinematics-2026');
-      const competitionCourses: PracticeTreeCourse[] = [];
-      if (fmaChapterSets.length) {
-        competitionCourses.push({
-          id: 'competition-course-fma',
-          label: 'FMA Competition',
-          description: 'F=ma questions organized by problem model.',
-          chapters: fmaChapterSets
-            .sort((a, b) => (a.chapter ?? 0) - (b.chapter ?? 0))
-            .map((set) => ({
-              id: `competition-fma-${set.id}`,
-              label: set.chapterTitle ?? set.label,
-              sets: [set],
-            })),
-        });
-      }
-      if (ap1KinematicsSets.length) {
-        competitionCourses.push({
-          id: 'competition-fma-ap1-kinematics',
-          label: 'FMA AP Physics 1: Kinematics',
-          description: 'AP Physics 1 Unit One Kinematics.',
-          chapters: [{ id: 'competition-fma-ap1-kinematics-mcq', label: 'Multiple Choice', sets: ap1KinematicsSets }],
-        });
-      }
-      systems.push({ id: 'competition', label: t.practice.tree.competition, courses: competitionCourses });
-    }
-
-    // CIE IGCSE Physics
-    const igcseSets = practiceSets.filter((s) => s.system === 'igcse');
-    if (igcseSets.length) {
-      const questionTypeCopy: Record<PracticeKind, { label: string; description: string }> = {
-        mcq: {
-          label: language === 'zh' ? '选择题 MCQ' : 'Multiple Choice',
-          description: language === 'zh' ? '按章节练习选择题。' : 'Topic-based multiple-choice practice.',
-        },
-        structured: {
-          label: language === 'zh' ? '问答题 Structured Questions' : 'Structured Questions',
-          description: language === 'zh' ? '按章节练习大题、计算题和解释题。' : 'Long-answer, calculation, and explanation questions by topic.',
-        },
-        paper5: {
-          label: language === 'zh' ? '实验题 Paper 5' : 'Paper 5 Practical',
-          description: language === 'zh' ? '按年份练习实验操作、图像分析和实验设计。' : 'Practical skills, graph analysis, and experimental design by year.',
-        },
-        evaluation: {
-          label: language === 'zh' ? '综合评估 Evaluation' : 'Evaluation',
-          description: language === 'zh' ? '完整诊断卷：选择题 + 大题综合检测，附详细评分标准。' : 'Full diagnostic papers: MCQ + structured questions with detailed mark schemes.',
-        },
-      };
-
-      const buildTopicChapters = (sets: PracticeSet[], kind: PracticeKind): PracticeTreeChapter[] => {
-        const chapterMap = new Map<number, { title: string; sets: PracticeSet[] }>();
-        sets.forEach((set) => {
-          const ch = set.chapter ?? 0;
-          if (!chapterMap.has(ch)) chapterMap.set(ch, { title: set.chapterTitle ?? `Chapter ${ch}`, sets: [] });
-          chapterMap.get(ch)!.sets.push(set);
-        });
-
-        return Array.from(chapterMap.entries())
-          .sort(([a], [b]) => a - b)
-          .map(([num, { title, sets: chapterSets }]) => ({
-            id: `igcse-${kind}-ch${num}`,
-            label: language === 'zh' ? `第 ${num} 章 · ${title}` : `Chapter ${num} · ${title}`,
-            sets: chapterSets,
-          }));
-      };
-
-      const buildPaper5Chapter = (sets: PracticeSet[]): PracticeTreeChapter[] => [
-        {
-          id: 'igcse-paper5-years',
-          label: language === 'zh' ? '按年份选择 Paper 5 实验题' : 'Past Papers by Year',
-          sets,
-        },
-      ];
-
-      const buildEvaluationChapter = (sets: PracticeSet[]): PracticeTreeChapter[] => [
-        {
-          id: 'igcse-evaluation-papers',
-          label: language === 'zh' ? '诊断评估卷' : 'Diagnostic Papers',
-          sets,
-        },
-      ];
-
-      const courses = (['mcq', 'structured', 'paper5', 'evaluation'] as const)
-        .map((kind): PracticeTreeCourse => {
-          const kindSets = igcseSets.filter((set) => inferPracticeKind(set) === kind);
-          return {
-            id: getIgcseCourseNodeId(kind),
-            label: questionTypeCopy[kind].label,
-            description: questionTypeCopy[kind].description,
-            chapters: kind === 'paper5'
-              ? buildPaper5Chapter(kindSets)
-              : kind === 'evaluation'
-                ? buildEvaluationChapter(kindSets)
-                : buildTopicChapters(kindSets, kind),
-          };
-        })
-        .filter((course) => course.chapters.some((chapter) => chapter.sets.length > 0));
-
-      systems.push({
-        id: 'igcse',
-        label: t.practice.tree.igcse,
-        courses,
-      });
-    }
-
-    return systems;
-  }, [language, t]);
+  const practiceTree = useMemo(
+    () =>
+      buildPracticeTree(language, {
+        apPhysics1: t.practice.tree.apPhysics1,
+        apPhysics2: t.practice.tree.apPhysics2,
+        bpho: t.practice.tree.bpho,
+        aLevel: t.practice.tree.aLevel,
+        physicsBowl: t.practice.tree.physicsBowl,
+        apCMech: t.practice.tree.apCMech,
+        apCEm: t.practice.tree.apCEm,
+        competition: t.practice.tree.competition,
+        igcse: t.practice.tree.igcse,
+      }, practiceCatalog),
+    [language, practiceCatalog, t],
+  );
 
   // The tree starts open around the active shared link, but otherwise stays compact.
-  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(() => getInitialExpandedNodes(initialSelection.setId));
+  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
   const toggleNode = (nodeId: string) => {
     setExpandedNodes((prev) => {
       const next = new Set(prev);
@@ -743,11 +281,38 @@ export const PracticeSection: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    if (!practiceCatalog.length) return;
+    const resolvedMeta =
+      practiceCatalog.find((set) => set.id === activeSetId) ??
+      practiceCatalog.find((set) => set.id === PUBLIC_SAMPLE_SET_ID) ??
+      practiceCatalog[0];
+    if (resolvedMeta.id !== activeSetId) {
+      setActiveSetId(resolvedMeta.id);
+      setRequestedQuestionId(null);
+      setActiveIndex(0);
+    }
+    setExpandedNodes((previous) => {
+      const next = new Set(previous);
+      getInitialExpandedNodes(resolvedMeta.id, practiceCatalog).forEach((node) => next.add(node));
+      return next;
+    });
+  }, [activeSetId, practiceCatalog]);
+
+  useEffect(() => {
+    if (!activeSet?.steps.length) return;
+    const requestedIndex = requestedQuestionId
+      ? activeSet.steps.findIndex((step) => step.id === requestedQuestionId)
+      : -1;
+    setActiveIndex(requestedIndex >= 0 ? requestedIndex : 0);
+    setRequestedQuestionId(null);
+  }, [activeSet?.id, requestedQuestionId]);
+
+  useEffect(() => {
     const handlePopState = () => {
       const next = readPracticeSelectionFromUrl();
-      const safe = getSafePracticeSelection(next.setId, next.questionId);
-      setActiveSetId(safe.setId);
-      setActiveIndex(safe.index);
+      setActiveSetId(next.setId);
+      setRequestedQuestionId(next.questionId);
+      setActiveIndex(0);
       setShareCopied(false);
     };
 
@@ -757,8 +322,8 @@ export const PracticeSection: React.FC = () => {
 
   useEffect(() => {
     if (!activeStep) return;
-    updatePracticeUrl(activeSet.id, activeStep.id, 'replace');
-  }, [activeSet.id, activeStep?.id]);
+    updatePracticeUrl(activeSetId, activeStep.id, 'replace');
+  }, [activeSetId, activeStep?.id]);
 
   // #10: Keyboard navigation support
   useEffect(() => {
@@ -836,7 +401,7 @@ export const PracticeSection: React.FC = () => {
     setResults((previous) => ({ ...previous, [activeStep.id]: result }));
 
     void saveAttempt({
-      practiceSetId: activeSet.id,
+      practiceSetId: activeSetId,
       practiceSetTitle: setCopy.title,
       questionId: activeStep.id,
       questionTitle: activeStep.title,
@@ -928,7 +493,7 @@ export const PracticeSection: React.FC = () => {
     setWorkUploadBusy(false);
     const nextIndex = Math.min(Math.max(index, 0), practiceSteps.length - 1);
     setActiveIndex(nextIndex);
-    updatePracticeUrl(activeSet.id, practiceSteps[nextIndex].id);
+    updatePracticeUrl(activeSetId, practiceSteps[nextIndex].id);
   };
 
   const selectPracticeSet = (setId: string) => {
@@ -939,12 +504,14 @@ export const PracticeSection: React.FC = () => {
     setDifficultyFilter('all');
     setSpecialtyFilter('all');
     setLabelFilter('all');
-    const nextSet = practiceSets.find((set) => set.id === setId) ?? practiceSets[0];
-    setActiveSetId(setId);
+    const nextSet = practiceCatalog.find((set) => set.id === setId);
+    if (!nextSet) return;
+    setActiveSetId(nextSet.id);
+    setRequestedQuestionId(null);
     setAnswers({});
     setResults({});
     setActiveIndex(0);
-    updatePracticeUrl(nextSet.id, nextSet.steps[0]?.id ?? '');
+    updatePracticeUrl(nextSet.id, '');
     // Auto-expand tree to show selected set
     setExpandedNodes((prev) => {
       const next = new Set(prev);
@@ -970,8 +537,8 @@ export const PracticeSection: React.FC = () => {
     setDifficultyFilter('all');
     setSpecialtyFilter('all');
     setLabelFilter('all');
-    const firstStep = practiceSteps[0] ?? activeSet.steps[0];
-    if (firstStep) updatePracticeUrl(activeSet.id, firstStep.id, 'replace');
+    const firstStep = practiceSteps[0] ?? activeSet?.steps[0];
+    if (firstStep) updatePracticeUrl(activeSetId, firstStep.id, 'replace');
     resetSavedAttempts();
   };
 
@@ -993,11 +560,11 @@ export const PracticeSection: React.FC = () => {
   const handleToggleLabel = (label: PracticeLabel) => {
     if (!activeStep) return;
     if (labelFilter !== 'all' && label === labelFilter) setActiveIndex(0);
-    void toggleLabel(activeSet.id, activeStep.id, label);
+    void toggleLabel(activeSetId, activeStep.id, label);
   };
 
   const copyCurrentQuestionLink = async () => {
-    const shareUrl = buildPracticeShareUrl(activeSet.id, activeStep.id);
+    const shareUrl = buildPracticeShareUrl(activeSetId, activeStep.id);
     if (!shareUrl) return;
 
     await copyTextToClipboard(shareUrl);
@@ -1081,7 +648,7 @@ export const PracticeSection: React.FC = () => {
           <div className="mt-5 space-y-1">
             {practiceTree.map((system) => {
               const sysExpanded = expandedNodes.has(system.id);
-              const systemAccessible = hasAccess(system.id);
+              const systemAccessible = hasAccess(system.id) || (!user && system.id === 'ap-physics-1');
               const hasSystemContent = system.courses.some((course) => course.chapters.some((chapter) => chapter.sets.length > 0));
               const canExpandSystem = systemAccessible && hasSystemContent;
               return (
@@ -1265,8 +832,33 @@ export const PracticeSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Permission gate: show locked card if system not accessible */}
-      {!hasAccess(activeSet.system) ? (
+      {sampleMode && (
+        <div className="mb-5 flex flex-col gap-2 rounded-xl border border-nebula/25 bg-nebula/[0.07] p-4 text-sm text-ink-soft sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <strong className="text-ink">{language === 'zh' ? '免费体验' : 'Free preview'}</strong>
+            <span className="ml-2">
+              {language === 'zh'
+                ? `当前开放前 ${PUBLIC_SAMPLE_LIMIT} 道 AP Physics 1 题目，无需登录。`
+                : `Try the first ${PUBLIC_SAMPLE_LIMIT} AP Physics 1 questions without signing in.`}
+            </span>
+          </div>
+          <span className="text-xs font-semibold text-nebula">
+            {language === 'zh' ? '登录后可保存学习记录' : 'Sign in to save progress'}
+          </span>
+        </div>
+      )}
+
+      {/* Question bodies load only after the server has authorized this set. */}
+      {setLoading ? (
+        <div className="glass-panel flex min-h-48 items-center justify-center rounded-lg p-10 text-sm text-ink-soft">
+          {language === 'zh' ? '正在加载题目…' : 'Loading questions…'}
+        </div>
+      ) : setLoadError && !activeSetAccessible ? (
+        <div className="glass-panel flex flex-col items-center justify-center gap-4 rounded-lg p-12 text-center">
+          <Lock className="h-10 w-10 text-slate-500" />
+          <p className="max-w-md text-sm text-ink-soft">{t.practice.lockedMessage}</p>
+        </div>
+      ) : !activeSetAccessible ? (
         <div className="glass-panel flex flex-col items-center justify-center gap-4 rounded-lg p-12 text-center">
           <Lock className="h-10 w-10 text-slate-500" />
           <p className="text-sm text-ink-soft max-w-md">{t.practice.lockedMessage}</p>
@@ -1342,7 +934,7 @@ export const PracticeSection: React.FC = () => {
                   <div className="min-w-0">
                     <div className="text-xs uppercase tracking-widest text-nebula mb-3">{activeStep.source}</div>
                     <h2 className="text-balance font-serif text-2xl text-ink md:text-3xl">{activeDisplayTitle}</h2>
-                    {activeSet.system !== 'competition' && !!activeStep.tags?.length && (
+                    {(activeSet?.system ?? activeMeta?.system) !== 'competition' && !!activeStep.tags?.length && (
                       <div className="mt-3 flex flex-wrap gap-2">
                         {activeStep.tags.slice(0, 4).map((tag) => (
                           <span
@@ -1541,7 +1133,7 @@ export const PracticeSection: React.FC = () => {
                 ) : (
                   <>
                     <StudentWorkUpload
-                      practiceSetId={activeSet.id}
+                      practiceSetId={activeSetId}
                       questionId={activeStep.id}
                       existingImageUrl={currentAnswerImage}
                       onUploadComplete={(imageUrl) => {

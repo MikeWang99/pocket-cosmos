@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { calculusForPhysicsMeta, calculusForPhysicsSteps } from './calculusForPhysics';
 import {
   apcMechanicsRotationTest16Meta,

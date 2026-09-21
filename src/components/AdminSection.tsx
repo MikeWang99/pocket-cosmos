@@ -15,11 +15,14 @@ import {
   UserRound,
   UsersRound,
 } from 'lucide-react';
-import { practiceSets } from '../data/practiceSets';
 import { useAuth } from '../auth/AuthContext';
 import { useLanguage } from '../LanguageContext';
 import { getSupabaseClient } from '../lib/supabaseClient';
+import { createStudentWorkSignedUrl } from '../lib/studentWorkStorage';
 import { ALL_SYSTEMS } from '../hooks/usePracticePermissions';
+import { useAdminPracticeCatalog } from '../hooks/useAdminPracticeCatalog';
+import { usePracticeSet } from '../hooks/usePracticeCatalog';
+import type { AdminPracticeSetSummary } from '../practice/adminTypes';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
 import { repairLatexExpression } from '../utils/latexRepair';
 
@@ -92,9 +95,13 @@ const splitPromptParts = (prompt: string) => {
 const isAutoGradedStep = (step: PracticeStep | undefined) =>
   Boolean(step?.choices?.length && step.correctAnswer);
 
-const isAutoGradedAttempt = (attempt: PracticeAttemptRow) => {
-  const set = practiceSets.find((candidate) => candidate.id === attempt.practice_set_id);
-  return isAutoGradedStep(set?.steps.find((step) => step.id === attempt.question_id));
+const isAutoGradedAttempt = (
+  attempt: PracticeAttemptRow,
+  sets: AdminPracticeSetSummary[],
+) => {
+  const set = sets.find((candidate) => candidate.id === attempt.practice_set_id);
+  const question = set?.questions.find((candidate) => candidate.id === attempt.question_id);
+  return Boolean(question?.hasChoices && question.hasAnswerKey);
 };
 
 const normalizeResult = (row: PracticeAttemptRow): EvaluationResult => {
@@ -152,12 +159,14 @@ export const AdminSection: React.FC = () => {
   const { language, t } = useLanguage();
   const { authEnabled, configured, isAdmin, loading: authLoading, user } = useAuth();
   const supabase = getSupabaseClient();
+  const { sets: adminPracticeSets } = useAdminPracticeCatalog();
   const [attempts, setAttempts] = useState<PracticeAttemptRow[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
-  const [selectedSetId, setSelectedSetId] = useState(practiceSets[0]?.id ?? '');
+  const [selectedSetId, setSelectedSetId] = useState('');
   const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
+  const [selectedAnswerImageUrl, setSelectedAnswerImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (!authEnabled || !configured || !supabase || !isAdmin) return;
@@ -200,7 +209,7 @@ export const AdminSection: React.FC = () => {
     return Array.from(grouped.entries())
       .map(([studentId, studentAttempts]) => {
         const completed = studentAttempts.length;
-        const gradedAttempts = studentAttempts.filter(isAutoGradedAttempt);
+        const gradedAttempts = studentAttempts.filter((attempt) => isAutoGradedAttempt(attempt, adminPracticeSets));
         const correct = gradedAttempts.filter((attempt) => attempt.is_correct).length;
         const latestAt = studentAttempts.reduce(
           (latest, attempt) => (new Date(attempt.updated_at) > new Date(latest) ? attempt.updated_at : latest),
@@ -218,7 +227,7 @@ export const AdminSection: React.FC = () => {
         };
       })
       .sort((a, b) => new Date(b.latestAt).getTime() - new Date(a.latestAt).getTime());
-  }, [attempts, t.admin.unknownStudent]);
+  }, [adminPracticeSets, attempts, t.admin.unknownStudent]);
 
   const selectedStudent = students.find((student) => student.studentId === selectedStudentId) ?? students[0] ?? null;
 
@@ -236,8 +245,8 @@ export const AdminSection: React.FC = () => {
   const availableSets = useMemo(() => {
     if (!selectedStudent) return [];
     const attemptedSetIds = new Set(selectedStudent.attempts.map((attempt) => attempt.practice_set_id));
-    return practiceSets.filter((set) => attemptedSetIds.has(set.id));
-  }, [selectedStudent]);
+    return adminPracticeSets.filter((set) => attemptedSetIds.has(set.id));
+  }, [adminPracticeSets, selectedStudent]);
 
   useEffect(() => {
     if (!availableSets.length) return;
@@ -246,24 +255,58 @@ export const AdminSection: React.FC = () => {
     }
   }, [availableSets, selectedSetId]);
 
-  const selectedSet = practiceSets.find((set) => set.id === selectedSetId) ?? availableSets[0] ?? practiceSets[0];
+  const selectedSetMeta =
+    adminPracticeSets.find((set) => set.id === selectedSetId) ??
+    availableSets[0] ??
+    adminPracticeSets[0] ??
+    null;
+
+  useEffect(() => {
+    if (!selectedSetId && selectedSetMeta) setSelectedSetId(selectedSetMeta.id);
+  }, [selectedSetId, selectedSetMeta]);
+
+  const { set: selectedSet } = usePracticeSet(selectedSetMeta?.id ?? null);
   const selectedSetAttempts = useMemo(() => {
-    if (!selectedStudent || !selectedSet) return new Map<string, PracticeAttemptRow>();
+    if (!selectedStudent || !selectedSetMeta) return new Map<string, PracticeAttemptRow>();
     return selectedStudent.attempts
-      .filter((attempt) => attempt.practice_set_id === selectedSet.id)
+      .filter((attempt) => attempt.practice_set_id === selectedSetMeta.id)
       .reduce<Map<string, PracticeAttemptRow>>((map, attempt) => {
         map.set(attempt.question_id, attempt);
         return map;
       }, new Map());
-  }, [selectedSet, selectedStudent]);
+  }, [selectedSetMeta, selectedStudent]);
 
-  const selectedStep =
-    selectedSet.steps.find((step) => step.id === selectedQuestionId && selectedSetAttempts.has(step.id)) ??
-    selectedSet.steps.find((step) => selectedSetAttempts.has(step.id)) ??
-    selectedSet.steps[0];
+  const selectedStep = selectedSet
+    ? selectedSet.steps.find((step) => step.id === selectedQuestionId && selectedSetAttempts.has(step.id)) ??
+      selectedSet.steps.find((step) => selectedSetAttempts.has(step.id)) ??
+      selectedSet.steps[0]
+    : undefined;
   const selectedAttempt = selectedStep ? selectedSetAttempts.get(selectedStep.id) : undefined;
   const selectedResult = selectedAttempt ? normalizeResult(selectedAttempt) : null;
-  const selectedGradedCount = selectedStudent?.attempts.filter(isAutoGradedAttempt).length ?? 0;
+
+  useEffect(() => {
+    const imageRef = selectedAttempt?.answer_image_url;
+    if (!imageRef || !supabase || !isAdmin) {
+      setSelectedAnswerImageUrl(null);
+      return;
+    }
+
+    let mounted = true;
+    void createStudentWorkSignedUrl(supabase, imageRef).then(({ signedUrl, error: signedError }) => {
+      if (!mounted) return;
+      if (signedError) {
+        console.error('Unable to sign student work image:', signedError);
+        setSelectedAnswerImageUrl(null);
+        return;
+      }
+      setSelectedAnswerImageUrl(signedUrl);
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, [isAdmin, selectedAttempt?.answer_image_url, supabase]);
+  const selectedGradedCount = selectedStudent?.attempts.filter((attempt) => isAutoGradedAttempt(attempt, adminPracticeSets)).length ?? 0;
   const selectedAccuracy = selectedGradedCount ? Math.round((selectedStudent!.correct / selectedGradedCount) * 100) : 0;
 
   if (!authEnabled) return null;
@@ -327,7 +370,7 @@ export const AdminSection: React.FC = () => {
             <div className="text-[10px] uppercase tracking-widest text-slate-500">{t.admin.accuracy}</div>
             <div className="mt-1 text-xl font-semibold sm:text-2xl">
               {(() => {
-                const graded = attempts.filter(isAutoGradedAttempt);
+                const graded = attempts.filter((attempt) => isAutoGradedAttempt(attempt, adminPracticeSets));
                 return graded.length ? Math.round((graded.filter((attempt) => attempt.is_correct).length / graded.length) * 100) : 0;
               })()}%
             </div>
@@ -589,16 +632,16 @@ export const AdminSection: React.FC = () => {
                       ) : (
                         <div className="rounded-lg border border-line bg-surface-muted p-4">
                           <div className="mb-2 text-xs uppercase tracking-widest text-slate-500">{t.admin.studentAnswer}</div>
-                          {selectedAttempt?.answer_image_url ? (
+                          {selectedAttempt?.answer_image_url && selectedAnswerImageUrl ? (
                             <a
-                              href={selectedAttempt.answer_image_url}
+                              href={selectedAnswerImageUrl}
                               target="_blank"
                               rel="noreferrer"
                               className="block overflow-hidden rounded-lg border border-line bg-white"
                               title={language === 'zh' ? '点击放大查看' : 'Click to open full size'}
                             >
                               <img
-                                src={selectedAttempt.answer_image_url}
+                                src={selectedAnswerImageUrl}
                                 alt={language === 'zh' ? '学生答案图片' : 'Student answer image'}
                                 className="max-h-[480px] w-full object-contain"
                               />

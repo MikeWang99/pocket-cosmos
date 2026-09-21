@@ -1,17 +1,23 @@
-import App from '@/src/App';
-
-const validTabs = new Set(['home', 'curriculum', 'practice', 'homework', 'admin']);
-
-const normalizeInitialTab = (value: string | string[] | undefined) => {
-  const tab = Array.isArray(value) ? value[0] : value;
-  return tab && validTabs.has(tab) ? tab : 'home';
-};
+import { redirect } from 'next/navigation';
+import { buildAppPath, normalizeAppTab } from '@/src/routing';
 
 export default async function HomePage({
   searchParams,
 }: {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const resolvedSearchParams = searchParams ? await searchParams : {};
-  return <App initialTab={normalizeInitialTab(resolvedSearchParams.tab)} />;
+  const params = searchParams ? await searchParams : {};
+  const rawTab = Array.isArray(params.tab) ? params.tab[0] : params.tab;
+  const tab = normalizeAppTab(rawTab ?? null);
+
+  const query = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (key === 'tab' || value == null) return;
+    const first = Array.isArray(value) ? value[0] : value;
+    if (first) query.set(key, first);
+  });
+
+  const path = buildAppPath(tab, 'en');
+  const suffix = query.toString();
+  redirect(suffix ? `${path}?${suffix}` : path);
 }

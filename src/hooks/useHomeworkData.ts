@@ -19,7 +19,7 @@ import type {
   HomeworkAttempt,
   HomeworkProfile,
 } from '../homework/types';
-import { findPracticeSet, isSupabaseUuid } from '../homework/catalog';
+import { isSupabaseUuid } from '../homework/catalog';
 import { getSupabaseClient } from '../lib/supabaseClient';
 import type { EvaluationResult } from '../types/practice';
 
@@ -257,19 +257,15 @@ export const useHomeworkData = () => {
           createdAt: timestamp,
           updatedAt: timestamp,
           studentIds: input.studentIds,
-          items: input.items.map((item, position) => {
-            const set = findPracticeSet(item.practiceSetId);
-            const step = set?.steps.find((candidate) => candidate.id === item.questionId);
-            return {
-              id: `${id}-item-${position + 1}`,
-              assignmentId: id,
-              position,
-              practiceSetId: item.practiceSetId,
-              questionId: item.questionId,
-              practiceSetTitle: set?.title,
-              questionTitle: step?.title,
-            };
-          }),
+          items: input.items.map((item, position) => ({
+            id: `${id}-item-${position + 1}`,
+            assignmentId: id,
+            position,
+            practiceSetId: item.practiceSetId,
+            questionId: item.questionId,
+            practiceSetTitle: item.practiceSetTitle,
+            questionTitle: item.questionTitle,
+          })),
         };
         const next = [assignment, ...assignments];
         setAssignments(next);
@@ -287,52 +283,63 @@ export const useHomeworkData = () => {
           error: 'Select at least one valid student before publishing.',
         };
       }
-      const { data, error: assignmentError } = await supabase
-        .from('assignments')
-        .insert({
-          title: input.title,
-          description: input.description,
-          status: input.status,
-          source_type: input.sourceType,
-          due_at: input.dueAt,
-          published_at: input.status === 'published' ? new Date().toISOString() : null,
-          assigned_to_all: input.assignedToAll,
-          ai_instruction: input.aiInstruction ?? null,
-          created_by: user.id,
-        })
-        .select('id, title, description, status, source_type, due_at, published_at, assigned_to_all, ai_instruction, created_at, updated_at')
-        .single();
-      if (assignmentError || !data) return { assignment: null, error: assignmentError?.message ?? 'Unable to create assignment.' };
+      const itemRows = input.items.map((item, position) => ({
+        position,
+        practice_set_id: item.practiceSetId,
+        question_id: item.questionId,
+        practice_set_title: item.practiceSetTitle ?? item.practiceSetId,
+        question_title: item.questionTitle ?? item.questionId,
+      }));
 
-      const assignmentId = (data as AssignmentRow).id;
-      const itemRows = input.items.map((item, position) => {
-        const set = findPracticeSet(item.practiceSetId);
-        const step = set?.steps.find((candidate) => candidate.id === item.questionId);
+      const { data: assignmentId, error: createError } = await supabase.rpc(
+        'create_homework_assignment',
+        {
+          p_title: input.title,
+          p_description: input.description,
+          p_status: input.status,
+          p_source_type: input.sourceType,
+          p_due_at: input.dueAt,
+          p_assigned_to_all: input.assignedToAll,
+          p_ai_instruction: input.aiInstruction ?? null,
+          p_items: itemRows,
+          p_student_ids: validStudentIds,
+        },
+      );
+
+      if (createError || !assignmentId) {
         return {
-          assignment_id: assignmentId,
-          position,
-          practice_set_id: item.practiceSetId,
-          question_id: item.questionId,
-          practice_set_title: set?.title ?? item.practiceSetId,
-          question_title: step?.title ?? item.questionId,
+          assignment: null,
+          error: createError?.message ?? 'Unable to create assignment.',
         };
-      });
-      const { error: itemError } = await supabase.from('assignment_items').insert(itemRows);
-      if (itemError) {
-        await supabase.from('assignments').delete().eq('id', assignmentId);
-        return { assignment: null, error: itemError.message };
       }
-      if (!input.assignedToAll && validStudentIds.length) {
-        const { error: studentError } = await supabase.from('assignment_students').insert(
-          validStudentIds.map((studentId) => ({ assignment_id: assignmentId, student_id: studentId })),
-        );
-        if (studentError) {
-          await supabase.from('assignments').delete().eq('id', assignmentId);
-          return { assignment: null, error: studentError.message };
-        }
-      }
+
+      const now = new Date().toISOString();
+      const assignment: HomeworkAssignment = {
+        id: assignmentId as string,
+        title: input.title,
+        description: input.description,
+        status: input.status,
+        sourceType: input.sourceType,
+        dueAt: input.dueAt,
+        publishedAt: input.status === 'published' ? now : null,
+        assignedToAll: input.assignedToAll,
+        aiInstruction: input.aiInstruction ?? null,
+        createdAt: now,
+        updatedAt: now,
+        studentIds: validStudentIds,
+        items: itemRows.map((item, position) => ({
+          id: `${assignmentId}-item-${position + 1}`,
+          assignmentId: assignmentId as string,
+          position,
+          practiceSetId: item.practice_set_id,
+          questionId: item.question_id,
+          practiceSetTitle: item.practice_set_title,
+          questionTitle: item.question_title,
+        })),
+      };
+
       await refresh();
-      return { assignment: normalizeAssignment(data as AssignmentRow), error: null };
+      return { assignment, error: null };
     },
     [assignments, demoMode, isAdmin, refresh, supabase, user],
   );
@@ -358,19 +365,15 @@ export const useHomeworkData = () => {
           aiInstruction: input.aiInstruction ?? null,
           updatedAt: timestamp,
           studentIds: input.assignedToAll ? [] : input.studentIds,
-          items: input.items.map((item, position) => {
-            const set = findPracticeSet(item.practiceSetId);
-            const step = set?.steps.find((candidate) => candidate.id === item.questionId);
-            return {
-              id: `${assignmentId}-item-${position + 1}`,
-              assignmentId,
-              position,
-              practiceSetId: item.practiceSetId,
-              questionId: item.questionId,
-              practiceSetTitle: set?.title,
-              questionTitle: step?.title,
-            };
-          }),
+          items: input.items.map((item, position) => ({
+            id: `${assignmentId}-item-${position + 1}`,
+            assignmentId,
+            position,
+            practiceSetId: item.practiceSetId,
+            questionId: item.questionId,
+            practiceSetTitle: item.practiceSetTitle,
+            questionTitle: item.questionTitle,
+          })),
         };
         const next = assignments.map((assignment) => assignment.id === assignmentId ? updated : assignment);
         setAssignments(next);
@@ -388,64 +391,35 @@ export const useHomeworkData = () => {
         return { assignment: null, error: 'Select at least one valid student.' };
       }
 
-      const itemRows = input.items.map((item, position) => {
-        const set = findPracticeSet(item.practiceSetId);
-        const step = set?.steps.find((candidate) => candidate.id === item.questionId);
-        return {
-          assignment_id: assignmentId,
-          position,
-          practice_set_id: item.practiceSetId,
-          question_id: item.questionId,
-          practice_set_title: set?.title ?? item.practiceSetId,
-          question_title: step?.title ?? item.questionId,
-        };
+      const itemRows = input.items.map((item, position) => ({
+        position,
+        practice_set_id: item.practiceSetId,
+        question_id: item.questionId,
+        practice_set_title: item.practiceSetTitle ?? item.practiceSetId,
+        question_title: item.questionTitle ?? item.questionId,
+      }));
+
+      const { error: updateError } = await supabase.rpc('update_draft_assignment', {
+        p_assignment_id: assignmentId,
+        p_title: input.title,
+        p_description: input.description,
+        p_status: input.status,
+        p_source_type: input.sourceType,
+        p_due_at: input.dueAt,
+        p_assigned_to_all: input.assignedToAll,
+        p_ai_instruction: input.aiInstruction ?? null,
+        p_items: itemRows,
+        p_student_ids: validStudentIds,
       });
 
-      const { error: deleteItemsError } = await supabase.from('assignment_items').delete().eq('assignment_id', assignmentId);
-      if (deleteItemsError) return { assignment: null, error: deleteItemsError.message };
-      const { error: insertItemsError } = await supabase.from('assignment_items').insert(itemRows);
-      if (insertItemsError) {
-        const restoreRows = existing.items.map((item, position) => ({
-          assignment_id: assignmentId,
-          position,
-          practice_set_id: item.practiceSetId,
-          question_id: item.questionId,
-          practice_set_title: item.practiceSetTitle ?? item.practiceSetId,
-          question_title: item.questionTitle ?? item.questionId,
-        }));
-        if (restoreRows.length) await supabase.from('assignment_items').insert(restoreRows);
-        return { assignment: null, error: insertItemsError.message };
+      if (updateError) {
+        // Preview can be connected to a database before this additive RPC
+        // migration lands. Never fall back to the old multi-write flow.
+        return { assignment: null, error: updateError.message };
       }
-
-      const { error: deleteStudentsError } = await supabase.from('assignment_students').delete().eq('assignment_id', assignmentId);
-      if (deleteStudentsError) return { assignment: null, error: deleteStudentsError.message };
-      if (!input.assignedToAll) {
-        const { error: insertStudentsError } = await supabase.from('assignment_students').insert(
-          validStudentIds.map((studentId) => ({ assignment_id: assignmentId, student_id: studentId })),
-        );
-        if (insertStudentsError) return { assignment: null, error: insertStudentsError.message };
-      }
-
-      // Keep the assignment in draft while its questions and audience are replaced.
-      // Publishing is the final write so students can never see a partially updated assignment.
-      const { error: metadataError } = await supabase
-        .from('assignments')
-        .update({
-          title: input.title,
-          description: input.description,
-          status: input.status,
-          source_type: input.sourceType,
-          due_at: input.dueAt,
-          published_at: input.status === 'published' ? new Date().toISOString() : null,
-          assigned_to_all: input.assignedToAll,
-          ai_instruction: input.aiInstruction ?? null,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', assignmentId)
-        .eq('status', 'draft');
-      if (metadataError) return { assignment: null, error: metadataError.message };
 
       await refresh();
+      const now = new Date().toISOString();
       const updated: HomeworkAssignment = {
         ...existing,
         title: input.title,
@@ -453,7 +427,7 @@ export const useHomeworkData = () => {
         status: input.status,
         sourceType: input.sourceType,
         dueAt: input.dueAt,
-        publishedAt: input.status === 'published' ? new Date().toISOString() : null,
+        publishedAt: input.status === 'published' ? now : null,
         assignedToAll: input.assignedToAll,
         aiInstruction: input.aiInstruction ?? null,
         studentIds: validStudentIds,
@@ -466,7 +440,7 @@ export const useHomeworkData = () => {
           practiceSetTitle: item.practice_set_title,
           questionTitle: item.question_title,
         })),
-        updatedAt: new Date().toISOString(),
+        updatedAt: now,
       };
       return { assignment: updated, error: null };
     },
@@ -518,9 +492,11 @@ export const useHomeworkData = () => {
       maxScore: number;
       isCorrect: boolean;
       result: EvaluationResult;
+      assignmentId?: string;
+      practiceSetTitle?: string;
+      questionTitle?: string;
+      tags?: string[];
     }) => {
-      const set = findPracticeSet(input.practiceSetId);
-      const step = set?.steps.find((candidate) => candidate.id === input.questionId);
       const attempt: HomeworkAttempt = {
         studentId: currentStudentId,
         studentEmail: user?.email ?? 'eden@example.com',
@@ -553,14 +529,14 @@ export const useHomeworkData = () => {
           student_id: user.id,
           student_email: user.email ?? null,
           practice_set_id: input.practiceSetId,
-          practice_set_title: set?.title ?? input.practiceSetId,
+          practice_set_title: input.practiceSetTitle ?? input.practiceSetId,
           question_id: input.questionId,
-          question_title: step?.title ?? input.questionId,
+          question_title: input.questionTitle ?? input.questionId,
           answer: input.answer,
           score: input.score,
           max_score: input.maxScore,
           is_correct: input.isCorrect,
-          tags: step?.tags ?? [],
+          tags: input.tags ?? [],
           result: input.result,
           updated_at: attempt.updatedAt,
         },
@@ -578,6 +554,23 @@ export const useHomeworkData = () => {
           ),
           attempt,
         ]);
+
+        const { error: historyError } = await supabase.from('practice_attempt_events').insert({
+          student_id: user.id,
+          practice_set_id: input.practiceSetId,
+          question_id: input.questionId,
+          assignment_id: input.assignmentId ?? null,
+          answer: input.answer,
+          score: input.score,
+          max_score: input.maxScore,
+          is_correct: input.isCorrect,
+          tags: input.tags ?? [],
+          result: input.result,
+          submitted_at: attempt.updatedAt,
+        });
+        if (historyError && historyError.code !== '42P01') {
+          console.warn('Unable to append homework attempt history:', historyError);
+        }
       }
       return saveError?.message ?? null;
     },
