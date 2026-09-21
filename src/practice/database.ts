@@ -6,7 +6,12 @@ import type { PracticeStep } from '../types/practice';
 const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
 const serviceRoleKey =
   process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY;
-const normalizedPracticeReadsEnabled = process.env.QUESTION_DB_READS_ENABLED === 'true';
+const normalizedPracticeReadsEnabled =
+  process.env.QUESTION_DB_READS_ENABLED === 'true' ||
+  (
+    process.env.VERCEL_ENV === 'preview' &&
+    process.env.QUESTION_DB_READS_ENABLED !== 'false'
+  );
 const SIGNED_ASSET_TTL_SECONDS = 60 * 60;
 
 const createServiceClient = () => {
