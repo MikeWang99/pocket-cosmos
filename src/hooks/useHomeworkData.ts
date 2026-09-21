@@ -41,6 +41,7 @@ interface AssignmentRow {
     position: number;
     practice_set_id: string;
     question_id: string;
+    question_version_id: string | null;
     practice_set_title: string | null;
     question_title: string | null;
   }>;
@@ -95,6 +96,7 @@ const normalizeAssignment = (row: AssignmentRow): HomeworkAssignment => ({
       position: item.position,
       practiceSetId: item.practice_set_id,
       questionId: item.question_id,
+      questionVersionId: item.question_version_id ?? undefined,
       practiceSetTitle: item.practice_set_title ?? undefined,
       questionTitle: item.question_title ?? undefined,
     })),
@@ -175,7 +177,7 @@ export const useHomeworkData = () => {
     const assignmentQuery = supabase
       .from('assignments')
       .select(
-        'id, title, description, status, source_type, due_at, published_at, assigned_to_all, ai_instruction, created_at, updated_at, assignment_items(id, assignment_id, position, practice_set_id, question_id, practice_set_title, question_title), assignment_students(student_id)',
+        'id, title, description, status, source_type, due_at, published_at, assigned_to_all, ai_instruction, created_at, updated_at, assignment_items(id, assignment_id, position, practice_set_id, question_id, question_version_id, practice_set_title, question_title), assignment_students(student_id)',
       )
       .order('created_at', { ascending: false });
 
