@@ -17,13 +17,13 @@ import {
   Tag,
   Target,
 } from 'lucide-react';
-import { practiceSets, type PracticeSet } from '../data/practiceSets';
 import { PRACTICE_LABELS, type EvaluationResult, type PracticeLabel, type PracticeStep } from '../types/practice';
 import { evaluateLocally } from '../utils/rubricScoring';
 import { useLanguage } from '../LanguageContext';
 import { useAuth } from '../auth/AuthContext';
 import { usePracticeProgress, type SavedPracticeAttempt } from '../hooks/usePracticeProgress';
 import { usePracticePermissions } from '../hooks/usePracticePermissions';
+import { usePracticeCatalog, usePracticeSet } from '../hooks/usePracticeCatalog';
 import { usePracticeLabels } from '../hooks/usePracticeLabels';
 import { StudentWorkUpload } from './StudentWorkUpload';
 import { QuestionPrompt } from './QuestionPrompt';
@@ -45,7 +45,6 @@ import {
 import {
   buildPracticeShareUrl,
   copyTextToClipboard,
-  getSafePracticeSelection,
   PUBLIC_SAMPLE_LIMIT,
   PUBLIC_SAMPLE_SET_ID,
   readPracticeSelectionFromUrl,
@@ -86,12 +85,17 @@ export const PracticeSection: React.FC = () => {
   const { language, t } = useLanguage();
   const { authEnabled, configured, isAdmin, user } = useAuth();
   const { hasAccess } = usePracticePermissions();
-  const initialSelection = useMemo(() => getSafePracticeSelection(
-    readPracticeSelectionFromUrl().setId,
-    readPracticeSelectionFromUrl().questionId,
-  ), []);
+  const initialSelection = useMemo(() => readPracticeSelectionFromUrl(), []);
+  const { sets: practiceCatalog } = usePracticeCatalog();
   const [activeSetId, setActiveSetId] = useState(initialSelection.setId);
-  const [activeIndex, setActiveIndex] = useState(initialSelection.index);
+  const [requestedQuestionId, setRequestedQuestionId] = useState(initialSelection.questionId);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const {
+    set: loadedSet,
+    access: loadedAccess,
+    loading: setLoading,
+    error: setLoadError,
+  } = usePracticeSet(activeSetId);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [answerImages, setAnswerImages] = useState<Record<string, string>>({});
   // True while the answer image is still compressing/uploading, so the submit
@@ -107,11 +111,16 @@ export const PracticeSection: React.FC = () => {
   const { resetSavedAttempts, savedAttempts, saveAttempt, syncError, syncState } = usePracticeProgress(activeSetId);
   const { labelsByQuestion, getLabels, toggleLabel } = usePracticeLabels();
 
-  const activeSet = practiceSets.find((set) => set.id === activeSetId) ?? practiceSets[0];
-  const hasFullAccess = hasAccess(activeSet.system);
-  const sampleMode = !user && !hasFullAccess && activeSet.id === PUBLIC_SAMPLE_SET_ID;
-  const activeSetAccessible = hasFullAccess || sampleMode;
-  const practiceSetMeta = activeSet;
+  const activeMeta =
+    practiceCatalog.find((set) => set.id === activeSetId) ??
+    practiceCatalog.find((set) => set.id === PUBLIC_SAMPLE_SET_ID) ??
+    practiceCatalog[0] ??
+    null;
+  const activeSet = loadedSet;
+  const hasFullAccess = loadedAccess === 'full';
+  const sampleMode = loadedAccess === 'sample';
+  const activeSetAccessible = loadedAccess !== 'locked' && Boolean(activeSet);
+  const practiceSetMeta = activeSet ?? activeMeta;
   const getSetCopy = (setId: string) => {
     if (setId === 'calculus-for-physics') return t.practice.sets.calculusForPhysics;
     if (setId === 'frq-2025-mechanics') return t.practice.sets.frq2025;
@@ -130,31 +139,31 @@ export const PracticeSection: React.FC = () => {
     if (setId === 'igcse-cie-ch1-topic-1-7') return t.practice.sets.igcseTopic17;
     if (setId === 'igcse-cie-ch1-topic-1-8') return t.practice.sets.igcseTopic18;
     // New IGCSE all-topic sets: use the set's own label/title
-    const matchedSet = practiceSets.find((s) => s.id === setId);
+    const matchedSet = practiceCatalog.find((s) => s.id === setId);
     if (matchedSet) {
       return { label: matchedSet.label, title: matchedSet.title, eyebrow: matchedSet.eyebrow, subtitle: matchedSet.subtitle, description: matchedSet.description };
     }
     return t.practice.sets.kinematicsMultipleChoice;
   };
-  const setCopy = getSetCopy(activeSet.id);
-  const isIgcseSet = activeSet.category === 'igcse';
-  const activePracticeKind = inferPracticeKind(activeSet);
+  const setCopy = getSetCopy(activeSetId);
+  const isIgcseSet = (activeSet ?? activeMeta)?.category === 'igcse';
+  const activePracticeKind = activeSet ? inferPracticeKind(activeSet) : activeMeta ? inferPracticeKind(activeMeta) : 'mcq';
   const supportsDifficultyFilter =
     activePracticeKind === 'mcq' &&
-    activeSet.steps.some((step) => Number.isFinite(step.difficulty) || step.tags?.some((tag) => tag.startsWith('Difficulty ')));
-  const supportsSpecialtyFilter = activeSet.system === 'competition' && activeSet.steps.some((step) => (step.specialtyTags?.length ?? 0) > 0);
-  const supportsLabelFilter = isAdmin && activeSet.steps.length > 0;
+    Boolean(activeSet?.steps.some((step) => Number.isFinite(step.difficulty) || step.tags?.some((tag) => tag.startsWith('Difficulty '))));
+  const supportsSpecialtyFilter = activeSet?.system === 'competition' && activeSet.steps.some((step) => (step.specialtyTags?.length ?? 0) > 0);
+  const supportsLabelFilter = isAdmin && Boolean(activeSet?.steps.length);
   const specialtyOptions = useMemo(() => {
     const labels = new Set<string>();
-    activeSet.steps.forEach((step) => step.specialtyTags?.forEach((label) => labels.add(label)));
+    activeSet?.steps.forEach((step) => step.specialtyTags?.forEach((label) => labels.add(label)));
     return [...labels].sort((a, b) => a.localeCompare(b));
-  }, [activeSet.steps]);
+  }, [activeSet?.steps]);
 
   // Filter any indexed MCQ bank by its normalized 1–5 difficulty value.
   const practiceSteps = useMemo(() => {
-    const filtered = activeSet.steps.filter((step) => {
+    const filtered = (activeSet?.steps ?? []).filter((step) => {
       if (supportsSpecialtyFilter && specialtyFilter !== 'all' && !step.specialtyTags?.includes(specialtyFilter)) return false;
-      if (supportsLabelFilter && labelFilter !== 'all' && !labelsByQuestion[`${activeSet.id}:${step.id}`]?.includes(labelFilter)) return false;
+      if (supportsLabelFilter && labelFilter !== 'all' && !labelsByQuestion[`${activeSetId}:${step.id}`]?.includes(labelFilter)) return false;
       if (!supportsDifficultyFilter || difficultyFilter === 'all') return true;
       const diffTag = step.tags?.find((tag) => tag.startsWith('Difficulty '));
       const taggedLevel = diffTag
@@ -168,8 +177,8 @@ export const PracticeSection: React.FC = () => {
       return true;
     });
 
-    return sampleMode ? filtered.slice(0, PUBLIC_SAMPLE_LIMIT) : filtered;
-  }, [activeSet.id, activeSet.steps, labelsByQuestion, supportsDifficultyFilter, difficultyFilter, supportsSpecialtyFilter, specialtyFilter, supportsLabelFilter, labelFilter, sampleMode]);
+    return filtered;
+  }, [activeSet?.steps, activeSetId, labelsByQuestion, supportsDifficultyFilter, difficultyFilter, supportsSpecialtyFilter, specialtyFilter, supportsLabelFilter, labelFilter]);
 
   // Map "Difficulty N" tag to display label
   const formatTag = (tag: string): string => {
@@ -192,7 +201,7 @@ export const PracticeSection: React.FC = () => {
   // applied. Keep the heading in lockstep with that sequence; source-paper
   // numbering is intentionally hidden from the practice UI.
   const activeDisplayTitle = activeStep
-    ? activeSet.system === 'competition'
+    ? (activeSet ?? activeMeta)?.system === 'competition'
       ? `Question ${activeIndex + 1}`
       : activeStep.title
     : '';
@@ -207,7 +216,7 @@ export const PracticeSection: React.FC = () => {
   const currentAnswer = activeStep ? (answers[activeStep.id] ?? '') : '';
   const currentAnswerImage = activeStep ? (answerImages[activeStep.id] ?? null) : null;
   const currentResult = activeStep ? results[activeStep.id] : undefined;
-  const activeLabels = activeStep ? getLabels(activeSet.id, activeStep.id) : [];
+  const activeLabels = activeStep ? getLabels(activeSetId, activeStep.id) : [];
   const practiceLabelCopy: Record<PracticeLabel, string> = language === 'zh'
     ? {
         high_difficulty: t.practice.questionLabels.highDifficulty,
@@ -252,12 +261,12 @@ export const PracticeSection: React.FC = () => {
         apCEm: t.practice.tree.apCEm,
         competition: t.practice.tree.competition,
         igcse: t.practice.tree.igcse,
-      }),
-    [language, t],
+      }, practiceCatalog),
+    [language, practiceCatalog, t],
   );
 
   // The tree starts open around the active shared link, but otherwise stays compact.
-  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(() => getInitialExpandedNodes(initialSelection.setId));
+  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
   const toggleNode = (nodeId: string) => {
     setExpandedNodes((prev) => {
       const next = new Set(prev);
@@ -272,11 +281,38 @@ export const PracticeSection: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    if (!practiceCatalog.length) return;
+    const resolvedMeta =
+      practiceCatalog.find((set) => set.id === activeSetId) ??
+      practiceCatalog.find((set) => set.id === PUBLIC_SAMPLE_SET_ID) ??
+      practiceCatalog[0];
+    if (resolvedMeta.id !== activeSetId) {
+      setActiveSetId(resolvedMeta.id);
+      setRequestedQuestionId(null);
+      setActiveIndex(0);
+    }
+    setExpandedNodes((previous) => {
+      const next = new Set(previous);
+      getInitialExpandedNodes(resolvedMeta.id, practiceCatalog).forEach((node) => next.add(node));
+      return next;
+    });
+  }, [activeSetId, practiceCatalog]);
+
+  useEffect(() => {
+    if (!activeSet?.steps.length) return;
+    const requestedIndex = requestedQuestionId
+      ? activeSet.steps.findIndex((step) => step.id === requestedQuestionId)
+      : -1;
+    setActiveIndex(requestedIndex >= 0 ? requestedIndex : 0);
+    setRequestedQuestionId(null);
+  }, [activeSet?.id, requestedQuestionId]);
+
+  useEffect(() => {
     const handlePopState = () => {
       const next = readPracticeSelectionFromUrl();
-      const safe = getSafePracticeSelection(next.setId, next.questionId);
-      setActiveSetId(safe.setId);
-      setActiveIndex(safe.index);
+      setActiveSetId(next.setId);
+      setRequestedQuestionId(next.questionId);
+      setActiveIndex(0);
       setShareCopied(false);
     };
 
@@ -286,8 +322,8 @@ export const PracticeSection: React.FC = () => {
 
   useEffect(() => {
     if (!activeStep) return;
-    updatePracticeUrl(activeSet.id, activeStep.id, 'replace');
-  }, [activeSet.id, activeStep?.id]);
+    updatePracticeUrl(activeSetId, activeStep.id, 'replace');
+  }, [activeSetId, activeStep?.id]);
 
   // #10: Keyboard navigation support
   useEffect(() => {
@@ -365,7 +401,7 @@ export const PracticeSection: React.FC = () => {
     setResults((previous) => ({ ...previous, [activeStep.id]: result }));
 
     void saveAttempt({
-      practiceSetId: activeSet.id,
+      practiceSetId: activeSetId,
       practiceSetTitle: setCopy.title,
       questionId: activeStep.id,
       questionTitle: activeStep.title,
@@ -457,7 +493,7 @@ export const PracticeSection: React.FC = () => {
     setWorkUploadBusy(false);
     const nextIndex = Math.min(Math.max(index, 0), practiceSteps.length - 1);
     setActiveIndex(nextIndex);
-    updatePracticeUrl(activeSet.id, practiceSteps[nextIndex].id);
+    updatePracticeUrl(activeSetId, practiceSteps[nextIndex].id);
   };
 
   const selectPracticeSet = (setId: string) => {
@@ -468,12 +504,14 @@ export const PracticeSection: React.FC = () => {
     setDifficultyFilter('all');
     setSpecialtyFilter('all');
     setLabelFilter('all');
-    const nextSet = practiceSets.find((set) => set.id === setId) ?? practiceSets[0];
-    setActiveSetId(setId);
+    const nextSet = practiceCatalog.find((set) => set.id === setId);
+    if (!nextSet) return;
+    setActiveSetId(nextSet.id);
+    setRequestedQuestionId(null);
     setAnswers({});
     setResults({});
     setActiveIndex(0);
-    updatePracticeUrl(nextSet.id, nextSet.steps[0]?.id ?? '');
+    updatePracticeUrl(nextSet.id, '');
     // Auto-expand tree to show selected set
     setExpandedNodes((prev) => {
       const next = new Set(prev);
@@ -499,8 +537,8 @@ export const PracticeSection: React.FC = () => {
     setDifficultyFilter('all');
     setSpecialtyFilter('all');
     setLabelFilter('all');
-    const firstStep = practiceSteps[0] ?? activeSet.steps[0];
-    if (firstStep) updatePracticeUrl(activeSet.id, firstStep.id, 'replace');
+    const firstStep = practiceSteps[0] ?? activeSet?.steps[0];
+    if (firstStep) updatePracticeUrl(activeSetId, firstStep.id, 'replace');
     resetSavedAttempts();
   };
 
@@ -522,11 +560,11 @@ export const PracticeSection: React.FC = () => {
   const handleToggleLabel = (label: PracticeLabel) => {
     if (!activeStep) return;
     if (labelFilter !== 'all' && label === labelFilter) setActiveIndex(0);
-    void toggleLabel(activeSet.id, activeStep.id, label);
+    void toggleLabel(activeSetId, activeStep.id, label);
   };
 
   const copyCurrentQuestionLink = async () => {
-    const shareUrl = buildPracticeShareUrl(activeSet.id, activeStep.id);
+    const shareUrl = buildPracticeShareUrl(activeSetId, activeStep.id);
     if (!shareUrl) return;
 
     await copyTextToClipboard(shareUrl);
