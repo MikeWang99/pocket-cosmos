@@ -1,7 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { getPracticeSetById } from '@/src/practice/server';
-import { getPinnedPracticeSteps } from '@/src/practice/database';
+import {
+  getPinnedPracticeSteps,
+  practiceStepFromMetadata,
+} from '@/src/practice/database';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -45,11 +48,42 @@ export async function GET(
   const pinnedIds = (rows ?? [])
     .map((row) => row.question_version_id as string | null)
     .filter((id): id is string => Boolean(id));
-  const pinnedSteps = pinnedIds.length ? await getPinnedPracticeSteps(pinnedIds) : new Map();
 
-  // Once an assignment is pinned, never silently fall back to mutable source
-  // code. Missing service-role configuration or a missing immutable version is
-  // an operational error and should be surfaced instead.
+  let pinnedSteps = pinnedIds.length ? await getPinnedPracticeSteps(pinnedIds) : new Map();
+
+  // If the deployment has no server-side Supabase secret, use the authorized
+  // SECURITY DEFINER RPC. It independently verifies the learner can see the
+  // assignment before returning immutable question metadata.
+  if (pinnedIds.length && !pinnedSteps) {
+    const { data: pinnedRows, error: pinnedError } = await supabase.rpc(
+      'get_authorized_assignment_question_steps',
+      { p_assignment_id: assignmentId },
+    );
+
+    if (pinnedError) {
+      return NextResponse.json(
+        { error: pinnedError.message },
+        { status: pinnedError.code === '42501' ? 403 : 503 },
+      );
+    }
+
+    pinnedSteps = new Map();
+    for (const row of (pinnedRows ?? []) as Array<{
+      item_id: string;
+      sort_position: number;
+      question_version_id: string | null;
+      metadata: unknown;
+    }>) {
+      if (!row.question_version_id) continue;
+      const step = practiceStepFromMetadata(row.metadata);
+      if (!step) continue;
+      pinnedSteps.set(row.question_version_id, {
+        ...step,
+        questionVersionId: row.question_version_id,
+      });
+    }
+  }
+
   if (pinnedIds.length && !pinnedSteps) {
     return NextResponse.json(
       { error: 'Immutable homework versions are not available in this deployment.' },
