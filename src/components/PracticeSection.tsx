@@ -26,6 +26,7 @@ import { useAuth } from '../auth/AuthContext';
 import { usePracticeProgress, type SavedPracticeAttempt } from '../hooks/usePracticeProgress';
 import { usePracticePermissions } from '../hooks/usePracticePermissions';
 import { usePracticeLabels } from '../hooks/usePracticeLabels';
+import { AuthStatusButton } from './AuthStatusButton';
 import { StudentWorkUpload } from './StudentWorkUpload';
 import { QuestionPrompt } from './QuestionPrompt';
 import { isLongChoice, MathText } from './MathText';
@@ -1301,6 +1302,14 @@ export const PracticeSection: React.FC = () => {
             <Sparkles className="h-4 w-4" />
             {language === 'zh' ? '免费试做 5 题' : 'Try 5 sample questions'}
           </button>
+          {authEnabled && (
+            <div className="mt-2 flex flex-col items-center gap-2 border-t border-line pt-4">
+              <span className="text-xs text-ink-muted">
+                {language === 'zh' ? '已有学生账号？登录后检查课程权限。' : 'Already a student? Sign in to check your course access.'}
+              </span>
+              <AuthStatusButton />
+            </div>
+          )}
         </div>
       ) : (
       <div className="grid gap-4 lg:grid-cols-[185px_minmax(0,1fr)] lg:gap-5 xl:grid-cols-[200px_minmax(0,1fr)]">
