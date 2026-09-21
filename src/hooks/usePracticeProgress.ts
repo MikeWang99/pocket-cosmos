@@ -36,6 +36,7 @@ interface SavePracticeAttemptInput {
   practiceSetId: string;
   practiceSetTitle: string;
   questionId: string;
+  questionVersionId?: string;
   questionTitle: string;
   answer: string;
   answerImageUrl?: string;
@@ -247,6 +248,7 @@ export const usePracticeProgress = (practiceSetId: string) => {
           practice_set_id: attempt.practiceSetId,
           practice_set_title: attempt.practiceSetTitle,
           question_id: attempt.questionId,
+          question_version_id: attempt.questionVersionId ?? null,
           question_title: attempt.questionTitle,
           answer: attempt.answer,
           answer_image_url: attempt.answerImageUrl ?? null,
@@ -270,6 +272,7 @@ export const usePracticeProgress = (practiceSetId: string) => {
         student_id: user.id,
         practice_set_id: attempt.practiceSetId,
         question_id: attempt.questionId,
+        question_version_id: attempt.questionVersionId ?? null,
         answer: attempt.answer,
         answer_image_ref: attempt.answerImageUrl ?? null,
         score: attempt.score,
