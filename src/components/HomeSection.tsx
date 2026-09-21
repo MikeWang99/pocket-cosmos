@@ -6,9 +6,9 @@ import { AuthStatusButton } from './AuthStatusButton';
 import { ProfileInfoPanel } from './ProfileInfoPanel';
 
 const appLinks = [
-  { id: 'curriculum', icon: BookOpenCheck },
-  { id: 'practice', icon: ClipboardCheck },
-  { id: 'homework', icon: ListChecks },
+  { id: 'curriculum', icon: BookOpenCheck, href: '/knowledge-map' },
+  { id: 'practice', icon: ClipboardCheck, href: '/practice' },
+  { id: 'homework', icon: ListChecks, href: '/homework' },
 ];
 
 export function HomeSection() {
@@ -100,14 +100,14 @@ export function HomeSection() {
 
         <div className="mt-7 flex flex-wrap gap-3">
           <a
-            href="/?tab=curriculum"
+            href="/knowledge-map"
             className="inline-flex min-h-12 items-center gap-2 rounded-full bg-nebula px-5 py-3 text-sm font-semibold text-on-accent transition-transform hover:-translate-y-0.5"
           >
             {content.primaryCta}
             <ArrowRight className="h-4 w-4" />
           </a>
           <a
-            href="/?tab=practice"
+            href="/practice"
             className="inline-flex min-h-12 items-center gap-2 rounded-full border border-line bg-surface px-5 py-3 text-sm font-semibold text-ink transition-colors hover:border-nebula/40 hover:text-nebula"
           >
             {content.secondaryCta}
@@ -132,7 +132,7 @@ export function HomeSection() {
               return (
                 <a
                   key={item.id}
-                  href={`/?tab=${item.id}`}
+                  href={appLinks[index]?.href ?? '/'}
                   className="group rounded-[24px] border border-line bg-surface p-5 transition-transform hover:-translate-y-1"
                 >
                   <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-surface-tint text-nebula">
