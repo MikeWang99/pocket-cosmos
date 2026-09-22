@@ -28,6 +28,7 @@ import type { HomeworkAssignment, ResolvedHomeworkItem } from '../homework/types
 import { useHomeworkData } from '../hooks/useHomeworkData';
 import { useLanguage } from '../LanguageContext';
 import type { EvaluationResult, PracticeStep } from '../types/practice';
+import { AuthStatusButton } from './AuthStatusButton';
 import { HomeworkAdminPanel } from './HomeworkAdminPanel';
 import { QuestionPrompt } from './QuestionPrompt';
 import { repairLatexExpression } from '../utils/latexRepair';
@@ -443,14 +444,45 @@ export const HomeworkSection: React.FC = () => {
   }
 
   if (!demoMode && authEnabled && !user) {
+    const previewFeatures = language === 'zh'
+      ? [
+          { icon: BookOpenCheck, title: '按课堂顺序完成', body: '老师把本次课需要完成的题目整理成一份作业，不需要再到题库里到处寻找。' },
+          { icon: CheckCircle2, title: '与题库进度同步', body: '同一道题在练习或作业中完成后，学习记录会使用同一个学生账号保存。' },
+          { icon: CalendarClock, title: '清楚看到截止时间', body: '每份作业集中展示完成数量、剩余题目和截止日期。' },
+        ]
+      : [
+          { icon: BookOpenCheck, title: 'Work in lesson order', body: 'Your teacher collects the questions for each lesson into one assignment, so there is no need to hunt through the library.' },
+          { icon: CheckCircle2, title: 'Shared practice progress', body: 'Practice and homework use the same student account so completed work stays connected.' },
+          { icon: CalendarClock, title: 'Keep deadlines visible', body: 'Each assignment keeps completion, remaining questions, and due dates together.' },
+        ];
+
     return (
-      <section className="max-w-4xl">
-        <div className="glass-panel rounded-xl p-8 text-center">
+      <section className="max-w-5xl space-y-5">
+        <div className="glass-panel rounded-[28px] p-7 text-center sm:p-9">
           <GraduationCap className="mx-auto h-10 w-10 text-nebula" />
-          <h1 className="mt-4 font-serif text-3xl text-ink">{language === 'zh' ? '登录后查看你的作业' : 'Sign in to view homework'}</h1>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-ink-soft">
-            {language === 'zh' ? '作业、题库和做题状态使用同一个学生账号同步。' : 'Assignments and question-bank progress sync through the same student account.'}
+          <h1 className="mt-4 font-serif text-3xl text-ink sm:text-4xl">
+            {language === 'zh' ? '登录后查看你的作业' : 'Sign in to view your homework'}
+          </h1>
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-ink-soft sm:text-base">
+            {language === 'zh'
+              ? '这里不是另一套独立题库，而是把老师布置的题目、截止时间和你的做题记录串成一个完整流程。'
+              : 'Homework is not a separate question bank. It connects teacher-assigned questions, deadlines, and your existing practice progress into one workflow.'}
           </p>
+          <div className="mt-6 flex justify-center">
+            <AuthStatusButton />
+          </div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          {previewFeatures.map(({ icon: Icon, title, body }) => (
+            <div key={title} className="rounded-2xl border border-line bg-surface p-5">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface-tint text-nebula">
+                <Icon className="h-5 w-5" />
+              </div>
+              <h2 className="mt-4 text-base font-semibold text-ink">{title}</h2>
+              <p className="mt-2 text-sm leading-6 text-ink-soft">{body}</p>
+            </div>
+          ))}
         </div>
       </section>
     );
