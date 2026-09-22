@@ -57,8 +57,11 @@ export function usePracticePermissions() {
       .then(({ data, error }) => {
         if (!mounted) return;
         if (error) {
-          // On error, fail open to avoid locking out users due to infra issues
-          setGrantedSystems(new Set(ALL_SYSTEMS));
+          // Permission checks protect gated learning content. Infrastructure
+          // errors must fail closed rather than accidentally unlocking every
+          // course.
+          console.error('Unable to load practice permissions:', error);
+          setGrantedSystems(new Set());
         } else {
           setGrantedSystems(new Set((data ?? []).map((row: PermissionRow) => row.system)));
         }
