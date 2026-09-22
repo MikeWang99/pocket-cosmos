@@ -15,3 +15,25 @@ outputs/crackap-apc-mechanics-test17/full_explanations.txt
 .vercel
 supabase/.temp/
 tmp/
+
+# Question-bank media belongs in Supabase Storage, not Git.
+# Existing tracked metadata/index JSON files inside these directories remain tracked.
+public/questions/
+public/ap1-u1-question-bank/
+public/ap-physics2-thermodynamics-assets/
+public/apc-em-rc-test16/
+public/apc-mechanics-momentum-test15/
+public/apc-mechanics-rotation-test17/
+public/apc-mechanics-rotation-test5/
+public/apc-mechanics-test16/
+public/dynamics-assets/
+public/fma-2008-assets/
+public/fma-ap-physics1-kinematics-assets/
+public/fma-historical-assets/
+public/fma-v5-assets/
+public/igcse-cie-all-assets/
+public/igcse-cie-ch1-assets/
+public/kinematics-assets/
+public/physicsbowl-em-assets/
+public/work-energy-assets/
+asset-upload-manifest-*.json
