@@ -1,0 +1,162 @@
+name: One-time Git history cleanup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/history-cleanup-trigger
+
+permissions:
+  contents: write
+
+jobs:
+  rewrite-history:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout full repository history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          persist-credentials: true
+
+      - name: Configure Git identity
+        run: |
+          git config user.name "Pocket Cosmos History Cleanup"
+          git config user.email "107355472+MikeWang99@users.noreply.github.com"
+
+      - name: Materialize all remote branches locally
+        run: |
+          git fetch origin '+refs/heads/*:refs/remotes/origin/*' --prune
+          while read -r remote_ref; do
+            branch="${remote_ref#origin/}"
+            if [ "$branch" = "HEAD" ] || [ "$branch" = "main" ]; then
+              continue
+            fi
+            git branch -f "$branch" "$remote_ref"
+          done < <(git for-each-ref --format='%(refname:short)' refs/remotes/origin)
+
+      - name: Create full pre-cleanup backup bundle
+        run: |
+          git bundle create pocket-cosmos-before-history-cleanup.bundle --all
+          ls -lh pocket-cosmos-before-history-cleanup.bundle
+
+      - name: Upload backup bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: pocket-cosmos-before-history-cleanup
+          path: pocket-cosmos-before-history-cleanup.bundle
+          retention-days: 7
+          compression-level: 0
+
+      - name: Install git-filter-repo
+        run: python -m pip install --disable-pip-version-check git-filter-repo
+
+      - name: Remove migrated question media from all reachable history
+        run: |
+          git filter-repo --force --filename-callback '
+          p = filename.lower()
+          exts = (b".png", b".jpg", b".jpeg", b".webp", b".svg", b".gif")
+          prefixes = (
+              b"public/ap-physics2-thermodynamics-assets/",
+              b"public/ap1-u1-question-bank/",
+              b"public/apc-em-rc-test16/",
+              b"public/apc-mechanics-momentum-test15/",
+              b"public/apc-mechanics-rotation-test17/",
+              b"public/apc-mechanics-rotation-test5/",
+              b"public/apc-mechanics-test16/",
+              b"public/dynamics-assets/",
+              b"public/fma-2008-assets/",
+              b"public/fma-ap-physics1-kinematics-assets/",
+              b"public/fma-historical-assets/",
+              b"public/fma-v5-assets/",
+              b"public/igcse-cie-all-assets/",
+              b"public/igcse-cie-ch1-assets/",
+              b"public/kinematics-assets/",
+              b"public/physicsbowl-em-assets/",
+              b"public/work-energy-assets/",
+          )
+          curriculum = (
+              b"public/curriculum-assets/igcse-force-analysis/fbd-01-angled-rope.svg",
+              b"public/curriculum-assets/igcse-force-analysis/fbd-02-stacked-blocks.svg",
+              b"public/curriculum-assets/igcse-force-analysis/fbd-03-block-on-slope.svg",
+              b"public/curriculum-assets/igcse-force-analysis/fbd-04-circular-motion.svg",
+              b"public/curriculum-assets/igcse-force-analysis/fbd-05-lift.svg",
+              b"public/curriculum-assets/igcse-force-analysis/fbd-06-pulley-pair.svg",
+              b"public/curriculum-assets/igcse-force-analysis/fbd-07-skydiver.svg",
+              b"public/curriculum-assets/igcse-force-analysis/fbd-08-pulled-up-slope.svg",
+              b"public/curriculum-assets/igcse-force-analysis/fbd-09-picture-strings.svg",
+              b"public/curriculum-assets/igcse-force-analysis/fbd-10-book-wall.svg",
+          )
+          if p.startswith(b"public/questions/"):
+              return None
+          if p.startswith(prefixes) and p.endswith(exts):
+              return None
+          if p in curriculum:
+              return None
+          return filename
+          '
+
+      - name: Verify cleaned current tree
+        run: |
+          git ls-tree -r --name-only main > /tmp/main-tree.txt
+          python - <<'PY'
+          from pathlib import Path
+
+          paths = Path("/tmp/main-tree.txt").read_text().splitlines()
+          exts = (".png", ".jpg", ".jpeg", ".webp", ".svg", ".gif")
+          prefixes = (
+              "public/ap-physics2-thermodynamics-assets/",
+              "public/ap1-u1-question-bank/",
+              "public/apc-em-rc-test16/",
+              "public/apc-mechanics-momentum-test15/",
+              "public/apc-mechanics-rotation-test17/",
+              "public/apc-mechanics-rotation-test5/",
+              "public/apc-mechanics-test16/",
+              "public/dynamics-assets/",
+              "public/fma-2008-assets/",
+              "public/fma-ap-physics1-kinematics-assets/",
+              "public/fma-historical-assets/",
+              "public/fma-v5-assets/",
+              "public/igcse-cie-all-assets/",
+              "public/igcse-cie-ch1-assets/",
+              "public/kinematics-assets/",
+              "public/physicsbowl-em-assets/",
+              "public/work-energy-assets/",
+          )
+          curriculum = {
+              "public/curriculum-assets/igcse-force-analysis/fbd-01-angled-rope.svg",
+              "public/curriculum-assets/igcse-force-analysis/fbd-02-stacked-blocks.svg",
+              "public/curriculum-assets/igcse-force-analysis/fbd-03-block-on-slope.svg",
+              "public/curriculum-assets/igcse-force-analysis/fbd-04-circular-motion.svg",
+              "public/curriculum-assets/igcse-force-analysis/fbd-05-lift.svg",
+              "public/curriculum-assets/igcse-force-analysis/fbd-06-pulley-pair.svg",
+              "public/curriculum-assets/igcse-force-analysis/fbd-07-skydiver.svg",
+              "public/curriculum-assets/igcse-force-analysis/fbd-08-pulled-up-slope.svg",
+              "public/curriculum-assets/igcse-force-analysis/fbd-09-picture-strings.svg",
+              "public/curriculum-assets/igcse-force-analysis/fbd-10-book-wall.svg",
+          }
+          unexpected = [
+              path for path in paths
+              if path.startswith("public/questions/")
+              or (path.startswith(prefixes) and path.lower().endswith(exts))
+              or path in curriculum
+          ]
+          if unexpected:
+              print("Unexpected migrated question media remains:")
+              print("\n".join(unexpected[:100]))
+              raise SystemExit(1)
+          PY
+
+      - name: Restore authenticated origin
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git remote remove origin 2>/dev/null || true
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+
+      - name: Force-push cleaned branches and tags
+        run: |
+          git push --force origin --all
+          git push --force origin --tags
