@@ -15,3 +15,7 @@ outputs/crackap-apc-mechanics-test17/full_explanations.txt
 .vercel
 supabase/.temp/
 tmp/
+
+# Local staging for object-storage imports; never commit question binaries here.
+staging/question-assets/
+staging/source-documents/

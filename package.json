@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "tsc --noEmit && npm run check:colors",
     "check:colors": "node scripts/check-color-contract.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "assets:upload": "node scripts/upload-question-assets.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.2",
