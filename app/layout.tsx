@@ -4,7 +4,7 @@ import './globals.css';
 import { Providers } from './providers';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://pocket-cosmos.com'),
+  metadataBase: new URL('https://www.pocket-cosmos.com'),
   title: {
     default: 'Pocket Cosmos | AP Physics Learning Material and One-Stop Physics Study',
     template: '%s | Pocket Cosmos',
@@ -23,7 +23,8 @@ export const metadata: Metadata = {
     '物理学习',
   ],
   alternates: {
-    canonical: '/',
+    canonical: '/en',
+    languages: { en: '/en', zh: '/zh', 'x-default': '/en' },
   },
   openGraph: {
     title: 'Pocket Cosmos | AP Physics Learning Material',

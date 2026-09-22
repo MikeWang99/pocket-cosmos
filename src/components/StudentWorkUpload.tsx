@@ -1,6 +1,11 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Camera, Upload, X, CheckCircle2, Loader2 } from 'lucide-react';
 import { getSupabaseClient } from '../lib/supabaseClient';
+import {
+  createStudentWorkSignedUrl,
+  normalizeStudentWorkPath,
+  STUDENT_WORK_BUCKET,
+} from '../lib/studentWorkStorage';
 import { useAuth } from '../auth/AuthContext';
 
 interface StudentWorkUploadProps {
@@ -17,7 +22,6 @@ interface StudentWorkUploadProps {
 const MAX_UPLOAD_SIZE = 2 * 1024 * 1024; // 2MB target after compression
 const MAX_DIMENSION = 2048; // max width/height in pixels
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic'];
-
 /** Compress image via Canvas: resize + JPEG quality reduction */
 const compressImage = (file: File): Promise<Blob> => {
   return new Promise((resolve, reject) => {
@@ -83,6 +87,34 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [pendingRetry, setPendingRetry] = useState<File | null>(null);
+
+  useEffect(() => {
+    if (!existingImageUrl) {
+      setPreview(null);
+      return;
+    }
+
+    const path = normalizeStudentWorkPath(existingImageUrl);
+    const supabase = getSupabaseClient();
+    if (!path || !supabase || !user) {
+      setPreview(existingImageUrl);
+      return;
+    }
+
+    let mounted = true;
+    void createStudentWorkSignedUrl(supabase, path).then(({ signedUrl, error }) => {
+      if (!mounted) return;
+      if (error || !signedUrl) {
+        setError(t.errorUpload);
+        return;
+      }
+      setPreview(signedUrl);
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, [existingImageUrl, user]);
 
   const setBusyState = (compressingNext: boolean, uploadingNext: boolean) => {
     setCompressing(compressingNext);
@@ -163,7 +195,7 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
     const path = `${user.id}/${practiceSetId}/${questionId}-${Date.now()}.jpg`;
 
     const { error: uploadError } = await supabase.storage
-      .from('student-work')
+      .from(STUDENT_WORK_BUCKET)
       .upload(path, uploadBlob, { upsert: true, contentType: 'image/jpeg' });
 
     if (uploadError) {
@@ -174,10 +206,19 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
       return;
     }
 
-    const { data: urlData } = supabase.storage.from('student-work').getPublicUrl(path);
-    const publicUrl = urlData.publicUrl;
+    const { signedUrl, error: signedError } = await createStudentWorkSignedUrl(supabase, path);
 
-    onUploadComplete(publicUrl);
+    if (signedError || !signedUrl) {
+      setError(t.errorUpload);
+      setPendingRetry(file);
+      setBusyState(false, false);
+      return;
+    }
+
+    // Persist only the stable object path. Signed URLs are short-lived and
+    // must never be stored in Postgres.
+    setPreview(signedUrl);
+    onUploadComplete(path);
     setBusyState(false, false);
   }, [user, practiceSetId, questionId, onUploadComplete, t, setBusyState]);
 
@@ -188,7 +229,19 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
     event.target.value = '';
   };
 
-  const handleClear = () => {
+  const handleClear = async () => {
+    const path = normalizeStudentWorkPath(existingImageUrl);
+    const supabase = getSupabaseClient();
+
+    if (path && supabase && user) {
+      const { error: removeError } = await supabase.storage
+        .from(STUDENT_WORK_BUCKET)
+        .remove([path]);
+      if (removeError) {
+        console.error('Storage delete error:', removeError);
+      }
+    }
+
     setPreview(null);
     setFileName(null);
     setError(null);
@@ -295,7 +348,7 @@ export const StudentWorkUpload: React.FC<StudentWorkUploadProps> = ({
               </button>
               <button
                 type="button"
-                onClick={handleClear}
+                onClick={() => void handleClear()}
                 className="flex items-center gap-1 rounded-md border border-rose-400/30 px-3 py-1.5 text-xs text-rose-600 hover:bg-rose-400/10"
               >
                 <X className="h-3 w-3" />

@@ -6,9 +6,10 @@ import { AuthModal } from './AuthModal';
 
 interface AuthStatusButtonProps {
   compact?: boolean;
+  iconOnly?: boolean;
 }
 
-export const AuthStatusButton: FC<AuthStatusButtonProps> = ({ compact = false }) => {
+export const AuthStatusButton: FC<AuthStatusButtonProps> = ({ compact = false, iconOnly = false }) => {
   const { t } = useLanguage();
   const { authEnabled, configured, loading, emailJustConfirmed, clearEmailJustConfirmed, passwordRecovery, passwordSetupRequired, user, signOut } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -20,6 +21,16 @@ export const AuthStatusButton: FC<AuthStatusButtonProps> = ({ compact = false })
   if (!authEnabled) return null;
 
   if (!configured) {
+    if (iconOnly) {
+      return (
+        <div
+          className="grid h-10 w-10 place-items-center rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-700"
+          title={t.auth.previewConfigTitle}
+        >
+          <ShieldAlert className="h-4 w-4" />
+        </div>
+      );
+    }
     return (
       <div
         className={`${compact ? 'inline-flex min-h-11 w-full flex-col items-center justify-center rounded-2xl px-2 py-2 text-center leading-tight' : 'inline-flex h-10 rounded-full px-4'} gap-1.5 border border-amber-500/30 bg-amber-500/10 text-xs font-semibold text-amber-700`}
@@ -32,6 +43,9 @@ export const AuthStatusButton: FC<AuthStatusButtonProps> = ({ compact = false })
   }
 
   if (loading) {
+    if (iconOnly) {
+      return <div className="h-10 w-10 animate-pulse rounded-full border border-line bg-surface-tint" />;
+    }
     return (
       <div className={`${compact ? 'inline-flex min-h-11 w-full flex-col items-center justify-center rounded-2xl px-2 py-2 text-center leading-tight' : 'inline-flex h-10 rounded-full px-4'} border border-[rgba(15,23,42,0.1)] bg-[rgba(21,94,117,0.06)] text-xs font-semibold text-slate-500`}>
         {compact ? '...' : t.auth.loading}
@@ -40,6 +54,22 @@ export const AuthStatusButton: FC<AuthStatusButtonProps> = ({ compact = false })
   }
 
   if (user) {
+    if (iconOnly) {
+      return (
+        <>
+          <button
+            type="button"
+            onClick={() => setAuthModalOpen(true)}
+            className="grid h-10 w-10 place-items-center rounded-full border border-emerald-500/25 bg-emerald-500/10 text-emerald-700"
+            title={user.email ?? t.auth.signedIn}
+            aria-label={t.auth.accountAccess}
+          >
+            <UserCircle2 className="h-4 w-4" />
+          </button>
+          <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
+        </>
+      );
+    }
     return (
       <>
         {emailJustConfirmed && (
@@ -91,6 +121,23 @@ export const AuthStatusButton: FC<AuthStatusButtonProps> = ({ compact = false })
             </button>
           </div>
         )}
+        <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
+      </>
+    );
+  }
+
+  if (iconOnly) {
+    return (
+      <>
+        <button
+          type="button"
+          onClick={() => setAuthModalOpen(true)}
+          className="grid h-10 w-10 place-items-center rounded-full border border-nebula/25 bg-surface-tint text-nebula"
+          title={t.auth.openAuth}
+          aria-label={t.auth.openAuth}
+        >
+          <LogIn className="h-4 w-4" />
+        </button>
         <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
       </>
     );
