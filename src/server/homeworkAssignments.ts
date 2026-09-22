@@ -176,6 +176,7 @@ export const createHomeworkAssignment = async (
       question_id: item.questionId,
       practice_set_title: set?.title ?? item.practiceSetId,
       question_title: step?.title ?? item.questionId,
+      question_snapshot: step ?? null,
     };
   });
 
