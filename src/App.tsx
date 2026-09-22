@@ -12,93 +12,83 @@ import { HomeworkSection } from './components/HomeworkSection';
 import { CurriculumSection } from './components/CurriculumSection';
 import { AdminSection } from './components/AdminSection';
 import { AnimatePresence } from 'motion/react';
-import { useLanguage } from './LanguageContext';
+import { LanguageProvider, ROUTE_CHANGE_EVENT, useLanguage } from './LanguageContext';
 import { useAuth } from './auth/AuthContext';
 import { HomeSection } from './components/HomeSection';
-
-const validTabs = new Set(['home', 'curriculum', 'practice', 'homework', 'admin']);
-
-const normalizeRequestedTab = (tab: string | null | undefined) =>
-  tab && validTabs.has(tab) ? tab : 'home';
+import {
+  buildTabUrl,
+  normalizeAppTab,
+  parseAppPath,
+  type AppTab,
+} from './routing';
 
 const readTabFromUrl = () => {
-  if (typeof window === 'undefined') return 'home';
-  return normalizeRequestedTab(new URLSearchParams(window.location.search).get('tab'));
+  if (typeof window === 'undefined') return 'home' as AppTab;
+  return parseAppPath(window.location.pathname, window.location.search).tab;
 };
 
-const normalizeUrlForTab = (tab: string, mode: 'push' | 'replace' = 'push') => {
-  if (typeof window === 'undefined') return;
-
-  const url = new URL(window.location.href);
-  url.pathname = '/';
-  url.hash = '';
-
-  if (tab === 'home') {
-    url.searchParams.delete('tab');
-    url.searchParams.delete('set');
-    url.searchParams.delete('q');
-    url.searchParams.delete('assignment');
-  } else {
-    url.searchParams.set('tab', tab);
-    if (tab !== 'practice') {
-      url.searchParams.delete('set');
-      url.searchParams.delete('q');
-    }
-    if (tab !== 'homework') {
-      url.searchParams.delete('assignment');
-    }
-  }
-
-  const nextUrl = `${url.pathname}${url.search}`;
-  if (nextUrl !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
-    window.history[mode === 'replace' ? 'replaceState' : 'pushState']({}, '', nextUrl);
-  }
-};
-
-export default function App({ initialTab = 'curriculum' }: { initialTab?: string }) {
-  const [activeTab, setActiveTab] = useState(() => normalizeRequestedTab(initialTab));
-  const { t } = useLanguage();
+function AppShell({ initialTab = 'home' }: { initialTab?: string }) {
+  const [activeTab, setActiveTab] = useState<AppTab>(() => normalizeAppTab(initialTab));
+  const { language, ready: languageReady, t } = useLanguage();
   const { isAdmin, loading: authLoading } = useAuth();
 
+  const normalizeUrlForTab = (tab: AppTab, mode: 'push' | 'replace' = 'push') => {
+    if (typeof window === 'undefined') return;
+
+    const nextUrl = buildTabUrl(tab, language, window.location.search);
+    const currentUrl = `${window.location.pathname}${window.location.search}`;
+    if (nextUrl !== currentUrl) {
+      window.history[mode === 'replace' ? 'replaceState' : 'pushState']({}, '', nextUrl);
+    }
+  };
+
   const selectTab = (tab: string) => {
-    setActiveTab(tab);
-    normalizeUrlForTab(tab);
+    const nextTab = normalizeAppTab(tab);
+    setActiveTab(nextTab);
+    normalizeUrlForTab(nextTab);
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   useEffect(() => {
-    const initialTab = readTabFromUrl();
-    setActiveTab(initialTab);
-    normalizeUrlForTab(initialTab, 'replace');
+    if (!languageReady) return;
 
-    const handlePopState = () => {
-      setActiveTab(readTabFromUrl());
+    const syncRoute = (mode: 'push' | 'replace' = 'replace') => {
+      const route = parseAppPath(window.location.pathname, window.location.search);
+      setActiveTab(route.tab);
+
+      const nextUrl = buildTabUrl(route.tab, language, window.location.search);
+      const currentUrl = `${window.location.pathname}${window.location.search}`;
+      if (route.legacy || nextUrl !== currentUrl) {
+        window.history[mode === 'replace' ? 'replaceState' : 'pushState']({}, '', nextUrl);
+      }
     };
 
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+    syncRoute('replace');
+    const handleRouteChange = () => setActiveTab(readTabFromUrl());
+
+    window.addEventListener('popstate', handleRouteChange);
+    window.addEventListener(ROUTE_CHANGE_EVENT, handleRouteChange);
+    return () => {
+      window.removeEventListener('popstate', handleRouteChange);
+      window.removeEventListener(ROUTE_CHANGE_EVENT, handleRouteChange);
+    };
+  }, [language, languageReady]);
 
   useEffect(() => {
-    if (activeTab === 'physics' || activeTab === 'about' || activeTab === 'books') {
-      setActiveTab('home');
-      normalizeUrlForTab('home', 'replace');
-      return;
-    }
     if (!authLoading && !isAdmin && activeTab === 'admin') {
       setActiveTab('practice');
       normalizeUrlForTab('practice', 'replace');
     }
-  }, [activeTab, isAdmin, authLoading]);
+  }, [activeTab, isAdmin, authLoading, language]);
 
   return (
     <div className="min-h-screen bg-space-950 font-sans text-starlight antialiased selection:bg-quantum/20 flex">
       <div className="fixed inset-0 bg-grid-pattern opacity-60 pointer-events-none"></div>
-      
+
       <Sidebar activeTab={activeTab} setActiveTab={selectTab} showAdmin={isAdmin} />
-      
+
       <main className="relative z-10 flex min-h-screen flex-1 flex-col pb-24 md:ml-[88px] md:pb-0">
         <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-5 sm:px-6 sm:py-8 md:p-10 lg:p-14 xl:p-16">
           <div className="flex-1">
@@ -114,12 +104,27 @@ export default function App({ initialTab = 'curriculum' }: { initialTab?: string
               )}
             </AnimatePresence>
           </div>
-          
+
           <footer className="mt-12 flex items-center justify-between border-t border-line pb-2 pt-6 text-[10px] uppercase tracking-widest text-ink-muted sm:mt-16 sm:pb-8 sm:pt-8">
             <div>{t.site.footerBrand}</div>
           </footer>
         </div>
       </main>
     </div>
+  );
+}
+
+
+export default function App({
+  initialTab = 'home',
+  initialLanguage,
+}: {
+  initialTab?: string;
+  initialLanguage?: 'en' | 'zh';
+}) {
+  return (
+    <LanguageProvider initialLanguage={initialLanguage}>
+      <AppShell initialTab={initialTab} />
+    </LanguageProvider>
   );
 }

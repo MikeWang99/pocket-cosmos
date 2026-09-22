@@ -9,6 +9,7 @@ export interface HomeworkItem {
   position: number;
   practiceSetId: string;
   questionId: string;
+  questionVersionId?: string;
   practiceSetTitle?: string;
   questionTitle?: string;
 }
@@ -34,6 +35,7 @@ export interface HomeworkAttempt {
   studentEmail?: string | null;
   practiceSetId: string;
   questionId: string;
+  questionVersionId?: string;
   answer: string;
   answerImageUrl?: string | null;
   score: number;
@@ -64,6 +66,11 @@ export interface CreateHomeworkInput {
   assignedToAll: boolean;
   studentIds: string[];
   aiInstruction?: string;
-  items: Array<Pick<HomeworkItem, 'practiceSetId' | 'questionId'>>;
+  items: Array<
+    Pick<HomeworkItem, 'practiceSetId' | 'questionId'> & {
+      practiceSetTitle?: string;
+      questionTitle?: string;
+    }
+  >;
 }
 

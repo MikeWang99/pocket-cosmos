@@ -3,6 +3,8 @@ name: Validate Overseas App
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
@@ -31,6 +33,9 @@ jobs:
 
       - name: Typecheck
         run: pnpm run typecheck
+
+      - name: Validate question sync plan
+        run: pnpm run questions:sync
 
       - name: Build overseas app
         run: pnpm run build

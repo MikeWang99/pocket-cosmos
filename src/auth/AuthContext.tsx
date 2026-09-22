@@ -36,7 +36,6 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 const PASSWORD_SETUP_STORAGE_KEY = 'pocket-cosmos-email-password-setup';
-const ADMIN_EMAILS = new Set(['mike.wang.de@gmail.com']);
 
 interface AuthErrorLike {
   code?: string;
@@ -94,6 +93,7 @@ const userNeedsPasswordSetup = (user: User | null | undefined) => {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const supabase = getSupabaseClient();
   const [session, setSession] = useState<Session | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(Boolean(supabase));
   const [message, setMessage] = useState<string | null>(null);
   const [emailJustConfirmed, setEmailJustConfirmed] = useState(false);
@@ -156,6 +156,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       subscription.unsubscribe();
     };
   }, [supabase]);
+
+  useEffect(() => {
+    if (!supabase || !session?.user) {
+      setIsAdmin(false);
+      return;
+    }
+
+    let mounted = true;
+    void supabase.rpc('is_practice_admin').then(({ data, error }) => {
+      if (!mounted) return;
+      if (error) {
+        console.error('Unable to resolve admin role:', error);
+        setIsAdmin(false);
+        return;
+      }
+      setIsAdmin(data === true);
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, [session?.user.id, supabase]);
 
   const clearMessage = useCallback(() => {
     setMessage(null);
@@ -402,7 +424,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     () => ({
       authEnabled: authFeatureEnabled,
       configured: supabaseConfigured,
-      isAdmin: ADMIN_EMAILS.has((session?.user.email ?? '').toLowerCase()),
+      isAdmin,
       loading,
       message,
       emailJustConfirmed,
@@ -428,6 +450,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       clearEmailJustConfirmed,
       clearPasswordRecovery,
       emailJustConfirmed,
+      isAdmin,
       loading,
       message,
       passwordRecovery,
